@@ -1171,6 +1171,7 @@ html[data-fs="xl"]{zoom:1.25}
 #tourTip b{font-size:16px;display:block;margin-bottom:4px}#tourTip p{margin:0 0 12px;font-size:14px;line-height:1.5;color:#334155}
 .tt-n{font-size:11.5px;font-weight:800;color:#2563eb;margin-bottom:3px}.tt-b{display:flex;gap:6px;align-items:center}
 #qsInput::-webkit-search-cancel-button{display:none}
+.unit-acct-note{font-size:13px;color:#475569;background:#f1f5ff;border:1px solid #dbe5fb;border-radius:10px;padding:9px 12px;line-height:1.5}
 </style>
 
 </head>
@@ -1294,7 +1295,7 @@ html[data-fs="xl"]{zoom:1.25}
     <div class="page" id="pg-units">
       <div class="card">
         <div class="card-row"><div class="card-title" style="margin:0"><span class="ct-icon">🏭</span>Khai báo Đơn vị & Lĩnh vực</div><button class="btn btn-pri" onclick="openUnitModal()">+ Thêm đơn vị</button></div>
-        <div class="tbl-wrap"><table><thead><tr><th class="num">#</th><th>Tên đơn vị</th><th>Lĩnh vực</th><th>Phụ trách</th><th>Tài khoản</th><th style="width:120px">Thao tác</th></tr></thead><tbody id="unitsTbody"></tbody></table></div>
+        <div class="tbl-wrap"><table><thead><tr><th class="num">#</th><th>Tên đơn vị</th><th>Lĩnh vực</th><th>Phụ trách</th><th style="width:120px">Thao tác</th></tr></thead><tbody id="unitsTbody"></tbody></table></div>
       </div>
     </div>
 
@@ -1360,12 +1361,9 @@ html[data-fs="xl"]{zoom:1.25}
           <h4 style="margin:0">👥 Tài khoản & Phân quyền</h4>
           <button class="btn btn-pri" onclick="openAcctModal()">+ Tạo tài khoản</button>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Tạo tài khoản cho lãnh đạo, cán bộ đánh giá, người xem… Mỗi tài khoản có <b>vai trò</b>, <b>phạm vi đơn vị</b> được làm việc và <b>quyền chi tiết</b>. Tài khoản đơn vị (dv01, dv02…) được tạo ở tab Đơn vị; tại đây có thể đổi mật khẩu hoặc khoá.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Tạo tài khoản cho lãnh đạo, cán bộ đánh giá, người xem… Mỗi tài khoản có <b>vai trò</b>, <b>phạm vi đơn vị</b> được làm việc và <b>quyền chi tiết</b>. Tài khoản cho nhân viên của một đơn vị: chọn vai trò phù hợp và phạm vi là đơn vị đó.</p>
         <div class="tbl-wrap"><table><thead><tr><th>Tài khoản</th><th>Họ tên</th><th>Vai trò</th><th>Phạm vi</th><th>Trạng thái</th><th style="width:190px">Thao tác</th></tr></thead><tbody id="acctTbody"></tbody></table></div>
-        <details style="margin-top:14px"><summary style="cursor:pointer;font-weight:700;color:var(--pri-d)">🏭 Tài khoản đơn vị (<span id="unitAcctCnt">0</span>)</summary>
-          <div class="tbl-wrap" style="margin-top:8px"><table><thead><tr><th>Đơn vị</th><th>Tài khoản</th><th>Trạng thái</th><th style="width:170px">Thao tác</th></tr></thead><tbody id="unitAcctTbody"></tbody></table></div>
-        </details>
-        <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700;color:var(--pri-d)">📖 Bảng quyền mặc định theo vai trò</summary><div id="roleMatrix" style="margin-top:8px"></div></details>
+                <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700;color:var(--pri-d)">📖 Bảng quyền mặc định theo vai trò</summary><div id="roleMatrix" style="margin-top:8px"></div></details>
       </div>
 
       <div id="cfgSystem">
@@ -1502,8 +1500,7 @@ html[data-fs="xl"]{zoom:1.25}
       </select>
     </div>
     <div class="fg"><label>Người phụ trách</label><input id="uManager" placeholder="Họ tên"></div>
-    <div class="fg"><label>Tài khoản *</label><input id="uUser" placeholder="Tài khoản đăng nhập"></div>
-    <div class="fg"><label>Mật khẩu *</label><input id="uPass" placeholder="Tối thiểu 6 ký tự"></div>
+    <div class="fg" style="grid-column:1/-1"><div class="unit-acct-note">Đơn vị chỉ dùng để tổ chức dữ liệu. Tài khoản đăng nhập cho nhân viên tạo ở mục <b>Tài khoản &amp; Phân quyền</b> bên dưới (chọn phạm vi là đơn vị này).</div></div>
   </div>
 </div><div class="modal-ft"><button class="btn btn-ghost" onclick="closeM('unitModal')">Hủy</button><button class="btn btn-pri" onclick="saveUnit()">💾 Lưu</button></div></div></div>
 
@@ -2261,35 +2258,28 @@ function renderUnits(){
   const units=S.units.filter(u=>!u.isAdmin);
   document.getElementById('unitsTbody').innerHTML=units.map((u,i)=>{
     const bz=BIZ_TYPES[u.biz]||BIZ_TYPES.other;
-    return `<tr><td class="num">${i+1}</td><td><b>${esc(u.name)}</b></td><td><span style="font-size:11px;padding:2px 8px;border-radius:4px;background:${bz.color}15;color:${bz.color};font-weight:700">${bz.label}</span></td><td>${esc(u.manager||'')}</td><td><code style="font-size:12px">${esc(u.username)}</code></td><td><button class="btn btn-ghost btn-sm" onclick="editUnit('${u.id}')">✏️</button> <button class="btn btn-err btn-sm" onclick="delUnit('${u.id}')">🗑️</button></td></tr>`;
-  }).join('')||'<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted)">Chưa có</td></tr>';
+    return `<tr><td class="num">${i+1}</td><td><b>${esc(u.name)}</b></td><td><span style="font-size:11px;padding:2px 8px;border-radius:4px;background:${bz.color}15;color:${bz.color};font-weight:700">${bz.label}</span></td><td>${esc(u.manager||'')}</td><td><button class="btn btn-ghost btn-sm" onclick="editUnit('${u.id}')">✏️</button> <button class="btn btn-err btn-sm" onclick="delUnit('${u.id}')">🗑️</button></td></tr>`;
+  }).join('')||'<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">Chưa có</td></tr>';
 }
-function openUnitModal(){S.editUnit=null;document.getElementById('unitModalT').textContent='Thêm đơn vị mới';['uCode','uNameI','uManager','uUser','uPass'].forEach(id=>document.getElementById(id).value='');document.getElementById('uPass').value='123456';document.getElementById('uBizType').value='auto_dealer';openM('unitModal')}
-function editUnit(id){const u=S.units.find(x=>x.id===id);S.editUnit=id;document.getElementById('unitModalT').textContent='Sửa đơn vị';document.getElementById('uCode').value=u.code;document.getElementById('uNameI').value=u.name;document.getElementById('uBizType').value=u.biz||'other';document.getElementById('uManager').value=u.manager||'';document.getElementById('uUser').value=u.username;document.getElementById('uPass').value=u.password;openM('unitModal')}
+function openUnitModal(){S.editUnit=null;document.getElementById('unitModalT').textContent='Thêm đơn vị mới';['uCode','uNameI','uManager'].forEach(id=>document.getElementById(id).value='');document.getElementById('uBizType').value='auto_dealer';openM('unitModal')}
+function editUnit(id){const u=S.units.find(x=>x.id===id);S.editUnit=id;document.getElementById('unitModalT').textContent='Sửa đơn vị';document.getElementById('uCode').value=u.code;document.getElementById('uNameI').value=u.name;document.getElementById('uBizType').value=u.biz||'other';document.getElementById('uManager').value=u.manager||'';openM('unitModal')}
 /* Mã đơn vị không còn hiển thị — tự sinh từ tài khoản (dùng nội bộ: tên thư mục ảnh, tên file) */
 function unitAutoCode(un,except){const b=String(un||'DV').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[đĐ]/g,'D').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,16)||'DV';let c=b,i=2;while(S.units.some(u=>u.id!==except&&u.code===c))c=b+(i++);return c}
 function saveUnit(){
-  let code=document.getElementById('uCode').value.trim();const name=document.getElementById('uNameI').value.trim(),biz=document.getElementById('uBizType').value,manager=document.getElementById('uManager').value.trim(),username=document.getElementById('uUser').value.trim(),password=document.getElementById('uPass').value;
-  if(!name||!username||!password){toast('⚠️ Nhập đủ thông tin *');return}
-  if(!code)code=unitAutoCode(username,S.editUnit);
-  if(password.length<6){toast('⚠️ MK tối thiểu 6 ký tự');return}
+  let code=document.getElementById('uCode').value.trim();const name=document.getElementById('uNameI').value.trim(),biz=document.getElementById('uBizType').value,manager=document.getElementById('uManager').value.trim();
+  if(!name){toast('⚠️ Nhập tên đơn vị');return}
+  if(!code)code=unitAutoCode(name,S.editUnit);
   if(S.editUnit){
     const u=S.units.find(x=>x.id===S.editUnit);
-    if(usernameTaken(username,'unit',u.id)){toast('⚠️ TK đã tồn tại');return}
     const oldBiz=u.biz;
-    Object.assign(u,{code,name,biz,manager,username,password});
-    // if biz type changed, re-seed criteria
-    if(oldBiz!==biz){
-      S.criteria=S.criteria.filter(c=>!(c.unitId===u.id&&c.month===S.month));
-      S.criteria=S.criteria.filter(c=>!(c.unitId===u.id&&c.month===S.month));seedCriteria(u.id,biz,S.month,true);
-    }
+    Object.assign(u,{code,name,biz,manager});     // tên đăng nhập kiểu cũ (nếu có) giữ nguyên
+    if(oldBiz!==biz){S.criteria=S.criteria.filter(c=>!(c.unitId===u.id&&c.month===S.month));seedCriteria(u.id,biz,S.month,true)}
   }else{
-    if(usernameTaken(username,'unit',null)){toast('⚠️ TK đã tồn tại');return}
-    const newU={id:'u_'+Date.now(),code,name,biz,manager,phone:'',username,password,isAdmin:false};
+    const newU={id:'u_'+Date.now(),code,name,biz,manager,phone:'',isAdmin:false};
     S.units.push(newU);
     seedCriteria(newU.id,biz,S.month);
   }
-  persist();closeM('unitModal');renderUnits();toast('✅ Đã lưu');
+  persist();closeM('unitModal');renderUnits();try{renderAccounts()}catch(e){}toast('✅ Đã lưu');
 }
 function delUnit(id){delayedConfirm('Xóa đơn vị','Bạn có chắc chắn muốn XÓA đơn vị này và toàn bộ dữ liệu liên quan? Hành động không thể hoàn tác.',()=>{S.units=S.units.filter(x=>x.id!==id);S.criteria=S.criteria.filter(c=>c.unitId!==id);S.evals=S.evals.filter(e=>e.unitId!==id);S.plans=S.plans.filter(p=>p.unitId!==id);try{if(S.fbDb){const seg=encKey(id),upd={};Object.values(S.sums).filter(x=>x&&x.u===id).forEach(x=>{upd['m/'+x.m+'/'+seg]=null;delete S.sums[sumKey(id,x.m)]});upd['x/sum/'+seg]=null;upd['x/open/'+seg]=null;S.fbDb.ref('dgData').update(upd)}}catch(e){}persist();renderUnits();toast('✅ Đã xóa')})}
 
@@ -3836,11 +3826,6 @@ function renderAccounts(){
   if(!S.users.length)rows+='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">Chưa có tài khoản bổ sung — bấm “+ Tạo tài khoản”</td></tr>';
   tb.innerHTML=rows;
 
-  const units=S.units.filter(u=>!u.isAdmin);
-  document.getElementById('unitAcctCnt').textContent=units.length;
-  document.getElementById('unitAcctTbody').innerHTML=units.map(u=>`<tr${u.locked?' style="opacity:.6"':''}><td><b>${esc(u.name)}</b></td><td><code>${esc(u.username)}</code></td><td>${u.locked?'<span class="badge badge-err">🔒 Đã khoá</span>':'<span class="badge badge-ok">Hoạt động</span>'}</td><td style="white-space:nowrap"><button class="btn btn-ghost btn-sm" onclick="openPwdFor('unit','${u.id}')">🔑 Đổi MK</button> <button class="btn btn-ghost btn-sm" onclick="toggleUnitLock('${u.id}')">${u.locked?'🔓 Mở':'🔒 Khoá'}</button></td></tr>`).join('')
-    ||'<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:16px">Chưa có đơn vị</td></tr>';
-
   document.getElementById('roleMatrix').innerHTML=`<div class="tbl-wrap"><table><thead><tr><th>Quyền</th>${Object.values(ROLES).map(r=>`<th style="text-align:center;font-size:11px;text-transform:none">${r.label}</th>`).join('')}</tr></thead><tbody>${PERMS.map(([k,l])=>`<tr><td style="font-size:13px">${l}</td>${Object.values(ROLES).map(r=>`<td style="text-align:center">${r.perms.includes(k)?'✅':'<span style="color:var(--muted)">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
   <div style="font-size:12px;color:var(--muted);margin-top:6px">Quyền của từng tài khoản có thể chỉnh riêng khi tạo/sửa. Người quản lý tài khoản không thể cấp quyền mà bản thân không có.</div>`;
 }
@@ -4000,6 +3985,27 @@ function savePwd(){
   toast('✅ Đã đổi mật khẩu cho '+rec.username);
 }
 
+
+/* Chuyển tài khoản đăng nhập kiểu cũ (gắn trên đơn vị) thành tài khoản thường — giữ tên đăng nhập & mật khẩu */
+function unitAcctToUser(u){
+  if(!u||!u.username)return false;
+  const id='acc_u_'+u.id,ex=S.users.find(a=>(a.username||'').toLowerCase()===u.username.toLowerCase());
+  if(ex&&ex.id===id){delete u.username;delete u.password;delete u.locked;return true}
+  if(ex)return false;                                   // trùng tên với tài khoản khác → giữ đăng nhập kiểu cũ
+  S.users.push({id,username:u.username,fullName:u.manager||u.name,password:u.password,role:'unit',unitIds:[u.id],perms:null,active:!u.locked,createdAt:nowISO(),createdBy:(S.user&&S.user.name)||'',from:'unit'});
+  delete u.username;delete u.password;delete u.locked;return true;
+}
+/* Tự chuyển (1 lần) khi quản trị viên / người quản lý tài khoản đang online và dữ liệu đã tải xong.
+   Mã tài khoản cố định theo đơn vị → 2 máy cùng chuyển không bị trùng. */
+function unitAcctAutoMigrate(){
+  try{
+    if(!S.user||!hasPerm('users')||!S.fbDb||!S.fbConnected||!S._syncReady)return;
+    const us=S.units.filter(u=>!u.isAdmin&&u.username);if(!us.length)return;
+    let n=0;us.forEach(u=>{if(unitAcctToUser(u))n++});
+    if(n){persist();try{renderAccounts();renderUnits()}catch(e){}toast(`Đã chuyển ${n} tài khoản đơn vị kiểu cũ vào danh sách Tài khoản (giữ nguyên tên đăng nhập & mật khẩu)`)}
+  }catch(e){console.warn('migrate',e)}
+}
+setInterval(unitAcctAutoMigrate,20000);
 /* ===========================================================
    ĐỒNG BỘ THEO NGĂN (v6): tháng × đơn vị × loại dữ liệu
    Máy chủ:
@@ -7742,7 +7748,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='28.10.2026-e7a943';
+const APP_BUILD='28.10.2026-556d8d';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
