@@ -1094,6 +1094,83 @@ details.fold[open]>summary{border-radius:12px 12px 0 0;border-bottom:1px solid v
 .td-sub{font-size:13px;font-weight:600;color:var(--muted)}
 .td-unit-h{margin-top:22px;padding-top:12px;border-top:1px dashed #cbd5e1}
 .td-sys{margin-bottom:4px}
+/* Lỗi ứng dụng */
+details.fold > summary[data-badge]:not([data-badge=""])::after{content:attr(data-badge);margin-left:8px;font-size:11.5px;font-weight:800;background:#fee2e2;color:#b91c1c;border-radius:999px;padding:1px 8px}
+.err-hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;font-size:13.5px;color:var(--ink-2,#475569)}
+.err-list{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.err-it{border-top:1px solid var(--line)}.err-it:first-child{border-top:none}
+.err-it > summary{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;cursor:pointer;list-style:none}
+.err-it > summary::-webkit-details-marker{display:none}
+.err-n{flex-shrink:0;font-weight:800;color:#b91c1c;background:#fee2e2;border-radius:7px;padding:1px 7px;font-size:12.5px}
+.err-m{min-width:0}.err-m b{display:block;font-size:13.5px;word-break:break-word}.err-m small{color:var(--muted);font-size:12px}
+.err-d{padding:4px 12px 12px 52px;font-size:12.5px;color:#334155}.err-d i{color:var(--muted);font-style:normal}
+.err-d pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:8px 10px;font-size:11.5px;white-space:pre-wrap;word-break:break-all;margin:6px 0 0;max-height:220px;overflow:auto}
+.err-empty{color:var(--muted);padding:10px 2px;font-size:13.5px;display:flex;align-items:center;gap:6px}.err-empty .ic{color:#16a34a}
+/* Hoàn tác */
+#toast.has-undo{display:flex;align-items:center;gap:14px;pointer-events:auto}
+.toast-undo{border:none;background:none;color:#93c5fd;font-weight:800;font-size:14.5px;cursor:pointer;padding:4px 6px;border-radius:6px;white-space:nowrap}
+.toast-undo:hover{background:rgba(255,255,255,.12)}
+/* Báo lỗi tại ô nhập */
+.is-err{border-color:#dc2626!important;box-shadow:0 0 0 3px rgba(220,38,38,.14)!important;background:#fffafa!important}
+.fe-msg{color:#b91c1c;font-size:12.5px;font-weight:600;margin-top:4px}
+.modal-err{display:flex;align-items:center;gap:8px;margin:0 20px 12px;padding:9px 12px;border-radius:10px;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;font-size:13.5px;font-weight:600}
+.modal-err .ic{width:17px;height:17px;flex-shrink:0}
+/* Viền khi dùng bàn phím */
+:focus-visible{outline:2.5px solid #2563eb;outline-offset:2px;border-radius:6px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0}
+/* Cỡ chữ */
+html[data-fs="l"]{zoom:1.12}
+html[data-fs="xl"]{zoom:1.25}
+.sn-fs{display:flex;align-items:center;gap:6px;margin:8px 0 2px;font-size:12px;color:#8fa3c7}
+.sn-fs button{border:1px solid rgba(255,255,255,.18);background:none;color:#cbd5e1;border-radius:7px;padding:2px 8px;cursor:pointer;font-weight:700;line-height:18px}
+.sn-fs button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+.sn-ver{font-size:11px;color:#64748b;margin-top:6px}
+/* Tìm nhanh */
+.hdr-search{display:inline-flex;align-items:center;gap:8px;border:1px solid #dbe3ee;background:#fff;color:#64748b;border-radius:10px;padding:7px 10px;font-size:13.5px;cursor:pointer;min-width:200px;margin-right:6px}
+.hdr-search:hover{border-color:#93c5fd;color:#1e3a8a}
+.hdr-search .ic{width:17px;height:17px}.hdr-search span{flex:1;text-align:left}
+.hdr-search kbd,.qs-in kbd{font:600 11px/1 system-ui;border:1px solid #cbd5e1;border-bottom-width:2px;border-radius:5px;padding:3px 5px;color:#64748b;background:#f8fafc}
+@media(max-width:900px){.hdr-search{min-width:0;padding:7px;border:none;background:none;margin:0}.hdr-search span,.hdr-search kbd{display:none}.hdr-search .ic{width:21px;height:21px}}
+#qsModal{align-items:flex-start;padding-top:9vh}
+.qs-box{max-width:620px;width:calc(100% - 24px);padding:0;overflow:hidden}
+.qs-in{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.qs-in .ic{width:20px;height:20px;color:#64748b}
+.qs-in input{flex:1;border:none;outline:none;font-size:16.5px;background:none;min-width:0}
+.qs-in .modal-x{position:static}
+.qs-res{max-height:min(62vh,520px);overflow-y:auto;padding:6px}
+.qs-g{font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px 4px}
+.qs-it{display:flex;align-items:center;gap:11px;width:100%;border:none;background:none;text-align:left;padding:8px 10px;border-radius:9px;cursor:pointer;color:var(--ink,#0f172a)}
+.qs-it .ic{width:19px;height:19px;color:#64748b;flex-shrink:0}
+.qs-it b{display:block;font-size:14.5px;font-weight:700}.qs-it small{display:block;font-size:12.5px;color:var(--muted)}
+.qs-it.on{background:#eff6ff}.qs-it.on .ic{color:var(--pri)}
+.qs-empty{padding:22px;text-align:center;color:var(--muted)}
+.qs-ft{border-top:1px solid var(--line);padding:7px 14px;font-size:12px;color:#94a3b8;background:#f8fafc}
+@media(max-width:600px){#qsModal{padding-top:0}.qs-box{width:100%;max-width:none;border-radius:0 0 16px 16px}.qs-in kbd,.qs-ft{display:none}}
+/* Thông tin công ty */
+.org-form{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.org-logo-ed{display:flex;flex-direction:column;gap:8px;align-items:center;width:150px}
+.org-lp{width:140px;height:110px;border:1.5px dashed #cbd5e1;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#f8fafc;overflow:hidden;text-align:center;font-size:12px;color:#94a3b8}
+.org-lp img{max-width:92%;max-height:92%;object-fit:contain}.org-lp .ic{width:26px;height:26px}
+.org-fg{flex:1;min-width:260px}
+.org-note{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.org-hd{display:flex;align-items:center;gap:12px;padding-bottom:8px;margin-bottom:10px;border-bottom:1.5px solid #333}
+.org-hd b{display:block;font-size:14px;text-transform:uppercase}.org-hd small{display:block;font-size:11px;color:#444}
+.org-logo{object-fit:contain;display:block}
+.rc-h .org-logo{margin:0 auto 4px}
+.org-rep{display:flex;align-items:center;justify-content:center;gap:12px;font-size:13px;color:var(--muted)}
+.org-rep b{display:block;color:var(--ink,#0f172a);font-size:14px;text-transform:uppercase}.org-rep small{display:block;font-size:12px}
+@media(max-width:600px){.org-form{flex-direction:column;align-items:stretch}.org-logo-ed{width:auto;flex-direction:row;flex-wrap:wrap}}
+/* Hướng dẫn */
+.help-btn{border:none;background:none;color:#94a3b8;cursor:pointer;padding:4px;border-radius:8px;display:inline-flex;margin-left:2px}
+.help-btn:hover{color:var(--pri);background:#eff6ff}.help-btn .ic{width:20px;height:20px}
+.help-ul{margin:0 0 14px;padding-left:20px;line-height:1.6;font-size:14.5px}.help-ul li{margin-bottom:4px}
+.help-k{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px}.help-k b{display:block;margin-bottom:6px}
+.help-k div{display:flex;gap:10px;align-items:center;margin:4px 0}.help-k kbd{font:600 11.5px/1 system-ui;border:1px solid #cbd5e1;border-bottom-width:2px;border-radius:5px;padding:3px 6px;background:#fff;min-width:96px;text-align:center}
+#tourHl{position:fixed;z-index:9998;border-radius:12px;box-shadow:0 0 0 9999px rgba(15,23,42,.58),0 0 0 3px #60a5fa;transition:all .2s;pointer-events:auto;cursor:pointer}
+#tourTip{position:fixed;z-index:9999;background:#fff;border-radius:14px;padding:14px 16px 12px;box-shadow:0 20px 50px rgba(0,0,0,.3);transition:top .2s,left .2s}
+#tourTip b{font-size:16px;display:block;margin-bottom:4px}#tourTip p{margin:0 0 12px;font-size:14px;line-height:1.5;color:#334155}
+.tt-n{font-size:11.5px;font-weight:800;color:#2563eb;margin-bottom:3px}.tt-b{display:flex;gap:6px;align-items:center}
+#qsInput::-webkit-search-cancel-button{display:none}
 </style>
 
 </head>
@@ -1123,7 +1200,7 @@ details.fold[open]>summary{border-radius:12px 12px 0 0;border-bottom:1px solid v
 </div>
 
 <!-- =============== APP =============== -->
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrow-back-up" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4" /> <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M22 17v-3h-20" /> <path d="M2 8v9" /> <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" /></symbol><symbol id="i-building-skyscraper" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-14l8 -4v18" /> <path d="M19 21v-10l-6 -4" /> <path d="M9 9l0 .01" /> <path d="M9 12l0 .01" /> <path d="M9 15l0 .01" /> <path d="M9 18l0 .01" /></symbol><symbol id="i-building-warehouse" viewBox="0 0 24 24"><path d="M3 21v-13l9 -4l9 4v13" /> <path d="M13 13h4v8h-10v-6h6" /> <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M16 3l0 4" /> <path d="M8 3l0 4" /> <path d="M4 11l16 0" /> <path d="M8 15h2v2h-2z" /></symbol><symbol id="i-chart-pie" viewBox="0 0 24 24"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /> <path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></symbol><symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-clipboard-list" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 12l.01 0" /> <path d="M13 12l2 0" /> <path d="M9 16l.01 0" /> <path d="M13 16l2 0" /></symbol><symbol id="i-clock-exclamation" viewBox="0 0 24 24"><path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" /> <path d="M12 7v5l3 3" /> <path d="M19 16v3" /> <path d="M19 22v.01" /></symbol><symbol id="i-door-enter" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /> <path d="M21 7h-7m3 -3l-3 3l3 3" /></symbol><symbol id="i-door-exit" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /> <path d="M14 7h7m-3 -3l3 3l-3 3" /></symbol><symbol id="i-eye-check" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-file-certificate" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /> <path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" /></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="i-folder-open" viewBox="0 0 24 24"><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-hotel-service" viewBox="0 0 24 24"><path d="M8.5 10a1.5 1.5 0 0 1 -1.5 -1.5a5.5 5.5 0 0 1 11 0v10.5a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2c0 -1.38 .71 -2.444 1.88 -3.175l4.424 -2.765c1.055 -.66 1.696 -1.316 1.696 -2.56a2.5 2.5 0 1 0 -5 0a1.5 1.5 0 0 1 -1.5 1.5z" /></symbol><symbol id="i-list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /> <path d="M11 6l9 0" /> <path d="M11 12l9 0" /> <path d="M11 18l9 0" /></symbol><symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 6l0 -3" /> <path d="M16.25 7.75l2.15 -2.15" /> <path d="M18 12l3 0" /> <path d="M16.25 16.25l2.15 2.15" /> <path d="M12 18l0 3" /> <path d="M7.75 16.25l-2.15 2.15" /> <path d="M6 12l-3 0" /> <path d="M7.75 7.75l-2.15 -2.15" /></symbol><symbol id="i-menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-percentage" viewBox="0 0 24 24"><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M6 18l12 -12" /></symbol><symbol id="i-point" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-signature" viewBox="0 0 24 24"><path d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2" /></symbol><symbol id="i-spray" viewBox="0 0 24 24"><path d="M4 10m0 2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2z" /> <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" /> <path d="M15 7h.01" /> <path d="M18 9h.01" /> <path d="M18 5h.01" /> <path d="M21 3h.01" /> <path d="M21 7h.01" /> <path d="M21 11h.01" /> <path d="M10 7h1" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></symbol><symbol id="i-users-group" viewBox="0 0 24 24"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /> <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M17 10h2a2 2 0 0 1 2 2v1" /> <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z" /> <path d="M15 9h.01" /></symbol><symbol id="i-file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 17h6" /> <path d="M9 13h6" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-device-floppy" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-robot" viewBox="0 0 24 24"><path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /> <path d="M12 2v2" /> <path d="M9 12v9" /> <path d="M15 12v9" /> <path d="M5 16l4 -2" /> <path d="M15 14l4 2" /> <path d="M9 18h6" /> <path d="M10 8v.01" /> <path d="M14 8v.01" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /> <path d="M9 12h12l-3 -3" /> <path d="M18 15l3 -3" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" /> <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="i-checks" viewBox="0 0 24 24"><path d="M7 12l5 5l10 -10" /> <path d="M2 12l5 5m5 -5l5 -5" /></symbol><symbol id="i-layout-list" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-qrcode" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 17l0 .01" /> <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 7l0 .01" /> <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M17 7l0 .01" /> <path d="M14 14l3 0" /> <path d="M20 14l0 .01" /> <path d="M14 14l0 3" /> <path d="M14 20l3 0" /> <path d="M17 17l3 0" /> <path d="M20 17l0 3" /></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></symbol><symbol id="i-arrows-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3l-3 3" /> <path d="M18 20l3 -3l-3 -3" /> <path d="M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5" /> <path d="M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3" /></symbol><symbol id="i-report-analytics" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /> <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /> <path d="M16 5l3 3" /></symbol><symbol id="i-lock-open" viewBox="0 0 24 24"><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M8 11v-5a4 4 0 0 1 8 0" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6 -6" /> <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /> <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 9l5 -5l5 5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-alarm" viewBox="0 0 24 24"><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M12 10l0 3l2 0" /> <path d="M7 4l-2.75 2" /> <path d="M17 4l2.75 2" /></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" /> <path d="M17 8l4 4l-4 4" /> <path d="M3 12l18 0" /></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /> <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /> <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /></symbol><symbol id="i-bath" viewBox="0 0 24 24"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" /> <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" /> <path d="M4 21l1 -1.5" /> <path d="M20 21l-1 -1.5" /></symbol><symbol id="i-bell-ringing" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /> <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /> <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6l0 13" /> <path d="M12 6l0 13" /> <path d="M21 6l0 13" /></symbol><symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 5h4v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2z" /> <path d="M14 3.5c0 1.626 .507 3.212 1.45 4.537l.05 .07a8.093 8.093 0 0 1 1.5 4.694v6.199a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-6.2c0 -1.682 .524 -3.322 1.5 -4.693l.05 -.07a7.823 7.823 0 0 0 1.45 -4.537" /> <path d="M7 14.803a2.4 2.4 0 0 0 1 -.803a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.805" /></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-building-bank" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 10l18 0" /> <path d="M5 6l7 -3l7 3" /> <path d="M4 10l0 11" /> <path d="M20 10l0 11" /> <path d="M8 14l0 3" /> <path d="M12 14l0 3" /> <path d="M16 14l0 3" /></symbol><symbol id="i-building-factory-2" viewBox="0 0 24 24"><path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-building-store" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /> <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /> <path d="M9.7 17l4.6 0" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M11 15h1" /> <path d="M12 15v3" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /> <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-candy" viewBox="0 0 24 24"><path d="M7.05 11.293l4.243 -4.243a2 2 0 0 1 2.828 0l2.829 2.83a2 2 0 0 1 0 2.828l-4.243 4.243a2 2 0 0 1 -2.828 0l-2.829 -2.831a2 2 0 0 1 0 -2.828z" /> <path d="M16.243 9.172l3.086 -.772a1.5 1.5 0 0 0 .697 -2.516l-2.216 -2.217a1.5 1.5 0 0 0 -2.44 .47l-1.248 2.913" /> <path d="M9.172 16.243l-.772 3.086a1.5 1.5 0 0 1 -2.516 .697l-2.217 -2.216a1.5 1.5 0 0 1 .47 -2.44l2.913 -1.248" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></symbol><symbol id="i-chart-bar" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M4 20h14" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></symbol><symbol id="i-confetti" viewBox="0 0 24 24"><path d="M4 5h2" /> <path d="M5 4v2" /> <path d="M11.5 4l-.5 2" /> <path d="M18 5h2" /> <path d="M19 4v2" /> <path d="M15 9l-1 1" /> <path d="M18 13l2 -.5" /> <path d="M18 19h2" /> <path d="M19 18v2" /> <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /> <path d="M3 10l18 0" /> <path d="M7 15l.01 0" /> <path d="M11 15l2 0" /></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" /></symbol><symbol id="i-device-laptop" viewBox="0 0 24 24"><path d="M3 19l18 0" /> <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></symbol><symbol id="i-device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14z" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /> <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6.5 17h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="i-microphone" viewBox="0 0 24 24"><path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z" /> <path d="M5 10a7 7 0 0 0 14 0" /> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /></symbol><symbol id="i-numbers" viewBox="0 0 24 24"><path d="M8 10v-7l-2 2" /> <path d="M6 16a2 2 0 1 1 4 0c0 .591 -.601 1.46 -1 2l-3 3h4" /> <path d="M15 14a2 2 0 1 0 2 -2a2 2 0 1 0 -2 -2" /> <path d="M6.5 10h3" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /> <path d="M13.5 6.5l4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-player-stop" viewBox="0 0 24 24"><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-player-track-next" viewBox="0 0 24 24"><path d="M3 5v14l8 -7z" /> <path d="M14 5v14l8 -7z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9.785 6l8.215 8.215l-2.054 2.054a5.81 5.81 0 1 1 -8.215 -8.215l2.054 -2.054z" /> <path d="M4 20l3.5 -3.5" /> <path d="M15 4l-3.5 3.5" /> <path d="M20 9l-3.5 3.5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol><symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17h-11v-14h-2" /> <path d="M6 5l14 1l-1 7h-13" /></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></symbol><symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" /> <path d="M14.5 10.5l-2.5 2.5" /> <path d="M17 8l1 -1" /> <path d="M14 3h-4" /></symbol><symbol id="i-tool" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></symbol><symbol id="i-tools-kitchen-2" viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol></svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrow-back-up" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4" /> <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M22 17v-3h-20" /> <path d="M2 8v9" /> <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" /></symbol><symbol id="i-building-skyscraper" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-14l8 -4v18" /> <path d="M19 21v-10l-6 -4" /> <path d="M9 9l0 .01" /> <path d="M9 12l0 .01" /> <path d="M9 15l0 .01" /> <path d="M9 18l0 .01" /></symbol><symbol id="i-building-warehouse" viewBox="0 0 24 24"><path d="M3 21v-13l9 -4l9 4v13" /> <path d="M13 13h4v8h-10v-6h6" /> <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M16 3l0 4" /> <path d="M8 3l0 4" /> <path d="M4 11l16 0" /> <path d="M8 15h2v2h-2z" /></symbol><symbol id="i-chart-pie" viewBox="0 0 24 24"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /> <path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></symbol><symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-clipboard-list" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 12l.01 0" /> <path d="M13 12l2 0" /> <path d="M9 16l.01 0" /> <path d="M13 16l2 0" /></symbol><symbol id="i-clock-exclamation" viewBox="0 0 24 24"><path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" /> <path d="M12 7v5l3 3" /> <path d="M19 16v3" /> <path d="M19 22v.01" /></symbol><symbol id="i-door-enter" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /> <path d="M21 7h-7m3 -3l-3 3l3 3" /></symbol><symbol id="i-door-exit" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /> <path d="M14 7h7m-3 -3l3 3l-3 3" /></symbol><symbol id="i-eye-check" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-file-certificate" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /> <path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" /></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="i-folder-open" viewBox="0 0 24 24"><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-hotel-service" viewBox="0 0 24 24"><path d="M8.5 10a1.5 1.5 0 0 1 -1.5 -1.5a5.5 5.5 0 0 1 11 0v10.5a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2c0 -1.38 .71 -2.444 1.88 -3.175l4.424 -2.765c1.055 -.66 1.696 -1.316 1.696 -2.56a2.5 2.5 0 1 0 -5 0a1.5 1.5 0 0 1 -1.5 1.5z" /></symbol><symbol id="i-list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /> <path d="M11 6l9 0" /> <path d="M11 12l9 0" /> <path d="M11 18l9 0" /></symbol><symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 6l0 -3" /> <path d="M16.25 7.75l2.15 -2.15" /> <path d="M18 12l3 0" /> <path d="M16.25 16.25l2.15 2.15" /> <path d="M12 18l0 3" /> <path d="M7.75 16.25l-2.15 2.15" /> <path d="M6 12l-3 0" /> <path d="M7.75 7.75l-2.15 -2.15" /></symbol><symbol id="i-menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-percentage" viewBox="0 0 24 24"><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M6 18l12 -12" /></symbol><symbol id="i-point" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-signature" viewBox="0 0 24 24"><path d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2" /></symbol><symbol id="i-spray" viewBox="0 0 24 24"><path d="M4 10m0 2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2z" /> <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" /> <path d="M15 7h.01" /> <path d="M18 9h.01" /> <path d="M18 5h.01" /> <path d="M21 3h.01" /> <path d="M21 7h.01" /> <path d="M21 11h.01" /> <path d="M10 7h1" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></symbol><symbol id="i-users-group" viewBox="0 0 24 24"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /> <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M17 10h2a2 2 0 0 1 2 2v1" /> <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z" /> <path d="M15 9h.01" /></symbol><symbol id="i-file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 17h6" /> <path d="M9 13h6" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-device-floppy" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-robot" viewBox="0 0 24 24"><path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /> <path d="M12 2v2" /> <path d="M9 12v9" /> <path d="M15 12v9" /> <path d="M5 16l4 -2" /> <path d="M15 14l4 2" /> <path d="M9 18h6" /> <path d="M10 8v.01" /> <path d="M14 8v.01" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /> <path d="M9 12h12l-3 -3" /> <path d="M18 15l3 -3" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" /> <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="i-checks" viewBox="0 0 24 24"><path d="M7 12l5 5l10 -10" /> <path d="M2 12l5 5m5 -5l5 -5" /></symbol><symbol id="i-layout-list" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-qrcode" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 17l0 .01" /> <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 7l0 .01" /> <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M17 7l0 .01" /> <path d="M14 14l3 0" /> <path d="M20 14l0 .01" /> <path d="M14 14l0 3" /> <path d="M14 20l3 0" /> <path d="M17 17l3 0" /> <path d="M20 17l0 3" /></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></symbol><symbol id="i-arrows-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3l-3 3" /> <path d="M18 20l3 -3l-3 -3" /> <path d="M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5" /> <path d="M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3" /></symbol><symbol id="i-report-analytics" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /> <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /> <path d="M16 5l3 3" /></symbol><symbol id="i-lock-open" viewBox="0 0 24 24"><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M8 11v-5a4 4 0 0 1 8 0" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6 -6" /> <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /> <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 9l5 -5l5 5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-alarm" viewBox="0 0 24 24"><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M12 10l0 3l2 0" /> <path d="M7 4l-2.75 2" /> <path d="M17 4l2.75 2" /></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" /> <path d="M17 8l4 4l-4 4" /> <path d="M3 12l18 0" /></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /> <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /> <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /></symbol><symbol id="i-bath" viewBox="0 0 24 24"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" /> <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" /> <path d="M4 21l1 -1.5" /> <path d="M20 21l-1 -1.5" /></symbol><symbol id="i-bell-ringing" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /> <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /> <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6l0 13" /> <path d="M12 6l0 13" /> <path d="M21 6l0 13" /></symbol><symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 5h4v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2z" /> <path d="M14 3.5c0 1.626 .507 3.212 1.45 4.537l.05 .07a8.093 8.093 0 0 1 1.5 4.694v6.199a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-6.2c0 -1.682 .524 -3.322 1.5 -4.693l.05 -.07a7.823 7.823 0 0 0 1.45 -4.537" /> <path d="M7 14.803a2.4 2.4 0 0 0 1 -.803a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.805" /></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-building-bank" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 10l18 0" /> <path d="M5 6l7 -3l7 3" /> <path d="M4 10l0 11" /> <path d="M20 10l0 11" /> <path d="M8 14l0 3" /> <path d="M12 14l0 3" /> <path d="M16 14l0 3" /></symbol><symbol id="i-building-factory-2" viewBox="0 0 24 24"><path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-building-store" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /> <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /> <path d="M9.7 17l4.6 0" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M11 15h1" /> <path d="M12 15v3" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /> <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-candy" viewBox="0 0 24 24"><path d="M7.05 11.293l4.243 -4.243a2 2 0 0 1 2.828 0l2.829 2.83a2 2 0 0 1 0 2.828l-4.243 4.243a2 2 0 0 1 -2.828 0l-2.829 -2.831a2 2 0 0 1 0 -2.828z" /> <path d="M16.243 9.172l3.086 -.772a1.5 1.5 0 0 0 .697 -2.516l-2.216 -2.217a1.5 1.5 0 0 0 -2.44 .47l-1.248 2.913" /> <path d="M9.172 16.243l-.772 3.086a1.5 1.5 0 0 1 -2.516 .697l-2.217 -2.216a1.5 1.5 0 0 1 .47 -2.44l2.913 -1.248" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></symbol><symbol id="i-chart-bar" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M4 20h14" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></symbol><symbol id="i-confetti" viewBox="0 0 24 24"><path d="M4 5h2" /> <path d="M5 4v2" /> <path d="M11.5 4l-.5 2" /> <path d="M18 5h2" /> <path d="M19 4v2" /> <path d="M15 9l-1 1" /> <path d="M18 13l2 -.5" /> <path d="M18 19h2" /> <path d="M19 18v2" /> <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /> <path d="M3 10l18 0" /> <path d="M7 15l.01 0" /> <path d="M11 15l2 0" /></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" /></symbol><symbol id="i-device-laptop" viewBox="0 0 24 24"><path d="M3 19l18 0" /> <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></symbol><symbol id="i-device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14z" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /> <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6.5 17h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="i-microphone" viewBox="0 0 24 24"><path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z" /> <path d="M5 10a7 7 0 0 0 14 0" /> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /></symbol><symbol id="i-numbers" viewBox="0 0 24 24"><path d="M8 10v-7l-2 2" /> <path d="M6 16a2 2 0 1 1 4 0c0 .591 -.601 1.46 -1 2l-3 3h4" /> <path d="M15 14a2 2 0 1 0 2 -2a2 2 0 1 0 -2 -2" /> <path d="M6.5 10h3" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /> <path d="M13.5 6.5l4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-player-stop" viewBox="0 0 24 24"><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-player-track-next" viewBox="0 0 24 24"><path d="M3 5v14l8 -7z" /> <path d="M14 5v14l8 -7z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9.785 6l8.215 8.215l-2.054 2.054a5.81 5.81 0 1 1 -8.215 -8.215l2.054 -2.054z" /> <path d="M4 20l3.5 -3.5" /> <path d="M15 4l-3.5 3.5" /> <path d="M20 9l-3.5 3.5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol><symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17h-11v-14h-2" /> <path d="M6 5l14 1l-1 7h-13" /></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></symbol><symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" /> <path d="M14.5 10.5l-2.5 2.5" /> <path d="M17 8l1 -1" /> <path d="M14 3h-4" /></symbol><symbol id="i-tool" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></symbol><symbol id="i-tools-kitchen-2" viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1" /> <path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3" /> <path d="M3 13l4 0" /> <path d="M17 13l4 0" /> <path d="M12 20l0 -6" /> <path d="M4 19l3.35 -2" /> <path d="M20 19l-3.35 -2" /> <path d="M4 7l3.75 2.4" /> <path d="M20 7l-3.75 2.4" /></symbol><symbol id="i-photo" viewBox="0 0 24 24"><path d="M15 8h.01" /> <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /> <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /> <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></symbol><symbol id="i-help-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 16v.01" /> <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></symbol><symbol id="i-player-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z" /></symbol></svg>
 <div id="idleWarn" class="idle-warn" role="alert"><div class="iw-tx"><b>Máy dùng chung</b> — sẽ tự đăng xuất sau <span class="iw-s">60</span> giây vì không thao tác.</div><button class="btn btn-pri btn-sm" onclick="idleTouch(true)">Tiếp tục dùng</button></div>
 <div id="app" style="display:none">
   <nav id="sideNav" class="no-print" aria-label="Menu chính"></nav><div id="sideScrim" onclick="closeSide()"></div><nav id="bottomNav" class="no-print" aria-label="Menu nhanh"></nav>
@@ -1136,6 +1213,7 @@ details.fold[open]>summary{border-radius:12px 12px 0 0;border-bottom:1px solid v
     </div>
     <div class="spacer"></div>
     <div id="fbStatusHdr"></div>
+    <button class="hdr-search" id="hdrSearch" onclick="openQS()" title="Tìm nhanh (Ctrl K)" aria-label="Tìm nhanh"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span>Tìm nhanh…</span><kbd>Ctrl K</kbd></button>
     <button class="notif-bell" id="notifBell" onclick="toggleNotif()" title="Thông báo">🔔<span class="cnt" id="notifCnt" style="display:none">0</span></button>
     <div class="user-pill" onclick="if(innerWidth<=900)openSide()" style="cursor:pointer"><div class="av" id="uAv">A</div><span class="uname" id="uName">Admin</span></div>
     <button class="btn-logout" style="color:var(--pri)" onclick="openMyPwd()" title="Đổi mật khẩu của tôi">🔑</button>
@@ -1291,6 +1369,8 @@ details.fold[open]>summary{border-radius:12px 12px 0 0;border-bottom:1px solid v
       </div>
 
       <div id="cfgSystem">
+      <div class="settings-card" id="cfgOrg"><h4 style="margin:0 0 8px">🏢 Thông tin công ty (in trên biên bản, hoá đơn, báo cáo)</h4><div id="orgBox"></div></div>
+      <div class="settings-card" id="cfgErr"><h4 style="margin:0 0 8px">🔧 Lỗi ứng dụng gần đây</h4><div id="errBox"></div></div>
       <div class="settings-card" id="cfgDrive"><h4 style="margin:0 0 8px">📁 Lưu ảnh lên Google Drive (Apps Script)</h4><div id="drvBox"></div></div>
       <div class="fb-config-panel">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
@@ -4474,7 +4554,7 @@ function goSub(pg,sub){
       if(hasPerm('users'))renderAccounts();
     }
     if(sub==='criteria')renderCriteria();
-    if(sub==='system'){try{renderStorageInfo()}catch(e){}}
+    if(sub==='system'){try{renderStorageInfo()}catch(e){}try{renderErrBox()}catch(e){}try{renderOrgBox()}catch(e){}}
     if(sub==='log')renderLog();
   }
 }
@@ -4490,11 +4570,11 @@ function renderWsHead(){
   document.getElementById('wsIcon').textContent=u?(BIZ_EMOJI[u.biz]||'📦'):'🏭';
   document.getElementById('wsMeta').innerHTML=u?`${(BIZ_TYPES[u.biz]||BIZ_TYPES.other).label} · ${esc(u.manager||'—')}`:'Chưa có đơn vị';
 }
-function wsUnitChange(){
+async function wsUnitChange(){
   const sel=document.getElementById('wsUnitSel'),nu=sel.value,sess=S.activeEvalSession;
   if(sess&&sess.unitId!==nu){
     const draft=S.evals.filter(e=>e.sessionId===sess.sessionId&&!e.committed);
-    if(draft.length&&!confirm(`Đang chấm dở ${draft.length} tiêu chí chưa lưu. Chuyển đơn vị sẽ BỎ các kết quả này. Tiếp tục?`)){sel.value=S.curUnit;return}
+    if(draft.length&&!(await askYes(`Đang chấm dở ${draft.length} tiêu chí chưa lưu. Chuyển đơn vị sẽ BỎ các kết quả này. Tiếp tục?`))){sel.value=S.curUnit;return}
     S.evals=S.evals.filter(e=>!(e.sessionId===sess.sessionId&&!e.committed));
     S.activeEvalSession=null;saveEvalSession();
   }
@@ -4979,12 +5059,12 @@ function reviewChk(decision){
   persist();closeM('chkModal');S._chk=null;renderChecks();
   toast((decision==='approve'?`✅ Phòng ${rec.room} sẵn sàng`:`↩️ Phòng ${rec.room}: yêu cầu làm lại`)+` — kiểm tra mất ${fmtDur(msBetween(l.is,now))}`);
 }
-function setRoomStatus(st){
+async function setRoomStatus(st){
   const c=S._chk;if(!c)return;
   if(st==='ready'&&!hasPerm('check_review')){toast('🔒 Chỉ giám sát được đặt "Sẵn sàng" không qua kiểm tra');return}
   if(!hasPerm('check_do')&&!hasPerm('check_review'))return;
   const open=S.checks.find(x=>x.unitId===c.unitId&&x.room===c.room&&chkLive(x));
-  if(open&&!confirm(`Phòng ${c.room} đang có phiếu "${CHK_STATUS[open.status].lbl}". Đổi tình trạng sẽ ĐÓNG phiếu này. Tiếp tục?`))return;
+  if(open&&!(await askYes(`Phòng ${c.room} đang có phiếu "${CHK_STATUS[open.status].lbl}". Đổi tình trạng sẽ ĐÓNG phiếu này. Tiếp tục?`)))return;
   const go=note=>{
     const now=nowISO();const id='rs_'+c.unitId+'_'+c.room;
     if(open){open.status='closed';open.closedAt=now;open.closedBy=S.user.name;open.closedTo=st;open.updatedAt=now;delete S._drafts[open.id]}
@@ -5420,11 +5500,11 @@ function chkUseView(rec){
   return `<div style="margin-top:10px;font-size:14px;line-height:1.7">${use?`<div><b>Khách dùng:</b> ${use}${rec.useAmt?` · <b>Tiền minibar ${fmtMoney(rec.useAmt)}</b>`:''}</div>`:''}
     ${rm?`<div style="color:#92400e"><b>Thay ra do hết hạn (huỷ):</b> ${rm}</div>`:''}${fill?`<div><b>Đã bổ sung (trừ kho):</b> ${fill}</div>`:''}${short?`<div style="color:var(--err-d)"><b>Còn thiếu, chưa bổ sung:</b> ${short}</div>`:''}</div>`;
 }
-function invFillRoom(uid,room){
+async function invFillRoom(uid,room){
   if(!hasPerm('inv_edit')&&!hasPerm('check_do')){toast('🔒 Bạn không có quyền');return}
   const list=roomShort(uid,room);if(!list.length)return;
   const b=invBalance(uid),lack=list.filter(x=>(b[x.i.id]||0)<x.miss);
-  if(lack.length&&!confirm(`Kho không đủ: ${lack.map(x=>x.i.name+' (tồn '+(b[x.i.id]||0)+')').join(', ')}. Vẫn ghi đã bổ sung đủ?`))return;
+  if(lack.length&&!(await askYes(`Kho không đủ: ${lack.map(x=>x.i.name+' (tồn '+(b[x.i.id]||0)+')').join(', ')}. Vẫn ghi đã bổ sung đủ?`)))return;
   const now=nowISO();const r=roomLevelRec(uid,room);const lv={...(r&&r.lv||{})},ex={...(r&&r.ex||{})};
   list.forEach(({i,miss})=>{const lot=i.exp?defaultLot(uid,i.id):'';
     S.inv.push({id:'im_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),unitId:uid,itemId:i.id,type:'out',qty:miss,date:localToday(),note:'Bù thiếu P.'+room,by:S.user.name,at:now,...(lot?{lot}:{})});
@@ -5441,10 +5521,10 @@ function invShortHtml(uid){
     <div class="tbl-wrap"><table><thead><tr><th>Phòng</th><th>Vật tư</th></tr></thead><tbody>${re.map(x=>`<tr><td><b>${esc(x.room)}</b></td><td>${x.list.map(s=>esc(s.i.name)+' '+expBadge(uid,s.exp)).join(' &nbsp; ')}</td></tr>`).join('')}</tbody></table></div>
     <div style="font-size:12.5px;color:var(--muted);margin-top:6px">Thay ở lần dọn tiếp theo: trong phiếu phòng bấm "Thay N món hết hạn".</div></div>`:'');
 }
-function invQuickTpl(uid){
+async function invQuickTpl(uid){
   if(!hasPerm('inv_edit')&&!hasPerm('criteria')){toast('🔒 Bạn không có quyền cài danh mục');return}
   const u=S.units.find(x=>x.id===uid);if(!u)return;
-  if(invItems(uid).length&&!confirm('Khách sạn đã có danh mục. Thêm vật tư mẫu vào cuối danh mục?'))return;
+  if(invItems(uid).length&&!(await askYes('Khách sạn đã có danh mục. Thêm vật tư mẫu vào cuối danh mục?')))return;
   const add=INV_TPL.map(t=>({id:'iv_'+Math.random().toString(36).slice(2,9),name:t[0],grp:t[1],uom:t[2],par:t[3],price:t[4],min:t[5],...(t[6]?{exp:true}:{})}));
   u.inv={...(u.inv||{}),items:invItems(uid).concat(add)};persist();
   if(S._chk)renderChkModal();
@@ -5594,11 +5674,11 @@ const GRP_SHOW=6;S._grpMore=false;
 function invGrpSync(){const ed=document.getElementById('invGrpEd'),b=document.getElementById('grpMoreBtn');if(!ed)return;const n=ed.querySelectorAll('.grp-row').length,many=n>GRP_SHOW;ed.classList.toggle('grp-less',many&&!S._grpMore);if(b){b.style.display=many?'':'none';b.textContent=S._grpMore?'Thu gọn ▴':`Xem thêm ${n-GRP_SHOW} nhóm ▾`}}
 function invGrpMore(){S._grpMore=!S._grpMore;invGrpSync()}
 function invAddGrp(){S._grpMore=true;const used=invGrpList().map(g=>g.c);const c=GRP_COLORS.find(x=>!used.includes(x))||GRP_COLORS[0];document.getElementById('invGrpEd').insertAdjacentHTML('beforeend',invGrpRow({c},''));invRefreshGrpSel();invGrpSync();const ins=document.querySelectorAll('#invGrpEd .g-name');ins[ins.length-1].focus()}
-function invDelGrp(btn){
+async function invDelGrp(btn){
   const row=btn.closest('.grp-row'),id=row.dataset.id;
   if(document.querySelectorAll('#invGrpEd .grp-row').length<=1){toast('⚠️ Cần ít nhất 1 nhóm');return}
   const n=[...document.querySelectorAll('#invCatBody .ic-grp')].filter(s=>s.value===id).length;
-  if(n&&!confirm(`Có ${n} vật tư đang thuộc nhóm này — sẽ chuyển sang nhóm đầu tiên còn lại. Xoá nhóm?`))return;
+  if(n&&!(await askYes(`Có ${n} vật tư đang thuộc nhóm này — sẽ chuyển sang nhóm đầu tiên còn lại. Xoá nhóm?`)))return;
   row.remove();invRefreshGrpSel();invGrpSync();
 }
 function invCatRow(i,ro,gs){
@@ -5677,7 +5757,7 @@ function invMoveHint(){
   const after=type==='in'?cur+q:type==='out'?cur-q:q;
   el.innerHTML=`Tồn hiện tại${scope}: <b>${cur}</b> → sau khi lưu: <b style="color:${after<0?'var(--err)':'var(--ok-d)'}">${after}</b>${type==='adjust'?` (chênh lệch ${q-cur>=0?'+':''}${q-cur})`:''}${extra}`;
 }
-function saveInvMove(more){
+async function saveInvMove(more){
   if(!hasPerm('inv_edit')){toast('🔒 Bạn không có quyền nhập / xuất kho');return}
   const uid=curUnitId(),u=S.units.find(x=>x.id===uid),type=document.getElementById('imType').value,itemId=document.getElementById('imItem').value;
   const it=invItems(uid).find(i=>i.id===itemId)||{};
@@ -5691,14 +5771,14 @@ function saveInvMove(more){
     const exp=expEl.value,lotNo=document.getElementById('imLotNo').value.trim();
     if(!exp){toast('⚠️ Nhập hạn sử dụng');expEl.focus();return}
     if(!it.exp){it.exp=true;toast('Đã bật theo dõi HSD cho '+it.name)}
-    if(exp<localToday()&&!confirm('Hạn sử dụng đã qua. Vẫn nhập kho?'))return;
+    if(exp<localToday()&&!(await askYes('Hạn sử dụng đã qua. Vẫn nhập kho?')))return;
     const lid=lotId(itemId,exp,lotNo);rec.lot=lid;
     u.inv.lots=u.inv.lots||[];const m=u.inv.lots.find(l=>l.id===lid);if(m)delete m.done;else u.inv.lots.push({id:lid,itemId,exp,...(lotNo?{lotNo}:{})});
   }else if(type!=='in'){
     const lotSel=document.getElementById('imLot');const lot=lotSel?lotSel.value:'';
     const cur=invMoveCur(uid,type,itemId);
     if(type==='adjust'){rec.qty=q-cur;if(rec.qty===0){toast('Số thực tế khớp tồn — không cần điều chỉnh');closeM('invModal');return}}
-    if(type==='out'&&q>cur&&!confirm(`Xuất ${q} vượt tồn hiện tại (${cur}). Vẫn lưu?`))return;
+    if(type==='out'&&q>cur&&!(await askYes(`Xuất ${q} vượt tồn hiện tại (${cur}). Vẫn lưu?`)))return;
     if(lot&&lot!=='__nolot')rec.lot=lot;
     if(lot==='__nolot'&&type==='adjust'&&rec.qty>0){}           // tăng hàng không rõ lô
   }
@@ -5960,8 +6040,8 @@ function rtRefreshPh(){const ts=rtList();document.querySelectorAll('#rtRooms tr'
 function rtTypeChanged(sel,ts){ts=ts||rtList();const t=ts.find(x=>x.id===sel.value);const p=sel.closest('tr').querySelector('.rt-price');p.placeholder=t&&t.price?t.price.toLocaleString('vi-VN'):'–'}
 function rtAddRow(){document.getElementById('rtBody').insertAdjacentHTML('beforeend',rtRow(null,''));const ins=document.querySelectorAll('#rtBody .rt-name');ins[ins.length-1].focus()}
 function rtUseTpl(){const b=document.getElementById('rtTplBtn');if(b)b.style.display='none';document.getElementById('rtBody').insertAdjacentHTML('beforeend',RT_TPL.map(t=>rtRow({name:t[0],code:t[1],price:t[2]},'')).join(''));rtRefreshSel();toast('Đã thêm loại phòng mẫu — chỉnh giá rồi bấm Lưu')}
-function rtDelRow(btn){const id=btn.closest('tr').dataset.id;const n=[...document.querySelectorAll('#rtRooms .rt-type')].filter(s=>s.value===id).length;
-  if(n&&!confirm(`Có ${n} phòng đang thuộc loại này — các phòng đó sẽ về "Chưa chọn". Xoá loại phòng?`))return;btn.closest('tr').remove();rtRefreshSel()}
+async function rtDelRow(btn){const id=btn.closest('tr').dataset.id;const n=[...document.querySelectorAll('#rtRooms .rt-type')].filter(s=>s.value===id).length;
+  if(n&&!(await askYes(`Có ${n} phòng đang thuộc loại này — các phòng đó sẽ về "Chưa chọn". Xoá loại phòng?`)))return;btn.closest('tr').remove();rtRefreshSel()}
 function rtBulk(){
   const rooms=new Set(parseRooms(document.getElementById('rtBulkRooms').value)),t=document.getElementById('rtBulkType').value;
   if(!rooms.size){toast('⚠️ Nhập số phòng, VD: 101-110');return}
@@ -6215,13 +6295,13 @@ function bkHint(){
   el.innerHTML=`${Math.max(1,n)} đêm × ${fmtMoney(f.rate)} = <b>${fmtMoney(Math.max(1,n)*f.rate)}</b>`+(cf?`<div style="color:var(--err-d);margin-top:4px">⚠️ Trùng với đặt phòng của ${esc(cf.guest||'khách')} (${fmtDT(cf.arr)} → ${fmtDT(cf.dep)})</div>`:'')
     +(roomState(uid,f.room).st==='ooo'?'<div style="color:var(--err-d);margin-top:4px">⚠️ Phòng đang bảo trì / không bán</div>':'');
 }
-function saveBk(){
+async function saveBk(){
   if(!hasPerm('fo'))return;
   const uid=foUid(),f=bkForm(),g=id=>document.getElementById(id);
   const guest=g('bkGuest').value.trim(),phone=g('bkPhone').value.replace(/\D/g,'').slice(-4);
   if(!guest){toast('⚠️ Nhập tên khách');g('bkGuest').focus();return}
   if(!dPart(f.arr)||!dPart(f.dep)||f.dep<=f.arr){toast('⚠️ Kiểm tra ngày giờ đến / đi');return}
-  if(!f.rate&&!confirm('Giá phòng = 0đ. Vẫn lưu?'))return;
+  if(!f.rate&&!(await askYes('Giá phòng = 0đ. Vẫn lưu?')))return;
   const cf=bkConflict(uid,f.room,f.arr,f.dep,f.id);if(cf){toast(`⚠️ Phòng ${f.room} đã có khách ${cf.guest||''} trong khoảng này`);return}
   const now=nowISO();
   const base={room:f.room,rate:f.rate,arr:f.arr,dep:f.dep,month:dPart(f.arr).slice(0,7),guest,phone4:phone,pax:Math.max(1,parseInt(g('bkPax').value)||1),src:g('bkSrc').value,note:g('bkNote').value.trim()};
@@ -6490,7 +6570,9 @@ function renderSide(){
     ${setItems.length?`<div class="sn-sec">QUẢN TRỊ</div>${setItems.map(it).join('')}`:''}
     <div class="sn-foot"><div class="sn-me"><span class="sn-av">${esc((S.user.code||S.user.name||'?').charAt(0).toUpperCase())}</span><span><b>${esc(S.user.name||'')}</b><small>${esc((ROLES[S.user.role]||{label:''}).label.replace(/^\S+\s/,''))}</small></span></div>
       <label class="sn-shared" title="Tự đăng xuất sau 15 phút không thao tác — dùng cho iPad/máy tính chung"><input type="checkbox" ${isShared()?'checked':''} onchange="setShared(this.checked)"><span>Máy dùng chung <small>tự thoát sau 15'</small></span></label>
-      <div class="sn-acts">${hasPerm('ai')?`<button onclick="closeSide();openAIModal()">${IC('ti-robot')}<span>Trợ lý AI</span></button>`:''}<button onclick="closeSide();openMyPwd()">${IC('ti-lock')}<span>Đổi mật khẩu</span></button><button class="out" onclick="closeSide();logout()">${IC('ti-logout')}<span>Đăng xuất</span></button></div></div>`;
+      <div class="sn-acts">${hasPerm('ai')?`<button onclick="closeSide();openAIModal()">${IC('ti-robot')}<span>Trợ lý AI</span></button>`:''}<button onclick="closeSide();openMyPwd()">${IC('ti-lock')}<span>Đổi mật khẩu</span></button><button class="out" onclick="closeSide();logout()">${IC('ti-logout')}<span>Đăng xuất</span></button></div>
+      <div class="sn-fs" role="group" aria-label="Cỡ chữ"><span>Cỡ chữ</span>${FS_LV.map(([k,l],i)=>`<button class="${fsGet()===k?'on':''}" onclick="fsSet('${k}')" title="${l}" style="font-size:${11+i*2}px">A</button>`).join('')}</div>
+      <div class="sn-ver">Phiên bản ${APP_BUILD}</div></div>`;
   if(bn){
     const pri=['fo','checks','evg','inv','overview','units','criteria','system','log'];
     const pick=[items.find(i=>i.k==='today')].filter(Boolean);
@@ -6643,6 +6725,8 @@ function todaySysHtml(){
   try{if(hasPerm('fo_rev')||hasPerm('fo')){const ru=new Set(us.map(u=>roomUnit(u.id)));const debt=S.bookings.filter(b=>b.status==='out'&&ru.has(b.unitId)&&bkInvoice(b).due>0);
     if(debt.length){const sum=debt.reduce((a,b)=>a+bkInvoice(b).due,0);k('err','ti-cash','Khách còn nợ',fmtMoney(sum),`${debt.length} lượt đã trả phòng`,`S._foView='hist';bhState().st='debt';openUnit('${debt[0].unitId}','fo')`);
       row('err','ti-cash',`${debt.length} lượt khách đã trả phòng còn nợ ${fmtMoney(sum)}`,debt.slice(0,6).map(b=>'P.'+esc(b.room)).join(', '),'Xem',`S._foView='hist';bhState().st='debt';openUnit('${debt[0].unitId}','fo')`)}}}catch(e){}
+  /* lỗi ứng dụng (chỉ quản trị viên) */
+  if(S.user.isAdmin){if(S._errRows===null){errLoad()}else{const e7=errRecent7();if(e7.length){const g=errGroups(e7);row('warn','ti-bug',`App ghi nhận ${e7.length} lỗi trong 7 ngày (${g.length} loại)`,esc(g[0].msg.slice(0,90)),'Xem',"goTab('setup','system');setTimeout(()=>{const d=document.getElementById('errBox');if(d){const f=d.closest('details');if(f)f.open=true;d.scrollIntoView({block:'start'})}},200)")}}}
   return `<div class="td-sec"><h3>${IC('ti-chart-pie')} Toàn hệ thống <span class="td-sub">${us.length} đơn vị</span></h3></div>
     <div class="td-kpis">${K.join('')}</div>${R.length?`<div class="td-list td-sys">${R.join('')}</div>`:'<div class="td-list"><div class="td-empty">'+IC('ti-circle-check')+'Toàn hệ thống không có việc tồn.</div></div>'}`;
 }
@@ -6730,7 +6814,7 @@ function applyFlt(tab){
    dgData/log/<YYYY-MM>/<mã> = {t, by, uid, role, col, rid, u, op, lbl, ch:[{f,o,n}]}
 =========================================================== */
 const LOG_COL_LBL={hkasg:'Phân công buồng phòng',units:'Đơn vị',users:'Tài khoản',plans:'Lịch đánh giá',criteria:'Tiêu chí',evals:'Chấm điểm',feedback:'Khắc phục / ý kiến',checks:'Kiểm tra phòng',bookings:'Lễ tân',inv:'Kho',rstate:'Tình trạng phòng',rlevel:'Minibar phòng',log:'Nhật ký'};
-const LOG_F={closed:'Đã chốt hoá đơn',extras:'Dịch vụ thêm',disc:'Giảm giá',src:'Nguồn đặt',result:'Kết quả',score:'Điểm',notes:'Ghi chú',status:'Trạng thái',st:'Tình trạng',name:'Tên',code:'Mã',rate:'Giá',arr:'Giờ đến',dep:'Giờ đi',ain:'Nhận phòng thực tế',aout:'Trả phòng thực tế',guest:'Khách',phone4:'SĐT',pax:'Số khách',qty:'Số lượng',type:'Loại',password:'Mật khẩu',role:'Vai trò',perms:'Quyền',unitIds:'Phạm vi',content:'Nội dung',dueDate:'Hạn KP',maxScore:'Điểm tối đa',desc:'Mô tả',method:'Phương pháp',group:'Nhóm',date:'Ngày',note:'Ghi chú',pays:'Thanh toán',room:'Phòng',active:'Hoạt động',fullName:'Họ tên',manager:'Phụ trách',checklist:'Cấu hình phòng / checklist',inv:'Danh mục kho',drive:'Lưu ảnh Drive',fo:'Cài đặt lễ tân',roomLink:'Liên kết phòng',committed:'Đã lưu',lv:'Mức minibar',price:'Giá',lot:'Lô',sur:'Phụ thu',reviews:'Duyệt',rounds:'Lượt dọn',round:'Lượt',use:'Khách dùng',fill:'Bổ sung'};
+const LOG_F={org:'Thông tin công ty',closed:'Đã chốt hoá đơn',extras:'Dịch vụ thêm',disc:'Giảm giá',src:'Nguồn đặt',result:'Kết quả',score:'Điểm',notes:'Ghi chú',status:'Trạng thái',st:'Tình trạng',name:'Tên',code:'Mã',rate:'Giá',arr:'Giờ đến',dep:'Giờ đi',ain:'Nhận phòng thực tế',aout:'Trả phòng thực tế',guest:'Khách',phone4:'SĐT',pax:'Số khách',qty:'Số lượng',type:'Loại',password:'Mật khẩu',role:'Vai trò',perms:'Quyền',unitIds:'Phạm vi',content:'Nội dung',dueDate:'Hạn KP',maxScore:'Điểm tối đa',desc:'Mô tả',method:'Phương pháp',group:'Nhóm',date:'Ngày',note:'Ghi chú',pays:'Thanh toán',room:'Phòng',active:'Hoạt động',fullName:'Họ tên',manager:'Phụ trách',checklist:'Cấu hình phòng / checklist',inv:'Danh mục kho',drive:'Lưu ảnh Drive',fo:'Cài đặt lễ tân',roomLink:'Liên kết phòng',committed:'Đã lưu',lv:'Mức minibar',price:'Giá',lot:'Lô',sur:'Phụ thu',reviews:'Duyệt',rounds:'Lượt dọn',round:'Lượt',use:'Khách dùng',fill:'Bổ sung'};
 const LOG_SECRET=/^(password|pass|token|key|apiKey)$/i;
 const LOG_SKIP=new Set(['updatedAt','updatedBy','at','by','byId','writer','v','closedAt']);
 S._srvSnap={};
@@ -6749,6 +6833,7 @@ function logDiff(o,n){
     if(LOG_SKIP.has(f))return;const a=o[f],b=n[f];
     if(JSON.stringify(a===undefined?null:a)===JSON.stringify(b===undefined?null:b))return;
     if(LOG_SECRET.test(f)){ch.push({f,o:'•••',n:'•••'});return}
+    if(f==='org'){ch.push({f,o:a&&a.name?a.name:'(trống)',n:(b&&b.name?b.name:'(trống)')+((a&&a.logo)!==(b&&b.logo)?' · đổi logo':'')});return}
     if(f==='drive'&&b&&typeof b==='object'){ch.push({f,o:a&&a.on?'Bật':'Tắt',n:b.on?'Bật':'Tắt'});return}
     ch.push({f,o:logShort(a),n:logShort(b)});
   });
@@ -6888,7 +6973,7 @@ function logAutoPrune(){
     S.fbDb.ref('dgData/log').update(upd).catch(()=>{});
   }catch(e){}
 }
-setInterval(logAutoPrune,60000);
+setInterval(()=>logAutoPrune(),60000);
 /* ===========================================================
    MÁY DÙNG CHUNG — tự đăng xuất sau 15 phút không thao tác
 =========================================================== */
@@ -7651,6 +7736,418 @@ function emoScan(root){
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
+/* ===========================================================
+   GHI LỖI ỨNG DỤNG về máy chủ (dgData/err/<YYYY-MM>/<mã>)
+   - Tự bắt lỗi JavaScript trên máy nhân viên → quản trị viên xem ở Hệ thống → "Lỗi ứng dụng gần đây"
+   - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
+   - Mất mạng: giữ tạm trên máy, có mạng gửi sau
+=========================================================== */
+const APP_BUILD='28.10.2026-e7a943';
+S._errSeen=new Set();S._errN=0;
+function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
+  const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
+function errScreen(){try{const t=S._curTab||'';return t==='unit'||t==='setup'?t+'/'+(S._sub[t]||''):t}catch(e){return ''}}
+function errReport(msg,stack,src){
+  try{
+    msg=String(msg||'Lỗi không rõ').slice(0,300);if(/^Script error\.?$/.test(msg)||/ResizeObserver loop/.test(msg))return;
+    const key=msg+'|'+(src||'');if(S._errSeen.has(key)||S._errN>=20)return;S._errSeen.add(key);S._errN++;
+    const t=nowMs(),d=new Date(t),mon=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const rec={t,msg,src:String(src||'').slice(0,160),stack:String(stack||'').replace(/file:\/\/[^\s)]+|https?:\/\/[^\s)]+/g,'').slice(0,700),
+      by:S.user?(S.user.name||''):'(chưa đăng nhập)',uid:S.user?S.user.id:'',role:S.user?S.user.role:'',dev:errDevice(),scr:errScreen(),ver:APP_BUILD,on:navigator.onLine};
+    const id=`${t.toString(36)}_${(typeof CLIENT_ID!=='undefined'?CLIENT_ID:'x').slice(-4)}`;
+    const q=LS.get('dg2_errq',[]);q.push({mon,id,rec});LS.set('dg2_errq',q.slice(-30));errFlush();
+  }catch(e){}
+}
+function errFlush(){
+  try{if(!S.fbDb||!S.fbConnected)return;const q=LS.get('dg2_errq',[]);if(!q.length)return;LS.set('dg2_errq',[]);
+    const u={};q.forEach(x=>u[`err/${x.mon}/${x.id}`]=x.rec);S.fbDb.ref('dgData').update(u).catch(()=>{const r=LS.get('dg2_errq',[]);LS.set('dg2_errq',q.concat(r).slice(-30))})}catch(e){}
+}
+addEventListener('error',e=>{if(e&&e.target&&e.target!==window&&e.target.tagName)return;errReport(e.message,e.error&&e.error.stack,(e.filename||'').split('/').pop()+':'+e.lineno+':'+e.colno)});
+addEventListener('unhandledrejection',e=>{const r=e.reason||{};if(r&&r.code==='PERMISSION_DENIED')return errReport('Máy chủ từ chối quyền: '+(r.message||''),r.stack,'firebase');errReport('Lỗi xử lý ngầm: '+(r.message||r),r.stack,'promise')});
+setInterval(errFlush,30000);addEventListener('online',()=>setTimeout(errFlush,3000));
+
+/* ---------- Xem lỗi (Hệ thống → Lỗi ứng dụng gần đây) ---------- */
+S._errRows=null;
+function errLoad(){
+  if(!S.fbDb){S._errRows=[];renderErrBox();return}
+  const d=new Date(nowMs()),cur=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`,prv=prevMonthOf(cur);
+  Promise.all([cur,prv].map(m=>S.fbDb.ref('dgData/err/'+m).orderByKey().limitToLast(300).once('value').then(s=>{const v=s.val()||{};return Object.keys(v).map(k=>({k,m,...v[k]}))}).catch(()=>[])))
+    .then(a=>{S._errRows=a.flat().sort((x,y)=>y.t-x.t);renderErrBox();try{if(S._curTab==='today')renderToday()}catch(e){}});
+}
+function errGroups(rows){const g={};(rows||[]).forEach(r=>{const k=r.msg+'|'+(r.src||'');const x=g[k]||(g[k]={msg:r.msg,src:r.src,n:0,last:0,users:new Set(),devs:new Set(),scr:new Set(),ver:new Set(),stack:r.stack,keys:[]});x.n++;x.last=Math.max(x.last,r.t);if(r.by)x.users.add(r.by);if(r.dev)x.devs.add(r.dev.split(' · ').slice(0,2).join(' · '));if(r.scr)x.scr.add(r.scr);if(r.ver)x.ver.add(r.ver);x.keys.push(r.m+'/'+r.k)});return Object.values(g).sort((a,b)=>b.last-a.last)}
+function errRecent7(){const c=nowMs()-7*864e5;return (S._errRows||[]).filter(r=>r.t>=c)}
+function renderErrBox(){
+  const box=document.getElementById('errBox');if(!box)return;
+  if(S._errRows===null){box.innerHTML='<div class="err-empty">Đang tải…</div>';errLoad();return}
+  const G=errGroups(S._errRows),n7=errRecent7().length,adm=S.user&&S.user.isAdmin;
+  const sm=box.closest('details')&&box.closest('details').querySelector('summary');if(sm)sm.dataset.badge=n7?n7+' lỗi / 7 ngày':'';
+  box.innerHTML=`<div class="err-hd"><span>${S._errRows.length?`<b>${S._errRows.length}</b> lượt lỗi · <b>${G.length}</b> loại · 2 tháng gần nhất`:''}</span><span style="flex:1"></span>
+    <button class="btn btn-ghost btn-sm" onclick="S._errRows=null;renderErrBox()">${IC('ti-refresh')} Tải lại</button>${adm&&G.length?`<button class="btn btn-ghost btn-sm lg-del" onclick="errClear()">${IC('ti-trash')} Xoá tất cả</button>`:''}</div>
+    ${G.length?`<div class="err-list">${G.map((x,i)=>`<details class="err-it"><summary><span class="err-n">${x.n}×</span><span class="err-m"><b>${esc(x.msg)}</b><small>${fmtDateTime(new Date(x.last).toISOString())} · ${esc([...x.users].slice(0,3).join(', '))}${x.users.size>3?'…':''} · ${esc([...x.devs].slice(0,2).join(' / '))}</small></span></summary>
+      <div class="err-d"><div><i>Màn hình:</i> ${esc([...x.scr].join(', ')||'–')}</div><div><i>Vị trí:</i> ${esc(x.src||'–')}</div><div><i>Phiên bản:</i> ${esc([...x.ver].join(', ')||'–')}</div>${x.stack?`<pre>${esc(x.stack)}</pre>`:''}</div></details>`).join('')}</div>`
+      :'<div class="err-empty">'+IC('ti-circle-check')+' Không ghi nhận lỗi nào trong 2 tháng gần nhất.</div>'}
+    <div class="lg-note">Lỗi được ghi tự động từ máy nhân viên (không gồm mật khẩu, thông tin khách). Gửi phần chi tiết cho người bảo trì khi cần sửa. Lỗi cũ hơn 3 tháng tự xoá.</div>`;
+}
+function errClear(){
+  if(!(S.user&&S.user.isAdmin))return;
+  uiConfirm('Xoá nhật ký lỗi',`Xoá ${S._errRows.length} lượt lỗi của 2 tháng gần nhất?`,'Xoá',()=>{const u={};S._errRows.forEach(r=>u[`err/${r.m}/${r.k}`]=null);S.fbDb.ref('dgData').update(u).then(()=>{S._errRows=null;renderErrBox();toast('Đã xoá nhật ký lỗi')})},true);
+}
+/* dọn lỗi > 3 tháng (cùng lúc với dọn nhật ký) */
+(function(){const o=logAutoPrune;logAutoPrune=function(){const before=LS.get('dg2_logprune','');o();
+  try{if(before!==LS.get('dg2_logprune','')&&S.fbDb){let c=localToday().slice(0,7);for(let i=0;i<3;i++)c=prevMonthOf(c);const u={};let m=prevMonthOf(c);for(let i=0;i<36;i++){u[m]=null;m=prevMonthOf(m)}S.fbDb.ref('dgData/err').update(u).catch(()=>{})}}catch(e){}}})();
+/* ===========================================================
+   HOÀN TÁC (Undo) + HỘP XÁC NHẬN thống nhất
+   - Xoá đơn giản (lịch, tiêu chí, lượt dọn, đặt phòng…): làm ngay, hiện "Đã xoá · Hoàn tác" 6 giây
+   - Xoá lớn (đơn vị, tài khoản): vẫn hỏi lại; tài khoản vẫn hoàn tác được
+   - askYes(): thay hộp confirm() mặc định của trình duyệt (trông thô, chặn màn hình)
+=========================================================== */
+const UNDO_COLS=['units','users','plans','rstate','rlevel','criteria','evals','feedback','checks','bookings','hkasg','inv'];
+function undoSnap(){const s={};UNDO_COLS.forEach(c=>{const m=new Map();(S[c]||[]).forEach(r=>{if(r&&r.id!=null)m.set(r.id,JSON.stringify(r))});s[c]=m});return s}
+function undoDiff(before){
+  const d={};let n=0;
+  UNDO_COLS.forEach(c=>{const b=before[c],now=new Map();(S[c]||[]).forEach(r=>{if(r&&r.id!=null)now.set(r.id,r)});
+    const x={rm:[],ch:[],add:[]};
+    b.forEach((js,id)=>{const r=now.get(id);if(!r)x.rm.push(js);else if(JSON.stringify(r)!==js)x.ch.push(js)});
+    now.forEach((r,id)=>{if(!b.has(id))x.add.push(id)});
+    if(x.rm.length||x.ch.length||x.add.length){d[c]=x;n+=x.rm.length+x.ch.length+x.add.length}});
+  return n?d:null;
+}
+function undoApply(d){
+  Object.entries(d).forEach(([c,x])=>{
+    if(x.add.length){const a=new Set(x.add);S[c]=S[c].filter(r=>!a.has(r.id))}
+    x.ch.forEach(js=>{const o=JSON.parse(js),i=S[c].findIndex(r=>r.id===o.id);if(i>=0)S[c][i]=o;else S[c].push(o)});
+    x.rm.forEach(js=>{const o=JSON.parse(js);if(!S[c].some(r=>r.id===o.id))S[c].push(o)});
+  });
+  persist();try{rerenderActive()}catch(e){}try{renderSide()}catch(e){}
+}
+/* chạy fn; nếu có thay đổi dữ liệu → toast có nút Hoàn tác */
+function withUndo(label,fn){
+  const before=undoSnap();let r;
+  try{r=fn()}finally{
+    const d=undoDiff(before);
+    if(d){S._undo={d,label,until:Date.now()+6000};undoToast(label)}
+  }
+  return r;
+}
+function undoToast(label){
+  const t=document.getElementById('toast');if(!t)return;
+  t.innerHTML='';const sp=document.createElement('span');sp.textContent=label;t.appendChild(sp);
+  const b=document.createElement('button');b.className='toast-undo';b.type='button';b.textContent='Hoàn tác';
+  b.onclick=e=>{e.stopPropagation();doUndo()};t.appendChild(b);
+  t.classList.add('show','has-undo');clearTimeout(window._tt);window._tt=setTimeout(()=>{t.classList.remove('show','has-undo');S._undo=null},6000);
+}
+function doUndo(){
+  const u=S._undo;if(!u)return;S._undo=null;
+  undoApply(u.d);const t=document.getElementById('toast');if(t)t.classList.remove('has-undo');
+  toast('↩️ Đã hoàn tác: '+u.label.replace(/^Đã\s*/,'').toLowerCase());
+}
+/* Ctrl+Z (khi không gõ trong ô nhập) */
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&e.key.toLowerCase()==='z'&&S._undo&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'')){e.preventDefault();doUndo()}});
+(function(){const o=toast;toast=function(msg){const t=document.getElementById('toast');if(t)t.classList.remove('has-undo');return o.apply(this,arguments)}})();
+
+/* Xoá đơn giản: bỏ hộp hỏi 5 giây, làm ngay + Hoàn tác */
+const UNDO_QUICK={'Xóa lịch đánh giá':'Đã xoá lịch đánh giá','Xóa tiêu chí':'Đã xoá tiêu chí','Xoá nhiều tiêu chí':'Đã xoá các tiêu chí đã chọn','Huỷ lượt dọn':'Đã huỷ lượt dọn'};
+const UNDO_KEEPASK={'Xoá tài khoản':'Đã xoá tài khoản'};
+(function(){const o=delayedConfirm;delayedConfirm=function(title,message,onConfirm){
+  if(UNDO_QUICK[title])return withUndo(UNDO_QUICK[title],onConfirm);
+  if(UNDO_KEEPASK[title])return o.call(this,title,message,()=>withUndo(UNDO_KEEPASK[title],onConfirm));
+  return o.apply(this,arguments);
+}})();
+
+/* Hộp hỏi Có/Không trả về Promise<boolean> — dùng: if(!(await askYes('…')))return; */
+function askYes(msg,opt){
+  opt=opt||{};
+  return new Promise(res=>{
+    let o=document.getElementById('askYes');if(o)o.remove();
+    o=document.createElement('div');o.id='askYes';o.className='modal-overlay show';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');
+    o.innerHTML=`<div class="modal" style="max-width:440px"><div class="modal-bd" style="padding:20px"><div style="font-weight:800;font-size:17px;margin-bottom:6px">${esc(opt.title||'Xác nhận')}</div><div style="color:#475569;font-size:14.5px;line-height:1.55;white-space:pre-line">${esc(msg)}</div></div>
+      <div class="modal-ft"><button class="btn btn-ghost" data-v="0">${esc(opt.no||'Huỷ')}</button><button class="btn ${opt.danger?'btn-err':'btn-pri'}" data-v="1">${esc(opt.yes||'Tiếp tục')}</button></div></div>`;
+    const done=v=>{o.remove();removeEventListener('keydown',kd,true);res(v)};
+    const kd=e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();done(false)}else if(e.key==='Enter'){e.preventDefault();e.stopPropagation();done(true)}};
+    o.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)done(b.dataset.v==='1');else if(e.target===o)done(false)});
+    addEventListener('keydown',kd,true);document.body.appendChild(o);setTimeout(()=>{const b=o.querySelector('[data-v="1"]');if(b)b.focus()},30);
+  });
+}
+/* Xoá đặt phòng (quản trị viên): vẫn hỏi, nhưng hoàn tác được */
+(function(){const o=uiConfirm;uiConfirm=function(title,msg,okLabel,onOk,danger){
+  if(title==='Xoá đặt phòng'&&typeof onOk==='function'){const f=onOk;onOk=function(){return withUndo('Đã xoá đặt phòng',()=>f.apply(this,arguments))}}
+  return o.call(this,title,msg,okLabel,onOk,danger)}})();
+/* ===========================================================
+   NHẬP LIỆU & BÀN PHÍM
+   - Báo lỗi ngay tại ô nhập (viền đỏ + dòng chữ dưới ô) thay vì chỉ thông báo chung
+   - Enter = Lưu (trong hộp thoại), Esc = Đóng, Enter ở màn đăng nhập = Đăng nhập
+   - Cỡ chữ: Vừa / Lớn / Rất lớn (lưu theo từng máy)
+=========================================================== */
+function topModal(){const ms=[...document.querySelectorAll('.modal-overlay.show,.modal-overlay.open,.confirm-overlay')].filter(m=>m.offsetParent!==null||getComputedStyle(m).position==='fixed');return ms[ms.length-1]||null}
+function fieldErr(el,msg){
+  if(!el)return;const fg=el.closest('.fg')||el.parentElement;if(!fg)return;
+  el.classList.add('is-err');el.setAttribute('aria-invalid','true');
+  let m=fg.querySelector(':scope > .fe-msg');if(!m){m=document.createElement('div');m.className='fe-msg';fg.appendChild(m)}m.textContent=msg;
+}
+function fieldClr(el){if(!el)return;el.classList.remove('is-err');el.removeAttribute('aria-invalid');const fg=el.closest('.fg')||el.parentElement;const m=fg&&fg.querySelector(':scope > .fe-msg');if(m)m.remove()}
+function modalErr(mo,msg){
+  const box=mo.querySelector('.modal,.confirm-box');if(!box)return;let a=box.querySelector('.modal-err');
+  if(!a){a=document.createElement('div');a.className='modal-err';a.setAttribute('role','alert');const ft=box.querySelector('.modal-ft');ft?ft.before(a):box.appendChild(a)}
+  a.innerHTML=IC('ti-alert-triangle')+'<span></span>';a.querySelector('span').textContent=msg;
+}
+S._lastFocus={el:null,t:0};
+document.addEventListener('focusin',e=>{S._lastFocus={el:e.target,t:Date.now()}},true);
+document.addEventListener('input',e=>{const el=e.target;if(el.classList&&el.classList.contains('is-err'))fieldClr(el);const mo=el.closest&&el.closest('.modal-overlay');const a=mo&&mo.querySelector('.modal-err');if(a)a.remove()},true);
+document.addEventListener('change',e=>{const el=e.target;if(el.classList&&el.classList.contains('is-err'))fieldClr(el)},true);
+/* Khi có thông báo lỗi ⚠️ lúc đang mở hộp thoại → chỉ ra ô cần sửa */
+(function(){const o=toast;toast=function(msg){
+  const r=o.apply(this,arguments);
+  const s=String(msg||'');if(/^⚠/.test(s))setTimeout(()=>{try{const mo=topModal();if(mo){
+    const text=s.replace(/^⚠️?\s*/,'');modalErr(mo,text);
+    const f=S._lastFocus;let marked=0;
+    if(f.el&&Date.now()-f.t<400&&mo.contains(f.el)&&/INPUT|SELECT|TEXTAREA/.test(f.el.tagName)){fieldErr(f.el,text);marked++}
+    if(!marked)mo.querySelectorAll('.fg').forEach(fg=>{const lb=fg.querySelector('label');if(!lb||!/\*\s*$/.test(lb.textContent))return;const el=fg.querySelector('input:not([type=hidden]):not([type=checkbox]),select,textarea');if(el&&!String(el.value||'').trim()){fieldErr(el,'Bắt buộc nhập');if(!marked)try{el.focus()}catch(e){}marked++}});
+  }}catch(e){}},0);
+  return r;
+}})();
+
+/* ---------- Bàn phím ---------- */
+addEventListener('keydown',e=>{
+  if(e.defaultPrevented)return;
+  const ae=document.activeElement||{};
+  if(e.key==='Escape'){
+    const mo=topModal();if(!mo)return;
+    const x=mo.querySelector('.modal-x,#dcCancel,[data-v="0"]')||[...mo.querySelectorAll('button')].find(b=>/^(Huỷ|Hủy|Đóng|Hủy bỏ|Huỷ bỏ)$/i.test(b.textContent.trim()));
+    if(x){e.preventDefault();x.click()}else{mo.classList.remove('show','open')}
+    return;
+  }
+  if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){
+    if(ae.id==='loginUser'){e.preventDefault();const p=document.getElementById('loginPass');if(p)p.focus();return}
+    if(ae.id==='loginPass'){e.preventDefault();try{doLogin()}catch(x){}return}
+    const mo=topModal();if(!mo||!mo.contains(ae))return;
+    if(ae.tagName==='TEXTAREA'||ae.tagName==='BUTTON'||ae.tagName==='SELECT'||ae.type==='checkbox'||ae.type==='search')return;
+    if(ae.tagName!=='INPUT')return;
+    const ft=mo.querySelector('.modal-ft');const btn=ft&&([...ft.querySelectorAll('.btn-pri,.btn-ok')].filter(b=>!b.disabled&&b.offsetParent).pop());
+    if(btn){e.preventDefault();btn.click()}
+  }
+});
+
+/* ---------- Cỡ chữ (theo từng máy) ---------- */
+const FS_LV=[['','Vừa'],['l','Lớn'],['xl','Rất lớn']];
+function fsGet(){try{return localStorage.getItem('dg2_fs')||''}catch(e){return ''}}
+function fsApply(){const v=fsGet();document.documentElement.dataset.fs=v}
+function fsSet(v){try{localStorage.setItem('dg2_fs',v)}catch(e){}fsApply();try{renderSide()}catch(e){}toast('Cỡ chữ: '+(FS_LV.find(x=>x[0]===v)||FS_LV[0])[1])}
+fsApply();
+/* ===========================================================
+   TÌM NHANH TOÀN APP — Ctrl+K (hoặc phím "/") · nút kính lúp trên thanh trên cùng
+   Tìm: chức năng, đơn vị, phòng, khách (đặt phòng), tiêu chí, vật tư, tài khoản — theo quyền người dùng
+=========================================================== */
+S._qs={q:'',i:0,res:[]};
+function qsItems(q){
+  const out=[],nq=vnorm(q),has=t=>vnorm(t).includes(nq),av=availUnits();if(!nq)return qsDefault();
+  const push=(g,ic,t,sub,go,score)=>out.push({g,ic,t,sub,go,score:score||0});
+  /* chức năng */
+  const F=[['Hôm nay','ti-calendar-check',"goTab('today')",1],['Tổng quan','ti-chart-pie',"goTab('overview')",tabAllowed('overview')],['Chấm điểm','ti-clipboard-check',"goTab('unit','evaluate')",subAllowed('unit','evaluate')],
+    ['Lỗi & khắc phục','ti-alert-triangle',"goTab('unit','issues')",subAllowed('unit','issues')],['Biên bản','ti-file-description',"goTab('unit','report')",subAllowed('unit','report')],['Hồ sơ đơn vị','ti-folder-open',"goTab('unit','profile')",subAllowed('unit','profile')],
+    ['Lịch đánh giá','ti-calendar-event',"goTab('unit','plan')",subAllowed('unit','plan')],['Lễ tân · Sơ đồ phòng','ti-key',"S._foView='rack';goTab('unit','fo')",hasPerm('fo')||hasPerm('fo_rev')],
+    ['Đặt phòng mới','ti-plus',"goTab('unit','fo');setTimeout(()=>openBk(),50)",hasPerm('fo')],['Lịch sử đặt phòng','ti-history',"S._foView='hist';goTab('unit','fo')",hasPerm('fo')],['Doanh thu','ti-cash',"S._foView='rep';goTab('unit','fo')",hasPerm('fo_rev')],
+    ['Giao ca','ti-receipt',"S._foView='shift';goTab('unit','fo')",hasPerm('fo')],['Kiểm tra phòng','ti-bed',"goTab('unit','checks')",subAllowed('unit','checks')],['Kho · Tồn kho','ti-building-warehouse',"S._invView='stock';goTab('unit','inv')",subAllowed('unit','inv')],
+    ['Nhập kho','ti-plus',"S._invView='stock';goTab('unit','inv');setTimeout(()=>{S._imKeep=null;openInvMove('in')},50)",hasPerm('inv_edit')],['Kiểm kê kho','ti-clipboard-list',"goTab('unit','inv');setTimeout(()=>openStocktake(),50)",hasPerm('inv_edit')],
+    ['Đơn vị & Tài khoản','ti-users-group',"goTab('setup','units')",tabAllowed('setup')&&subAllowed('setup','units')],['Bộ tiêu chí','ti-list-check',"goTab('setup','criteria')",subAllowed('setup','criteria')],
+    ['Hệ thống','ti-settings',"goTab('setup','system')",subAllowed('setup','system')],['Nhật ký thay đổi','ti-history',"goTab('setup','log')",subAllowed('setup','log')],['Đổi mật khẩu','ti-lock',"openMyPwd()",1],['Đăng xuất','ti-logout',"logout()",1]];
+  F.forEach(([t,ic,go,ok])=>{if(ok&&has(t))push('Chức năng',ic,t,'',go,vnorm(t).startsWith(nq)?3:1)});
+  /* đơn vị */
+  av.forEach(u=>{if(has(u.name)||has(u.username||''))push('Đơn vị','ti-building',u.name,(BIZ_TYPES[u.biz]||BIZ_TYPES.other).label,`openUnit('${u.id}')`,vnorm(u.name).startsWith(nq)?3:1)});
+  /* phòng */
+  const canFo=hasPerm('fo')||hasPerm('fo_rev'),canChk=typeof chkPerm==='function'&&chkPerm();
+  if(canFo||canChk){const hosts=[...new Set(av.map(u=>roomUnit(u.id)))];hosts.forEach(h=>{const cfg=chkCfg(h);if(!cfg)return;const hu=S.units.find(x=>x.id===h);
+    (cfg.rooms||[]).forEach((r,i)=>{if(vnorm(r)===nq||(nq.length>=2&&vnorm(r).startsWith(nq))){let st='';try{st=(RS_SHORT[roomState(h,r).st]||['',''])[0]}catch(e){}
+      push('Phòng','ti-bed','Phòng '+r,(hu?hu.name:'')+(st?' · '+st:''),`qsRoom('${h}',${JSON.stringify(String(r))},${i})`,vnorm(r)===nq?5:2)}})})}
+  /* khách (đặt phòng) */
+  if(hasPerm('fo')&&nq.length>=2){const hs=new Set(av.map(u=>roomUnit(u.id)));
+    S.bookings.filter(b=>hs.has(b.unitId)&&(has(b.guest||'')||(b.phone4&&String(b.phone4)===nq))).sort((a,b)=>(b.arr||'').localeCompare(a.arr||'')).slice(0,8)
+      .forEach(b=>push('Khách','ti-user',b.guest||'Khách',`P.${b.room} · ${fmtDT(b.arr)} → ${fmtDT(b.dep)} · ${(BK_ST[b.status]||{l:b.status}).l}`,`qsBk('${b.id}','${b.unitId}')`,2))}
+  /* tiêu chí (tháng đang xem) */
+  if(nq.length>=2&&(subAllowed('unit','evaluate')||subAllowed('unit','report'))){const seen=new Set();
+    S.criteria.filter(c=>c.month===S.month&&av.some(u=>u.id===c.unitId)&&has(c.name)).slice(0,40).forEach(c=>{const k=c.unitId+c.name;if(seen.has(k)||seen.size>=8)return;seen.add(k);const u=S.units.find(x=>x.id===c.unitId);
+      push('Tiêu chí','ti-clipboard-check',c.name,u?u.name:'',`qsCrit('${c.unitId}',${JSON.stringify(c.name)})`,1)})}
+  /* vật tư */
+  if(nq.length>=2&&typeof invPerm==='function'&&invPerm()){av.forEach(u=>{try{invItems(u.id).filter(i=>has(i.name)).slice(0,5).forEach(i=>push('Vật tư','ti-package',i.name,u.name,`S._invView='stock';S._invFilter=null;openUnit('${u.id}','inv')`,1))}catch(e){}})}
+  /* tài khoản */
+  if(hasPerm('users')&&nq.length>=2)S.users.filter(a=>has(a.fullName||'')||has(a.username||'')).slice(0,6).forEach(a=>push('Tài khoản','ti-user',a.fullName||a.username,a.username+' · '+((ROLES[a.role]||{}).label||'').replace(/^\S+\s/,''),`goTab('setup','units');setTimeout(()=>openAcctModal('${a.id}'),80)`,1));
+  const order=['Phòng','Khách','Chức năng','Đơn vị','Tiêu chí','Vật tư','Tài khoản'];
+  return out.sort((a,b)=>(order.indexOf(a.g)-order.indexOf(b.g))||(b.score-a.score)).slice(0,40);
+}
+function qsDefault(){const o=[];const add=(t,ic,go)=>o.push({g:'Gợi ý',ic,t,sub:'',go});
+  add('Hôm nay','ti-calendar-check',"goTab('today')");if(hasPerm('fo'))add('Đặt phòng mới','ti-plus',"goTab('unit','fo');setTimeout(()=>openBk(),50)");
+  if(subAllowed('unit','checks'))add('Kiểm tra phòng','ti-bed',"goTab('unit','checks')");if(subAllowed('unit','evaluate'))add('Chấm điểm','ti-clipboard-check',"goTab('unit','evaluate')");
+  if(tabAllowed('overview'))add('Tổng quan','ti-chart-pie',"goTab('overview')");return o}
+function qsRoom(h,r,i){const av=availUnits();S.curUnit=(av.find(u=>u.id===h)||av.find(u=>roomUnit(u.id)===h)||{}).id||h;
+  if(hasPerm('fo')||hasPerm('fo_rev')){S._foView='rack';goTab('unit','fo');setTimeout(()=>{try{rackClick(r)}catch(e){}},60)}
+  else{goTab('unit','checks');setTimeout(()=>{try{openRoom(i)}catch(e){}},60)}}
+function qsBk(id,h){const av=availUnits();S.curUnit=(av.find(u=>u.id===h)||av.find(u=>roomUnit(u.id)===h)||{}).id||h;goTab('unit','fo');setTimeout(()=>openBkView(id),60)}
+function qsCrit(uid,name){S.curUnit=uid;const st=fltState('evaluate');st.q=name;st.s='';st.g='';const b=document.getElementById('flt-evaluate');if(b)b.dataset.sig='';goTab('unit',subAllowed('unit','evaluate')?'evaluate':'report')}
+function openQS(){
+  if(!S.user)return;let o=document.getElementById('qsModal');
+  if(!o){o=document.createElement('div');o.id='qsModal';o.className='modal-overlay';o.setAttribute('role','dialog');o.setAttribute('aria-label','Tìm nhanh');
+    o.innerHTML=`<div class="modal qs-box"><div class="qs-in">${IC('ti-search')}<input id="qsInput" type="search" autocomplete="off" placeholder="Tìm phòng, khách, đơn vị, tiêu chí, vật tư, chức năng…" aria-label="Tìm nhanh"><kbd>Esc</kbd><button class="modal-x" onclick="closeQS()" aria-label="Đóng">✕</button></div><div class="qs-res" id="qsRes" role="listbox"></div><div class="qs-ft">↑↓ chọn · Enter mở · Ctrl K mở nhanh</div></div>`;
+    o.addEventListener('click',e=>{if(e.target===o)closeQS()});document.body.appendChild(o);
+    const inp=o.querySelector('#qsInput');inp.addEventListener('input',()=>{S._qs.q=inp.value;S._qs.i=0;qsRender()});
+    inp.addEventListener('keydown',e=>{const n=S._qs.res.length;if(e.key==='ArrowDown'){e.preventDefault();S._qs.i=(S._qs.i+1)%Math.max(1,n);qsRender()}else if(e.key==='ArrowUp'){e.preventDefault();S._qs.i=(S._qs.i-1+n)%Math.max(1,n);qsRender()}else if(e.key==='Enter'){e.preventDefault();e.stopPropagation();qsGo(S._qs.i)}else if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeQS()}});
+  }
+  o.classList.add('show');const inp=o.querySelector('#qsInput');inp.value=S._qs.q='';S._qs.i=0;qsRender();setTimeout(()=>inp.focus(),30);
+}
+function closeQS(){const o=document.getElementById('qsModal');if(o)o.classList.remove('show')}
+function qsRender(){
+  const box=document.getElementById('qsRes');if(!box)return;let res=[];try{res=qsItems(S._qs.q)}catch(e){console.warn('qs',e)}S._qs.res=res;
+  if(!res.length){box.innerHTML=`<div class="qs-empty">Không tìm thấy “${esc(S._qs.q)}”. Thử số phòng, tên khách, tên đơn vị…</div>`;return}
+  let g='',h='';res.forEach((r,i)=>{if(r.g!==g){g=r.g;h+=`<div class="qs-g">${esc(g)}</div>`}
+    h+=`<button type="button" role="option" aria-selected="${i===S._qs.i}" class="qs-it${i===S._qs.i?' on':''}" onclick="qsGo(${i})" onmousemove="if(S._qs.i!==${i}){S._qs.i=${i};qsRender()}">${IC(r.ic)}<span><b>${esc(r.t)}</b>${r.sub?`<small>${esc(r.sub)}</small>`:''}</span></button>`});
+  box.innerHTML=h;const on=box.querySelector('.qs-it.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest'});
+}
+function qsGo(i){const r=S._qs.res[i];if(!r)return;closeQS();try{new Function(r.go)()}catch(e){console.warn(e)}}
+addEventListener('keydown',e=>{
+  if(!S.user||document.getElementById('app').style.display==='none')return;
+  const ae=document.activeElement||{},typing=/INPUT|TEXTAREA|SELECT/.test(ae.tagName||'')||ae.isContentEditable;
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openQS()}
+  else if(e.key==='/'&&!typing&&!topModal()){e.preventDefault();openQS()}
+});
+/* ===========================================================
+   THÔNG TIN CÔNG TY — tên, logo, địa chỉ… in lên biên bản, hoá đơn, báo cáo, Excel
+   Lưu trên bản ghi quản trị (đồng bộ mọi máy): admin.org = {name,addr,phone,tax,web,logo,logoInv}
+=========================================================== */
+function orgInfo(){const a=S.units.find(u=>u.isAdmin);return (a&&a.org)||{}}
+function orgLogoImg(h){const o=orgInfo();return o.logo?`<img class="org-logo" src="${o.logo}" alt="" style="max-height:${h||44}px">`:''}
+/* khối tiêu đề công ty dùng cho bản in A4/A5 */
+function orgHeader(){
+  const o=orgInfo();if(!o.name&&!o.logo)return '';
+  const l2=[o.addr,o.phone?'ĐT: '+o.phone:'',o.tax?'MST: '+o.tax:'',o.web].filter(Boolean).map(esc).join(' · ');
+  return `<div class="org-hd">${orgLogoImg(46)}<div><b>${esc(o.name||'')}</b>${l2?`<small>${l2}</small>`:''}</div></div>`;
+}
+/* Biên bản: thay dòng "TỔNG CÔNG TY" bằng tên / logo công ty */
+(function(){const o=renderReport;renderReport=function(){const r=o.apply(this,arguments);try{const org=orgInfo(),c=document.querySelector('#reportContent > .card');if(c){const d=c.querySelector(':scope > div > div');
+  if(d&&/TỔNG CÔNG TY/.test(d.textContent)){if(org.name||org.logo){d.className='org-rep';d.removeAttribute('style');d.innerHTML=`${orgLogoImg(52)}<div><b>${esc(org.name||'')}</b>${org.addr?`<small>${esc(org.addr)}</small>`:''}</div>`}}}}catch(e){}return r}})();
+/* Bản in qua printHtml: thêm tiêu đề công ty (A4/A5); hoá đơn có khối riêng → chỉ thêm logo nếu bật */
+(function(){const o=printHtml;printHtml=function(html,size){
+  try{const org=orgInfo();
+    if(/class="rc[ "]/.test(html)){if(org.logo&&org.logoInv!==false)html=html.replace('<div class="rc-h">','<div class="rc-h">'+orgLogoImg(size==='80'?38:48));}
+    else if(size!=='80')html=orgHeader()+html;
+  }catch(e){}
+  return o.call(this,html,size)}})();
+/* Hoá đơn: địa chỉ / ĐT để trống ở Lễ tân → lấy của công ty */
+(function(){const o=foInvInfo;foInvInfo=function(uid){const r=o.apply(this,arguments),org=orgInfo();if(!r.addr&&org.addr)r.addr=org.addr;if(!r.phone&&org.phone)r.phone=org.phone;return r}})();
+/* Excel báo cáo: thêm dòng tên công ty trên dòng tiêu đề */
+(function(){const o=xlSheet;xlSheet=function(X,rows,widths){try{const org=orgInfo();if(org.name&&rows&&rows.length&&Array.isArray(rows[0])&&rows[0].length===1&&typeof rows[0][0]==='string')rows=[[org.name]].concat(rows)}catch(e){}return o.call(this,X,rows,widths)}})();
+
+/* ---------- Thiết lập (Hệ thống → Thông tin công ty) ---------- */
+function renderOrgBox(){
+  const box=document.getElementById('orgBox');if(!box)return;const o=orgInfo(),adm=S.user&&(S.user.isAdmin||hasPerm('config'));const ro=adm?'':'disabled';
+  box.innerHTML=`<div class="org-form">
+    <div class="org-logo-ed"><div class="org-lp" id="orgLp">${o.logo?`<img src="${o.logo}" alt="Logo">`:`<span>${IC('ti-photo')}<br>Chưa có logo</span>`}</div>
+      ${adm?`<label class="btn btn-ghost btn-sm">${IC('ti-upload')} Chọn logo<input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden onchange="orgLogoPick(this)"></label>${o.logo?`<button class="btn btn-ghost btn-sm lg-del" onclick="orgLogoDel()">${IC('ti-trash')} Bỏ logo</button>`:''}`:''}</div>
+    <div class="form-grid org-fg">
+      <div class="fg"><label>Tên công ty *</label><input id="orgName" value="${esc(o.name||'')}" placeholder="VD: Công ty TNHH Hưng Thịnh" ${ro}></div>
+      <div class="fg"><label>Mã số thuế</label><input id="orgTax" value="${esc(o.tax||'')}" ${ro}></div>
+      <div class="fg" style="grid-column:1/-1"><label>Địa chỉ</label><input id="orgAddr" value="${esc(o.addr||'')}" ${ro}></div>
+      <div class="fg"><label>Điện thoại</label><input id="orgPhone" value="${esc(o.phone||'')}" ${ro}></div>
+      <div class="fg"><label>Email / Website</label><input id="orgWeb" value="${esc(o.web||'')}" ${ro}></div>
+      <label class="perm-chk" style="grid-column:1/-1"><input type="checkbox" id="orgLogoInv" ${o.logoInv!==false?'checked':''} ${ro}> In logo trên hoá đơn / phiếu thu của khách</label>
+    </div></div>
+    <div class="org-note">Hiện trên: biên bản đánh giá, hoá đơn &amp; phiếu thu, biên bản giao ca, kiểm kê, báo cáo Tổng quan (In / PDF) và dòng đầu file Excel báo cáo. Địa chỉ / điện thoại riêng của từng khách sạn (Lễ tân → Cài đặt) vẫn được ưu tiên trên hoá đơn.</div>
+    ${adm?`<div style="text-align:right;margin-top:10px"><button class="btn btn-pri" onclick="orgSave()">${IC('ti-device-floppy')} Lưu thông tin công ty</button></div>`:''}`;
+}
+S._orgLogo=undefined;
+function orgLogoPick(inp){const f=inp.files&&inp.files[0];if(!f)return;if(f.size>3e6){toast('⚠️ Ảnh logo tối đa 3 MB');return}
+  const rd=new FileReader();rd.onload=()=>{
+    if(f.type==='image/svg+xml'){if(rd.result.length>80000){toast('⚠️ File SVG quá lớn');return}S._orgLogo=rd.result;orgLogoPrev();return}
+    const im=new Image();im.onload=()=>{const k=Math.min(1,320/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      let u=c.toDataURL('image/png');if(u.length>90000)u=c.toDataURL('image/jpeg',.85);S._orgLogo=u;orgLogoPrev()};im.src=rd.result};
+  rd.readAsDataURL(f)}
+function orgLogoPrev(){const p=document.getElementById('orgLp');if(p)p.innerHTML=S._orgLogo?`<img src="${S._orgLogo}" alt="Logo">`:`<span>${IC('ti-photo')}<br>Chưa có logo</span>`;toast('Đã chọn logo — bấm "Lưu thông tin công ty"')}
+function orgLogoDel(){S._orgLogo=null;orgLogoPrev()}
+function orgSave(){
+  const a=S.units.find(u=>u.isAdmin);if(!a)return;const g=id=>(document.getElementById(id)||{}).value.trim();
+  const name=g('orgName');if(!name){toast('⚠️ Nhập tên công ty');const e=document.getElementById('orgName');if(e){e.focus();fieldErr(e,'Bắt buộc nhập')}return}
+  const o={...(a.org||{}),name,tax:g('orgTax'),addr:g('orgAddr'),phone:g('orgPhone'),web:g('orgWeb'),logoInv:document.getElementById('orgLogoInv').checked};
+  if(S._orgLogo!==undefined){if(S._orgLogo)o.logo=S._orgLogo;else delete o.logo}
+  a.org=o;S._orgLogo=undefined;persist();renderOrgBox();toast('✅ Đã lưu thông tin công ty');
+}
+/* ===========================================================
+   HƯỚNG DẪN: tour lần đầu theo vai trò + nút "?" ở mỗi màn hình
+   - Tour tự hiện 1 lần / tài khoản / máy (bỏ qua được, xem lại ở nút "?")
+=========================================================== */
+const TOUR_V=1;
+const HELP={
+  today:['Tóm tắt việc cần làm trong ngày của đơn vị đang chọn.','Bấm vào ô số liệu hoặc nút bên phải mỗi việc để mở đúng màn hình xử lý.','Quản trị / lãnh đạo thấy thêm khối "Toàn hệ thống" ở đầu trang.'],
+  overview:['Chọn kỳ Tháng / Quý / 6 tháng / Năm; đổi tháng ở thanh trên cùng.','Bấm ô "Tiến độ" để chỉ xem đơn vị chưa chấm xong; ô "Lỗi" để mở danh sách lỗi.','Xuất Excel hoặc In / PDF theo đúng kỳ đang xem.'],
+  evaluate:['Bấm ĐẠT / KHÔNG cho từng tiêu chí; KHÔNG ĐẠT nên kèm ảnh và ghi chú.','"Đạt các mục còn lại" để chấm nhanh phần còn lại.','Bấm "Lưu đánh giá" khi xong — bản nháp tự lưu trên máy nếu bị gián đoạn.'],
+  issues:['Danh sách lỗi chưa khắc phục, đánh dấu Tái phạm / Quá hạn.','Ghi biện pháp, hạn khắc phục và bấm "Đã khắc phục" khi xong.'],
+  report:['Biên bản tháng — lọc rồi bấm In để in đúng phần đang hiển thị.','Tên và logo công ty lấy từ Hệ thống → Thông tin công ty.'],
+  profile:['Hồ sơ 360° của đơn vị: điểm 12 tháng, lịch sử, kết quả từng tiêu chí.'],
+  plan:['Lịch đánh giá: "Đơn vị này" hoặc "Tất cả đơn vị".','"+ Tạo lịch" để thêm; bấm Chờ / Xong trong danh sách để đổi trạng thái.'],
+  fo:['Sơ đồ phòng: bấm phòng trống để đặt nhanh, phòng có khách để xem hoá đơn / trả phòng.','Tab Đặt phòng, Lịch tháng, Doanh thu, Giao ca, Cài đặt ở hàng trên.','"Lịch sử" xem đặt phòng đã kết thúc; chỉ quản trị viên được sửa / xoá.'],
+  checks:['Bấm số phòng để bắt đầu dọn, hoàn tất, hoặc kiểm tra.','Chip "Phòng của tôi" lọc phòng được phân công.','Khung thông báo màu vàng gom việc gấp: chờ kiểm, ưu tiên dọn, thiếu minibar.'],
+  inv:['Tồn kho / Lô & HSD / Khách dùng / Nhập – xuất / Danh mục.','"+ Nhập kho" ghi phiếu nhập; Xuất kho, Kiểm kê, Excel ở nút "Thêm" (điện thoại).'],
+  units:['Thêm / sửa đơn vị, tài khoản đăng nhập và phân quyền.','Khoá tài khoản khi nhân viên nghỉ việc.'],
+  criteria:['Bộ tiêu chí theo tháng của từng đơn vị; "Copy tháng trước" để dùng lại.'],
+  system:['Thông tin công ty, lưu ảnh Drive, Firebase, sao lưu, lỗi ứng dụng gần đây.'],
+  log:['Ai đã thêm / sửa / xoá gì, lúc nào. Quản trị viên được xoá nhật ký (mỗi lần xoá đều ghi lại).']
+};
+const KEYS_HELP=[['Ctrl K hoặc /','Tìm nhanh phòng, khách, đơn vị, chức năng'],['Enter','Lưu trong hộp thoại'],['Esc','Đóng hộp thoại'],['Ctrl Z','Hoàn tác thao tác xoá vừa làm']];
+function helpKey(){const t=S._curTab;if(t==='unit'||t==='setup')return S._sub[t]||'';return t||'today'}
+function openHelp(){
+  const k=helpKey(),L=HELP[k]||[];let o=document.getElementById('helpModal');if(o)o.remove();
+  o=document.createElement('div');o.id='helpModal';o.className='modal-overlay show';
+  o.innerHTML=`<div class="modal" style="max-width:520px"><div class="modal-hd"><h3>${IC('ti-help-circle')} Hướng dẫn</h3><button class="modal-x" onclick="document.getElementById('helpModal').remove()">✕</button></div>
+    <div class="modal-bd">${L.length?`<ul class="help-ul">${L.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+      <div class="help-k"><b>Phím tắt</b>${KEYS_HELP.map(([a,b])=>`<div><kbd>${esc(a)}</kbd><span>${esc(b)}</span></div>`).join('')}</div></div>
+    <div class="modal-ft"><button class="btn btn-ghost" onclick="document.getElementById('helpModal').remove();tourStart(true)">${IC('ti-player-play')} Xem hướng dẫn nhanh</button><button class="btn btn-pri" onclick="document.getElementById('helpModal').remove()">Đã hiểu</button></div></div>`;
+  o.addEventListener('click',e=>{if(e.target===o)o.remove()});document.body.appendChild(o);
+}
+/* nút ? cạnh tiêu đề trang */
+(function(){const o=setPageTitle;setPageTitle=function(host,ic,label,meta){o.apply(this,arguments);try{const t=host&&host.querySelector(':scope > .pg-title');if(t&&!t.querySelector('.help-btn')){const b=document.createElement('button');b.type='button';b.className='help-btn no-print';b.title='Hướng dẫn màn hình này';b.setAttribute('aria-label','Hướng dẫn');b.innerHTML=IC('ti-help-circle');b.onclick=openHelp;t.appendChild(b)}}catch(e){}}})();
+
+/* ---------- Tour lần đầu ---------- */
+function tourSteps(){
+  const r=S.user.role,mob=innerWidth<=900,st=[];
+  const nav=mob?'#bottomNav':'#sideNav';
+  st.push({sel:nav,t:'Chào mừng đến HT Đánh Giá',x:mob?'Thanh dưới cùng chứa các mục hay dùng; "Menu" mở toàn bộ chức năng.':'Menu bên trái chứa mọi chức năng bạn được phân quyền. Ô trên cùng để chọn đơn vị làm việc.'});
+  st.push({sel:'#hdrSearch',t:'Tìm nhanh',x:'Gõ số phòng, tên khách, đơn vị, tiêu chí… để mở ngay. Trên máy tính bấm Ctrl K.'});
+  if(r==='frontdesk'||(hasPerm('fo')&&!hasPerm('evaluate')))st.push({go:"S._foView='rack';goTab('unit','fo')",sel:'#sub-fo .rack',t:'Sơ đồ phòng',x:'Màu viền cho biết trạng thái. Bấm phòng trống để đặt nhanh, phòng có khách để xem hoá đơn, nhận / trả phòng.'},{sel:'#sub-fo .btn-pri',t:'Đặt phòng',x:'Tạo đặt phòng mới. Hoá đơn, mã QR thanh toán và in phiếu nằm trong chi tiết đặt phòng.'});
+  if(hasPerm('check_do')||hasPerm('check_review'))st.push({go:"goTab('unit','checks')",sel:'#sub-checks .room-grid',t:'Kiểm tra phòng',x:hasPerm('check_review')?'Bấm phòng để kiểm tra và duyệt. Nút "Phân công dọn phòng" chia phòng cho nhân viên.':'Bấm phòng được giao để "Bắt đầu dọn", tích checklist rồi "Hoàn tất" để gửi giám sát kiểm.'});
+  if(hasPerm('evaluate'))st.push({go:"goTab('unit','evaluate')",sel:'#evgTabs',t:'Đánh giá',x:'Chấm điểm, Lỗi & khắc phục, Biên bản, Hồ sơ và Lịch nằm chung ở đây.'});
+  if(tabAllowed('overview'))st.push({go:"goTab('overview')",sel:'#ovMain .td-kpis',t:'Tổng quan',x:'Số liệu toàn hệ thống theo tháng / quý / năm. Bấm vào ô để lọc nhanh.'});
+  st.push({go:"goTab('today')",sel:'#todayContent .td-kpis, #todayContent .td-list',t:'Trang Hôm nay',x:'Mỗi ngày mở app sẽ thấy ngay việc cần làm. Nút "?" cạnh tiêu đề mỗi trang luôn có hướng dẫn.'});
+  return st;
+}
+S._tour=null;
+function tourStart(force){
+  if(!S.user)return;S._tour={i:0,st:tourSteps()};tourShow();
+}
+function tourEnd(){const a=document.getElementById('tourHl'),b=document.getElementById('tourTip');if(a)a.remove();if(b)b.remove();if(S.user)LS.set('dg2_tour_'+S.user.id,TOUR_V);S._tour=null;removeEventListener('resize',tourPos)}
+function tourGo(d){if(!S._tour)return;S._tour.i+=d;if(S._tour.i<0)S._tour.i=0;if(S._tour.i>=S._tour.st.length){tourEnd();toast('Bạn có thể xem lại hướng dẫn ở nút "?" cạnh tiêu đề trang');return}tourShow()}
+function tourShow(){
+  const T=S._tour;if(!T)return;const s=T.st[T.i];
+  if(s.go)try{new Function(s.go)()}catch(e){}
+  setTimeout(()=>{
+    const el=[...document.querySelectorAll(s.sel)].find(e=>e.offsetParent!==null||getComputedStyle(e).position==='fixed');
+    if(!el){if(T.i<T.st.length-1){T.st.splice(T.i,1);tourShow()}else tourEnd();return}
+    try{el.scrollIntoView({block:'center',behavior:'instant'})}catch(e){}
+    let hl=document.getElementById('tourHl');if(!hl){hl=document.createElement('div');hl.id='tourHl';document.body.appendChild(hl);hl.onclick=()=>tourGo(1)}
+    let tp=document.getElementById('tourTip');if(!tp){tp=document.createElement('div');tp.id='tourTip';tp.setAttribute('role','dialog');document.body.appendChild(tp)}
+    tp.innerHTML=`<div class="tt-n">${T.i+1} / ${T.st.length}</div><b>${esc(s.t)}</b><p>${esc(s.x)}</p><div class="tt-b"><button class="btn btn-ghost btn-sm" onclick="tourEnd()">Bỏ qua</button><span style="flex:1"></span>${T.i?'<button class="btn btn-ghost btn-sm" onclick="tourGo(-1)">Trước</button>':''}<button class="btn btn-pri btn-sm" onclick="tourGo(1)">${T.i===T.st.length-1?'Xong':'Tiếp'}</button></div>`;
+    T.el=el;tourPos();addEventListener('resize',tourPos);
+  },s.go?260:30);
+}
+function tourPos(){
+  const T=S._tour;if(!T||!T.el)return;const r=T.el.getBoundingClientRect(),hl=document.getElementById('tourHl'),tp=document.getElementById('tourTip');if(!hl||!tp)return;
+  const pad=6,top=Math.max(4,r.top-pad),left=Math.max(4,r.left-pad),w=Math.min(innerWidth-8,r.width+pad*2),h=Math.min(innerHeight-8,r.height+pad*2);
+  Object.assign(hl.style,{top:top+'px',left:left+'px',width:w+'px',height:h+'px'});
+  const tw=Math.min(340,innerWidth-24);tp.style.width=tw+'px';const th=tp.offsetHeight||150;
+  let ty=top+h+10;if(ty+th>innerHeight-8)ty=Math.max(8,top-th-10);if(ty<8)ty=8;
+  let tx=Math.min(Math.max(12,left),innerWidth-tw-12);if(r.width>innerWidth*.6)tx=(innerWidth-tw)/2;
+  if(h>innerHeight*.7){if(w<innerWidth*.4&&left+w+tw+24<innerWidth){tx=left+w+14;ty=Math.min(140,innerHeight-th-20)}else{ty=innerHeight-th-80;tx=(innerWidth-tw)/2}}
+  tp.style.top=ty+'px';tp.style.left=tx+'px';
+}
+function tourMaybe(){try{if(!S.user||navigator.webdriver||S._tour)return;if(LS.get('dg2_tour_'+S.user.id,0)>=TOUR_V)return;tourStart()}catch(e){}}
+(function(){const o=initApp;initApp=function(){const r=o.apply(this,arguments);setTimeout(tourMaybe,1500);return r}})();
+addEventListener('keydown',e=>{if(!S._tour)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();tourEnd()}else if(e.key==='ArrowRight'||e.key==='Enter'){e.preventDefault();tourGo(1)}else if(e.key==='ArrowLeft'){e.preventDefault();tourGo(-1)}},true);
+(function(){const o=renderToday;renderToday=function(){const r=o.apply(this,arguments);try{const t=document.querySelector('#todayContent > .pg-title h2');if(t&&!t.parentNode.querySelector('.help-btn')){const b=document.createElement('button');b.type='button';b.className='help-btn no-print';b.title='Hướng dẫn';b.setAttribute('aria-label','Hướng dẫn');b.innerHTML=IC('ti-help-circle');b.onclick=openHelp;t.after(b)}}catch(e){}return r}})();
 // START
 buildLayout();
 STORE.init().then(()=>{S.sums=LS.get(K_SUMS,{});checkSession()});
