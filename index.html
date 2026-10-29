@@ -1193,6 +1193,13 @@ html[data-fs="xl"]{zoom:1.25}
 .pg-more{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0 4px;font-size:13px;color:var(--muted)}
 .pg-more .btn{font-weight:700}
 @media print{tr.pg-hide{display:table-row!important}}
+/* Nghỉ giờ */
+.hr-rules{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:10px 0 2px;padding:10px 12px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;font-size:13.5px}
+.hr-rules b{width:100%;font-size:13.5px}
+.hr-rules input[type=number]{width:58px;padding:5px 6px;border:1px solid var(--border);border-radius:7px;text-align:center}
+.hr-rules small{color:var(--muted)}
+.bk-mode{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13.5px;font-weight:600;color:#475569}
+.rk-hr{color:#7c3aed}
 </style>
 
 </head>
@@ -1876,7 +1883,7 @@ function refreshSessionUser(){
 S._formDirty=false;S._rrWait=false;
 document.addEventListener('input',e=>{if(e.target&&e.target.closest&&e.target.closest('.guard'))S._formDirty=true},true);
 document.addEventListener('change',e=>{if(e.target&&e.target.closest&&e.target.closest('.guard'))S._formDirty=true},true);
-function formSaved(){S._formDirty=false;if(S._rrWait){S._rrWait=false;setTimeout(()=>{try{rerenderActive()}catch(e){}},50)}}
+function formSaved(){try{const a=document.activeElement;if(a&&a.closest&&a.closest('.guard')&&a.blur)a.blur()}catch(e){}S._formDirty=false;if(S._rrWait){S._rrWait=false;setTimeout(()=>{try{rerenderActive()}catch(e){}},50)}}
 function rerenderActive(){
   const app=document.getElementById('app');
   if(!app||app.style.display==='none')return;
@@ -5301,7 +5308,7 @@ function saveChkSetup(){
   const rt=rtCollect(rooms);if(rt&&rt.err){toast(rt.err);return}
   const lk=document.getElementById('chkLink');const link=!enabled&&lk?lk.value:'';
   if(link)u.roomLink=link;else delete u.roomLink;
-  u.checklist={...(u.checklist||{}),...(rt?{roomTypes:rt.types,roomInfo:rt.info}:{}),enabled,minPhotos:num('chkMin',2,1,10),stdClean:num('chkStdC',30,1,600),stdInspect:num('chkStdI',10,1,120),rooms,items};
+  u.checklist={...(u.checklist||{}),...(rt?{roomTypes:rt.types,roomInfo:rt.info,hourly:rt.hourly||(u.checklist||{}).hourly}:{}),enabled,minPhotos:num('chkMin',2,1,10),stdClean:num('chkStdC',30,1,600),stdInspect:num('chkStdI',10,1,120),rooms,items};
   persist();formSaved();renderChkSetup();toast(enabled?`✅ Đã lưu checklist: ${rooms.length} phòng, ${items.length} tiêu chí`:link?`🔗 Đã liên kết lễ tân với ${(S.units.find(x=>x.id===link)||{}).name||''} — tab Lễ tân đã có ở đơn vị này`:'✅ Đã tắt checklist');
 }
 
@@ -6041,7 +6048,8 @@ function renderRoomTypeSetup(roomsNow){
   host.innerHTML=`<details class="rt-fold" ${S._rtOpen?'open':''} ontoggle="S._rtOpen=this.open">
     <summary><b>Loại phòng & giá</b><span class="rt-sum">${types.length?`${types.length} loại · ${set}/${rooms.length} phòng đã gán`:'chưa cài'}</span><span class="rt-more">Xem thêm</span></summary>
     <div class="rt-fold-bd">
-    <div class="tbl-wrap"><table class="inv-ed"><thead><tr><th style="min-width:160px">Tên loại phòng</th><th>Ký hiệu</th><th>Giá mặc định / đêm</th><th style="text-align:right">Số phòng</th><th></th></tr></thead><tbody id="rtBody">${types.map(t=>rtRow(t,ro,uid)).join('')}</tbody></table></div>
+    <div class="tbl-wrap"><table class="inv-ed"><thead><tr><th style="min-width:160px">Tên loại phòng</th><th>Ký hiệu</th><th>Giá mặc định / đêm</th><th class="rt-hcol">Nghỉ giờ: giá giờ đầu</th><th class="rt-hcol">Mỗi giờ tiếp</th><th style="text-align:right">Số phòng</th><th></th></tr></thead><tbody id="rtBody">${types.map(t=>rtRow(t,ro,uid)).join('')}</tbody></table></div>
+    ${hourRulesHtml(cfg.hourly,ro)}
     ${ro?'':`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button type="button" class="btn btn-ghost btn-sm" onclick="rtAddRow()">+ Thêm loại phòng</button><button type="button" class="btn btn-ghost btn-sm" id="rtTplBtn" onclick="rtUseTpl()" ${types.length?'style="display:none"':''}>Dùng mẫu (Standard / Superior / Deluxe / Suite)</button></div>`}
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 6px"><b>Gán loại cho từng phòng</b>
       ${ro?'':`<div class="rt-bulk">Gán nhanh phòng <input id="rtBulkRooms" placeholder="VD: 101-110, 201"> là <select id="rtBulkType">${rtOptions(types,'')}</select> <button type="button" class="btn btn-ghost btn-sm" onclick="rtBulk()">Áp dụng</button></div>`}</div>
@@ -6057,10 +6065,12 @@ function rtRow(t,ro,uid){
   return `<tr data-id="${id}"><td><input class="rt-name" value="${esc(t.name||'')}" placeholder="VD: Deluxe" oninput="rtRefreshSel()" ${ro}></td>
     <td><input class="rt-code" value="${esc(t.code||'')}" placeholder="DLX" maxlength="6" style="width:80px" oninput="rtRefreshSel()" ${ro}></td>
     <td><input class="rt-tprice" type="number" min="0" step="10000" value="${t.price||''}" placeholder="0" style="width:150px" oninput="rtRefreshPh()" ${ro}></td>
+    <td class="rt-hcol"><input class="rt-h1" type="number" min="0" step="10000" value="${t.h1||''}" placeholder="VD: 200000" style="width:130px" ${ro}></td>
+    <td class="rt-hcol"><input class="rt-hx" type="number" min="0" step="10000" value="${t.hx||''}" placeholder="VD: 50000" style="width:120px" ${ro}></td>
     <td style="text-align:right;color:var(--muted)">${n||''}</td>
     <td>${ro?'':'<button class="btn btn-ghost btn-sm" onclick="rtDelRow(this)" aria-label="Xoá loại phòng">🗑️</button>'}</td></tr>`;
 }
-function rtList(){return [...document.querySelectorAll('#rtBody tr')].map(r=>({id:r.dataset.id,name:r.querySelector('.rt-name').value.trim(),code:r.querySelector('.rt-code').value.trim().toUpperCase(),price:Math.max(0,parseInt(r.querySelector('.rt-tprice').value)||0)})).filter(t=>t.name)}
+function rtList(){const n=(r,c)=>{const e=r.querySelector(c);return e?Math.max(0,parseInt(e.value)||0):0};return [...document.querySelectorAll('#rtBody tr')].map(r=>({id:r.dataset.id,name:r.querySelector('.rt-name').value.trim(),code:r.querySelector('.rt-code').value.trim().toUpperCase(),price:n(r,'.rt-tprice'),h1:n(r,'.rt-h1'),hx:n(r,'.rt-hx')})).filter(t=>t.name)}
 function rtRefreshSel(){const ts=rtList();document.querySelectorAll('#rtRooms .rt-type,#rtBulkType').forEach(s=>{const v=s.value;s.innerHTML=rtOptions(ts,ts.some(t=>t.id===v)?v:'')});rtRefreshPh()}
 function rtRefreshPh(){const ts=rtList();document.querySelectorAll('#rtRooms tr').forEach(r=>rtTypeChanged(r.querySelector('.rt-type'),ts))}
 function rtTypeChanged(sel,ts){ts=ts||rtList();const t=ts.find(x=>x.id===sel.value);const p=sel.closest('tr').querySelector('.rt-price');p.placeholder=t&&t.price?t.price.toLocaleString('vi-VN'):'–'}
@@ -6085,7 +6095,7 @@ function rtCollect(newRooms){
     const o={};if(type&&ids.has(type))o.type=type;if(pv!=='')o.price=Math.max(0,parseInt(pv)||0);if(note)o.note=note;
     if(Object.keys(o).length)info[r.dataset.room]=o;
   });
-  return{types,info};
+  return{types,info,hourly:hourRulesRead()};
 }
 
 
@@ -6165,8 +6175,8 @@ function bkToday(uid,room){const td=localToday();
 function surPct(rules,t,isLate){const rs=[...rules].sort((a,b)=>a.u.localeCompare(b.u));
   if(isLate){const r=rs.find(r=>t<=r.u);return r?r.p:(rs.length?rs[rs.length-1].p:0)}
   const r=rs.find(r=>t<r.u);return r?r.p:0}
-function calcEarly(uid,b){const c=foCfg(uid);if(!b.ain||dPart(b.ain)!==dPart(b.arr))return null;const t=tPart(b.ain);if(t>=c.cin)return null;const p=surPct(c.early,t,false);return p?{k:'early',pct:p,amt:Math.round(b.rate*p/100)}:null}
-function calcLate(uid,b){const c=foCfg(uid);if(!b.aout)return null;const t=tPart(b.aout);if(t<=c.cout)return null;const p=surPct(c.late,t,true);return p?{k:'late',pct:p,amt:Math.round(b.rate*p/100)}:null}
+function calcEarly(uid,b){if(b.mode==='hour')return null;const c=foCfg(uid);if(!b.ain||dPart(b.ain)!==dPart(b.arr))return null;const t=tPart(b.ain);if(t>=c.cin)return null;const p=surPct(c.early,t,false);return p?{k:'early',pct:p,amt:Math.round(b.rate*p/100)}:null}
+function calcLate(uid,b){if(b.mode==='hour')return null;const c=foCfg(uid);if(!b.aout)return null;const t=tPart(b.aout);if(t<=c.cout)return null;const p=surPct(c.late,t,true);return p?{k:'late',pct:p,amt:Math.round(b.rate*p/100)}:null}
 function bkNights(b){const end=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);return Math.max(1,daysBetween(dPart(b.arr),end))}
 
 /* ---------- Minibar tự động từ phiếu dọn phòng ---------- */
@@ -6187,11 +6197,11 @@ function addHoursLocal(dt,h){const d=new Date(dPart(dt)+'T'+tPart(dt)+':00');d.s
 
 /* ---------- Hoá đơn ---------- */
 function bkInvoice(b){
-  const n=bkNights(b),room=n*(b.rate||0);
+  const hr=b.mode==='hour'?hourCalc(b):null;const n=hr?0:bkNights(b),room=hr?hr.cost:n*(b.rate||0);
   const sur=(b.sur||[]).filter(s=>!s.off);const surAmt=sur.reduce((a,s)=>a+(s.amt||0),0);
   const mb=bkMinibar(b);const ext=(b.extras||[]).reduce((a,x)=>a+(+x.amt||0),0);
   const total=room+surAmt+mb.amt+ext-(+b.disc||0);const paid=(b.pays||[]).reduce((a,p)=>a+(+p.amt||0),0);
-  return{n,room,sur,surAmt,mb,ext,disc:+b.disc||0,total,paid,due:total-paid};
+  return{n,hr,room,sur,surAmt,mb,ext,disc:+b.disc||0,total,paid,due:total-paid};
 }
 
 /* ---------- Màn hình Lễ tân ---------- */
@@ -6247,7 +6257,7 @@ function foRackHtml(uid,cfg){
       return `<button class="rk" style="--c:${v.c};--bg:${v.bg}" onclick="rackClick('${esc(x.r)}')">
         <div class="rk-top"><b>${esc(x.r)}</b><span>${t?esc(t.code||t.name):''}</span></div>
         <div class="rk-st">${v.l}</div>
-        ${x.inh?`<div class="rk-g">${esc(x.inh.guest||'')}</div><div class="rk-t">trả ${fmtDT(x.inh.dep)}</div>`:''}
+        ${x.inh?`<div class="rk-g">${esc(x.inh.guest||'')}</div><div class="rk-t">${x.inh.mode==='hour'?'<b class="rk-hr">Nghỉ giờ</b> · ':''}trả ${fmtDT(x.inh.dep)}</div>`:''}
         ${!x.inh&&x.hk.st==='ooo'&&x.hk.note?`<div class="rk-t">${esc(x.hk.note)}</div>`:''}
         ${hkTxt(x)?`<div class="rk-t">${hkTxt(x)}</div>`:''}
         ${x.arr?`<div class="rk-arr${notReady?' warn':''}">Đến ${tPart(x.arr.arr)} · ${esc(x.arr.guest||'')}${notReady?' — chưa sẵn sàng':''}</div>`:''}
@@ -6304,7 +6314,7 @@ function foListHtml(uid){
   const cnt=k=>bkFor(uid).filter(b=>k==='act'?bkActive(b):k==='due'?(b.status==='out'&&bkInvoice(b).due>0):b.status===k).length;
   return `<div class="fchips">${[['act','Đang hiệu lực'],['due','Còn nợ'],['out','Đã trả'],['cancel','Đã huỷ'],['all','Tất cả']].map(([k,l])=>`<button class="fchip${f===k?' on':''}" onclick="S._bkF='${k}';renderFO()">${l}${k!=='all'?` <b>${cnt(k)}</b>`:''}</button>`).join('')}</div>
     <div class="card" style="padding:0;overflow:hidden"><div class="tbl-wrap" style="border:none;border-radius:0"><table><thead><tr><th>Phòng</th><th>Khách</th><th>Đến</th><th>Đi</th><th style="text-align:right">Đêm</th><th>Trạng thái</th>${hasPerm('fo_rev')||hasPerm('fo')?'<th style="text-align:right">Tổng</th><th style="text-align:right">Còn thu</th>':''}<th></th></tr></thead><tbody>${
-      list.map(b=>{const v=bkInvoice(b),st=BK_ST[b.status];return `<tr style="cursor:pointer" onclick="openBkView('${b.id}')"><td><b>${esc(b.room)}</b>${rtLabel(uid,b.room)}</td><td>${esc(b.guest||'')}${b.phone4?` <span style="color:var(--muted)">…${esc(b.phone4)}</span>`:''}</td><td>${fmtDT(b.ain||b.arr)}</td><td>${fmtDT(b.aout||b.dep)}</td><td style="text-align:right">${v.n}</td>
+      list.map(b=>{const v=bkInvoice(b),st=BK_ST[b.status];return `<tr style="cursor:pointer" onclick="openBkView('${b.id}')"><td><b>${esc(b.room)}</b>${rtLabel(uid,b.room)}</td><td>${esc(b.guest||'')}${b.phone4?` <span style="color:var(--muted)">…${esc(b.phone4)}</span>`:''}</td><td>${fmtDT(b.ain||b.arr)}</td><td>${fmtDT(b.aout||b.dep)}</td><td style="text-align:right">${v.hr?v.hr.h+' giờ':v.n}</td>
         <td><span class="badge" style="background:${st.c}18;color:${st.c}">${st.l}</span></td>${hasPerm('fo_rev')||hasPerm('fo')?`<td style="text-align:right">${fmtMoney(v.total)}</td><td style="text-align:right;font-weight:700;color:${v.due>0?'var(--err-d)':'var(--ok-d)'}">${v.due>0?fmtMoney(v.due):'✓'}</td>`:''}<td></td></tr>`}).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:16px">Không có đặt phòng</td></tr>'}</tbody></table></div></div>`;
 }
 
@@ -6317,7 +6327,8 @@ function openBk(id,room,date){
   document.getElementById('bkModalT').textContent=b?'Sửa đặt phòng':'Đặt phòng mới';
   document.getElementById('bkModalBd').innerHTML=`<input type="hidden" id="bkId" value="${b?b.id:''}">
     <div class="form-grid"><div class="fg"><label>Phòng *</label><select id="bkRoom" onchange="bkRoomChanged()">${cfg.rooms.map(r=>{const t=roomTypeOf(uid,r),p=roomPrice(uid,r);return `<option value="${esc(r)}"${r===r0?' selected':''}>${esc(r)}${t?' · '+esc(t.name):''}${p!=null?' · '+fmtMoney(p):''}</option>`}).join('')}</select></div>
-      <div class="fg"><label>Giá / đêm *</label><input id="bkRate" type="number" min="0" step="10000" value="${b?b.rate:(roomPrice(uid,r0)||'')}" oninput="bkHint()"></div></div>
+      <div class="fg bk-night"><label>Giá / đêm *</label><input id="bkRate" type="number" min="0" step="10000" value="${b?b.rate:(roomPrice(uid,r0)||'')}" oninput="bkHint()"></div></div>
+    ${bkHourFields(uid,r0,b)}
     <div class="form-grid" style="margin-top:10px"><div class="fg"><label>Ngày giờ đến *</label><div style="display:flex;gap:6px"><input id="bkArrD" type="date" value="${dPart(arr)}" oninput="bkHint()"><input id="bkArrT" type="time" value="${tPart(arr)}" oninput="bkHint()" style="max-width:120px"></div></div>
       <div class="fg"><label>Ngày giờ đi *</label><div style="display:flex;gap:6px"><input id="bkDepD" type="date" value="${dPart(dep)}" oninput="bkHint()"><input id="bkDepT" type="time" value="${tPart(dep)}" oninput="bkHint()" style="max-width:120px"></div></div></div>
     <div class="form-grid" style="margin-top:10px"><div class="fg"><label>Tên khách *</label><input id="bkGuest" value="${esc(b?b.guest||'':'')}" placeholder="VD: Nguyễn Văn A"></div>
@@ -6330,15 +6341,15 @@ function openBk(id,room,date){
     <div id="bkHint" style="margin-top:10px;font-size:14px"></div>`;
   openM('bkModal');bkHint();
 }
-function bkRoomChanged(){const uid=foUid(),p=roomPrice(uid,document.getElementById('bkRoom').value);if(p!=null)document.getElementById('bkRate').value=p;bkHint()}
-function bkForm(){const g=id=>document.getElementById(id);return{id:g('bkId').value,room:g('bkRoom').value,rate:Math.max(0,parseInt(g('bkRate').value)||0),arr:`${g('bkArrD').value}T${g('bkArrT').value||'14:00'}`,dep:`${g('bkDepD').value}T${g('bkDepT').value||'12:00'}`}}
+function bkRoomChanged(){const uid=foUid(),room=document.getElementById('bkRoom').value,p=roomPrice(uid,room);if(p!=null)document.getElementById('bkRate').value=p;bkHourFill(uid,room);bkHint()}
+function bkForm(){const g=id=>document.getElementById(id);const hm=g('bkMode')&&g('bkMode').value==='hour';return{mode:hm?'hour':'night',h1:hm?Math.max(0,parseInt((g('bkH1')||{}).value)||0):0,hx:hm?Math.max(0,parseInt((g('bkHx')||{}).value)||0):0,id:g('bkId').value,room:g('bkRoom').value,rate:Math.max(0,parseInt(g('bkRate').value)||0),arr:`${g('bkArrD').value}T${g('bkArrT').value||'14:00'}`,dep:`${g('bkDepD').value}T${g('bkDepT').value||'12:00'}`}}
 function bkHint(){
   const uid=foUid(),f=bkForm(),el=document.getElementById('bkHint');if(!el)return;
   if(!dPart(f.arr)||!dPart(f.dep)){el.innerHTML='';return}
   const n=daysBetween(dPart(f.arr),dPart(f.dep));
   if(f.dep<=f.arr){el.innerHTML='<span style="color:var(--err-d)">⚠️ Giờ đi phải sau giờ đến</span>';return}
   const cf=bkConflict(uid,f.room,f.arr,f.dep,f.id);
-  el.innerHTML=`${Math.max(1,n)} đêm × ${fmtMoney(f.rate)} = <b>${fmtMoney(Math.max(1,n)*f.rate)}</b>`+(cf?`<div style="color:var(--err-d);margin-top:4px">⚠️ Trùng với đặt phòng của ${esc(cf.guest||'khách')} (${fmtDT(cf.arr)} → ${fmtDT(cf.dep)})</div>`:'')
+  el.innerHTML=(f.mode==='hour'?hourHint(f):`${Math.max(1,n)} đêm × ${fmtMoney(f.rate)} = <b>${fmtMoney(Math.max(1,n)*f.rate)}</b>`)+(cf?`<div style="color:var(--err-d);margin-top:4px">⚠️ Trùng với đặt phòng của ${esc(cf.guest||'khách')} (${fmtDT(cf.arr)} → ${fmtDT(cf.dep)})</div>`:'')
     +(roomState(uid,f.room).st==='ooo'?'<div style="color:var(--err-d);margin-top:4px">⚠️ Phòng đang bảo trì / không bán</div>':'');
 }
 async function saveBk(){
@@ -6347,12 +6358,13 @@ async function saveBk(){
   const guest=g('bkGuest').value.trim(),phone=g('bkPhone').value.replace(/\D/g,'').slice(-4);
   if(!guest){toast('⚠️ Nhập tên khách');g('bkGuest').focus();return}
   if(!dPart(f.arr)||!dPart(f.dep)||f.dep<=f.arr){toast('⚠️ Kiểm tra ngày giờ đến / đi');return}
-  if(!f.rate&&!(await askYes('Giá phòng = 0đ. Vẫn lưu?')))return;
+  if(f.mode==='hour'&&!f.h1){toast('⚠️ Nhập giá giờ đầu');const e=g('bkH1');if(e)e.focus();return}
+  if(f.mode!=='hour'&&!f.rate&&!(await askYes('Giá phòng = 0đ. Vẫn lưu?')))return;
   const cf=bkConflict(uid,f.room,f.arr,f.dep,f.id);if(cf){toast(`⚠️ Phòng ${f.room} đã có khách ${cf.guest||''} trong khoảng này`);return}
   const now=nowISO();
-  const base={room:f.room,rate:f.rate,arr:f.arr,dep:f.dep,month:dPart(f.arr).slice(0,7),guest,phone4:phone,pax:Math.max(1,parseInt(g('bkPax').value)||1),src:g('bkSrc').value,note:g('bkNote').value.trim()};
+  const base={...bkHourBase(f),room:f.room,rate:f.rate,arr:f.arr,dep:f.dep,month:dPart(f.arr).slice(0,7),guest,phone4:phone,pax:Math.max(1,parseInt(g('bkPax').value)||1),src:g('bkSrc').value,note:g('bkNote').value.trim()};
   let b=f.id?S.bookings.find(x=>x.id===f.id):null;
-  if(b)Object.assign(b,base,{updatedAt:now,updatedBy:S.user.name});
+  if(b){Object.assign(b,base,{updatedAt:now,updatedBy:S.user.name});if(f.mode!=='hour')['mode','h1','hx','hb','hg','hm'].forEach(k=>delete b[k])}
   else{const dep=Math.max(0,parseInt((g('bkDep')||{}).value)||0);
     b={id:'bk_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),unitId:uid,...base,status:'booked',pays:dep?[{amt:dep,m:'Tiền cọc',at:now,by:S.user.name}]:[],by:S.user.name,at:now};S.bookings.push(b)}
   persist();closeM('bkModal');renderFO();toast(`Đã lưu đặt phòng ${b.room} — ${guest}`);
@@ -6403,7 +6415,7 @@ function bkTimeHint(){
   const p=bkTimePreview(),el=document.getElementById('btHint');if(!p||!el)return;
   if(p.err){el.innerHTML=`<div style="color:var(--err-d)">⚠️ ${p.err}</div>`;return}
   const row=(l,v)=>`<tr><td>${l}</td><td style="text-align:right">${v}</td></tr>`;
-  el.innerHTML=`<table class="inv-tbl"><tbody>${row('Số đêm tính tiền',p.n+' đêm × '+fmtMoney(p.b.rate))}
+  el.innerHTML=`<table class="inv-tbl"><tbody>${p.t.mode==='hour'?row('Nghỉ giờ',hourLine(p.t)):row('Số đêm tính tiền',p.n+' đêm × '+fmtMoney(p.b.rate))}
     ${p.e?row(`Phụ thu nhận sớm (${p.e.pct}%)${p.e.off?' — đang miễn':''}`,fmtMoney(p.e.amt)):(p.t.ain?row('Phụ thu nhận sớm','Không'):'')}
     ${p.t.aout?(p.l?row(`Phụ thu trả muộn (${p.l.pct}%)${p.l.off?' — đang miễn':''}`,fmtMoney(p.l.amt)):row('Phụ thu trả muộn','Không')):''}</tbody></table>`;
 }
@@ -6441,7 +6453,7 @@ function renderBkView(){
       ${b.status==='in'?`<button class="btn btn-ghost" onclick="bkEditTimes('${b.id}')">🕒 Sửa giờ thực tế</button>`:''}`:''}</div>
     <div class="card" style="margin:0"><div class="card-title" style="display:flex;justify-content:space-between">Hoá đơn ${b.status==='out'&&v.mb.pending?'<span class="badge" style="background:#fef3c7;color:#92400e">Chờ buồng phòng đếm minibar</span>':''}</div>
     <table class="inv-tbl"><tbody>
-      ${line(`Tiền phòng: ${v.n} đêm × ${fmtMoney(b.rate)}`,v.room)}
+      ${line(v.hr?`Tiền phòng nghỉ giờ: ${hourLine(b)}`:`Tiền phòng: ${v.n} đêm × ${fmtMoney(b.rate)}`,v.room)}
       ${(b.sur||[]).map((s,i)=>`<tr${s.off?' style="opacity:.45;text-decoration:line-through"':''}><td>${surN[s.k]||'Phụ thu'} (${s.pct}% giá đêm)</td><td style="text-align:right">${fmtMoney(s.amt)}</td><td>${can&&!lock?`<button class="btn btn-ghost btn-sm" onclick="bkSurToggle(${i})">${s.off?'Tính lại':'Miễn'}</button>`:''}</td></tr>`).join('')}
       ${v.mb.lines.map(l=>line(`Minibar: ${esc(l.n)} × ${l.q}`,l.amt)).join('')||(b.ain?`<tr><td style="color:var(--muted)">Minibar: chưa phát sinh</td><td></td><td></td></tr>`:'')}
       ${(b.extras||[]).map((x,i)=>line(esc(x.n),+x.amt,can&&!lock?`<button class="btn btn-ghost btn-sm" onclick="bkDelExtra(${i})" aria-label="Xoá">✕</button>`:'')).join('')}
@@ -6475,17 +6487,18 @@ function foRepHtml(uid,cfg){
   const[y,m]=S.month.split('-').map(Number),N=new Date(y,m,0).getDate(),first=S.month+'-01',endEx=addDays(`${S.month}-${String(N).padStart(2,'0')}`,1);
   const bs=bkFor(uid).filter(b=>b.status==='in'||b.status==='out');
   let nights=0,roomRev=0;
-  bs.forEach(b=>{const a=dPart(b.arr),e=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);const s=a<first?first:a,t=e>endEx?endEx:e;const n=Math.max(0,daysBetween(s,t));nights+=n;roomRev+=n*(b.rate||0)});
+  let hourRev=0,hourN=0;bs.forEach(b=>{if(b.mode==='hour'){if((b.aout||b.ain||b.arr).slice(0,7)===S.month){hourRev+=bkInvoice(b).room;hourN++}return}const a=dPart(b.arr),e=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);const s=a<first?first:a,t=e>endEx?endEx:e;const n=Math.max(0,daysBetween(s,t));nights+=n;roomRev+=n*(b.rate||0)});
   const inMonth=bs.filter(b=>(b.aout||b.ain||b.arr).slice(0,7)===S.month);
   let sur=0,mb=0,mbCost=0,ext=0,disc=0,paid=0,due=0;
   inMonth.forEach(b=>{const v=bkInvoice(b);sur+=v.surAmt;mb+=v.mb.amt;mbCost+=v.mb.cost;ext+=v.ext;disc+=v.disc;paid+=v.paid;if(b.status==='out')due+=Math.max(0,v.due)});
   const avail=cfg.rooms.length*N,occ=avail?nights/avail*100:0,adr=nights?roomRev/nights:0,revpar=avail?roomRev/avail:0;
-  const total=roomRev+sur+mb+ext-disc;
-  const byType={};bs.forEach(b=>{const t=roomTypeOf(uid,b.room);const k=t?t.name:'Chưa phân loại';const a=dPart(b.arr),e=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);const n=Math.max(0,daysBetween(a<first?first:a,e>endEx?endEx:e));if(!n)return;byType[k]=byType[k]||{n:0,r:0};byType[k].n+=n;byType[k].r+=n*(b.rate||0)});
+  const total=roomRev+hourRev+sur+mb+ext-disc;
+  const byType={};bs.forEach(b=>{if(b.mode==='hour')return;const t=roomTypeOf(uid,b.room);const k=t?t.name:'Chưa phân loại';const a=dPart(b.arr),e=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);const n=Math.max(0,daysBetween(a<first?first:a,e>endEx?endEx:e));if(!n)return;byType[k]=byType[k]||{n:0,r:0};byType[k].n+=n;byType[k].r+=n*(b.rate||0)});
   const k=(l,v,c)=>`<div class="prof-kpi"><div class="v"${c?` style="color:${c}"`:''}>${v}</div><div class="l">${l}</div></div>`;
   return `<div class="prof-kpis">${k('Công suất phòng',occ.toFixed(1)+'%')}${k('Đêm phòng đã bán',nights+' / '+avail)}${k('Giá TB / đêm (ADR)',fmtMoney(adr))}${k('Doanh thu / phòng sẵn có (RevPAR)',fmtMoney(revpar))}</div>
     <div class="card"><div class="card-title">Doanh thu tháng ${S.month.split('-').reverse().join('/')}</div><table class="inv-tbl"><tbody>
       <tr><td>Tiền phòng (theo đêm ở trong tháng)</td><td style="text-align:right">${fmtMoney(roomRev)}</td></tr>
+      <tr><td>Tiền phòng nghỉ giờ (${hourN} lượt)</td><td style="text-align:right">${fmtMoney(hourRev)}</td></tr>
       <tr><td>Phụ thu nhận sớm / trả muộn</td><td style="text-align:right">${fmtMoney(sur)}</td></tr>
       <tr><td>Minibar</td><td style="text-align:right">${fmtMoney(mb)}</td></tr>
       <tr><td>Dịch vụ khác</td><td style="text-align:right">${fmtMoney(ext)}</td></tr>
@@ -7144,7 +7157,7 @@ function bkPrint(size){
     <table class="rc-i"><tr><td>Phòng</td><td class="r"><b>${esc(b.room)}</b>${roomTypeOf(b.unitId,b.room)?' · '+esc(roomTypeOf(b.unitId,b.room).name):''}</td></tr>
       <tr><td>Khách</td><td class="r">${esc(b.guest||'')}${b.pax>1?' ('+b.pax+' khách)':''}</td></tr>
       <tr><td>Nhận phòng</td><td class="r">${fmtDT(b.ain||b.arr)}</td></tr><tr><td>Trả phòng</td><td class="r">${fmtDT(b.aout||b.dep)}</td></tr></table>
-    <table class="rc-l">${L(`Tiền phòng ${v.n} đêm × ${fmtMoney(b.rate)}`,v.room)}
+    <table class="rc-l">${L(v.hr?`Tiền phòng nghỉ giờ: ${hourLine(b)}`:`Tiền phòng ${v.n} đêm × ${fmtMoney(b.rate)}`,v.room)}
       ${v.sur.map(s=>L(`${surN[s.k]||'Phụ thu'} (${s.pct}%)`,s.amt)).join('')}
       ${v.mb.lines.map(l=>L(`${esc(l.n)} × ${l.q}`,l.amt)).join('')}
       ${(b.extras||[]).map(x=>L(esc(x.n),+x.amt)).join('')}
@@ -7408,9 +7421,9 @@ function foMonthRev(uid,month){
   const cfg=chkCfg(uid);if(!cfg||!(cfg.rooms||[]).length)return null;
   const[y,m]=month.split('-').map(Number),N=new Date(y,m,0).getDate(),first=month+'-01',endEx=addDays(`${month}-${String(N).padStart(2,'0')}`,1);
   const bs=bkFor(uid).filter(b=>b.status==='in'||b.status==='out');let nights=0,roomRev=0;
-  bs.forEach(b=>{const a=dPart(b.arr),e=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);const s=a<first?first:a,t=e>endEx?endEx:e;const n=Math.max(0,daysBetween(s,t));nights+=n;roomRev+=n*(b.rate||0)});
-  let other=0,mb=0;bs.filter(b=>(b.aout||b.ain||b.arr).slice(0,7)===month).forEach(b=>{const v=bkInvoice(b);other+=v.surAmt+v.ext-v.disc;mb+=v.mb.amt});
-  const avail=cfg.rooms.length*N;return{nights,avail,occ:avail?nights/avail*100:0,adr:nights?roomRev/nights:0,roomRev,mb,other,total:roomRev+mb+other};
+  bs.forEach(b=>{if(b.mode==='hour')return;const a=dPart(b.arr),e=b.status==='out'&&b.aout&&dPart(b.aout)>dPart(b.dep)?dPart(b.aout):dPart(b.dep);const s=a<first?first:a,t=e>endEx?endEx:e;const n=Math.max(0,daysBetween(s,t));nights+=n;roomRev+=n*(b.rate||0)});
+  let other=0,mb=0,hour=0,hourN=0;bs.filter(b=>(b.aout||b.ain||b.arr).slice(0,7)===month).forEach(b=>{const v=bkInvoice(b);other+=v.surAmt+v.ext-v.disc;mb+=v.mb.amt;if(v.hr){hour+=v.room;hourN++}});
+  const avail=cfg.rooms.length*N;return{nights,avail,occ:avail?nights/avail*100:0,adr:nights?roomRev/nights:0,roomRev,hour,hourN,mb,other,total:roomRev+hour+mb+other};
 }
 /* lỗi lặp lại & tiêu chí hay trượt trong cửa sổ tháng ws (mustLast: phải có lỗi ở tháng cuối) */
 function ovRepTop(ws,mustLast){
@@ -7509,10 +7522,10 @@ function ovRepHtml(D){return D.rep.length?`<div class="tbl-wrap"><table class="s
   D.rep.slice(0,40).map(x=>`<tr><td><span class="link-unit" onclick="openUnit('${x.u.id}','issues')"><b>${esc(x.u.name)}</b></span></td><td>${esc(x.n)}</td><td class="c"><b style="color:#b91c1c">${x.ms.length}</b></td><td>${x.ms.map(mLbl).join(', ')}</td><td>${x.r==='fixed'?'<span class="badge badge-ok">Đã KP</span>':'<span class="badge badge-err">Chưa KP</span>'}</td></tr>`).join('')}</tbody></table></div>`:`<div class="sp-empty">Không có lỗi lặp lại ${S._sp==='m'?'trong 3 tháng gần nhất':'trong kỳ'} 🎉</div>`}
 function ovTopHtml(D){return D.topList.length?`<div class="sp-bars">${D.topList.map(t=>`<div class="sp-b"><span class="sp-bn" title="${esc(t.n)}">${esc(t.n)}</span><div class="sp-bb"><i style="width:${Math.round(t.c/D.topList[0].c*100)}%"></i></div><b>${t.c}</b><small>${[...t.us].slice(0,4).join(', ')}${t.us.size>4?'…':''}</small></div>`).join('')}</div>`:'<div class="sp-empty">Chưa có lỗi</div>'}
 function ovRevHtml(D){
-  return D.rev.map(R0=>{const keep=R0.per.map((p,i)=>p&&(p.nights||p.total)?i:-1).filter(i=>i>=0);const first=keep.length?keep[0]:R0.per.length-1;const R={u:R0.u,per:R0.per.slice(first)},msR=D.ms.slice(first);const tot={nights:0,avail:0,roomRev:0,mb:0,other:0,total:0};R.per.forEach(p=>{if(p)Object.keys(tot).forEach(k=>tot[k]+=p[k])});
+  return D.rev.map(R0=>{const keep=R0.per.map((p,i)=>p&&(p.nights||p.total)?i:-1).filter(i=>i>=0);const first=keep.length?keep[0]:R0.per.length-1;const R={u:R0.u,per:R0.per.slice(first)},msR=D.ms.slice(first);const tot={nights:0,avail:0,roomRev:0,hour:0,hourN:0,mb:0,other:0,total:0};R.per.forEach(p=>{if(p)Object.keys(tot).forEach(k=>tot[k]+=(p[k]||0))});
     const one=msR.length<2;
     return `<div class="card sp-card"><div class="card-title">Doanh thu phòng — ${esc(R.u.name)}</div><div class="tbl-wrap"><table class="sp-tbl"><thead><tr><th>Chỉ tiêu</th>${one?'':msR.map(m=>`<th class="r">${mLbl(m)}</th>`).join('')}<th class="r">${one?esc(spLabel()):'Cả kỳ'}</th></tr></thead><tbody>
-      ${[['Công suất phòng',p=>p.occ.toFixed(1)+'%',()=>tot.avail?(tot.nights/tot.avail*100).toFixed(1)+'%':'–'],['Đêm phòng đã bán',p=>p.nights,()=>tot.nights],['Giá TB/đêm (ADR)',p=>fmtMoney(p.adr),()=>fmtMoney(tot.nights?tot.roomRev/tot.nights:0)],['Tiền phòng',p=>fmtMoney(p.roomRev),()=>fmtMoney(tot.roomRev)],['Minibar',p=>fmtMoney(p.mb),()=>fmtMoney(tot.mb)],['Phụ thu / dịch vụ (trừ giảm giá)',p=>fmtMoney(p.other),()=>fmtMoney(tot.other)],['Tổng doanh thu',p=>`<b>${fmtMoney(p.total)}</b>`,()=>`<b>${fmtMoney(tot.total)}</b>`]]
+      ${[['Công suất phòng',p=>p.occ.toFixed(1)+'%',()=>tot.avail?(tot.nights/tot.avail*100).toFixed(1)+'%':'–'],['Đêm phòng đã bán',p=>p.nights,()=>tot.nights],['Giá TB/đêm (ADR)',p=>fmtMoney(p.adr),()=>fmtMoney(tot.nights?tot.roomRev/tot.nights:0)],['Tiền phòng',p=>fmtMoney(p.roomRev),()=>fmtMoney(tot.roomRev)],['Tiền phòng nghỉ giờ',p=>fmtMoney(p.hour||0)+(p.hourN?` <small>(${p.hourN} lượt)</small>`:''),()=>fmtMoney(tot.hour)+(tot.hourN?` <small>(${tot.hourN} lượt)</small>`:'')],['Minibar',p=>fmtMoney(p.mb),()=>fmtMoney(tot.mb)],['Phụ thu / dịch vụ (trừ giảm giá)',p=>fmtMoney(p.other),()=>fmtMoney(tot.other)],['Tổng doanh thu',p=>`<b>${fmtMoney(p.total)}</b>`,()=>`<b>${fmtMoney(tot.total)}</b>`]]
         .map(([l,f,t])=>`<tr><td>${l}</td>${one?'':R.per.map(p=>`<td class="r">${p?f(p):'–'}</td>`).join('')}<td class="r">${t()}</td></tr>`).join('')}</tbody></table></div>
       ${one?'':revBars(msR,R.per)}</div>`}).join('');
 }
@@ -7574,7 +7587,7 @@ async function spExport(){
   }
   if(dash&&D.rep.length)X.utils.book_append_sheet(wb,xlSheet(X,[['Đơn vị','Tiêu chí','Số tháng lỗi','Các tháng','KP gần nhất']].concat(D.rep.map(x=>[x.u.name,x.n,x.ms.length,x.ms.join(', '),x.r==='fixed'?'Đã KP':'Chưa KP'])),[10,40,12,30,14]),'Lỗi lặp lại');
   if(dash&&D.topList.length)X.utils.book_append_sheet(wb,xlSheet(X,[['Tiêu chí','Lượt không đạt','Đơn vị']].concat(D.topList.map(t=>[t.n,t.c,[...t.us].join(', ')])),[40,14,40]),'Hay trượt');
-  D.rev.forEach(R=>{X.utils.book_append_sheet(wb,xlSheet(X,[['Doanh thu phòng — '+R.u.name],[],['Tháng','Công suất %','Đêm bán','ADR','Tiền phòng','Minibar','Phụ thu/DV','Tổng']].concat(ms.map((m,i)=>{const p=R.per[i];return p?[m.split('-').reverse().join('/'),+p.occ.toFixed(1),p.nights,Math.round(p.adr),p.roomRev,p.mb,p.other,p.total]:[m,'','','','','','','']})),[10,12,10,12,14,12,12,14]),('DT '+R.u.name).replace(/[\\\/?*\[\]:]/g,' ').slice(0,30))});
+  D.rev.forEach(R=>{X.utils.book_append_sheet(wb,xlSheet(X,[['Doanh thu phòng — '+R.u.name],[],['Tháng','Công suất %','Đêm bán','ADR','Tiền phòng','Nghỉ giờ','Minibar','Phụ thu/DV','Tổng']].concat(ms.map((m,i)=>{const p=R.per[i];return p?[m.split('-').reverse().join('/'),+p.occ.toFixed(1),p.nights,Math.round(p.adr),p.roomRev,p.hour||0,p.mb,p.other,p.total]:[m,'','','','','','','','']})),[10,12,10,12,14,12,12,12,14]),('DT '+R.u.name).replace(/[\\\/?*\[\]:]/g,' ').slice(0,30))});
   if(!wb.SheetNames.length){toast('Không có dữ liệu để xuất');return}
   xlSave(X,wb,`TongQuan_${vnorm(spLabel()).replace(/[^a-z0-9]+/g,'_')}_${localToday()}.xlsx`);toast('Đã tải file Excel');
 }
@@ -7830,7 +7843,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='28.10.2026-d8ca08';
+const APP_BUILD='29.10.2026-339a81';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -8397,6 +8410,67 @@ function leaveAsk(proceed){
 })();
 /* đóng / tải lại trang khi còn thay đổi chưa lưu */
 addEventListener('beforeunload',e=>{if(dirtyGuardEl()){e.preventDefault();e.returnValue='';return ''}});
+/* ===========================================================
+   BẢNG GIÁ NGHỈ GIỜ
+   - Loại phòng: "giá giờ đầu" (cho N giờ đầu) + "mỗi giờ tiếp"
+   - Quy tắc chung (Loại phòng & giá): số giờ đầu, phút ân hạn, quá X giờ tính giá 1 đêm, không vượt giá 1 đêm
+   - Đặt phòng chọn "Nghỉ giờ": tiền phòng tính theo giờ thực tế (nhận → trả); không áp phụ thu nhận sớm / trả muộn
+=========================================================== */
+const HR_DEF={block:2,grace:15,maxH:0,cap:true};
+function hourRules(uid){return {...HR_DEF,...(((chkCfg(uid)||{}).hourly)||{})}}
+function hourRulesHtml(h,ro){h={...HR_DEF,...(h||{})};
+  return `<div class="hr-rules"><b>Quy tắc nghỉ giờ</b>
+    <label>Giá giờ đầu tính cho <input id="hrBlock" type="number" min="1" max="12" value="${h.block}" ${ro}> giờ đầu</label>
+    <label>Quá <input id="hrGrace" type="number" min="0" max="59" value="${h.grace}" ${ro}> phút thì tính thêm 1 giờ</label>
+    <label>Ở quá <input id="hrMax" type="number" min="0" max="24" value="${h.maxH||0}" ${ro}> giờ thì tính giá 1 đêm <small>(0 = không áp dụng)</small></label>
+    <label class="perm-chk"><input type="checkbox" id="hrCap" ${h.cap!==false?'checked':''} ${ro}> Tiền nghỉ giờ không vượt giá 1 đêm</label></div>`}
+function hourRulesRead(){const g=id=>document.getElementById(id);if(!g('hrBlock'))return null;const n=(id,d,lo,hi)=>Math.max(lo,Math.min(hi,parseInt(g(id).value)||d));
+  return{block:n('hrBlock',2,1,12),grace:Math.max(0,Math.min(59,parseInt(g('hrGrace').value)||0)),maxH:Math.max(0,Math.min(24,parseInt(g('hrMax').value)||0)),cap:g('hrCap').checked}}
+function hourRates(uid,room){const t=roomTypeOf(uid,room)||{};return{h1:+t.h1||0,hx:+t.hx||0}}
+/* tính tiền nghỉ giờ của 1 đặt phòng */
+function hourCalc(b){
+  const start=b.ain||b.arr;let end=b.aout;
+  if(!end){const now=isoToLocal(new Date(nowMs()).toISOString());end=b.status==='in'&&now>b.dep?now:b.dep}
+  const mins=Math.max(0,(new Date(end)-new Date(start))/60000);
+  const block=b.hb||2,grace=b.hg!=null?b.hg:15;
+  let h=Math.floor(mins/60)+((mins%60)>grace?1:0);h=Math.max(1,h);
+  const h1=+b.h1||0,hx=+b.hx||0;let cost=h<=block?h1:h1+(h-block)*hx,toDay=false,capped=false;
+  if(b.hm&&h>b.hm&&b.rate){cost=+b.rate;toDay=true}
+  else if(b.hcap!==false&&b.rate&&cost>b.rate){cost=+b.rate;capped=true}
+  return{h,cost,block,toDay,capped,mins};
+}
+function hourLine(b){const r=hourCalc(b);
+  return `${r.h} giờ (${r.block} giờ đầu ${fmtMoney(b.h1||0)}${r.h>r.block?` + ${r.h-r.block} giờ × ${fmtMoney(b.hx||0)}`:''})${r.toDay?` — quá ${b.hm} giờ, tính giá 1 đêm`:r.capped?' — tối đa bằng giá 1 đêm':''}`}
+/* ---------- Form đặt phòng ---------- */
+function bkHourFields(uid,room,b){
+  const R=hourRules(uid),rt=hourRates(uid,room),hm=b&&b.mode==='hour';
+  return `<div class="bk-mode"><span>Hình thức</span><div class="seg" role="tablist"><button type="button" class="${hm?'':'on'}" onclick="bkSetMode('night')">Theo đêm</button><button type="button" class="${hm?'on':''}" onclick="bkSetMode('hour')">Nghỉ giờ</button></div><input type="hidden" id="bkMode" value="${hm?'hour':'night'}"></div>
+    <div class="form-grid bk-hour" id="bkHourRow" style="margin-top:10px;${hm?'':'display:none'}">
+      <div class="fg"><label>Giá ${R.block} giờ đầu *</label><input id="bkH1" type="number" min="0" step="10000" value="${hm?b.h1:(rt.h1||'')}" oninput="bkHint()" placeholder="Cài ở Loại phòng & giá"></div>
+      <div class="fg"><label>Mỗi giờ tiếp theo</label><input id="bkHx" type="number" min="0" step="10000" value="${hm?b.hx:(rt.hx||'')}" oninput="bkHint()"></div></div>`;
+}
+function bkSetMode(m){
+  const g=id=>document.getElementById(id);g('bkMode').value=m;
+  document.querySelectorAll('.bk-mode .seg button').forEach((x,i)=>x.classList.toggle('on',(i===1)===(m==='hour')));
+  g('bkHourRow').style.display=m==='hour'?'':'none';
+  const lb=g('bkRate')&&g('bkRate').closest('.fg').querySelector('label');if(lb)lb.textContent=m==='hour'?'Giá 1 đêm (mức trần)':'Giá / đêm *';
+  if(m==='hour'&&!g('bkId').value){
+    const uid=foUid(),R=hourRules(uid),now=new Date(nowMs());now.setMinutes(Math.ceil(now.getMinutes()/5)*5,0,0);
+    const ad=g('bkArrD').value,today=localToday();
+    if(!ad||ad===today){const p=n=>String(n).padStart(2,'0');g('bkArrD').value=today;g('bkArrT').value=`${p(now.getHours())}:${p(now.getMinutes())}`}
+    const st=new Date(`${g('bkArrD').value}T${g('bkArrT').value||'12:00'}`);const en=new Date(st.getTime()+R.block*3600000);
+    g('bkDepD').value=isoLocalDate(en.toISOString());g('bkDepT').value=`${String(en.getHours()).padStart(2,'0')}:${String(en.getMinutes()).padStart(2,'0')}`;
+    bkHourFill(uid,g('bkRoom').value);
+  }
+  bkHint();
+}
+function bkHourFill(uid,room){const g=id=>document.getElementById(id);if(!g('bkH1')||g('bkMode').value!=='hour')return;const r=hourRates(uid,room);if(r.h1)g('bkH1').value=r.h1;if(r.hx)g('bkHx').value=r.hx}
+function bkHourBase(f){if(f.mode!=='hour')return{};const R=hourRules(foUid());return{mode:'hour',h1:f.h1,hx:f.hx,hb:R.block,hg:R.grace,hm:R.maxH||0,hcap:R.cap!==false}}
+function hourHint(f){
+  if(!f.h1)return '<span style="color:var(--err-d)">⚠️ Nhập giá giờ đầu (hoặc cài ở Thiết lập → Bộ tiêu chí → Loại phòng &amp; giá)</span>';
+  const R=hourRules(foUid()),b={...f,status:'booked',hb:R.block,hg:R.grace,hm:R.maxH,hcap:R.cap};const r=hourCalc(b);
+  return `Nghỉ giờ: ${hourLine(b)} = <b>${fmtMoney(r.cost)}</b>`;
+}
 // START
 buildLayout();
 STORE.init().then(()=>{S.sums=LS.get(K_SUMS,{});checkSession()});
