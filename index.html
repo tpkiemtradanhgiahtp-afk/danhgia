@@ -1178,6 +1178,21 @@ html[data-fs="xl"]{zoom:1.25}
 .sn-bt b{font-size:14px;font-weight:800;letter-spacing:-.1px;white-space:nowrap}
 .sn-bt small{font-size:12px;font-weight:600;color:#93a8cc;letter-spacing:.2px;margin-top:1px}
 .login-sub{font-size:14.5px;font-weight:600;color:#64748b;margin:-6px 0 16px;text-align:center}
+/* Dung lượng tải */
+.us-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.us-v{font-size:24px;font-weight:800;color:var(--ink,#0f172a)}.us-l{font-size:12.5px;color:var(--muted)}
+.us-bar{flex:1;min-width:160px;height:10px;background:#e5e9f0;border-radius:6px;overflow:hidden}.us-bar i{display:block;height:100%;background:#22c55e;border-radius:6px}.us-bar i.warn{background:#f59e0b}.us-bar i.err{background:#dc2626}
+.us-p{font-size:14px}
+.us-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.us-grid h5{margin:0 0 6px;font-size:13px;color:#475569}
+.us-d{display:grid;grid-template-columns:minmax(0,1.2fr) 1fr auto;gap:8px;align-items:center;font-size:12.5px;margin:4px 0}
+.us-d span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.us-d small{color:var(--muted);font-size:11px}
+.us-db{height:7px;background:#eef2f7;border-radius:4px;overflow:hidden}.us-db i{display:block;height:100%;background:#3b82f6;border-radius:4px}
+/* Phân trang */
+.pg-hide{display:none!important}
+.pg-more{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0 4px;font-size:13px;color:var(--muted)}
+.pg-more .btn{font-weight:700}
+@media print{tr.pg-hide{display:table-row!important}}
 </style>
 
 </head>
@@ -1374,6 +1389,7 @@ html[data-fs="xl"]{zoom:1.25}
 
       <div id="cfgSystem">
       <div class="settings-card" id="cfgOrg"><h4 style="margin:0 0 8px">🏢 Thông tin công ty (in trên biên bản, hoá đơn, báo cáo)</h4><div id="orgBox"></div></div>
+      <div class="settings-card" id="cfgUsage"><h4 style="margin:0 0 8px">📊 Dung lượng tải dữ liệu (hạn mức Firebase)</h4><div id="usageBox"></div></div>
       <div class="settings-card" id="cfgErr"><h4 style="margin:0 0 8px">🔧 Lỗi ứng dụng gần đây</h4><div id="errBox"></div></div>
       <div class="settings-card" id="cfgDrive"><h4 style="margin:0 0 8px">📁 Lưu ảnh lên Google Drive (Apps Script)</h4><div id="drvBox"></div></div>
       <div class="fb-config-panel">
@@ -4182,13 +4198,14 @@ function doPush(writes,updates){
   try{Object.assign(updates,writes.length>200?logBulk(writes):logEntries(writes,updates))}catch(e){console.warn('log',e)}
   return S.fbDb.ref('dgData').update(updates).then(()=>{
     writes.forEach(w=>logPutSnap(w.path,w.k,updates[w.pk]||null));
-    const touched=new Set(),invTouched=new Set();
+    const touched=new Set(),invTouched=new Set(),revTouched=new Set();
     writes.forEach(w=>{const B=S._base[w.path]||(S._base[w.path]={});if(w.h)B[w.k]=w.h;else delete B[w.k];
       if(S._pending[w.pk]&&S._pending[w.pk].tok===tok)delete S._pending[w.pk];
-      const seg=w.path.split('/');if(seg[0]==='m'&&CORE_COLS.includes(seg[3]))touched.add(seg[1]+'|'+seg[2]);if(seg[0]==='m'&&seg[3]==='checks')invTouched.add(seg[1]+'|'+seg[2])});
+      const seg=w.path.split('/');if(seg[0]==='m'&&CORE_COLS.includes(seg[3]))touched.add(seg[1]+'|'+seg[2]);if(seg[0]==='m'&&seg[3]==='checks')invTouched.add(seg[1]+'|'+seg[2]);if(seg[0]==='m'&&seg[3]==='bookings')revTouched.add(seg[1]+'|'+seg[2])});
     saveSyncBase();updateSyncIndicator();
     if(touched.size)updateSummaries(touched);
     if(invTouched.size){try{updateInvUse(invTouched)}catch(e){console.warn(e)}}
+    if(revTouched.size){try{revUpdate(revTouched)}catch(e){console.warn(e)}}
   }).catch(err=>{
     writes.forEach(w=>{if(S._pending[w.pk]&&S._pending[w.pk].tok===tok)delete S._pending[w.pk]});
     console.warn('sync',err);toast('⚠️ Lỗi đồng bộ: '+((err&&err.message)||'không rõ'));updateSyncIndicator();
@@ -4361,7 +4378,7 @@ function connectFB(silent){
     teardownSync();
     if(S.fbApp){try{S.fbApp.delete()}catch(e){}}
     S.fbApp=firebase.initializeApp(cfg,'dgApp_'+Date.now());
-    S.fbDb=S.fbApp.database();S._dbUrl=cfg.databaseURL;S._base=loadSyncBase();
+    S.fbDb=S.fbApp.database();S._dbUrl=cfg.databaseURL;S._base=loadSyncBase();try{usagePatch(S.fbDb)}catch(e){console.warn('usage',e)}
     const db=S.fbDb;
     db.ref('.info/connected').on('value',snap=>{if(db!==S.fbDb)return;S.fbConnected=!!snap.val();updateFBStatus();if(S.fbConnected&&S._syncReady)setTimeout(scheduleSync,800)});
     db.ref('.info/serverTimeOffset').on('value',snap=>{if(db!==S.fbDb)return;const v=snap.val();if(typeof v==='number'&&isFinite(v))S._srvOff=v});
@@ -4566,7 +4583,7 @@ function goSub(pg,sub){
       if(hasPerm('users'))renderAccounts();
     }
     if(sub==='criteria')renderCriteria();
-    if(sub==='system'){try{renderStorageInfo()}catch(e){}try{renderErrBox()}catch(e){}try{renderOrgBox()}catch(e){}}
+    if(sub==='system'){try{renderStorageInfo()}catch(e){}try{renderErrBox()}catch(e){}try{renderOrgBox()}catch(e){}try{renderUsageBox()}catch(e){}}
     if(sub==='log')renderLog();
   }
 }
@@ -6014,11 +6031,11 @@ function roomPrice(uid,room){const inf=roomInfo(uid,room);if(inf.price!=null&&in
 function rtLabel(uid,room){const t=roomTypeOf(uid,room);if(!t)return '';return `<span class="rt-tag" style="background:${rtColor(uid,t)}18;color:${rtColor(uid,t)}">${esc(t.code||t.name)}</span>`}
 
 /* ---------- Thiết lập (Thiết lập → Bộ tiêu chí, dưới checklist) ---------- */
-function renderRoomTypeSetup(){
+function renderRoomTypeSetup(roomsNow){
   const host=document.getElementById('rtHost');if(!host)return;
   const uid=(document.getElementById('cUnitSel')||{}).value;const u=S.units.find(x=>x.id===uid);
-  const cfg=(u&&u.checklist)||{},rooms=cfg.rooms||[];
-  if(!rooms.length){host.innerHTML='<div class="rt-fold-empty">Lưu danh sách phòng trước, sau đó cài loại phòng & giá tại đây.</div>';return}
+  const cfg=(u&&u.checklist)||{},rooms=roomsNow||cfg.rooms||[];
+  if(!rooms.length){host.innerHTML='<div class="rt-fold-empty">Nhập danh sách phòng ở trên — bảng loại phòng & giá sẽ hiện ngay tại đây.</div>';return}
   const types=cfg.roomTypes||[],ro=hasPerm('criteria')?'':'disabled';
   const set=rooms.filter(r=>((cfg.roomInfo||{})[r]||{}).type).length;
   host.innerHTML=`<details class="rt-fold" ${S._rtOpen?'open':''} ontoggle="S._rtOpen=this.open">
@@ -6028,12 +6045,9 @@ function renderRoomTypeSetup(){
     ${ro?'':`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button type="button" class="btn btn-ghost btn-sm" onclick="rtAddRow()">+ Thêm loại phòng</button><button type="button" class="btn btn-ghost btn-sm" id="rtTplBtn" onclick="rtUseTpl()" ${types.length?'style="display:none"':''}>Dùng mẫu (Standard / Superior / Deluxe / Suite)</button></div>`}
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 6px"><b>Gán loại cho từng phòng</b>
       ${ro?'':`<div class="rt-bulk">Gán nhanh phòng <input id="rtBulkRooms" placeholder="VD: 101-110, 201"> là <select id="rtBulkType">${rtOptions(types,'')}</select> <button type="button" class="btn btn-ghost btn-sm" onclick="rtBulk()">Áp dụng</button></div>`}</div>
-    <div class="tbl-wrap" style="max-height:420px;overflow:auto"><table class="inv-ed"><thead><tr><th>Phòng</th><th style="min-width:150px">Loại phòng</th><th>Giá / đêm <span style="font-weight:400;text-transform:none">(để trống = theo loại)</span></th><th style="min-width:180px">Ghi chú</th></tr></thead><tbody id="rtRooms">${
-      rooms.map(r=>{const inf=(cfg.roomInfo||{})[r]||{};const t=types.find(x=>x.id===inf.type);
-        return `<tr data-room="${esc(r)}"><td><b>${esc(r)}</b></td><td><select class="rt-type" ${ro} onchange="rtTypeChanged(this)">${rtOptions(types,inf.type||'')}</select></td>
-        <td><input class="rt-price" type="number" min="0" step="10000" value="${inf.price!=null&&inf.price!==''?inf.price:''}" placeholder="${t&&t.price?(+t.price).toLocaleString('vi-VN'):'–'}" style="width:140px" ${ro}></td>
-        <td><input class="rt-note" value="${esc(inf.note||'')}" placeholder="VD: view biển, giường đôi" ${ro}></td></tr>`}).join('')}</tbody></table></div>
-    <div style="font-size:12.5px;color:var(--muted);margin-top:6px">Bấm "Lưu checklist" bên dưới để lưu cả loại phòng & giá. Phòng mới thêm vào danh sách sẽ hiện ở đây sau khi lưu.</div>
+    <div class="tbl-wrap no-pg" style="max-height:420px;overflow:auto"><table class="inv-ed"><thead><tr><th>Phòng</th><th style="min-width:150px">Loại phòng</th><th>Giá / đêm <span style="font-weight:400;text-transform:none">(để trống = theo loại)</span></th><th style="min-width:180px">Ghi chú</th></tr></thead><tbody id="rtRooms">${
+      rooms.map(r=>rtRoomRow(r,(cfg.roomInfo||{})[r]||{},types,ro)).join('')}</tbody></table></div>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:6px">Bảng cập nhật ngay khi sửa danh sách phòng. Bấm "Lưu checklist" bên dưới để lưu cả danh sách phòng, loại phòng &amp; giá.</div>
     </div></details>`;
 }
 function rtOptions(types,v){return `<option value=""${!v?' selected':''}>— Chưa chọn —</option>`+types.map(t=>`<option value="${t.id}"${t.id===v?' selected':''}>${esc(t.name)}${t.code?' ('+esc(t.code)+')':''}</option>`).join('')}
@@ -6075,6 +6089,26 @@ function rtCollect(newRooms){
 }
 
 
+
+function rtRoomRow(r,inf,types,ro){const t=types.find(x=>x.id===inf.type);
+  return `<tr data-room="${esc(r)}"><td><b>${esc(r)}</b></td><td><select class="rt-type" ${ro} onchange="rtTypeChanged(this)">${rtOptions(types,inf.type||'')}</select></td>
+    <td><input class="rt-price" type="number" min="0" step="10000" value="${inf.price!=null&&inf.price!==''?inf.price:''}" placeholder="${t&&t.price?(+t.price).toLocaleString('vi-VN'):'–'}" style="width:140px" ${ro}></td>
+    <td><input class="rt-note" value="${esc(inf.note||'')}" placeholder="VD: view biển, giường đôi" ${ro}></td></tr>`}
+/* Gõ danh sách phòng → cập nhật ngay số phòng + bảng gán loại (giữ nguyên những gì đã nhập ở các phòng cũ) */
+function chkRoomsLive(){
+  const ta=document.getElementById('chkRooms');if(!ta)return;const rooms=[...new Set(parseRooms(ta.value))];
+  const lb=ta.closest('.fg')&&ta.closest('.fg').querySelector('label');if(lb)lb.textContent=`Danh sách phòng (${rooms.length})`;
+  const tb=document.getElementById('rtRooms');
+  if(!tb){renderRoomTypeSetup(rooms);return}
+  const uid=(document.getElementById('cUnitSel')||{}).value,u=S.units.find(x=>x.id===uid),cfg=(u&&u.checklist)||{};
+  const ro=hasPerm('criteria')?'':'disabled',types=document.getElementById('rtBody')?rtList():(cfg.roomTypes||[]);
+  const cur={};[...tb.rows].forEach(tr=>{cur[tr.dataset.room]=tr});
+  const frag=document.createDocumentFragment();
+  rooms.forEach(r=>{let tr=cur[r];if(!tr){const t=document.createElement('tbody');t.innerHTML=rtRoomRow(r,(cfg.roomInfo||{})[r]||{},types,ro);tr=t.firstElementChild;tr.classList.add('rt-new')}frag.appendChild(tr)});
+  tb.innerHTML='';tb.appendChild(frag);
+  const sm=document.querySelector('#rtHost .rt-sum');if(sm){const set=[...tb.rows].filter(tr=>tr.querySelector('.rt-type').value).length;sm.textContent=types.length?`${types.length} loại · ${set}/${rooms.length} phòng đã gán`:'chưa cài'}
+}
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='chkRooms'){clearTimeout(S._crT);S._crT=setTimeout(chkRoomsLive,250)}});
 /* ===========================================================
    LỄ TÂN: đặt phòng · nhận/trả phòng · hoá đơn · báo cáo — liên kết buồng phòng
    Booking (S.bookings, ngăn m/<tháng đến>/<đơn vị>/bookings):
@@ -6737,6 +6771,8 @@ function todaySysHtml(){
   try{if(hasPerm('fo_rev')||hasPerm('fo')){const ru=new Set(us.map(u=>roomUnit(u.id)));const debt=S.bookings.filter(b=>b.status==='out'&&ru.has(b.unitId)&&bkInvoice(b).due>0);
     if(debt.length){const sum=debt.reduce((a,b)=>a+bkInvoice(b).due,0);k('err','ti-cash','Khách còn nợ',fmtMoney(sum),`${debt.length} lượt đã trả phòng`,`S._foView='hist';bhState().st='debt';openUnit('${debt[0].unitId}','fo')`);
       row('err','ti-cash',`${debt.length} lượt khách đã trả phòng còn nợ ${fmtMoney(sum)}`,debt.slice(0,6).map(b=>'P.'+esc(b.room)).join(', '),'Xem',`S._foView='hist';bhState().st='debt';openUnit('${debt[0].unitId}','fo')`)}}}catch(e){}
+  /* dung lượng tải (chỉ quản trị viên) */
+  if(S.user.isAdmin){if(S._uRows===null){usageLoad()}else{const u=usageToday();if(u){const p=u.b/1048576/USAGE_LIMIT_MB*100;if(p>=60)row(p>=85?'err':'warn','ti-chart-bar',`Đã dùng ${p.toFixed(0)}% hạn mức tải dữ liệu hôm nay (${mb(u.b)} / ${USAGE_LIMIT_MB} MB)`,'Xem máy / loại dữ liệu tải nhiều nhất','Xem',"goTab('setup','system');setTimeout(()=>{const d=document.getElementById('usageBox');if(d){const f=d.closest('details');if(f)f.open=true;d.scrollIntoView({block:'start'})}},200)")}}}
   /* lỗi ứng dụng (chỉ quản trị viên) */
   if(S.user.isAdmin){if(S._errRows===null){errLoad()}else{const e7=errRecent7();if(e7.length){const g=errGroups(e7);row('warn','ti-bug',`App ghi nhận ${e7.length} lỗi trong 7 ngày (${g.length} loại)`,esc(g[0].msg.slice(0,90)),'Xem',"goTab('setup','system');setTimeout(()=>{const d=document.getElementById('errBox');if(d){const f=d.closest('details');if(f)f.open=true;d.scrollIntoView({block:'start'})}},200)")}}}
   return `<div class="td-sec"><h3>${IC('ti-chart-pie')} Toàn hệ thống <span class="td-sub">${us.length} đơn vị</span></h3></div>
@@ -6845,7 +6881,7 @@ function logDiff(o,n){
     if(LOG_SKIP.has(f))return;const a=o[f],b=n[f];
     if(JSON.stringify(a===undefined?null:a)===JSON.stringify(b===undefined?null:b))return;
     if(LOG_SECRET.test(f)){ch.push({f,o:'•••',n:'•••'});return}
-    if(f==='org'){ch.push({f,o:a&&a.name?a.name:'(trống)',n:(b&&b.name?b.name:'(trống)')+((a&&a.logo)!==(b&&b.logo)?' · đổi logo':'')});return}
+    if(f==='org'){ch.push({f,o:a&&a.name?a.name:'(trống)',n:(b&&b.name?b.name:'(trống)')+((a&&(a.logoV||a.logo))!==(b&&(b.logoV||b.logo))?' · đổi logo':'')});return}
     if(f==='drive'&&b&&typeof b==='object'){ch.push({f,o:a&&a.on?'Bật':'Tắt',n:b.on?'Bật':'Tắt'});return}
     ch.push({f,o:logShort(a),n:logShort(b)});
   });
@@ -6910,7 +6946,7 @@ function renderLog(){
       ${sel('u',[['','Tất cả đơn vị'],...units.map(u=>[u,uName(u)||u])])}
       ${sel('col',[['','Tất cả mục'],...Object.entries(LOG_COL_LBL).filter(([k])=>k!=='rlevel')])}
       ${sel('op',[['','Mọi thao tác'],['add','Thêm'],['upd','Sửa'],['del','Xoá']])}
-      <span class="flt-cnt">${rows?`${list.length} thay đổi · T${mon.split('-')[1]}/${mon.split('-')[0]}`:''}</span></div>
+      <span class="flt-cnt">${rows?`${list.length} thay đổi${rows.length>=(S._logLim||50)?` (trong ${rows.length} mới nhất đã tải)`:''} · T${mon.split('-')[1]}/${mon.split('-')[0]}`:''}</span></div>
       <div class="flt-act"><button class="btn btn-ghost btn-sm" onclick="S._logRows=null;renderLog()">${IC('ti-refresh')} Tải lại</button>${rows&&list.length?`<button class="btn btn-ghost btn-sm" onclick="logExport()">${IC('ti-download')} Xuất CSV</button>`:''}</div></div>
     ${rows===null?'<div class="card" style="text-align:center;padding:30px;color:var(--muted)">⏳ Đang tải nhật ký…</div>'
      :!list.length?'<div class="flt-empty">Chưa có thay đổi nào phù hợp trong tháng này. Đổi tháng ở thanh trên cùng để xem tháng khác.</div>'
@@ -6918,11 +6954,12 @@ function renderLog(){
         <div class="lg-main"><div class="lg-hd">${opB[r.op]||''}<b>${esc(LOG_COL_LBL[r.col]||r.col)}</b>${r.u?`<span class="lg-u">${esc(uName(r.u))}</span>`:''}<span class="lg-lbl">${esc(r.lbl||'')}</span></div>
         ${(r.ch||[]).length?`<div class="lg-ch">${r.ch.map(c=>`<span><i>${esc(LOG_F[c.f]||c.f)}:</i> <s>${esc(c.o)}</s> → <b>${esc(c.n)}</b></span>`).join('')}</div>`:''}</div>
         <div class="lg-by">${esc(r.by||'')}<small>${esc(((ROLES[r.role]||{}).label||'').replace(/^\S+\s/,''))}</small></div></div>`).join('')}</div>
-      ${list.length>shown.length?`<div style="text-align:center;color:var(--muted);font-size:13px;margin-top:8px">Hiển thị 400 thay đổi mới nhất — dùng bộ lọc để thu hẹp.</div>`:''}`}
+      ${list.length>shown.length?`<div style="text-align:center;color:var(--muted);font-size:13px;margin-top:8px">Hiển thị 400 thay đổi mới nhất — dùng bộ lọc để thu hẹp.</div>`:''}
+      ${rows.length>=(S._logLim||50)?`<div style="text-align:center;margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="S._logLim=(S._logLim||50)+50;S._logRows=null;renderLog()">Tải thêm 50 thay đổi cũ hơn</button></div>`:''}`}
     <div class="lg-note">${IC('ti-history')} Nhật ký cũ hơn ${LOG_KEEP_M} tháng được tự động xoá.${adm?' Quản trị viên có thể xoá thủ công; mỗi lần xoá đều được ghi lại.':''}</div>`;
 }
 function loadLog(mon){
-  S.fbDb.ref('dgData/log/'+mon).orderByKey().limitToLast(3000).once('value').then(sn=>{
+  S.fbDb.ref('dgData/log/'+mon).orderByKey().limitToLast(S._logLim||50).once('value').then(sn=>{
     if(S._logMon!==mon)return;const v=sn.val()||{};
     S._logRows=Object.keys(v).map(k=>({k,...v[k]})).sort((a,b)=>(b.t||0)-(a.t||0));S._logSel=new Set();
     if(S._sub.setup==='log')renderLog();
@@ -6948,15 +6985,22 @@ function logAdminBar(list,shown){
   return `<div class="lg-adm-bar no-print"><label class="lg-ck-all"><input type="checkbox" ${all?'checked':''} onchange="logPickAll(this.checked)"> Chọn tất cả${list.length>shown.length?` (${shown.length} đang hiện)`:''}</label>
     <span style="flex:1"></span>
     ${n?`<button class="btn btn-ghost btn-sm" onclick="S._logSel.clear();renderLog()">Bỏ chọn</button><button class="btn btn-err btn-sm" onclick="logDelAsk('sel')">${IC('ti-trash')} Xoá ${n} mục đã chọn</button>`:''}
-    ${!n&&fil&&list.length?`<button class="btn btn-ghost btn-sm lg-del" onclick="logDelAsk('filter')">${IC('ti-trash')} Xoá ${list.length} mục theo bộ lọc</button>`:''}
+    ${!n&&fil&&list.length?`<button class="btn btn-ghost btn-sm lg-del" onclick="logDelAsk('filter')">${IC('ti-trash')} Xoá theo bộ lọc (cả tháng)</button>`:''}
     ${!n?`<button class="btn btn-ghost btn-sm lg-del" onclick="logDelAsk('month')">${IC('ti-trash')} Xoá cả tháng</button>`:''}</div>`;
 }
 function logDelAsk(mode){
   if(!(S.user&&S.user.isAdmin)){toast('🔒 Chỉ quản trị viên được xoá nhật ký');return}
   if(!S.fbConnected){toast('⚠️ Cần có mạng để xoá nhật ký trên máy chủ');return}
   const mon=S._logMon,ml=mon.split('-').reverse().join('/');
-  const keys=mode==='sel'?[...S._logSel]:mode==='filter'?(S._logList||[]).map(r=>r.k):(S._logRows||[]).map(r=>r.k);
-  if(!keys.length)return;
+  if((mode==='filter'||mode==='month')&&!S._logAllFor){   /* xoá theo bộ lọc / cả tháng: áp dụng cho TOÀN BỘ tháng, không chỉ các dòng đang tải */
+    S.fbDb.ref('dgData/log/'+mon).once('value').then(sn=>{const v=sn.val()||{},f=S._logF,q=vnorm(f.q);
+      const all=Object.keys(v).map(k=>({k,...v[k]}));
+      const ks=mode==='month'?all.map(r=>r.k):all.filter(r=>(!f.u||r.u===f.u)&&(!f.who||r.by===f.who)&&(!f.col||r.col===f.col)&&(!f.op||r.op===f.op)&&(!q||vnorm(r.lbl+' '+(r.ch||[]).map(c=>(LOG_F[c.f]||c.f)+' '+c.o+' '+c.n).join(' ')).includes(q))).map(r=>r.k);
+      S._logAllFor=ks;try{logDelAsk(mode)}finally{S._logAllFor=null}}).catch(e=>toast('⚠️ Không tải được nhật ký: '+(e.message||e)));
+    return;
+  }
+  const keys=mode==='sel'?[...S._logSel]:S._logAllFor;
+  if(!keys||!keys.length){toast('Không có mục nào để xoá');return}
   const msg=mode==='month'?`Xoá TOÀN BỘ ${keys.length} mục nhật ký tháng ${ml}? Không thể khôi phục.`:`Xoá ${keys.length} mục nhật ký tháng ${ml}? Không thể khôi phục.`;
   uiConfirm('Xoá nhật ký thay đổi',msg+' Việc xoá sẽ được ghi lại (người xoá, số mục).','Xoá',()=>logDelete(mon,keys,mode),true);
 }
@@ -7392,8 +7436,7 @@ function spData(){
   let rev=[];
   if(hasPerm('fo_rev')){
     const hosts=[...new Set(units.map(u=>roomUnit(u.id)))].map(id=>S.units.find(x=>x.id===id)).filter(u=>u&&chkCfg(u.id)&&(chkCfg(u.id).rooms||[]).length);
-    if(S.fbDb)hosts.forEach(u=>ms.concat([prevMonthOf(ms[0])]).forEach(m=>needPart(bkPart(u.id,m))));
-    rev=hosts.map(u=>({u,per:ms.map(m=>foMonthRev(u.id,m))}));
+    rev=hosts.map(u=>({u,per:ms.map(m=>revMonth(u.id,m))}));
   }
   return{ms,ev,rep,topList,rev};
 }
@@ -7545,6 +7588,37 @@ function spPrint(){
   const tmp=document.createElement('div');tmp.innerHTML=h;tmp.querySelectorAll('.no-print').forEach(x=>x.remove());tmp.querySelectorAll('[onclick]').forEach(x=>x.removeAttribute('onclick'));
   printHtml(`<div class="sp-print">${tmp.innerHTML}</div>`,'a4');
 }
+
+/* ===========================================================
+   DOANH THU THÁNG ĐÃ TỔNG HỢP (dgData/x/rev/<khách sạn>/<tháng>)
+   → Tổng quan quý / năm không phải tải toàn bộ đặt phòng của các tháng cũ
+=========================================================== */
+S.revX={};S._revL={};
+function revLoad(h){
+  if(!S.fbDb||S._revL[h])return;S._revL[h]='loading';
+  S.fbDb.ref('dgData/x/rev/'+encKey(h)).once('value').then(sn=>{const v=sn.val()||{};Object.keys(v).forEach(m=>S.revX[sumKey(h,m)]=v[m]);S._revL[h]='done';if(S._curTab==='overview')renderOverview()})
+    .catch(()=>{S._revL[h]='done'});
+}
+function revReady(h,m){return partReady(m,h,'bookings')&&partReady(prevMonthOf(m),h,'bookings')}
+function revMonth(h,m){
+  const cur=localToday().slice(0,7);
+  if(!S.fbDb)return foMonthRev(h,m);
+  if(revReady(h,m)){const r=foMonthRev(h,m);revPush(h,m,r);return r}
+  if(m===cur||m===prevMonthOf(cur)){needPart(bkPart(h,m));needPart(bkPart(h,prevMonthOf(m)));return foMonthRev(h,m)}
+  if(S._revL[h]!=='done'){revLoad(h);return null}
+  const x=S.revX[sumKey(h,m)];if(x)return x;
+  needPart(bkPart(h,m));needPart(bkPart(h,prevMonthOf(m)));return null;   /* chưa có tổng hợp → tải 1 lần, tính rồi lưu lại */
+}
+function revPush(h,m,r){
+  try{if(!r||!S.fbConnected||!(hasPerm('fo')||hasPerm('fo_rev')))return;const key=sumKey(h,m),v=canon(r);
+    if(JSON.stringify(canon(S.revX[key])||null)===JSON.stringify(v))return;S.revX[key]=v;S.fbDb.ref(`dgData/x/rev/${encKey(h)}/${m}`).set(v).catch(()=>{})}catch(e){}
+}
+/* sau khi ghi đặt phòng → cập nhật tổng hợp tháng đó và tháng sau (đặt phòng kéo dài qua tháng) */
+function revUpdate(touched){
+  const cur=localToday().slice(0,7);
+  touched.forEach(s=>{const[m,seg]=s.split('|');const h=unitFromSeg(seg);[m,nextMonthOf(m)].forEach(mm=>{if(mm<=cur&&revReady(h,mm))revPush(h,mm,foMonthRev(h,mm))})});
+}
+function nextMonthOf(m){const[y,mm]=m.split('-').map(Number);const d=new Date(y,mm,1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
 /* ===========================================================
    LỄ TÂN: LỊCH SỬ ĐẶT PHÒNG
    - Mọi người có quyền Lễ tân xem được; chỉ QUẢN TRỊ VIÊN sửa / xoá / mở khoá đặt phòng đã kết thúc
@@ -7614,9 +7688,11 @@ function bkDelete(id){if(!bkAdmin()){toast('🔒 Chỉ quản trị viên đư�
 function bkAudit(id){
   const box=document.getElementById('bkAudit');if(!box)return;const b=S.bookings.find(x=>x.id===id);if(!b||!S.fbDb){box.innerHTML='<div class="bk-ro">Cần kết nối máy chủ để xem lịch sử.</div>';return}
   box.innerHTML='<div class="bk-ro">⏳ Đang tải lịch sử…</div>';
-  const ms=[...new Set([dPart(b.at||b.arr).slice(0,7),dPart(b.arr).slice(0,7),dPart(b.aout||b.dep).slice(0,7),localToday().slice(0,7)])].filter(Boolean).sort();
-  const k=encKey(id);
-  Promise.all(ms.map(m=>S.fbDb.ref('dgData/log/'+m).orderByKey().limitToLast(3000).once('value').then(s=>Object.values(s.val()||{}).filter(r=>r.col==='bookings'&&r.rid===k)).catch(()=>[]))).then(a=>{
+  const ms=[...new Set([dPart(b.at||b.arr).slice(0,7),dPart(b.arr).slice(0,7),dPart(b.aout||b.dep).slice(0,7)])].filter(Boolean).sort();
+  const k=encKey(id);S._bkLogC=S._bkLogC||{};
+  /* nhật ký từng tháng chỉ tải 1 lần / 10 phút rồi dùng lại cho mọi đặt phòng */
+  const get=m=>{const c=S._bkLogC[m];if(c&&Date.now()-c.t<600000)return Promise.resolve(c.v);return S.fbDb.ref('dgData/log/'+m).orderByKey().limitToLast(3000).once('value').then(s=>{const v=Object.values(s.val()||{}).filter(r=>r.col==='bookings');S._bkLogC[m]={t:Date.now(),v};return v})};
+  Promise.all(ms.map(m=>get(m).then(v=>v.filter(r=>r.rid===k)).catch(()=>[]))).then(a=>{
     const rows=a.flat().sort((x,y)=>(x.t||0)-(y.t||0));
     box.innerHTML=`<div class="bk-aud">${rows.length?rows.map(r=>`<div class="bk-ar"><span class="lg-op ${r.op}">${{add:'Tạo',upd:'Sửa',del:'Xoá'}[r.op]||r.op}</span><b>${esc(r.by||'')}</b> <span class="bk-at">${fmtDateTime(new Date(r.t).toISOString())}</span>${(r.ch||[]).length?`<div class="lg-ch">${r.ch.map(c=>`<span><i>${esc(LOG_F[c.f]||c.f)}:</i> <s>${esc(c.o)}</s> → <b>${esc(c.n)}</b></span>`).join('')}</div>`:''}</div>`).join(''):'<div class="bk-ro">Chưa có ghi nhận thay đổi (nhật ký bắt đầu từ khi cập nhật phiên bản có nhật ký).</div>'}</div>`;
   });
@@ -7754,7 +7830,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='28.10.2026-c76db4';
+const APP_BUILD='28.10.2026-d8ca08';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -8023,7 +8099,15 @@ addEventListener('keydown',e=>{
    THÔNG TIN CÔNG TY — tên, logo, địa chỉ… in lên biên bản, hoá đơn, báo cáo, Excel
    Lưu trên bản ghi quản trị (đồng bộ mọi máy): admin.org = {name,addr,phone,tax,web,logo,logoInv}
 =========================================================== */
-function orgInfo(){const a=S.units.find(u=>u.isAdmin);return (a&&a.org)||{}}
+function orgInfo(){const a=S.units.find(u=>u.isAdmin),o={...((a&&a.org)||{})};
+  if(!o.logo&&o.logoV){const c=LS.get('dg2_orglogo',null);if(c&&c.v===o.logoV)o.logo=c.d;else orgLogoFetch(o.logoV)}
+  return o}
+/* Logo lưu riêng (dgData/org/logo) — mỗi máy chỉ tải 1 lần mỗi khi logo đổi, không tải kèm danh sách đơn vị */
+S._orgLF=null;
+function orgLogoFetch(v){if(!S.fbDb||S._orgLF===v)return;S._orgLF=v;S.fbDb.ref('dgData/org/logo').once('value').then(sn=>{const d=sn.val();if(d){LS.set('dg2_orglogo',{v,d});try{if(S._curTab==='setup')renderOrgBox();if(S._sub.unit==='report'&&S._curTab==='unit')renderReport()}catch(e){}}}).catch(()=>{S._orgLF=null})}
+function orgLogoMigrate(){try{const a=S.units.find(u=>u.isAdmin);if(!a||!a.org||!a.org.logo||!S.fbDb||!S.fbConnected||!S._syncReady||!(S.user&&S.user.isAdmin))return;
+  const d=a.org.logo,v=Date.now();S.fbDb.ref('dgData/org/logo').set(d).then(()=>{LS.set('dg2_orglogo',{v,d});const o={...a.org,logoV:v};delete o.logo;a.org=o;persist()})}catch(e){}}
+setInterval(orgLogoMigrate,30000);
 function orgLogoImg(h){const o=orgInfo();return o.logo?`<img class="org-logo" src="${o.logo}" alt="" style="max-height:${h||44}px">`:''}
 /* khối tiêu đề công ty dùng cho bản in A4/A5 */
 function orgHeader(){
@@ -8076,7 +8160,11 @@ function orgSave(){
   const a=S.units.find(u=>u.isAdmin);if(!a)return;const g=id=>(document.getElementById(id)||{}).value.trim();
   const name=g('orgName');if(!name){toast('⚠️ Nhập tên công ty');const e=document.getElementById('orgName');if(e){e.focus();fieldErr(e,'Bắt buộc nhập')}return}
   const o={...(a.org||{}),name,tax:g('orgTax'),addr:g('orgAddr'),phone:g('orgPhone'),web:g('orgWeb'),logoInv:document.getElementById('orgLogoInv').checked};
-  if(S._orgLogo!==undefined){if(S._orgLogo)o.logo=S._orgLogo;else delete o.logo}
+  delete o.logo;
+  if(S._orgLogo!==undefined){
+    if(S._orgLogo){if(!S.fbDb||!S.fbConnected){toast('⚠️ Cần có mạng để lưu logo');return}const v=Date.now(),d=S._orgLogo;S.fbDb.ref('dgData/org/logo').set(d).catch(()=>{});LS.set('dg2_orglogo',{v,d});o.logoV=v}
+    else{delete o.logoV;try{if(S.fbDb)S.fbDb.ref('dgData/org/logo').remove()}catch(e){}LS.set('dg2_orglogo',null)}
+  }
   a.org=o;S._orgLogo=undefined;persist();renderOrgBox();toast('✅ Đã lưu thông tin công ty');
 }
 /* ===========================================================
@@ -8160,6 +8248,155 @@ function tourMaybe(){try{if(!S.user||navigator.webdriver||S._tour)return;if(LS.g
 (function(){const o=initApp;initApp=function(){const r=o.apply(this,arguments);setTimeout(tourMaybe,1500);return r}})();
 addEventListener('keydown',e=>{if(!S._tour)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();tourEnd()}else if(e.key==='ArrowRight'||e.key==='Enter'){e.preventDefault();tourGo(1)}else if(e.key==='ArrowLeft'){e.preventDefault();tourGo(-1)}},true);
 (function(){const o=renderToday;renderToday=function(){const r=o.apply(this,arguments);try{const t=document.querySelector('#todayContent > .pg-title h2');if(t&&!t.parentNode.querySelector('.help-btn')){const b=document.createElement('button');b.type='button';b.className='help-btn no-print';b.title='Hướng dẫn';b.setAttribute('aria-label','Hướng dẫn');b.innerHTML=IC('ti-help-circle');b.onclick=openHelp;t.after(b)}}catch(e){}return r}})();
+/* ===========================================================
+   ĐO DUNG LƯỢNG TẢI TỪ FIREBASE (ước tính) — để không vượt hạn mức 360 MB/ngày của gói miễn phí
+   - Đếm kích thước dữ liệu mỗi lần máy nhận từ máy chủ (tải ngăn, thay đổi thời gian thực, đọc trước khi ghi…)
+   - Mỗi máy cộng dồn theo ngày, gửi về dgData/x/usage/<ngày>/<mã máy> mỗi 3 phút
+   - Quản trị viên xem ở Hệ thống → Dung lượng tải; Hôm nay cảnh báo khi > 60% hạn mức
+=========================================================== */
+const USAGE_LIMIT_MB=360;
+function uDay(){return localToday()}
+function uState(){let u=LS.get('dg2_usage',null);const d=uDay();if(!u||u.d!==d)u={d,b:0,c:{},n:0};return u}
+S._uAcc=null;
+function uAdd(cat,bytes){if(!bytes)return;const u=S._uAcc||(S._uAcc=uState());if(u.d!==uDay()){usageFlush(true);S._uAcc=uState()}const A=S._uAcc;A.b+=bytes;A.c[cat]=(A.c[cat]||0)+bytes;S._uDirty=true}
+function uCat(path){
+  let p=String(path||'');const i=p.indexOf('dgData');p=i>=0?p.slice(i+7):p.replace(/^https?:\/\/[^/]+\//,'');
+  const a=p.split('/').filter(Boolean);if(!a.length)return 'khác';
+  if(a[0]==='m')return a[3]||'tháng';if(a[0]==='g')return a[1]||'chung';if(a[0]==='u')return a[2]||'kho';if(a[0]==='x')return 'tổng hợp';
+  return a[0];
+}
+function uSize(snap){try{const v=snap&&snap.val?snap.val():null;if(v==null)return 20;const s=JSON.stringify(v);let n=s.length;for(let i=0;i<s.length;i+=7)if(s.charCodeAt(i)>127)n+=1.3;return Math.round(n+40)}catch(e){return 0}}
+function uPathOf(q){try{if(q.path!=null&&typeof q.path==='string')return q.path;return q.toString()}catch(e){return ''}}
+function usagePatch(db){
+  const r=db.ref('dgData');let p=Object.getPrototypeOf(r);while(p&&!Object.prototype.hasOwnProperty.call(p,'on'))p=Object.getPrototypeOf(p);
+  if(!p||p.__uPatched)return;p.__uPatched=true;
+  const oOn=p.on,oOff=p.off,oOnce=p.once,W=new WeakMap();
+  p.on=function(ev,cb){
+    const path=uPathOf(this);if(/\.info/.test(path)||typeof cb!=='function')return oOn.apply(this,arguments);
+    const t0=Date.now(),cat=uCat(path);
+    const w=function(snap){try{if(ev==='value'||ev==='child_changed'||(ev==='child_added'&&Date.now()-t0>2500))uAdd(cat,uSize(snap))}catch(e){}return cb.apply(this,arguments)};
+    let m=W.get(cb);if(!m){m=new Map();W.set(cb,m)}m.set(ev+'|'+path,w);
+    const args=[...arguments];args[1]=w;oOn.apply(this,args);return cb;
+  };
+  p.off=function(ev,cb){if(typeof cb==='function'){const m=W.get(cb),k=ev+'|'+uPathOf(this);if(m&&m.has(k)){const w=m.get(k);m.delete(k);const args=[...arguments];args[1]=w;return oOff.apply(this,args)}}return oOff.apply(this,arguments)};
+  p.once=function(ev){const path=uPathOf(this),cat=uCat(path);const pr=oOnce.apply(this,arguments);if(pr&&pr.then&&!/\.info/.test(path))pr.then(s=>uAdd(cat,uSize(s)),()=>{});return pr};
+}
+function usageFlush(force){
+  try{
+    const A=S._uAcc;if(!A)return;LS.set('dg2_usage',A);
+    if(!S.fbDb||!S.fbConnected||!S.user||(!S._uDirty&&!force))return Promise.resolve();S._uDirty=false;
+    const c={};Object.entries(A.c).forEach(([k,v])=>{c[encKey(k)]=Math.round(v)});
+    return S.fbDb.ref(`dgData/x/usage/${A.d}/${encKey(CLIENT_ID)}`).set({b:Math.round(A.b),n:A.n,c,by:S.user.name||'',dev:(typeof errDevice==='function'?errDevice():''),t:Date.now()}).catch(()=>{});
+  }catch(e){}return Promise.resolve()
+}
+(function(){S._uAcc=uState();S._uAcc.n++;LS.set('dg2_usage',S._uAcc)})();
+setInterval(()=>usageFlush(),180000);
+addEventListener('pagehide',()=>{try{LS.set('dg2_usage',S._uAcc)}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')usageFlush()});
+
+/* ---------- Xem (Hệ thống → Dung lượng tải) ---------- */
+S._uRows=null;
+const U_CAT_LBL={checks:'Kiểm tra phòng',bookings:'Đặt phòng',evals:'Chấm điểm',criteria:'Tiêu chí',feedback:'Khắc phục / ý kiến',hkasg:'Phân công',inv:'Kho',units:'Đơn vị',users:'Tài khoản',plans:'Lịch',rstate:'Tình trạng phòng',rlevel:'Minibar phòng','tổng hợp':'Bảng tổng hợp',log:'Nhật ký',err:'Lỗi app',photos:'Ảnh (cũ)',org:'Logo',meta:'Hệ thống'};
+function usageLoad(){
+  if(!S.fbDb){S._uRows=[];renderUsageBox();return}
+  const days=[];let d=new Date(nowMs());for(let i=0;i<7;i++){days.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);d=new Date(d.getTime()-864e5)}
+  Promise.resolve(usageFlush(true)).catch(()=>{}).then(()=>Promise.all(days.map(dy=>S.fbDb.ref('dgData/x/usage/'+dy).once('value').then(s=>({d:dy,v:s.val()||{}})).catch(()=>({d:dy,v:{}})))).then(a=>{S._uRows=a;renderUsageBox();try{if(S._curTab==='today')renderToday()}catch(e){}}));
+}
+function mb(b){return b<1048576?Math.round(b/1024)+' KB':(b/1048576).toFixed(b<10485760?2:1)+' MB'}
+function usageToday(){const r=(S._uRows||[])[0];if(!r)return null;const v=Object.values(r.v);return{b:v.reduce((a,x)=>a+(x.b||0),0),devs:v.length,v}}
+function renderUsageBox(){
+  const box=document.getElementById('usageBox');if(!box)return;
+  if(S._uRows===null){box.innerHTML='<div class="err-empty">Đang tải…</div>';usageLoad();return}
+  const R=S._uRows,T=R[0]?Object.values(R[0].v):[],tot=T.reduce((a,x)=>a+(x.b||0),0),pct=Math.min(100,tot/1048576/USAGE_LIMIT_MB*100);
+  const cats={};T.forEach(x=>Object.entries(x.c||{}).forEach(([k,v])=>{cats[k]=(cats[k]||0)+v}));const cl=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  const max7=Math.max(1,...R.map(r=>Object.values(r.v).reduce((a,x)=>a+(x.b||0),0)));
+  box.innerHTML=`<div class="us-top"><div><div class="us-v">${mb(tot)}</div><div class="us-l">đã tải hôm nay · ${T.length} máy · hạn mức ${USAGE_LIMIT_MB} MB/ngày</div></div>
+    <div class="us-bar"><i class="${pct>80?'err':pct>60?'warn':''}" style="width:${Math.max(1,pct)}%"></i></div><b class="us-p">${pct.toFixed(1)}%</b>
+    <button class="btn btn-ghost btn-sm" onclick="S._uRows=null;renderUsageBox()">${IC('ti-refresh')} Tải lại</button></div>
+  <div class="us-grid"><div><h5>7 ngày gần nhất</h5>${R.map(r=>{const b=Object.values(r.v).reduce((a,x)=>a+(x.b||0),0);return `<div class="us-d"><span>${r.d.split('-').reverse().slice(0,2).join('/')}</span><div class="us-db"><i style="width:${Math.max(.5,b/max7*100)}%"></i></div><b>${mb(b)}</b></div>`}).join('')}</div>
+    <div><h5>Theo loại dữ liệu (hôm nay)</h5>${cl.length?cl.slice(0,8).map(([k,v])=>`<div class="us-d"><span>${esc(U_CAT_LBL[k]||k)}</span><div class="us-db"><i style="width:${Math.max(.5,v/cl[0][1]*100)}%"></i></div><b>${mb(v)}</b></div>`).join(''):'<div class="err-empty">Chưa có số liệu</div>'}</div>
+    <div><h5>Theo máy (hôm nay)</h5>${T.length?T.sort((a,b)=>b.b-a.b).slice(0,8).map(x=>`<div class="us-d"><span title="${esc(x.dev||'')}">${esc(x.by||'?')} <small>${esc((x.dev||'').split(' · ')[0])}</small></span><b>${mb(x.b)}</b><small>${x.n||0} lần mở</small></div>`).join(''):'<div class="err-empty">Chưa có số liệu</div>'}</div></div>
+  <div class="lg-note">Số ước tính từ dữ liệu app nhận được (gửi về mỗi 3 phút). Hạn mức của Firebase tính cả phần mã hoá &amp; giao thức nên thực tế có thể cao hơn khoảng 20–40%. Số chính xác: Firebase Console → Realtime Database → Usage.</div>`;
+}
+/* dọn số liệu > 30 ngày (cùng lúc với dọn nhật ký) */
+(function(){const o=logAutoPrune;logAutoPrune=function(){const before=LS.get('dg2_logprune','');o();
+  try{if(before!==LS.get('dg2_logprune','')&&S.fbDb){const u={};let d=new Date(nowMs()-31*864e5);for(let i=0;i<120;i++){u[`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`]=null;d=new Date(d.getTime()-864e5)}S.fbDb.ref('dgData/x/usage').update(u).catch(()=>{})}}catch(e){}}})();
+/* ===========================================================
+   PHÂN TRANG DANH SÁCH DÀI: mỗi danh sách chỉ hiện 50 dòng, bấm "Xem thêm" để hiện tiếp
+   - Tự áp dụng cho mọi bảng / danh sách trong app (kể cả sau khi lọc)
+   - Bỏ qua: biên bản in, bảng quyền, lịch, danh sách đã phân trang ở máy chủ (class no-pg)
+=========================================================== */
+const PG_N=50;S._pg={};
+const PG_SKIP='#reportContent,#roleMatrix,#printArea,.no-pg,.cal-grid,.modal-overlay:not(.pg-ok)';
+function pgKey(c){const h=c.parentElement&&c.parentElement.closest('[id]');const sel=c.tagName==='TABLE'?'table':'.err-list';const i=h?[...h.querySelectorAll(sel)].indexOf(c):0;return (h?h.id:'x')+':'+i+':'+(S._curTab||'')+':'+((S._sub&&S._sub[S._curTab])||'')+':'+(S._foView||'')+(S._invView||'')}
+function pgItems(c){
+  if(c.tagName==='TABLE'){const rows=[];[...c.tBodies].forEach(tb=>rows.push(...tb.rows));return{all:rows,data:rows.filter(r=>!r.dataset.hd&&!(r.cells.length===1&&r.cells[0].colSpan>1)),hd:rows.filter(r=>r.dataset.hd)}}
+  const it=[...c.children].filter(x=>x.classList.contains('err-it'));return{all:it,data:it,hd:[]};
+}
+function pgOne(c){
+  if(c.closest(PG_SKIP))return;
+  const{all,data,hd}=pgItems(c);const elig=data.filter(r=>r.style.display!=='none');
+  const key=pgKey(c),anchor=c.tagName==='TABLE'?(c.closest('.tbl-wrap')||c):c;
+  let btn=anchor.nextElementSibling&&anchor.nextElementSibling.classList.contains('pg-more')?anchor.nextElementSibling:null;
+  if(elig.length<=PG_N+5){data.forEach(r=>r.classList.remove('pg-hide'));hd.forEach(r=>r.classList.remove('pg-hide'));if(btn)btn.remove();return}
+  const lim=Math.max(PG_N,S._pg[key]||PG_N),set=new Set(elig.slice(0,lim));
+  data.forEach(r=>{const h=!set.has(r)&&r.style.display!=='none';if(r.classList.contains('pg-hide')!==h)r.classList.toggle('pg-hide',h)});
+  /* tiêu đề nhóm: ẩn nếu cả nhóm đều bị ẩn */
+  if(hd.length){for(let i=0;i<all.length;i++){const r=all[i];if(!r.dataset.hd)continue;let vis=false;for(let j=i+1;j<all.length;j++){const x=all[j];if(x.dataset.hd)break;if(x.style.display!=='none'&&!x.classList.contains('pg-hide')){vis=true;break}}r.classList.toggle('pg-hide',!vis)}}
+  const rest=elig.length-Math.min(lim,elig.length);
+  if(!rest){if(btn)btn.remove();return}
+  const txt=`Đang hiện ${lim}/${elig.length}`;
+  if(!btn){btn=document.createElement('div');btn.className='pg-more no-print';anchor.after(btn)}
+  if(btn.dataset.t!==txt+key){btn.dataset.t=txt+key;btn.innerHTML=`<span>${txt}</span><button type="button" class="btn btn-ghost btn-sm" data-a="more">Xem thêm ${Math.min(PG_N,rest)}</button>${rest>PG_N?`<button type="button" class="btn btn-ghost btn-sm" data-a="all">Xem tất cả (${elig.length})</button>`:''}`;
+    btn.onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;S._pg[key]=a.dataset.a==='all'?1e9:lim+PG_N;pgOne(c)}}
+}
+function pgApply(){try{document.querySelectorAll('.main table, .main .err-list').forEach(pgOne)}catch(e){console.warn('pg',e)}}
+(function(){let q=0;const run=()=>{q=0;pgApply()};
+  const start=()=>{const m=document.querySelector('.main');if(!m)return;new MutationObserver(ms=>{if(ms.every(x=>x.target.closest&&x.target.closest('.pg-more')))return;if(!q)q=requestAnimationFrame(run)}).observe(m,{childList:true,subtree:true});pgApply()};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+/* bộ lọc tại chỗ (ẩn/hiện dòng không vẽ lại) → phân trang lại */
+(function(){if(typeof applyFlt==='function'){const o=applyFlt;applyFlt=function(){const r=o.apply(this,arguments);try{pgApply()}catch(e){}return r}}})();
+/* ===========================================================
+   GIỮ THAY ĐỔI CHƯA LƯU: đang sửa một màn hình cài đặt (vùng .guard) mà chuyển sang mục khác
+   → hỏi "Lưu & chuyển / Bỏ thay đổi / Ở lại" thay vì mất trắng
+=========================================================== */
+function dirtyGuardEl(){if(!S._formDirty)return null;return document.querySelector('.page.active .sub.active .guard, .page.active > .guard, .page.active .guard')}
+function leaveAsk(proceed){
+  const g=dirtyGuardEl();if(!g){proceed();return}
+  const save=[...g.querySelectorAll('.btn-pri')].filter(b=>/Lưu/i.test(b.textContent)).pop();
+  let o=document.getElementById('leaveAsk');if(o)o.remove();
+  o=document.createElement('div');o.id='leaveAsk';o.className='modal-overlay show';o.setAttribute('role','dialog');
+  o.innerHTML=`<div class="modal" style="max-width:440px"><div class="modal-bd" style="padding:20px"><div style="font-weight:800;font-size:17px;margin-bottom:6px">Có thay đổi chưa lưu</div><div style="color:#475569;font-size:14.5px;line-height:1.55">Bạn đã sửa nội dung ở màn hình này nhưng chưa bấm Lưu. Chuyển sang mục khác sẽ mất các thay đổi đó.</div></div>
+    <div class="modal-ft" style="flex-wrap:wrap"><button class="btn btn-ghost" data-a="stay">Ở lại</button><button class="btn btn-ghost lg-del" data-a="drop">Bỏ thay đổi</button>${save?'<button class="btn btn-pri" data-a="save">Lưu &amp; chuyển</button>':''}</div></div>`;
+  const done=a=>{o.remove();removeEventListener('keydown',kd,true);
+    if(a==='drop'){S._formDirty=false;proceed()}
+    else if(a==='save'){save.click();setTimeout(()=>{if(!S._formDirty)proceed();else toast('⚠️ Chưa lưu được — kiểm tra lại các ô báo lỗi')},120)}};
+  const kd=e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();done('stay')}};
+  o.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b)done(b.dataset.a);else if(e.target===o)done('stay')});
+  addEventListener('keydown',kd,true);document.body.appendChild(o);setTimeout(()=>{const b=o.querySelector('[data-a="save"],[data-a="stay"]');if(b)b.focus()},30);
+}
+(function(){
+  const curSub=t=>S._sub&&S._sub[t];
+  const gt=goTab;goTab=function(t,sub){
+    if(S._inRR||!dirtyGuardEl())return gt.apply(this,arguments);
+    const same=(t===S._curTab||(TAB_ALIAS[t]&&TAB_ALIAS[t][0]===S._curTab&&(!sub&&!TAB_ALIAS[t][1]||(sub||TAB_ALIAS[t][1])===curSub(S._curTab))))&&(!sub||sub===curSub(S._curTab));
+    if(same)return gt.apply(this,arguments);
+    const args=arguments,self=this;leaveAsk(()=>gt.apply(self,args));
+  };
+  const gs=goSub;goSub=function(pg,sub){
+    if(S._inRR||!dirtyGuardEl()||sub===curSub(pg))return gs.apply(this,arguments);
+    const args=arguments,self=this;leaveAsk(()=>gs.apply(self,args));
+  };
+  /* đổi đơn vị ở menu trái */
+  const su=sideUnitChange;sideUnitChange=function(v){
+    if(!dirtyGuardEl())return su.apply(this,arguments);
+    const sel=document.getElementById('sideUnitSel');if(sel)sel.value=S.curUnit;const args=arguments,self=this;
+    leaveAsk(()=>{if(sel)sel.value=v;su.apply(self,args)});
+  };
+})();
+/* đóng / tải lại trang khi còn thay đổi chưa lưu */
+addEventListener('beforeunload',e=>{if(dirtyGuardEl()){e.preventDefault();e.returnValue='';return ''}});
 // START
 buildLayout();
 STORE.init().then(()=>{S.sums=LS.get(K_SUMS,{});checkSession()});
