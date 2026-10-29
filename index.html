@@ -1200,6 +1200,13 @@ html[data-fs="xl"]{zoom:1.25}
 .hr-rules small{color:var(--muted)}
 .bk-mode{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13.5px;font-weight:600;color:#475569}
 .rk-hr{color:#7c3aed}
+/* Thanh lưu nổi */
+#saveBar{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:170;display:flex;align-items:center;gap:10px;background:#0f172a;color:#fff;border-radius:14px;padding:9px 10px 9px 16px;box-shadow:0 12px 32px rgba(15,23,42,.35);transition:transform .2s;max-width:calc(100% - 24px)}
+#saveBar.show{transform:translate(-50%,0)}
+#saveBar span{display:flex;align-items:center;gap:7px;font-size:14px;white-space:nowrap}#saveBar span .ic{color:#fbbf24;width:18px;height:18px}
+#saveBar .btn-ghost{background:rgba(255,255,255,.1)!important;color:#e2e8f0!important;border-color:transparent!important}
+@media(min-width:901px){#saveBar{left:calc(50% + var(--side-w)/2)}}
+@media(max-width:900px){#saveBar{bottom:74px;gap:6px;padding:7px 8px 7px 12px}#saveBar span{font-size:13px}}
 </style>
 
 </head>
@@ -6055,7 +6062,7 @@ function renderRoomTypeSetup(roomsNow){
       ${ro?'':`<div class="rt-bulk">Gán nhanh phòng <input id="rtBulkRooms" placeholder="VD: 101-110, 201"> là <select id="rtBulkType">${rtOptions(types,'')}</select> <button type="button" class="btn btn-ghost btn-sm" onclick="rtBulk()">Áp dụng</button></div>`}</div>
     <div class="tbl-wrap no-pg" style="max-height:420px;overflow:auto"><table class="inv-ed"><thead><tr><th>Phòng</th><th style="min-width:150px">Loại phòng</th><th>Giá / đêm <span style="font-weight:400;text-transform:none">(để trống = theo loại)</span></th><th style="min-width:180px">Ghi chú</th></tr></thead><tbody id="rtRooms">${
       rooms.map(r=>rtRoomRow(r,(cfg.roomInfo||{})[r]||{},types,ro)).join('')}</tbody></table></div>
-    <div style="font-size:12.5px;color:var(--muted);margin-top:6px">Bảng cập nhật ngay khi sửa danh sách phòng. Bấm "Lưu checklist" bên dưới để lưu cả danh sách phòng, loại phòng &amp; giá.</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px"><span style="font-size:12.5px;color:var(--muted)">Bảng cập nhật ngay khi sửa danh sách phòng.</span>${ro?'':`<button type="button" class="btn btn-pri btn-sm" onclick="saveChkSetup()">${IC('ti-device-floppy')} Lưu loại phòng &amp; giá</button>`}</div>
     </div></details>`;
 }
 function rtOptions(types,v){return `<option value=""${!v?' selected':''}>— Chưa chọn —</option>`+types.map(t=>`<option value="${t.id}"${t.id===v?' selected':''}>${esc(t.name)}${t.code?' ('+esc(t.code)+')':''}</option>`).join('')}
@@ -7843,7 +7850,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='29.10.2026-339a81';
+const APP_BUILD='29.10.2026-593eef';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -8410,6 +8417,24 @@ function leaveAsk(proceed){
 })();
 /* đóng / tải lại trang khi còn thay đổi chưa lưu */
 addEventListener('beforeunload',e=>{if(dirtyGuardEl()){e.preventDefault();e.returnValue='';return ''}});
+
+/* ---------- Thanh "Có thay đổi chưa lưu" luôn hiện ở cuối màn hình khi đang sửa vùng cài đặt ---------- */
+function guardSaveBtn(g){return g?[...g.querySelectorAll('.btn-pri')].filter(b=>/Lưu/i.test(b.textContent)).pop():null}
+function saveBarSync(){
+  const g=dirtyGuardEl();let bar=document.getElementById('saveBar');
+  if(!g||!guardSaveBtn(g)){if(bar)bar.classList.remove('show');return}
+  if(!bar){bar=document.createElement('div');bar.id='saveBar';bar.className='no-print';bar.setAttribute('role','status');
+    bar.innerHTML=`<span>${IC('ti-alert-triangle')}<b>Có thay đổi chưa lưu</b></span><button type="button" class="btn btn-ghost btn-sm" data-a="drop">Bỏ thay đổi</button><button type="button" class="btn btn-pri btn-sm" data-a="save">${IC('ti-device-floppy')} Lưu</button>`;
+    bar.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const gg=dirtyGuardEl();
+      if(b.dataset.a==='save'){const s=guardSaveBtn(gg);if(s)s.click();setTimeout(saveBarSync,150)}
+      else{S._formDirty=false;bar.classList.remove('show');S._inRR=true;try{const a=S._curTab;goTab(a,S._sub[a])}finally{S._inRR=false}toast('Đã bỏ các thay đổi chưa lưu')}});
+    document.body.appendChild(bar)}
+  bar.classList.add('show');
+}
+document.addEventListener('input',e=>{if(e.target&&e.target.closest&&e.target.closest('.guard'))setTimeout(saveBarSync,0)},true);
+document.addEventListener('change',e=>{if(e.target&&e.target.closest&&e.target.closest('.guard'))setTimeout(saveBarSync,0)},true);
+(function(){const o=formSaved;formSaved=function(){const r=o.apply(this,arguments);setTimeout(saveBarSync,0);return r}})();
+(function(){const o=goTab;goTab=function(){const r=o.apply(this,arguments);setTimeout(saveBarSync,0);return r}})();
 /* ===========================================================
    BẢNG GIÁ NGHỈ GIỜ
    - Loại phòng: "giá giờ đầu" (cho N giờ đầu) + "mỗi giờ tiếp"
