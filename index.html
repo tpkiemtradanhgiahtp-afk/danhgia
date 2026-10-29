@@ -2178,7 +2178,7 @@ const SEED_UNITS=[
 function seed(){
   if(S.units.length>0) return;
   // admin
-  S.units.push({id:'admin',code:'ADMIN',name:'Quản trị viên',biz:'office',manager:'Admin',phone:'',username:'admin',password:'Hungthinh123',isAdmin:true});
+  S.units.push({id:'admin',code:'ADMIN',name:'Quản trị viên',biz:'office',manager:'Admin',phone:'',username:'admin',pw:{...ADMIN_PW},isAdmin:true});
   // 20 đơn vị mẫu: chỉ khi chạy độc lập không có máy chủ (có máy chủ thì lấy đơn vị thật từ máy chủ)
   if(!hasFbCfg())SEED_UNITS.forEach((u,i)=>{
     S.units.push({
@@ -2279,8 +2279,8 @@ function doLogin(){
   const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value;
   loadLocal();if(!S.units.length){seed();ensureCriteria();}
   const un=u.toLowerCase();
-  let kind='acct',rec=S.users.find(x=>(x.username||'').toLowerCase()===un&&x.password===p);
-  if(!rec){kind='unit';rec=S.units.find(x=>(x.username||'').toLowerCase()===un&&x.password===p)}
+  let kind='acct',rec=S.users.filter(x=>(x.username||'').toLowerCase()===un).find(x=>pwCheck(x,p));
+  if(!rec){kind='unit';rec=S.units.filter(x=>(x.username||'').toLowerCase()===un).find(x=>pwCheck(x,p))}
   if(!rec){toast('❌ Sai tài khoản hoặc mật khẩu');return}
   if(rec.active===false||rec.locked){toast('🔒 Tài khoản đã bị khoá — liên hệ quản trị viên');return}
   S.user=buildSessionUser(kind,rec);
@@ -3841,11 +3841,11 @@ initApp=function(){_initAppV3();try{initV4()}catch(e){console.warn('initV4',e)}}
 /* ===========================================================
    v4.3 — TÀI KHOẢN & PHÂN QUYỀN
 =========================================================== */
-const ADMIN_PWD='Hungthinh123';
-/* Đổi mật khẩu admin gốc: chỉ thay nếu vẫn còn mật khẩu mặc định cũ (không đè mật khẩu đã tự đổi) */
+/* Đổi mật khẩu admin gốc: chỉ thay nếu vẫn còn mật khẩu mặc định cũ (không đè mật khẩu đã tự đổi).
+   Mật khẩu gốc lưu dạng băm ADMIN_PW (xem 53-bam-mat-khau.js) */
 function migrateAdminPwd(){
   const a=(S.units||[]).find(u=>u.isAdmin&&(u.username||'').toLowerCase()==='admin');
-  if(a&&a.password==='123456'){a.password=ADMIN_PWD;return true}
+  if(a&&pwCheck(a,'123456')){a.pw={...ADMIN_PW};delete a.password;return true}
   return false;
 }
 
@@ -3901,8 +3901,9 @@ function buildSessionUser(kind,rec){
       isAdmin:role==='admin',perms:acctPerms(rec),
       unitIds:(role==='admin'||!rec.unitIds||!rec.unitIds.length)?null:rec.unitIds.slice()};
   }
-  if(rec.isAdmin)return{...rec,kind:'unit',role:'admin',perms:permMap(ROLES.admin.perms),unitIds:null};
-  return{...rec,kind:'unit',role:'unit',isAdmin:false,perms:permMap(ROLES.unit.perms),unitIds:[rec.id]};
+  const {password,pw,pin,...pub}=rec;   // không mang mật khẩu / PIN vào phiên đăng nhập
+  if(rec.isAdmin)return{...pub,kind:'unit',role:'admin',perms:permMap(ROLES.admin.perms),unitIds:null};
+  return{...pub,kind:'unit',role:'unit',isAdmin:false,perms:permMap(ROLES.unit.perms),unitIds:[rec.id]};
 }
 function hasPerm(p){return !!(S.user&&S.user.perms&&S.user.perms[p])}
 function availUnits(){
@@ -4044,9 +4045,9 @@ function saveAcct(){
   const now=nowISO();
   if(a){
     Object.assign(a,{username,fullName,role,unitIds,perms,active,updatedAt:now,updatedBy:S.user.name});
-    if(pass){a.password=pass;a.pwdChangedAt=now}
+    if(pass){pwSet(a,pass);a.pwdChangedAt=now}
   }else{
-    S.users.push({id:'acc_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),username,fullName,password:pass,role,unitIds,perms,active,createdAt:now,createdBy:S.user.name});
+    S.users.push({id:'acc_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),username,fullName,pw:pwMake(pass),role,unitIds,perms,active,createdAt:now,createdBy:S.user.name});
   }
   persist();closeM('acctModal');
   if(me){S.user=buildSessionUser('acct',a);document.getElementById('uName').textContent=S.user.name;renderTabs();goTab('firebase')}
@@ -4101,11 +4102,11 @@ function savePwd(){
   if(!_pwdTarget)return;
   const rec=_pwdRec(_pwdTarget);if(!rec){toast('⚠️ Không tìm thấy tài khoản');return}
   const cur=document.getElementById('pwdCur').value,n1=document.getElementById('pwdNew').value,n2=document.getElementById('pwdNew2').value;
-  if(_pwdTarget.self&&cur!==rec.password){toast('❌ Mật khẩu hiện tại không đúng');return}
+  if(_pwdTarget.self&&!pwCheck(rec,cur)){toast('❌ Mật khẩu hiện tại không đúng');return}
   if(n1.length<6){toast('⚠️ Mật khẩu mới tối thiểu 6 ký tự');return}
   if(n1!==n2){toast('⚠️ Hai lần nhập mật khẩu mới không khớp');return}
-  if(n1===rec.password){toast('⚠️ Mật khẩu mới phải khác mật khẩu cũ');return}
-  rec.password=n1;rec.pwdChangedAt=nowISO();
+  if(pwCheck(rec,n1)){toast('⚠️ Mật khẩu mới phải khác mật khẩu cũ');return}
+  pwSet(rec,n1);rec.pwdChangedAt=nowISO();
   persist();closeM('pwdModal');
   if(_pwdTarget.self)S.user=buildSessionUser(_pwdTarget.kind,rec);
   try{if(hasPerm('users'))renderAccounts()}catch(e){}
@@ -4117,10 +4118,10 @@ function savePwd(){
 function unitAcctToUser(u){
   if(!u||!u.username)return false;
   const id='acc_u_'+u.id,ex=S.users.find(a=>(a.username||'').toLowerCase()===u.username.toLowerCase());
-  if(ex&&ex.id===id){delete u.username;delete u.password;delete u.locked;return true}
+  if(ex&&ex.id===id){delete u.username;delete u.password;delete u.pw;delete u.locked;return true}
   if(ex)return false;                                   // trùng tên với tài khoản khác → giữ đăng nhập kiểu cũ
-  S.users.push({id,username:u.username,fullName:u.manager||u.name,password:u.password,role:'unit',unitIds:[u.id],perms:null,active:!u.locked,createdAt:nowISO(),createdBy:(S.user&&S.user.name)||'',from:'unit'});
-  delete u.username;delete u.password;delete u.locked;return true;
+  S.users.push({id,username:u.username,fullName:u.manager||u.name,...(u.pw?{pw:u.pw}:{}),...(u.password?{password:u.password}:{}),role:'unit',unitIds:[u.id],perms:null,active:!u.locked,createdAt:nowISO(),createdBy:(S.user&&S.user.name)||'',from:'unit'});
+  delete u.username;delete u.password;delete u.pw;delete u.locked;return true;
 }
 /* Tự chuyển (1 lần) khi quản trị viên / người quản lý tài khoản đang online và dữ liệu đã tải xong.
    Mã tài khoản cố định theo đơn vị → 2 máy cùng chuyển không bị trùng. */
@@ -6974,7 +6975,7 @@ function applyFlt(tab){
 =========================================================== */
 const LOG_COL_LBL={hkasg:'Phân công buồng phòng',units:'Đơn vị',users:'Tài khoản',plans:'Lịch đánh giá',criteria:'Tiêu chí',evals:'Chấm điểm',feedback:'Khắc phục / ý kiến',checks:'Kiểm tra phòng',bookings:'Lễ tân',inv:'Kho',rstate:'Tình trạng phòng',rlevel:'Minibar phòng',log:'Nhật ký'};
 const LOG_F={org:'Thông tin công ty',closed:'Đã chốt hoá đơn',extras:'Dịch vụ thêm',disc:'Giảm giá',src:'Nguồn đặt',result:'Kết quả',score:'Điểm',notes:'Ghi chú',status:'Trạng thái',st:'Tình trạng',name:'Tên',code:'Mã',rate:'Giá',arr:'Giờ đến',dep:'Giờ đi',ain:'Nhận phòng thực tế',aout:'Trả phòng thực tế',guest:'Khách',phone4:'SĐT',pax:'Số khách',qty:'Số lượng',type:'Loại',password:'Mật khẩu',role:'Vai trò',perms:'Quyền',unitIds:'Phạm vi',content:'Nội dung',dueDate:'Hạn KP',maxScore:'Điểm tối đa',desc:'Mô tả',method:'Phương pháp',group:'Nhóm',date:'Ngày',note:'Ghi chú',pays:'Thanh toán',room:'Phòng',active:'Hoạt động',fullName:'Họ tên',manager:'Phụ trách',checklist:'Cấu hình phòng / checklist',inv:'Danh mục kho',drive:'Lưu ảnh Drive',fo:'Cài đặt lễ tân',roomLink:'Liên kết phòng',committed:'Đã lưu',lv:'Mức minibar',price:'Giá',lot:'Lô',sur:'Phụ thu',reviews:'Duyệt',rounds:'Lượt dọn',round:'Lượt',use:'Khách dùng',fill:'Bổ sung'};
-const LOG_SECRET=/^(password|pass|token|key|apiKey|pin)$/i;
+const LOG_SECRET=/^(password|pass|token|key|apiKey|pin|pw)$/i;
 const LOG_SKIP=new Set(['updatedAt','updatedBy','at','by','byId','writer','v','closedAt']);
 S._srvSnap={};
 function logPutSnap(path,k,r){S._srvSnap[path+'/'+k]=r||null}
@@ -7941,7 +7942,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='29.10.2026-e9b9f9';
+const APP_BUILD='29.10.2026-f82ec8';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -8883,7 +8884,7 @@ function qaErr(id,msg){const el=document.getElementById(id);if(el){fieldErr(el,m
 function qaSavePin(){
   const me=qaMe();if(!me)return;
   const cur=document.getElementById('qaCur').value,p1=document.getElementById('qaPin1').value.trim(),p2=document.getElementById('qaPin2').value.trim();
-  if(cur!==me.password){qaErr('qaCur','Mật khẩu hiện tại không đúng');return}
+  if(!pwCheck(me,cur)){qaErr('qaCur','Mật khẩu hiện tại không đúng');return}
   if(!/^\d{4,6}$/.test(p1)){qaErr('qaPin1','PIN gồm 4–6 chữ số');return}
   if(pinWeak(p1)){qaErr('qaPin1','PIN quá dễ đoán (dãy số liền / trùng nhau) — chọn số khác');return}
   if(p1!==p2){qaErr('qaPin2','Hai lần nhập PIN không khớp');return}
@@ -8892,7 +8893,7 @@ function qaSavePin(){
 }
 async function qaDelPin(){
   const me=qaMe();if(!me)return;
-  if(document.getElementById('qaCur').value!==me.password){qaErr('qaCur','Nhập mật khẩu hiện tại để xoá PIN');return}
+  if(!pwCheck(me,document.getElementById('qaCur').value)){qaErr('qaCur','Nhập mật khẩu hiện tại để xoá PIN');return}
   if(!await askYes('Xoá mã PIN? Lần sau sẽ phải đăng nhập bằng mật khẩu.'))return;
   delete me.pin;persist();toast('Đã xoá mã PIN');qaRender();iwSync();try{renderSide()}catch(e){}
 }
@@ -8907,9 +8908,9 @@ async function pinResetFor(kind,id){
 /* QTV đặt lại mật khẩu cho người khác → xoá luôn PIN người đó */
 const _qaSavePwd=savePwd;
 savePwd=function(){
-  const t=_pwdTarget,r=t&&_pwdRec(t),had=r&&r.password;
+  const t=_pwdTarget,r=t&&_pwdRec(t),had=r&&JSON.stringify([r.password,r.pw]);
   const out=_qaSavePwd.apply(this,arguments);
-  try{if(t&&!t.self&&r&&r.password!==had&&r.pin){delete r.pin;persist();try{renderAccounts()}catch(e){}}}catch(e){}
+  try{if(t&&!t.self&&r&&JSON.stringify([r.password,r.pw])!==had&&r.pin){delete r.pin;persist();try{renderAccounts()}catch(e){}}}catch(e){}
   return out;
 };
 
@@ -8930,6 +8931,41 @@ function qaNudgeClose(remember){const d=document.getElementById('qaNudge');if(d)
 /* nút khoá trên thanh trên cùng cập nhật cùng menu */
 const _qaRenderSide=renderSide;
 renderSide=function(){const r=_qaRenderSide.apply(this,arguments);try{iwSync()}catch(e){}return r};
+/* ===========================================================
+   BĂM MẬT KHẨU — không lưu mật khẩu dạng chữ thường ở bất kỳ đâu
+   - rec.pw={h,s,v:1}: h = sha256 lặp PW_ITER vòng (kèm muối ngẫu nhiên s riêng từng tài khoản)
+   - Bản ghi còn rec.password (chữ thường — dữ liệu cũ hoặc máy chạy bản cũ đẩy lên) được coi là mới nhất:
+     tự băm rồi xoá, cả trên máy này lẫn máy chủ (đẩy qua persist)
+   - Hạn chế đã biết: việc kiểm tra mật khẩu vẫn chạy trong trình duyệt. Băm giúp không ai đọc được
+     mật khẩu thật, nhưng không thay được Firebase Authentication + Security Rules.
+=========================================================== */
+const PW_ITER=2000;
+/* mật khẩu gốc của tài khoản admin (đã băm, không để chữ thường trong mã nguồn) */
+const ADMIN_PW={h:'2e48189aa0d521232ff970ee83fafaf88db9621ec2399542c845b4944444f25c',s:'7f3c9a1e5b2d8460c4a1f9e2',v:1};
+function pwHash(p,s){let h='pw|'+s+'|'+p;for(let i=0;i<PW_ITER;i++)h=sha256hex(h+'|'+s);return h}
+function pwMake(p){const s=rndSalt();return{h:pwHash(p,s),s,v:1}}
+function pwSet(rec,p){rec.pw=pwMake(p);delete rec.password}
+function pwCheck(rec,p){
+  if(!rec||typeof p!=='string'||!p)return false;
+  if(typeof rec.password==='string'&&rec.password)return rec.password===p;   // dữ liệu cũ chưa kịp băm
+  return !!(rec.pw&&rec.pw.h&&pwHash(p,rec.pw.s)===rec.pw.h);
+}
+function pwMigrate(){
+  let n=0;
+  [...(S.users||[]),...(S.units||[])].forEach(r=>{
+    if(r&&Object.prototype.hasOwnProperty.call(r,'password')){
+      // muối suy ra từ mã tài khoản + mật khẩu → mọi máy cùng băm ra một kết quả, không sinh "xung đột dữ liệu"
+      if(typeof r.password==='string'&&r.password){const s=sha256hex('mig|'+r.id+'|'+r.password).slice(0,24);r.pw={h:pwHash(r.password,s),s,v:1}}
+      delete r.password;n++;
+    }
+  });
+  return n;
+}
+/* mỗi lần nạp dữ liệu từ máy → băm luôn */
+const _pwLoadLocal=loadLocal;
+loadLocal=function(){const r=_pwLoadLocal.apply(this,arguments);try{if(pwMigrate())persist()}catch(e){console.warn(e)}return r};
+/* dữ liệu đồng bộ từ máy khác (có thể là máy chạy bản cũ) → kiểm tra định kỳ */
+setInterval(()=>{try{if(pwMigrate())persist()}catch(e){}},4000);
 // START
 buildLayout();
 STORE.init().then(()=>{S.sums=LS.get(K_SUMS,{});checkSession()});
