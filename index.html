@@ -1207,6 +1207,86 @@ html[data-fs="xl"]{zoom:1.25}
 #saveBar .btn-ghost{background:rgba(255,255,255,.1)!important;color:#e2e8f0!important;border-color:transparent!important}
 @media(min-width:901px){#saveBar{left:calc(50% + var(--side-w)/2)}}
 @media(max-width:900px){#saveBar{bottom:74px;gap:6px;padding:7px 8px 7px 12px}#saveBar span{font-size:13px}}
+/* ===== ĐĂNG NHẬP NHANH: PIN, khoá màn hình, vân tay / Face ID ===== */
+.login-bio{width:100%;margin-top:10px;padding:12px;border:1.5px solid var(--pri);border-radius:8px;background:#fff;color:var(--pri);font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.login-bio:hover{background:var(--pri-ll)}
+.login-bio .ic{width:20px;height:20px}
+.qa-tags{margin-left:auto;display:flex;gap:4px;align-items:center}
+.qa-tags i{font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.4px;color:var(--pri);background:var(--pri-ll);border:1px solid var(--pri-l);border-radius:6px;padding:1px 6px;display:inline-flex;align-items:center}
+.qa-tags i .ic{width:13px;height:13px}
+.qa-recent button .qa-x{margin-left:6px}
+
+/* chọn tên → PIN */
+#pinView{margin-top:6px}
+.pv-who{display:flex;align-items:center;gap:12px;justify-content:center;margin:4px 0 6px}
+.pv-who .qa-av{width:44px;height:44px;font-size:18px}
+.pv-who b{display:block;font-size:17px;color:var(--txt)}
+.pv-who small{color:var(--muted);font-size:13px}
+.pv-lbl{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin:8px 0 2px}
+.pv-alt{display:flex;justify-content:space-between;gap:8px;margin-top:14px}
+.pv-alt .lnk{background:none;border:0;color:var(--pri);font-weight:600;font-size:14px;cursor:pointer;padding:6px 2px;display:inline-flex;align-items:center;gap:6px}
+.pv-alt .lnk:only-child{margin:0 auto}
+
+.pin-box{display:flex;flex-direction:column;align-items:center}
+.login-box .pin-in,.pin-in{width:200px;text-align:center;letter-spacing:12px;font-size:22px;padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;margin:6px 0 0;position:absolute;opacity:0;pointer-events:none;height:1px}
+@media (pointer:fine){.login-box .pin-in,.pin-in{position:static;opacity:1;pointer-events:auto;height:auto}}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:12px 0 4px;min-height:16px}
+.pin-dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--pri);background:transparent;transition:.12s}
+.pin-dots i.on{background:var(--pri)}
+.pin-msg{min-height:20px;color:var(--err);font-size:13.5px;font-weight:600;text-align:center}
+.pin-pad{display:grid;grid-template-columns:repeat(3,72px);gap:10px;justify-content:center;margin-top:6px}
+.pin-pad button{height:58px;border-radius:14px;border:1px solid var(--border);background:#f8fafc;font-size:24px;font-weight:600;color:var(--txt);cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.pin-pad button:active{background:var(--pri-l);transform:scale(.96)}
+.pin-pad .pk-del .ic{width:24px;height:24px}
+.pin-pad .pk-ok{background:var(--pri);color:#fff;border-color:var(--pri);font-size:17px}
+.pin-box.shake{animation:pinShake .35s}
+@keyframes pinShake{0%,100%{transform:none}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+/* khoá màn hình */
+#lockScreen{position:fixed;inset:0;z-index:100000;background:linear-gradient(160deg,#0f1f4b,#1e3a8a 55%,#1a56db);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+body.is-locked{overflow:hidden}
+.lk-box{background:#fff;border-radius:18px;padding:26px 26px 20px;width:380px;max-width:100%;box-shadow:0 25px 50px rgba(0,0,0,.3);text-align:center}
+.lk-ic{width:46px;height:46px;border-radius:50%;background:var(--pri-ll);color:var(--pri);display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+.lk-ic .ic{width:24px;height:24px}
+.lk-t{font-weight:700;font-size:18px;margin-bottom:10px;color:var(--txt)}
+.lk-note{font-size:12.5px;color:var(--muted);margin-top:8px}
+.lk-box .pv-alt{justify-content:center}
+
+/* cài đặt */
+.qa-sec{border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.qa-h{display:flex;align-items:center;gap:8px;font-size:15px}
+.qa-h .ic{color:var(--pri);width:20px;height:20px}
+.qa-st{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);background:#f1f5f9;border-radius:20px;padding:2px 10px;white-space:nowrap}
+.qa-st.on{color:var(--ok-d);background:var(--ok-l)}
+.qa-p{font-size:13.5px;color:#475569;margin:6px 0 8px;line-height:1.5}
+.qa-form label{display:block;font-size:13px;font-weight:600;color:var(--txt);margin-bottom:8px}
+.qa-form input{display:block;width:100%;margin-top:4px;padding:9px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:15px}
+.qa-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qa-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.qa-chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin:6px 0}
+.qa-chk input{margin-top:3px;width:18px;height:18px}
+.qa-chk small{color:var(--muted)}
+.qa-tip{display:flex;gap:10px;align-items:flex-start;background:var(--pri-ll);border-color:var(--pri-l);font-size:13px;color:#334155}
+.qa-tip .ic{color:var(--pri);flex:none;width:20px;height:20px;margin-top:1px}
+
+/* gợi ý sau đăng nhập */
+.qa-nudge{position:fixed;left:16px;bottom:16px;z-index:9000;background:#fff;border:1px solid var(--border);border-left:4px solid var(--pri);border-radius:12px;box-shadow:var(--shadow-lg);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;max-width:440px;animation:qnIn .25s}
+.qa-nudge .qn-ic{width:36px;height:36px;border-radius:10px;background:var(--pri-ll);color:var(--pri);display:flex;align-items:center;justify-content:center;flex:none}
+.qa-nudge .qn-tx b{display:block;font-size:14.5px}
+.qa-nudge .qn-tx span{font-size:13px;color:#475569;line-height:1.45}
+.qa-nudge .qn-act{display:flex;flex-direction:column;gap:6px;flex:none}
+@keyframes qnIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+@media (max-width:640px){
+  .qa-nudge{left:10px;right:10px;bottom:76px;max-width:none}
+  .qa-2{grid-template-columns:1fr}
+  .pin-pad{grid-template-columns:repeat(3,68px)}
+}
+@media print{#lockScreen,.qa-nudge{display:none!important}}
+
+/* nút Đăng nhập nhanh trên thanh trên cùng (máy tính) */
+.hdr-qa{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.hdr-qa .ic,#hdrLock .ic{width:18px;height:18px}
+@media (max-width:1100px){.hdr-qa span{display:none}}
 </style>
 
 </head>
@@ -1221,13 +1301,17 @@ html[data-fs="xl"]{zoom:1.25}
       <h2>Tập Đoàn Hưng Thịnh</h2><div class="login-sub">Phần Mềm Đánh Giá</div>
       <div class="sub">Tổng Công Ty — Phần mềm quản lý & đánh giá đơn vị thành viên v5.0</div>
     </div>
-    <label>Tên đăng nhập</label>
-    <input type="text" id="loginUser" placeholder="Tên đăng nhập được cấp" autocomplete="username">
-    <label>Mật khẩu</label>
-    <input type="password" id="loginPass" placeholder="Nhập mật khẩu" autocomplete="current-password">
-    <label class="login-shared"><input type="checkbox" id="loginShared"> <span><b>Máy dùng chung</b> — tự đăng xuất sau 15 phút không dùng</span></label>
+    <form id="pwForm" autocomplete="on" onsubmit="event.preventDefault();doLogin()">
+    <label for="loginUser">Tên đăng nhập</label>
+    <input type="text" id="loginUser" name="username" placeholder="Tên đăng nhập được cấp" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+    <label for="loginPass">Mật khẩu</label>
+    <input type="password" id="loginPass" name="password" placeholder="Nhập mật khẩu" autocomplete="current-password">
+    <label class="login-shared"><input type="checkbox" id="loginShared"> <span><b>Máy dùng chung</b> — tự khoá / đăng xuất sau 15 phút không dùng</span></label>
     <div id="idleMsg" class="idle-msg" style="display:none">🔒 Đã tự đăng xuất vì máy dùng chung không thao tác quá 15 phút.</div>
-    <button class="login-btn" onclick="doLogin()">🔐 Đăng nhập</button>
+    <button type="submit" class="login-btn">🔐 Đăng nhập</button>
+    <button type="button" id="bioLoginBtn" class="login-bio" style="display:none" onclick="bioLogin()"><svg class="ic"><use href="#i-fingerprint"/></svg> Đăng nhập bằng vân tay / Face ID</button>
+    </form>
+    <div id="pinView" style="display:none"></div>
     <div class="quick-access">
       <div class="qa-title">Tài khoản đã dùng trên máy này</div>
       <div class="qa-grid" id="quickGrid"></div>
@@ -1236,8 +1320,8 @@ html[data-fs="xl"]{zoom:1.25}
 </div>
 
 <!-- =============== APP =============== -->
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrow-back-up" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4" /> <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M22 17v-3h-20" /> <path d="M2 8v9" /> <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" /></symbol><symbol id="i-building-skyscraper" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-14l8 -4v18" /> <path d="M19 21v-10l-6 -4" /> <path d="M9 9l0 .01" /> <path d="M9 12l0 .01" /> <path d="M9 15l0 .01" /> <path d="M9 18l0 .01" /></symbol><symbol id="i-building-warehouse" viewBox="0 0 24 24"><path d="M3 21v-13l9 -4l9 4v13" /> <path d="M13 13h4v8h-10v-6h6" /> <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M16 3l0 4" /> <path d="M8 3l0 4" /> <path d="M4 11l16 0" /> <path d="M8 15h2v2h-2z" /></symbol><symbol id="i-chart-pie" viewBox="0 0 24 24"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /> <path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></symbol><symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-clipboard-list" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 12l.01 0" /> <path d="M13 12l2 0" /> <path d="M9 16l.01 0" /> <path d="M13 16l2 0" /></symbol><symbol id="i-clock-exclamation" viewBox="0 0 24 24"><path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" /> <path d="M12 7v5l3 3" /> <path d="M19 16v3" /> <path d="M19 22v.01" /></symbol><symbol id="i-door-enter" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /> <path d="M21 7h-7m3 -3l-3 3l3 3" /></symbol><symbol id="i-door-exit" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /> <path d="M14 7h7m-3 -3l3 3l-3 3" /></symbol><symbol id="i-eye-check" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-file-certificate" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /> <path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" /></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="i-folder-open" viewBox="0 0 24 24"><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-hotel-service" viewBox="0 0 24 24"><path d="M8.5 10a1.5 1.5 0 0 1 -1.5 -1.5a5.5 5.5 0 0 1 11 0v10.5a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2c0 -1.38 .71 -2.444 1.88 -3.175l4.424 -2.765c1.055 -.66 1.696 -1.316 1.696 -2.56a2.5 2.5 0 1 0 -5 0a1.5 1.5 0 0 1 -1.5 1.5z" /></symbol><symbol id="i-list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /> <path d="M11 6l9 0" /> <path d="M11 12l9 0" /> <path d="M11 18l9 0" /></symbol><symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 6l0 -3" /> <path d="M16.25 7.75l2.15 -2.15" /> <path d="M18 12l3 0" /> <path d="M16.25 16.25l2.15 2.15" /> <path d="M12 18l0 3" /> <path d="M7.75 16.25l-2.15 2.15" /> <path d="M6 12l-3 0" /> <path d="M7.75 7.75l-2.15 -2.15" /></symbol><symbol id="i-menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-percentage" viewBox="0 0 24 24"><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M6 18l12 -12" /></symbol><symbol id="i-point" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-signature" viewBox="0 0 24 24"><path d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2" /></symbol><symbol id="i-spray" viewBox="0 0 24 24"><path d="M4 10m0 2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2z" /> <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" /> <path d="M15 7h.01" /> <path d="M18 9h.01" /> <path d="M18 5h.01" /> <path d="M21 3h.01" /> <path d="M21 7h.01" /> <path d="M21 11h.01" /> <path d="M10 7h1" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></symbol><symbol id="i-users-group" viewBox="0 0 24 24"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /> <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M17 10h2a2 2 0 0 1 2 2v1" /> <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z" /> <path d="M15 9h.01" /></symbol><symbol id="i-file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 17h6" /> <path d="M9 13h6" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-device-floppy" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-robot" viewBox="0 0 24 24"><path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /> <path d="M12 2v2" /> <path d="M9 12v9" /> <path d="M15 12v9" /> <path d="M5 16l4 -2" /> <path d="M15 14l4 2" /> <path d="M9 18h6" /> <path d="M10 8v.01" /> <path d="M14 8v.01" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /> <path d="M9 12h12l-3 -3" /> <path d="M18 15l3 -3" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" /> <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="i-checks" viewBox="0 0 24 24"><path d="M7 12l5 5l10 -10" /> <path d="M2 12l5 5m5 -5l5 -5" /></symbol><symbol id="i-layout-list" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-qrcode" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 17l0 .01" /> <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 7l0 .01" /> <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M17 7l0 .01" /> <path d="M14 14l3 0" /> <path d="M20 14l0 .01" /> <path d="M14 14l0 3" /> <path d="M14 20l3 0" /> <path d="M17 17l3 0" /> <path d="M20 17l0 3" /></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></symbol><symbol id="i-arrows-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3l-3 3" /> <path d="M18 20l3 -3l-3 -3" /> <path d="M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5" /> <path d="M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3" /></symbol><symbol id="i-report-analytics" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /> <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /> <path d="M16 5l3 3" /></symbol><symbol id="i-lock-open" viewBox="0 0 24 24"><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M8 11v-5a4 4 0 0 1 8 0" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6 -6" /> <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /> <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 9l5 -5l5 5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-alarm" viewBox="0 0 24 24"><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M12 10l0 3l2 0" /> <path d="M7 4l-2.75 2" /> <path d="M17 4l2.75 2" /></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" /> <path d="M17 8l4 4l-4 4" /> <path d="M3 12l18 0" /></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /> <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /> <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /></symbol><symbol id="i-bath" viewBox="0 0 24 24"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" /> <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" /> <path d="M4 21l1 -1.5" /> <path d="M20 21l-1 -1.5" /></symbol><symbol id="i-bell-ringing" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /> <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /> <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6l0 13" /> <path d="M12 6l0 13" /> <path d="M21 6l0 13" /></symbol><symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 5h4v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2z" /> <path d="M14 3.5c0 1.626 .507 3.212 1.45 4.537l.05 .07a8.093 8.093 0 0 1 1.5 4.694v6.199a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-6.2c0 -1.682 .524 -3.322 1.5 -4.693l.05 -.07a7.823 7.823 0 0 0 1.45 -4.537" /> <path d="M7 14.803a2.4 2.4 0 0 0 1 -.803a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.805" /></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-building-bank" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 10l18 0" /> <path d="M5 6l7 -3l7 3" /> <path d="M4 10l0 11" /> <path d="M20 10l0 11" /> <path d="M8 14l0 3" /> <path d="M12 14l0 3" /> <path d="M16 14l0 3" /></symbol><symbol id="i-building-factory-2" viewBox="0 0 24 24"><path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-building-store" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /> <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /> <path d="M9.7 17l4.6 0" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M11 15h1" /> <path d="M12 15v3" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /> <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-candy" viewBox="0 0 24 24"><path d="M7.05 11.293l4.243 -4.243a2 2 0 0 1 2.828 0l2.829 2.83a2 2 0 0 1 0 2.828l-4.243 4.243a2 2 0 0 1 -2.828 0l-2.829 -2.831a2 2 0 0 1 0 -2.828z" /> <path d="M16.243 9.172l3.086 -.772a1.5 1.5 0 0 0 .697 -2.516l-2.216 -2.217a1.5 1.5 0 0 0 -2.44 .47l-1.248 2.913" /> <path d="M9.172 16.243l-.772 3.086a1.5 1.5 0 0 1 -2.516 .697l-2.217 -2.216a1.5 1.5 0 0 1 .47 -2.44l2.913 -1.248" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></symbol><symbol id="i-chart-bar" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M4 20h14" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></symbol><symbol id="i-confetti" viewBox="0 0 24 24"><path d="M4 5h2" /> <path d="M5 4v2" /> <path d="M11.5 4l-.5 2" /> <path d="M18 5h2" /> <path d="M19 4v2" /> <path d="M15 9l-1 1" /> <path d="M18 13l2 -.5" /> <path d="M18 19h2" /> <path d="M19 18v2" /> <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /> <path d="M3 10l18 0" /> <path d="M7 15l.01 0" /> <path d="M11 15l2 0" /></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" /></symbol><symbol id="i-device-laptop" viewBox="0 0 24 24"><path d="M3 19l18 0" /> <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></symbol><symbol id="i-device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14z" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /> <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6.5 17h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="i-microphone" viewBox="0 0 24 24"><path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z" /> <path d="M5 10a7 7 0 0 0 14 0" /> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /></symbol><symbol id="i-numbers" viewBox="0 0 24 24"><path d="M8 10v-7l-2 2" /> <path d="M6 16a2 2 0 1 1 4 0c0 .591 -.601 1.46 -1 2l-3 3h4" /> <path d="M15 14a2 2 0 1 0 2 -2a2 2 0 1 0 -2 -2" /> <path d="M6.5 10h3" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /> <path d="M13.5 6.5l4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-player-stop" viewBox="0 0 24 24"><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-player-track-next" viewBox="0 0 24 24"><path d="M3 5v14l8 -7z" /> <path d="M14 5v14l8 -7z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9.785 6l8.215 8.215l-2.054 2.054a5.81 5.81 0 1 1 -8.215 -8.215l2.054 -2.054z" /> <path d="M4 20l3.5 -3.5" /> <path d="M15 4l-3.5 3.5" /> <path d="M20 9l-3.5 3.5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol><symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17h-11v-14h-2" /> <path d="M6 5l14 1l-1 7h-13" /></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></symbol><symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" /> <path d="M14.5 10.5l-2.5 2.5" /> <path d="M17 8l1 -1" /> <path d="M14 3h-4" /></symbol><symbol id="i-tool" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></symbol><symbol id="i-tools-kitchen-2" viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1" /> <path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3" /> <path d="M3 13l4 0" /> <path d="M17 13l4 0" /> <path d="M12 20l0 -6" /> <path d="M4 19l3.35 -2" /> <path d="M20 19l-3.35 -2" /> <path d="M4 7l3.75 2.4" /> <path d="M20 7l-3.75 2.4" /></symbol><symbol id="i-photo" viewBox="0 0 24 24"><path d="M15 8h.01" /> <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /> <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /> <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></symbol><symbol id="i-help-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 16v.01" /> <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></symbol><symbol id="i-player-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z" /></symbol></svg>
-<div id="idleWarn" class="idle-warn" role="alert"><div class="iw-tx"><b>Máy dùng chung</b> — sẽ tự đăng xuất sau <span class="iw-s">60</span> giây vì không thao tác.</div><button class="btn btn-pri btn-sm" onclick="idleTouch(true)">Tiếp tục dùng</button></div>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrow-back-up" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4" /> <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M22 17v-3h-20" /> <path d="M2 8v9" /> <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" /></symbol><symbol id="i-building-skyscraper" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-14l8 -4v18" /> <path d="M19 21v-10l-6 -4" /> <path d="M9 9l0 .01" /> <path d="M9 12l0 .01" /> <path d="M9 15l0 .01" /> <path d="M9 18l0 .01" /></symbol><symbol id="i-building-warehouse" viewBox="0 0 24 24"><path d="M3 21v-13l9 -4l9 4v13" /> <path d="M13 13h4v8h-10v-6h6" /> <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M16 3l0 4" /> <path d="M8 3l0 4" /> <path d="M4 11l16 0" /> <path d="M8 15h2v2h-2z" /></symbol><symbol id="i-chart-pie" viewBox="0 0 24 24"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /> <path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></symbol><symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-clipboard-list" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 12l.01 0" /> <path d="M13 12l2 0" /> <path d="M9 16l.01 0" /> <path d="M13 16l2 0" /></symbol><symbol id="i-clock-exclamation" viewBox="0 0 24 24"><path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" /> <path d="M12 7v5l3 3" /> <path d="M19 16v3" /> <path d="M19 22v.01" /></symbol><symbol id="i-door-enter" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /> <path d="M21 7h-7m3 -3l-3 3l3 3" /></symbol><symbol id="i-door-exit" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /> <path d="M14 7h7m-3 -3l3 3l-3 3" /></symbol><symbol id="i-eye-check" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-file-certificate" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /> <path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" /></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="i-folder-open" viewBox="0 0 24 24"><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-hotel-service" viewBox="0 0 24 24"><path d="M8.5 10a1.5 1.5 0 0 1 -1.5 -1.5a5.5 5.5 0 0 1 11 0v10.5a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2c0 -1.38 .71 -2.444 1.88 -3.175l4.424 -2.765c1.055 -.66 1.696 -1.316 1.696 -2.56a2.5 2.5 0 1 0 -5 0a1.5 1.5 0 0 1 -1.5 1.5z" /></symbol><symbol id="i-list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /> <path d="M11 6l9 0" /> <path d="M11 12l9 0" /> <path d="M11 18l9 0" /></symbol><symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 6l0 -3" /> <path d="M16.25 7.75l2.15 -2.15" /> <path d="M18 12l3 0" /> <path d="M16.25 16.25l2.15 2.15" /> <path d="M12 18l0 3" /> <path d="M7.75 16.25l-2.15 2.15" /> <path d="M6 12l-3 0" /> <path d="M7.75 7.75l-2.15 -2.15" /></symbol><symbol id="i-menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-percentage" viewBox="0 0 24 24"><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M6 18l12 -12" /></symbol><symbol id="i-point" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-signature" viewBox="0 0 24 24"><path d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2" /></symbol><symbol id="i-spray" viewBox="0 0 24 24"><path d="M4 10m0 2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2z" /> <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" /> <path d="M15 7h.01" /> <path d="M18 9h.01" /> <path d="M18 5h.01" /> <path d="M21 3h.01" /> <path d="M21 7h.01" /> <path d="M21 11h.01" /> <path d="M10 7h1" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></symbol><symbol id="i-users-group" viewBox="0 0 24 24"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /> <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M17 10h2a2 2 0 0 1 2 2v1" /> <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z" /> <path d="M15 9h.01" /></symbol><symbol id="i-file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 17h6" /> <path d="M9 13h6" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-device-floppy" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-robot" viewBox="0 0 24 24"><path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /> <path d="M12 2v2" /> <path d="M9 12v9" /> <path d="M15 12v9" /> <path d="M5 16l4 -2" /> <path d="M15 14l4 2" /> <path d="M9 18h6" /> <path d="M10 8v.01" /> <path d="M14 8v.01" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /> <path d="M9 12h12l-3 -3" /> <path d="M18 15l3 -3" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" /> <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="i-checks" viewBox="0 0 24 24"><path d="M7 12l5 5l10 -10" /> <path d="M2 12l5 5m5 -5l5 -5" /></symbol><symbol id="i-layout-list" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-qrcode" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 17l0 .01" /> <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 7l0 .01" /> <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M17 7l0 .01" /> <path d="M14 14l3 0" /> <path d="M20 14l0 .01" /> <path d="M14 14l0 3" /> <path d="M14 20l3 0" /> <path d="M17 17l3 0" /> <path d="M20 17l0 3" /></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></symbol><symbol id="i-arrows-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3l-3 3" /> <path d="M18 20l3 -3l-3 -3" /> <path d="M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5" /> <path d="M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3" /></symbol><symbol id="i-report-analytics" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /> <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /> <path d="M16 5l3 3" /></symbol><symbol id="i-lock-open" viewBox="0 0 24 24"><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M8 11v-5a4 4 0 0 1 8 0" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6 -6" /> <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /> <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 9l5 -5l5 5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-alarm" viewBox="0 0 24 24"><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M12 10l0 3l2 0" /> <path d="M7 4l-2.75 2" /> <path d="M17 4l2.75 2" /></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" /> <path d="M17 8l4 4l-4 4" /> <path d="M3 12l18 0" /></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /> <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /> <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /></symbol><symbol id="i-bath" viewBox="0 0 24 24"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" /> <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" /> <path d="M4 21l1 -1.5" /> <path d="M20 21l-1 -1.5" /></symbol><symbol id="i-bell-ringing" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /> <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /> <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6l0 13" /> <path d="M12 6l0 13" /> <path d="M21 6l0 13" /></symbol><symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 5h4v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2z" /> <path d="M14 3.5c0 1.626 .507 3.212 1.45 4.537l.05 .07a8.093 8.093 0 0 1 1.5 4.694v6.199a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-6.2c0 -1.682 .524 -3.322 1.5 -4.693l.05 -.07a7.823 7.823 0 0 0 1.45 -4.537" /> <path d="M7 14.803a2.4 2.4 0 0 0 1 -.803a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.805" /></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-building-bank" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 10l18 0" /> <path d="M5 6l7 -3l7 3" /> <path d="M4 10l0 11" /> <path d="M20 10l0 11" /> <path d="M8 14l0 3" /> <path d="M12 14l0 3" /> <path d="M16 14l0 3" /></symbol><symbol id="i-building-factory-2" viewBox="0 0 24 24"><path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-building-store" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /> <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /> <path d="M9.7 17l4.6 0" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M11 15h1" /> <path d="M12 15v3" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /> <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-candy" viewBox="0 0 24 24"><path d="M7.05 11.293l4.243 -4.243a2 2 0 0 1 2.828 0l2.829 2.83a2 2 0 0 1 0 2.828l-4.243 4.243a2 2 0 0 1 -2.828 0l-2.829 -2.831a2 2 0 0 1 0 -2.828z" /> <path d="M16.243 9.172l3.086 -.772a1.5 1.5 0 0 0 .697 -2.516l-2.216 -2.217a1.5 1.5 0 0 0 -2.44 .47l-1.248 2.913" /> <path d="M9.172 16.243l-.772 3.086a1.5 1.5 0 0 1 -2.516 .697l-2.217 -2.216a1.5 1.5 0 0 1 .47 -2.44l2.913 -1.248" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></symbol><symbol id="i-chart-bar" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M4 20h14" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></symbol><symbol id="i-confetti" viewBox="0 0 24 24"><path d="M4 5h2" /> <path d="M5 4v2" /> <path d="M11.5 4l-.5 2" /> <path d="M18 5h2" /> <path d="M19 4v2" /> <path d="M15 9l-1 1" /> <path d="M18 13l2 -.5" /> <path d="M18 19h2" /> <path d="M19 18v2" /> <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /> <path d="M3 10l18 0" /> <path d="M7 15l.01 0" /> <path d="M11 15l2 0" /></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" /></symbol><symbol id="i-device-laptop" viewBox="0 0 24 24"><path d="M3 19l18 0" /> <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></symbol><symbol id="i-device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14z" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /> <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6.5 17h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="i-microphone" viewBox="0 0 24 24"><path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z" /> <path d="M5 10a7 7 0 0 0 14 0" /> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /></symbol><symbol id="i-numbers" viewBox="0 0 24 24"><path d="M8 10v-7l-2 2" /> <path d="M6 16a2 2 0 1 1 4 0c0 .591 -.601 1.46 -1 2l-3 3h4" /> <path d="M15 14a2 2 0 1 0 2 -2a2 2 0 1 0 -2 -2" /> <path d="M6.5 10h3" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /> <path d="M13.5 6.5l4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-player-stop" viewBox="0 0 24 24"><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-player-track-next" viewBox="0 0 24 24"><path d="M3 5v14l8 -7z" /> <path d="M14 5v14l8 -7z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9.785 6l8.215 8.215l-2.054 2.054a5.81 5.81 0 1 1 -8.215 -8.215l2.054 -2.054z" /> <path d="M4 20l3.5 -3.5" /> <path d="M15 4l-3.5 3.5" /> <path d="M20 9l-3.5 3.5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol><symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17h-11v-14h-2" /> <path d="M6 5l14 1l-1 7h-13" /></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></symbol><symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" /> <path d="M14.5 10.5l-2.5 2.5" /> <path d="M17 8l1 -1" /> <path d="M14 3h-4" /></symbol><symbol id="i-tool" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></symbol><symbol id="i-tools-kitchen-2" viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1" /> <path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3" /> <path d="M3 13l4 0" /> <path d="M17 13l4 0" /> <path d="M12 20l0 -6" /> <path d="M4 19l3.35 -2" /> <path d="M20 19l-3.35 -2" /> <path d="M4 7l3.75 2.4" /> <path d="M20 7l-3.75 2.4" /></symbol><symbol id="i-photo" viewBox="0 0 24 24"><path d="M15 8h.01" /> <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /> <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /> <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></symbol><symbol id="i-help-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 16v.01" /> <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></symbol><symbol id="i-player-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z" /></symbol><symbol id="i-backspace" viewBox="0 0 24 24"><path d="M20 6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-11l-5 -5a1.5 1.5 0 0 1 0 -2l5 -5z" /> <path d="M12 10l4 4m0 -4l-4 4" /></symbol><symbol id="i-fingerprint" viewBox="0 0 24 24"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" /> <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6" /> <path d="M12 11v2a14 14 0 0 0 2.5 8" /> <path d="M8 15a18 18 0 0 0 1.8 6" /> <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" /></symbol><symbol id="i-shield-lock" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /> <path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12l0 2.5" /></symbol><symbol id="i-switch-horizontal" viewBox="0 0 24 24"><path d="M16 3l4 4l-4 4" /> <path d="M10 7l10 0" /> <path d="M8 13l-4 4l4 4" /> <path d="M4 17l9 0" /></symbol></svg>
+<div id="idleWarn" class="idle-warn" role="alert"><div class="iw-tx"><b>Máy dùng chung</b> — sẽ tự <span id="iwAct">đăng xuất</span> sau <span class="iw-s">60</span> giây vì không thao tác.</div><button class="btn btn-pri btn-sm" onclick="idleTouch(true)">Tiếp tục dùng</button></div>
 <div id="app" style="display:none">
   <nav id="sideNav" class="no-print" aria-label="Menu chính"></nav><div id="sideScrim" onclick="closeSide()"></div><nav id="bottomNav" class="no-print" aria-label="Menu nhanh"></nav>
   <div class="app-header">
@@ -1252,7 +1336,7 @@ html[data-fs="xl"]{zoom:1.25}
     <button class="hdr-search" id="hdrSearch" onclick="openQS()" title="Tìm nhanh (Ctrl K)" aria-label="Tìm nhanh"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span>Tìm nhanh…</span><kbd>Ctrl K</kbd></button>
     <button class="notif-bell" id="notifBell" onclick="toggleNotif()" title="Thông báo">🔔<span class="cnt" id="notifCnt" style="display:none">0</span></button>
     <div class="user-pill" onclick="if(innerWidth<=900)openSide()" style="cursor:pointer"><div class="av" id="uAv">A</div><span class="uname" id="uName">Admin</span></div>
-    <button class="btn-logout" style="color:var(--pri)" onclick="openMyPwd()" title="Đổi mật khẩu của tôi">🔑</button>
+    <button class="btn-logout hdr-qa" id="hdrQuick" style="color:var(--pri)" onclick="openQuickLogin()" title="Đăng nhập nhanh: mã PIN, vân tay / Face ID, khoá màn hình"><svg class="ic" aria-hidden="true"><use href="#i-fingerprint"/></svg><span>Đăng nhập nhanh</span></button><button class="btn-logout" id="hdrLock" style="color:var(--pri);display:none" onclick="lockNow(true)" title="Khoá màn hình"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></button><button class="btn-logout" style="color:var(--pri)" onclick="openMyPwd()" title="Đổi mật khẩu của tôi">🔑</button>
     <button class="btn-logout" onclick="logout()">Đăng xuất</button>
   </div>
   <div class="notif-panel" id="notifPanel">
@@ -2177,13 +2261,20 @@ function renderQuick(){
   const rec=LS.get('dg2_recent',[]).filter(r=>r&&r.u).slice(0,8);
   if(box)box.style.display=rec.length?'':'none';
   g.className='qa-recent';
-  g.innerHTML=rec.map(r=>`<button type="button" onclick="qPick('${esc(r.u)}')"><span class="qa-av">${esc((r.n||r.u).charAt(0).toUpperCase())}</span><span class="qa-tx"><b>${esc(r.n||r.u)}</b><small>${esc(r.u)}</small></span><span class="qa-x" role="button" aria-label="Xoá khỏi danh sách" onclick="event.stopPropagation();qForget('${esc(r.u)}')">×</span></button>`).join('');
+  g.innerHTML=rec.map(r=>{const f=qaFind(r.u),tg=f?qaTags(f.rec):'';return `<button type="button" onclick="qPick('${esc(r.u)}')"><span class="qa-av">${esc((r.n||r.u).charAt(0).toUpperCase())}</span><span class="qa-tx"><b>${esc(r.n||r.u)}</b><small>${esc(r.u)}</small></span>${tg}<span class="qa-x" role="button" aria-label="Xoá khỏi danh sách" onclick="event.stopPropagation();qForget('${esc(r.u)}')">×</span></button>`}).join('');
+  try{bioLoginBtnSync()}catch(e){}
 }
-function qPick(un){document.getElementById('loginUser').value=un;const p=document.getElementById('loginPass');p.value='';p.focus()}
+function qPick(un){
+  const f=qaFind(un);
+  if(f&&f.rec.active!==false&&!f.rec.locked){
+    if(pinUsable(f.rec)){pinViewOpen(f.kind,f.rec);return}
+    if(f.rec.pin)toast('PIN đã bị khoá trên máy này vì nhập sai nhiều lần — hãy đăng nhập bằng mật khẩu');
+  }
+  pinViewClose();document.getElementById('loginUser').value=un;const p=document.getElementById('loginPass');p.value='';p.focus()}
 function qForget(un){LS.set('dg2_recent',LS.get('dg2_recent',[]).filter(r=>r.u!==un));renderQuick()}
 function qRemember(){try{if(!S.user)return;const u=S.user.username||S.user.code;if(!u)return;const a=LS.get('dg2_recent',[]).filter(r=>r.u!==u);a.unshift({u,n:S.user.name||u});LS.set('dg2_recent',a.slice(0,8))}catch(e){}}
-function qLogin(un){document.getElementById('loginUser').value=un;document.getElementById('loginPass').value='123456';doLogin()}
 function doLogin(){
+  if(S.user)return;
   try{const c=document.getElementById('loginShared');if(c)LS.set(K_SHARED,c.checked);idleTouch(true)}catch(e){}
   const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value;
   loadLocal();if(!S.units.length){seed();ensureCriteria();}
@@ -2194,6 +2285,7 @@ function doLogin(){
   if(rec.active===false||rec.locked){toast('🔒 Tài khoản đã bị khoá — liên hệ quản trị viên');return}
   S.user=buildSessionUser(kind,rec);
   if(kind==='acct'){rec.lastLogin=nowISO();persist()}
+  qaOnLogin(rec);pwStoreBrowser(u,p,S.user.name);
   // Lưu phiên vào localStorage (bền hơn sessionStorage — không mất khi iPad khoá máy / chuyển app)
   const sess=JSON.stringify({uid:rec.id,kind,ts:Date.now()});
   try{localStorage.setItem(K.sess,sess)}catch(e){}
@@ -3284,8 +3376,7 @@ function delayedConfirm(title,message,onConfirm){
 
 // close modals on bg click
 document.querySelectorAll('.modal-overlay').forEach(bg=>{bg.addEventListener('click',e=>{if(e.target===bg)closeM(bg.id)})});
-// enter to login
-['loginUser','loginPass'].forEach(id=>{document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()})});
+// Enter ở ô mật khẩu: form #pwForm tự gửi (một lần duy nhất)
 
 /* ===========================================================
    v3.0 — MODULE NÂNG CẤP
@@ -3849,15 +3940,15 @@ function renderAccounts(){
   let rows='';
   if(sa){
     const me=S.user&&S.user.kind==='unit'&&S.user.id===sa.id;
-    rows+=`<tr style="background:#faf5ff"><td><code>${esc(sa.username)}</code>${me?' <span class="badge badge-sw">Bạn</span>':''}</td><td>${esc(sa.name)} <span style="font-size:11px;color:var(--muted)">(tài khoản gốc)</span></td><td>${roleBadge('admin')}</td><td>Tất cả đơn vị</td><td><span class="badge badge-ok">Hoạt động</span></td><td>${S.user.isAdmin?`<button class="btn btn-ghost btn-sm" onclick="openPwdFor('unit','${sa.id}')">🔑 Đổi MK</button>`:''}</td></tr>`;
+    rows+=`<tr style="background:#faf5ff"><td><code>${esc(sa.username)}</code>${me?' <span class="badge badge-sw">Bạn</span>':''}</td><td>${esc(sa.name)} <span style="font-size:11px;color:var(--muted)">(tài khoản gốc)</span></td><td>${roleBadge('admin')}</td><td>Tất cả đơn vị</td><td><span class="badge badge-ok">Hoạt động</span></td><td>${S.user.isAdmin?`<button class="btn btn-ghost btn-sm" onclick="openPwdFor('unit','${sa.id}')">🔑 Đổi MK</button>${sa.pin&&!me?` <button class="btn btn-ghost btn-sm" onclick="pinResetFor('unit','${sa.id}')">Xoá PIN</button>`:''}`:''}</td></tr>`;
   }
   rows+=S.users.map(a=>{
     const me=S.user&&S.user.kind==='acct'&&S.user.id===a.id;
     const locked=a.role==='admin'&&!S.user.isAdmin;
     const acts=locked?'<span style="font-size:12px;color:var(--muted)">🔒 Chỉ QTV</span>':
-      `<button class="btn btn-ghost btn-sm" onclick="openAcctModal('${a.id}')" title="Sửa">✏️</button> <button class="btn btn-ghost btn-sm" onclick="openPwdFor('acct','${a.id}')" title="Đổi mật khẩu">🔑</button>`+
+      `<button class="btn btn-ghost btn-sm" onclick="openAcctModal('${a.id}')" title="Sửa">✏️</button> <button class="btn btn-ghost btn-sm" onclick="openPwdFor('acct','${a.id}')" title="Đổi mật khẩu">🔑</button>`+(a.pin?` <button class="btn btn-ghost btn-sm" onclick="pinResetFor('acct','${a.id}')" title="Xoá mã PIN">Xoá PIN</button>`:'')+
       (me?'':` <button class="btn btn-ghost btn-sm" onclick="toggleAcctActive('${a.id}')" title="${a.active===false?'Mở khoá':'Khoá'}">${a.active===false?'🔓':'🔒'}</button> <button class="btn btn-err btn-sm" onclick="delAcct('${a.id}')" title="Xoá">🗑️</button>`);
-    return `<tr${a.active===false?' style="opacity:.6"':''}><td><code>${esc(a.username)}</code>${me?' <span class="badge badge-sw">Bạn</span>':''}${a.lastLogin?`<div style="font-size:11px;color:var(--muted)">Đăng nhập: ${fmtDateTime(a.lastLogin)}</div>`:''}</td><td>${esc(a.fullName||'')}</td><td>${roleBadge(a.role)}</td><td style="font-size:13px">${esc(scopeText(a))}</td><td>${a.active===false?'<span class="badge badge-err">🔒 Đã khoá</span>':'<span class="badge badge-ok">Hoạt động</span>'}</td><td style="white-space:nowrap">${acts}</td></tr>`;
+    return `<tr${a.active===false?' style="opacity:.6"':''}><td><code>${esc(a.username)}</code>${me?' <span class="badge badge-sw">Bạn</span>':''}${a.pin?' <span class="badge" title="Đã đặt mã PIN đăng nhập nhanh">PIN</span>':''}${a.lastLogin?`<div style="font-size:11px;color:var(--muted)">Đăng nhập: ${fmtDateTime(a.lastLogin)}</div>`:''}</td><td>${esc(a.fullName||'')}</td><td>${roleBadge(a.role)}</td><td style="font-size:13px">${esc(scopeText(a))}</td><td>${a.active===false?'<span class="badge badge-err">🔒 Đã khoá</span>':'<span class="badge badge-ok">Hoạt động</span>'}</td><td style="white-space:nowrap">${acts}</td></tr>`;
   }).join('');
   if(!S.users.length)rows+='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">Chưa có tài khoản bổ sung — bấm “+ Tạo tài khoản”</td></tr>';
   tb.innerHTML=rows;
@@ -6635,8 +6726,8 @@ function renderSide(){
     ${unitItems.length?`<div class="sn-sec">CÔNG VIỆC</div>${unitItems.map(it).join('')}`:''}
     ${setItems.length?`<div class="sn-sec">QUẢN TRỊ</div>${setItems.map(it).join('')}`:''}
     <div class="sn-foot"><div class="sn-me"><span class="sn-av">${esc((S.user.code||S.user.name||'?').charAt(0).toUpperCase())}</span><span><b>${esc(S.user.name||'')}</b><small>${esc((ROLES[S.user.role]||{label:''}).label.replace(/^\S+\s/,''))}</small></span></div>
-      <label class="sn-shared" title="Tự đăng xuất sau 15 phút không thao tác — dùng cho iPad/máy tính chung"><input type="checkbox" ${isShared()?'checked':''} onchange="setShared(this.checked)"><span>Máy dùng chung <small>tự thoát sau 15'</small></span></label>
-      <div class="sn-acts">${hasPerm('ai')?`<button onclick="closeSide();openAIModal()">${IC('ti-robot')}<span>Trợ lý AI</span></button>`:''}<button onclick="closeSide();openMyPwd()">${IC('ti-lock')}<span>Đổi mật khẩu</span></button><button class="out" onclick="closeSide();logout()">${IC('ti-logout')}<span>Đăng xuất</span></button></div>
+      <label class="sn-shared" title="Tự đăng xuất sau 15 phút không thao tác — dùng cho iPad/máy tính chung"><input type="checkbox" ${isShared()?'checked':''} onchange="setShared(this.checked)"><span>Máy dùng chung <small>tự khoá / thoát sau 15'</small></span></label>
+      <div class="sn-acts">${hasPerm('ai')?`<button onclick="closeSide();openAIModal()">${IC('ti-robot')}<span>Trợ lý AI</span></button>`:''}<button onclick="closeSide();openQuickLogin()">${IC('ti-fingerprint')}<span>Đăng nhập nhanh</span></button>${canQuick(S.user.kind||'unit',S.user.id)?`<button onclick="closeSide();lockNow(true)">${IC('ti-lock')}<span>Khoá màn hình</span></button>`:''}<button onclick="closeSide();openMyPwd()">${IC('ti-key')}<span>Đổi mật khẩu</span></button><button class="out" onclick="closeSide();logout()">${IC('ti-logout')}<span>Đăng xuất</span></button></div>
       <div class="sn-fs" role="group" aria-label="Cỡ chữ"><span>Cỡ chữ</span>${FS_LV.map(([k,l],i)=>`<button class="${fsGet()===k?'on':''}" onclick="fsSet('${k}')" title="${l}" style="font-size:${11+i*2}px">A</button>`).join('')}</div>
       <div class="sn-ver">Phiên bản ${APP_BUILD}</div></div>`;
   if(bn){
@@ -6883,7 +6974,7 @@ function applyFlt(tab){
 =========================================================== */
 const LOG_COL_LBL={hkasg:'Phân công buồng phòng',units:'Đơn vị',users:'Tài khoản',plans:'Lịch đánh giá',criteria:'Tiêu chí',evals:'Chấm điểm',feedback:'Khắc phục / ý kiến',checks:'Kiểm tra phòng',bookings:'Lễ tân',inv:'Kho',rstate:'Tình trạng phòng',rlevel:'Minibar phòng',log:'Nhật ký'};
 const LOG_F={org:'Thông tin công ty',closed:'Đã chốt hoá đơn',extras:'Dịch vụ thêm',disc:'Giảm giá',src:'Nguồn đặt',result:'Kết quả',score:'Điểm',notes:'Ghi chú',status:'Trạng thái',st:'Tình trạng',name:'Tên',code:'Mã',rate:'Giá',arr:'Giờ đến',dep:'Giờ đi',ain:'Nhận phòng thực tế',aout:'Trả phòng thực tế',guest:'Khách',phone4:'SĐT',pax:'Số khách',qty:'Số lượng',type:'Loại',password:'Mật khẩu',role:'Vai trò',perms:'Quyền',unitIds:'Phạm vi',content:'Nội dung',dueDate:'Hạn KP',maxScore:'Điểm tối đa',desc:'Mô tả',method:'Phương pháp',group:'Nhóm',date:'Ngày',note:'Ghi chú',pays:'Thanh toán',room:'Phòng',active:'Hoạt động',fullName:'Họ tên',manager:'Phụ trách',checklist:'Cấu hình phòng / checklist',inv:'Danh mục kho',drive:'Lưu ảnh Drive',fo:'Cài đặt lễ tân',roomLink:'Liên kết phòng',committed:'Đã lưu',lv:'Mức minibar',price:'Giá',lot:'Lô',sur:'Phụ thu',reviews:'Duyệt',rounds:'Lượt dọn',round:'Lượt',use:'Khách dùng',fill:'Bổ sung'};
-const LOG_SECRET=/^(password|pass|token|key|apiKey)$/i;
+const LOG_SECRET=/^(password|pass|token|key|apiKey|pin)$/i;
 const LOG_SKIP=new Set(['updatedAt','updatedBy','at','by','byId','writer','v','closedAt']);
 S._srvSnap={};
 function logPutSnap(path,k,r){S._srvSnap[path+'/'+k]=r||null}
@@ -7850,7 +7941,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='29.10.2026-593eef';
+const APP_BUILD='29.10.2026-e9b9f9';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -8026,7 +8117,7 @@ addEventListener('keydown',e=>{
   }
   if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){
     if(ae.id==='loginUser'){e.preventDefault();const p=document.getElementById('loginPass');if(p)p.focus();return}
-    if(ae.id==='loginPass'){e.preventDefault();try{doLogin()}catch(x){}return}
+    if(ae.id==='loginPass')return; // form tự gửi
     const mo=topModal();if(!mo||!mo.contains(ae))return;
     if(ae.tagName==='TEXTAREA'||ae.tagName==='BUTTON'||ae.tagName==='SELECT'||ae.type==='checkbox'||ae.type==='search')return;
     if(ae.tagName!=='INPUT')return;
@@ -8496,6 +8587,349 @@ function hourHint(f){
   const R=hourRules(foUid()),b={...f,status:'booked',hb:R.block,hg:R.grace,hm:R.maxH,hcap:R.cap};const r=hourCalc(b);
   return `Nghỉ giờ: ${hourLine(b)} = <b>${fmtMoney(r.cost)}</b>`;
 }
+/* ===========================================================
+   ĐĂNG NHẬP NHANH
+   1) Mã PIN 4–6 số: đăng nhập bằng cách bấm tên + gõ PIN, mở khoá màn hình
+      - Lưu dạng băm (sha256 lặp 500 lần + muối ngẫu nhiên) trong bản ghi tài khoản → dùng được trên mọi máy
+      - Đặt / đổi PIN phải nhập mật khẩu hiện tại; QTV đặt lại mật khẩu cho ai thì PIN người đó bị xoá
+      - Sai 5 lần trên một máy → PIN bị khoá trên máy đó tới khi đăng nhập lại bằng mật khẩu
+   2) Khoá màn hình: máy dùng chung không thao tác 15 phút → khoá (không mất việc đang làm) thay vì đăng xuất,
+      nếu người đang dùng có PIN; nút "Khoá màn hình" ở menu; máy riêng có thể bật "khoá khi mở lại sau 30 phút"
+   3) Vân tay / Face ID (WebAuthn, chỉ trên máy riêng): khoá sinh trắc nằm trong máy, app không nhận dữ liệu
+      vân tay / khuôn mặt. Không có máy chủ xác thực nên đây là lớp mở khoá trên máy, không thay mật khẩu.
+   4) Cho trình duyệt lưu mật khẩu (form chuẩn + PasswordCredential trên Chrome, chỉ máy riêng)
+=========================================================== */
+const PIN_MAX_FAIL=5,K_PINFAIL='dg2_pinfail',K_BIO='dg2_bio',K_RESUME='dg2_resumelock',K_LOCKED='dg2_locked',K_HIDDEN_AT='dg2_hiddenat',RESUME_MS=30*60*1000;
+const PIN_WEAK=['0123','1234','12345','123456','4321','54321','654321','2580','1212','6969','1122','112233','121212','123123','0000','000000','1111','111111','9999','999999'];
+
+/* ---------- sha256 (đồng bộ, chạy được cả khi mở file trực tiếp) ---------- */
+const _SHA_K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function sha256hex(str){
+  const m=new TextEncoder().encode(str),l=m.length,nb=((l+9+63)>>6)<<6,buf=new Uint8Array(nb);buf.set(m);buf[l]=0x80;
+  const dv=new DataView(buf.buffer),bits=l*8;dv.setUint32(nb-4,bits>>>0);dv.setUint32(nb-8,Math.floor(bits/4294967296));
+  const H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],w=new Int32Array(64),r=(x,n)=>(x>>>n)|(x<<(32-n));
+  for(let o=0;o<nb;o+=64){
+    for(let i=0;i<16;i++)w[i]=dv.getInt32(o+i*4);
+    for(let i=16;i<64;i++){const a=w[i-15],b=w[i-2];w[i]=(w[i-16]+(r(a,7)^r(a,18)^(a>>>3))+w[i-7]+(r(b,17)^r(b,19)^(b>>>10)))|0}
+    let a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(let i=0;i<64;i++){const t1=(h+(r(e,6)^r(e,11)^r(e,25))+((e&f)^(~e&g))+_SHA_K[i]+w[i])|0,t2=((r(a,2)^r(a,13)^r(a,22))+((a&b)^(a&c)^(b&c)))|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+  }
+  return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');
+}
+function pinHash(pin,salt){let h=salt+'|'+pin;for(let i=0;i<500;i++)h=sha256hex(h+'|'+salt);return h}
+function rndSalt(){const a=new Uint8Array(12);try{crypto.getRandomValues(a)}catch(e){for(let i=0;i<12;i++)a[i]=Math.random()*256|0}return [...a].map(x=>x.toString(16).padStart(2,'0')).join('')}
+
+/* ---------- tài khoản ---------- */
+function qaFind(un){un=(un||'').toLowerCase();if(!un)return null;let rec=(S.users||[]).find(x=>(x.username||'').toLowerCase()===un);if(rec)return{kind:'acct',rec};rec=(S.units||[]).find(x=>(x.username||'').toLowerCase()===un);return rec?{kind:'unit',rec}:null}
+function qaById(kind,id){return kind==='acct'?(S.users||[]).find(x=>x.id===id):(S.units||[]).find(x=>x.id===id)}
+function qaMe(){return S.user?qaById(S.user.kind||'unit',S.user.id):null}
+function pinFail(id){return (LS.get(K_PINFAIL,{})||{})[id]||0}
+function pinFailSet(id,n){const o=LS.get(K_PINFAIL,{})||{};if(n)o[id]=n;else delete o[id];LS.set(K_PINFAIL,o)}
+function pinUsable(rec){return !!(rec&&rec.pin&&rec.pin.h&&pinFail(rec.id)<PIN_MAX_FAIL)}
+function pinCheck(rec,pin){return !!(rec&&rec.pin&&rec.pin.h&&pinHash(pin,rec.pin.s)===rec.pin.h)}
+function pinWeak(p){return PIN_WEAK.includes(p)||/^(\d)\1+$/.test(p)}
+function qaTags(rec){const t=[];if(pinUsable(rec))t.push('PIN');if(!isShared()&&bioFor(rec.id))t.push(IC('ti-fingerprint'));return t.length?`<span class="qa-tags">${t.map(x=>`<i>${x}</i>`).join('')}</span>`:''}
+function canQuick(kind,id){const r=qaById(kind,id);return !!(r&&r.active!==false&&!r.locked&&(pinUsable(r)||(!isShared()&&bioFor(id))))}
+
+/* ---------- vân tay / Face ID ---------- */
+function bioMap(){return LS.get(K_BIO,{})||{}}
+function bioFor(id){return bioMap()[id]||null}
+let _bioAvail=null;
+async function bioSupported(){
+  if(_bioAvail!==null)return _bioAvail;
+  try{_bioAvail=!!(window.PublicKeyCredential&&window.isSecureContext&&location.protocol!=='file:'&&await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())}catch(e){_bioAvail=false}
+  return _bioAvail;
+}
+const b64u=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const ub64=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');s+='='.repeat((4-s.length%4)%4);return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+async function bioRegister(){
+  const me=qaMe();if(!me)return;
+  if(isShared()){toast('⚠ Không bật vân tay / Face ID trên máy dùng chung — máy chỉ nhận vân tay của chủ máy, không phân biệt được nhân viên');return}
+  if(!await bioSupported()){toast('⚠ Máy hoặc trình duyệt này chưa hỗ trợ vân tay / Face ID');return}
+  try{
+    const cred=await navigator.credentials.create({publicKey:{
+      challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Phần Mềm Đánh Giá'},
+      user:{id:new TextEncoder().encode(String(me.id)).slice(0,64),name:S.user.username||S.user.code||String(me.id),displayName:S.user.name||''},
+      pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+      authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
+    const m=bioMap();m[me.id]={kind:S.user.kind||'unit',cid:b64u(cred.rawId),un:S.user.username||S.user.code||'',n:S.user.name||'',at:Date.now()};LS.set(K_BIO,m);
+    toast('Đã bật vân tay / Face ID trên máy này');qaRender();iwSync();try{renderSide()}catch(e){}
+  }catch(e){toast(e&&e.name==='NotAllowedError'?'Đã huỷ bật vân tay / Face ID':'⚠ Không bật được: '+((e&&e.message)||e))}
+}
+function bioRemove(id){const m=bioMap();delete m[id||(S.user&&S.user.id)];LS.set(K_BIO,m);toast('Đã tắt vân tay / Face ID trên máy này');qaRender();iwSync();try{renderSide()}catch(e){}}
+/* hỏi vân tay / Face ID; trả về {uid,kind} của tài khoản khớp khoá, hoặc null */
+async function bioVerify(ids){
+  const m=bioMap(),list=(ids||Object.keys(m)).filter(id=>m[id]);if(!list.length)return null;
+  const cred=await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:list.map(id=>({type:'public-key',id:ub64(m[id].cid)})),userVerification:'required',timeout:60000}});
+  if(!cred)return null;const cid=b64u(cred.rawId),uid=list.find(id=>m[id].cid===cid);return uid?{uid,kind:m[uid].kind}:null;
+}
+async function bioLoginBtnSync(){
+  const b=document.getElementById('bioLoginBtn');if(!b)return;
+  const m=bioMap(),ok=Object.keys(m).some(id=>{const r=qaById(m[id].kind,id);return r&&r.active!==false&&!r.locked});
+  b.style.display=(ok&&!isShared()&&await bioSupported())?'':'none';
+}
+async function bioLogin(){
+  try{
+    const r=await bioVerify();if(!r){toast('⚠ Không nhận ra tài khoản');return}
+    const rec=qaById(r.kind,r.uid);if(!rec){toast('⚠ Tài khoản không còn tồn tại');bioRemove(r.uid);return}
+    qaLoginAs(r.kind,rec);
+  }catch(e){toast(e&&e.name==='NotAllowedError'?'Đã huỷ':'⚠ '+((e&&e.message)||e))}
+}
+
+/* ---------- đăng nhập không cần mật khẩu (sau khi đã xác thực PIN / sinh trắc) ---------- */
+function qaLoginAs(kind,rec){
+  if(S.user)return false;
+  if(rec.active===false||rec.locked){toast('🔒 Tài khoản đã bị khoá — liên hệ quản trị viên');return false}
+  try{const c=document.getElementById('loginShared');if(c)LS.set(K_SHARED,c.checked);idleTouch(true)}catch(e){}
+  S.user=buildSessionUser(kind,rec);
+  if(kind==='acct'){rec.lastLogin=nowISO();persist()}
+  qaOnLogin(rec);
+  const sess=JSON.stringify({uid:rec.id,kind,ts:Date.now()});
+  try{localStorage.setItem(K.sess,sess)}catch(e){}try{sessionStorage.setItem(K.sess,sess)}catch(e){}
+  pinViewClose();
+  document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='block';
+  initApp();return true;
+}
+/* gọi sau mọi lần đăng nhập thành công */
+function qaOnLogin(rec){try{pinFailSet(rec.id,0);LS.set(K_LOCKED,'');LS.set(K_HIDDEN_AT,0)}catch(e){}}
+/* Chrome: chủ động đề nghị lưu mật khẩu (Safari / iCloud Keychain tự nhận form chuẩn). Không làm trên máy dùng chung */
+function pwStoreBrowser(u,p,name){
+  try{if(isShared()||!u||!p||!window.PasswordCredential||!navigator.credentials||!navigator.credentials.store)return;
+    navigator.credentials.store(new PasswordCredential({id:u,password:p,name:name||u})).catch(()=>{})}catch(e){}
+}
+
+/* ---------- bàn phím PIN (dùng chung cho màn hình đăng nhập và khoá màn hình) ---------- */
+const _coarse=()=>{try{return matchMedia('(pointer:coarse)').matches}catch(e){return false}};
+function pinPadHtml(ctx,n){
+  const k=[1,2,3,4,5,6,7,8,9].map(d=>`<button type="button" tabindex="-1" onclick="pinKey('${ctx}','${d}')">${d}</button>`).join('');
+  return `<div class="pin-box" data-ctx="${ctx}">
+    <input id="${ctx}Pin" class="pin-in" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" aria-label="Mã PIN" ${_coarse()?'readonly':''}
+      oninput="this.value=this.value.replace(/\\D/g,'').slice(0,6);pinDots('${ctx}')" onkeydown="if(event.key==='Enter'){event.preventDefault();event.stopPropagation();pinSubmit('${ctx}')}">
+    <div class="pin-dots" id="${ctx}Dots">${'<i></i>'.repeat(n||4)}</div>
+    <div class="pin-msg" id="${ctx}Msg"></div>
+    <div class="pin-pad">${k}<button type="button" tabindex="-1" class="pk-del" onclick="pinKey('${ctx}','del')" aria-label="Xoá">${IC('ti-backspace')}</button><button type="button" tabindex="-1" onclick="pinKey('${ctx}','0')">0</button><button type="button" tabindex="-1" class="pk-ok" onclick="pinSubmit('${ctx}')" aria-label="Xác nhận">OK</button></div>
+  </div>`;
+}
+function _pinLen(ctx){const r=ctx==='lock'?qaMe():_pinTarget&&qaById(_pinTarget.kind,_pinTarget.id);return (r&&r.pin&&r.pin.n)||0}
+function pinDots(ctx){
+  const i=document.getElementById(ctx+'Pin'),d=document.getElementById(ctx+'Dots');if(!i||!d)return;
+  const n=_pinLen(ctx)||Math.max(4,i.value.length);d.innerHTML=[...Array(n)].map((_,k)=>`<i class="${k<i.value.length?'on':''}"></i>`).join('');
+  const m=document.getElementById(ctx+'Msg');if(m&&i.value)m.textContent='';
+  if(_pinLen(ctx)&&i.value.length===_pinLen(ctx))setTimeout(()=>pinSubmit(ctx),120);
+}
+function pinKey(ctx,k){const i=document.getElementById(ctx+'Pin');if(!i)return;if(k==='del')i.value=i.value.slice(0,-1);else if(i.value.length<6)i.value+=k;pinDots(ctx);if(!_coarse())i.focus()}
+function pinErr(ctx,msg){const i=document.getElementById(ctx+'Pin'),m=document.getElementById(ctx+'Msg'),b=i&&i.closest('.pin-box');if(i)i.value='';pinDots(ctx);if(m)m.textContent=msg;if(b){b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}}
+function pinSubmit(ctx){
+  const i=document.getElementById(ctx+'Pin');if(!i||i._busy)return;const v=i.value;if(!v)return;
+  if(v.length<4){pinErr(ctx,'PIN gồm 4–6 số');return}
+  const rec=ctx==='lock'?qaMe():_pinTarget&&qaById(_pinTarget.kind,_pinTarget.id);if(!rec)return;
+  i._busy=true;setTimeout(()=>{i._busy=false},150);
+  if(pinCheck(rec,v)){pinFailSet(rec.id,0);if(ctx==='lock')lockOff();else qaLoginAs(_pinTarget.kind,rec);return}
+  const n=pinFail(rec.id)+1;pinFailSet(rec.id,n);
+  if(n>=PIN_MAX_FAIL){
+    if(ctx==='lock'){LS.set(K_LOCKED,'');toast('🔒 Sai PIN quá '+PIN_MAX_FAIL+' lần — hãy đăng nhập lại bằng mật khẩu');setTimeout(()=>{_qaLogout()},900);return}
+    pinViewClose();document.getElementById('loginUser').value=rec.username||'';const p=document.getElementById('loginPass');p.value='';p.focus();
+    toast('🔒 Sai PIN quá '+PIN_MAX_FAIL+' lần — PIN đã khoá trên máy này, hãy đăng nhập bằng mật khẩu');renderQuick();return;
+  }
+  pinErr(ctx,`Sai mã PIN — còn ${PIN_MAX_FAIL-n} lần thử`);
+}
+
+/* ---------- màn hình đăng nhập: chọn tên → nhập PIN ---------- */
+let _pinTarget=null;
+async function pinViewOpen(kind,rec){
+  _pinTarget={kind,id:rec.id};
+  const v=document.getElementById('pinView'),f=document.getElementById('pwForm'),q=document.querySelector('#loginScreen .quick-access');if(!v)return;
+  const name=rec.fullName||rec.name||rec.username,bio=!isShared()&&bioFor(rec.id)&&await bioSupported();
+  v.innerHTML=`<div class="pv-who"><span class="qa-av">${esc((name||'?').charAt(0).toUpperCase())}</span><div><b>${esc(name)}</b><small>${esc(rec.username||'')}</small></div></div>
+    <div class="pv-lbl">Nhập mã PIN</div>${pinPadHtml('login',rec.pin&&rec.pin.n)}
+    ${bio?`<button type="button" class="login-bio" onclick="pinViewBio()">${IC('ti-fingerprint')} Dùng vân tay / Face ID</button>`:''}
+    <div class="pv-alt"><button type="button" class="lnk" onclick="pinViewToPw()">Dùng mật khẩu</button><button type="button" class="lnk" onclick="pinViewClose()">Chọn tài khoản khác</button></div>`;
+  v.style.display='';if(f)f.style.display='none';if(q)q.style.display='none';
+  const i=document.getElementById('loginPin');if(i&&!_coarse())setTimeout(()=>i.focus(),30);
+}
+function pinViewClose(){
+  _pinTarget=null;const v=document.getElementById('pinView'),f=document.getElementById('pwForm');if(!v)return;
+  if(v.style.display!=='none'){v.style.display='none';v.innerHTML='';if(f)f.style.display='';try{renderQuick()}catch(e){}}
+}
+function pinViewToPw(){const t=_pinTarget&&qaById(_pinTarget.kind,_pinTarget.id);pinViewClose();if(t){document.getElementById('loginUser').value=t.username||'';const p=document.getElementById('loginPass');p.value='';p.focus()}}
+async function pinViewBio(){
+  if(!_pinTarget)return;const t=_pinTarget;
+  try{const r=await bioVerify([t.id]);if(r&&r.uid===t.id)qaLoginAs(t.kind,qaById(t.kind,t.id));}catch(e){toast(e&&e.name==='NotAllowedError'?'Đã huỷ':'⚠ '+((e&&e.message)||e))}
+}
+
+/* ---------- khoá màn hình ---------- */
+function qaLocked(){return !!document.getElementById('lockScreen')}
+async function lockNow(manual){
+  if(!S.user||qaLocked())return qaLocked();
+  if(!canQuick(S.user.kind||'unit',S.user.id)){if(manual)toast('Hãy đặt mã PIN trước (Menu → Đăng nhập nhanh)');return false}
+  LS.set(K_LOCKED,S.user.id);
+  try{const w=document.getElementById('idleWarn');if(w)w.classList.remove('show')}catch(e){}
+  try{if(document.activeElement&&document.activeElement.blur)document.activeElement.blur()}catch(e){}
+  const me=qaMe(),pin=pinUsable(me),bio=!isShared()&&bioFor(me.id)&&await bioSupported();
+  if(qaLocked())return true;
+  const d=document.createElement('div');d.id='lockScreen';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Màn hình đã khoá');
+  d.innerHTML=`<div class="lk-box">
+    <div class="lk-ic">${IC('ti-lock')}</div>
+    <div class="lk-t">Màn hình đã khoá</div>
+    <div class="pv-who"><span class="qa-av">${esc((S.user.name||'?').charAt(0).toUpperCase())}</span><div><b>${esc(S.user.name||'')}</b><small>${esc(S.user.username||S.user.code||'')}</small></div></div>
+    ${pin?pinPadHtml('lock',me.pin.n):'<div class="pin-msg" id="lockMsg"></div>'}
+    ${bio?`<button type="button" class="login-bio" onclick="lockBio()">${IC('ti-fingerprint')} Mở bằng vân tay / Face ID</button>`:''}
+    <div class="pv-alt"><button type="button" class="lnk" onclick="lockSwitch()">${IC('ti-switch-horizontal')} Đổi người dùng / Đăng xuất</button></div>
+    <div class="lk-note">Việc đang làm dở vẫn được giữ nguyên.</div>
+  </div>`;
+  document.body.appendChild(d);document.body.classList.add('is-locked');
+  const i=document.getElementById('lockPin');if(i&&!_coarse())setTimeout(()=>i.focus(),30);
+  if(!pin&&bio)setTimeout(()=>lockBio(),250);
+  return true;
+}
+function lockOff(){const d=document.getElementById('lockScreen');if(d)d.remove();document.body.classList.remove('is-locked');LS.set(K_LOCKED,'');LS.set(K_HIDDEN_AT,0);idleTouch(true)}
+async function lockBio(){try{const r=await bioVerify([S.user.id]);if(r&&r.uid===S.user.id)lockOff()}catch(e){if(e&&e.name!=='NotAllowedError')toast('⚠ '+((e&&e.message)||e))}}
+function lockSwitch(){LS.set(K_LOCKED,'');_qaLogout()}
+/* khi khoá: chặn phím tắt / thao tác với phần dưới */
+window.addEventListener('keydown',e=>{
+  const d=document.getElementById('lockScreen');if(!d)return;
+  e.stopImmediatePropagation();
+  const inside=d.contains(e.target),i=document.getElementById('lockPin'),combo=e.ctrlKey||e.metaKey||e.altKey;
+  if(combo||e.key==='Escape'){e.preventDefault();return}
+  if(e.key==='Enter'){e.preventDefault();if(i)pinSubmit('lock');return}
+  if(inside&&e.key==='Tab')return;
+  if(inside&&e.target===i)return; // gõ số trực tiếp vào ô PIN
+  e.preventDefault();
+  if(i&&/^\d$/.test(e.key)){i.value=(i.value+e.key).slice(0,6);pinDots('lock')}
+  else if(i&&e.key==='Backspace'){i.value=i.value.slice(0,-1);pinDots('lock')}
+},true);
+
+/* máy dùng chung hết 15 phút: khoá thay vì đăng xuất nếu có PIN */
+const _qaLogout=logout;
+logout=function(){
+  let idle=false;try{idle=sessionStorage.getItem('dg2_idle_out')==='1'}catch(e){}
+  if(idle&&S.user&&canQuick(S.user.kind||'unit',S.user.id)){try{sessionStorage.removeItem('dg2_idle_out')}catch(e){}if(!qaLocked())lockNow();return}
+  try{LS.set(K_LOCKED,'')}catch(e){}
+  return _qaLogout.apply(this,arguments);
+};
+/* mở lại app trên máy dùng chung sau 15 phút: vẫn giữ phiên nhưng khoá, nếu có PIN */
+const _qaIdleExp=idleSessionExpired;
+idleSessionExpired=function(){
+  if(!_qaIdleExp())return false;
+  try{const o=JSON.parse(localStorage.getItem(K.sess)||'null');if(o&&o.uid&&canQuick(o.kind||'unit',o.uid)){LS.set(K_LOCKED,o.uid);return false}}catch(e){}
+  return true;
+};
+/* máy riêng: khoá khi mở lại sau 30 phút (tuỳ chọn) */
+function resumeOn(){return !!LS.get(K_RESUME,false)}
+function resumeDue(){const t=+LS.get(K_HIDDEN_AT,0)||0;return !isShared()&&resumeOn()&&t&&Date.now()-t>=RESUME_MS}
+document.addEventListener('visibilitychange',()=>{
+  if(!S.user)return;
+  if(document.hidden){if(!qaLocked())LS.set(K_HIDDEN_AT,Date.now());return}
+  if(resumeDue())lockNow();else if(!qaLocked())LS.set(K_HIDDEN_AT,0);
+});
+window.addEventListener('pagehide',()=>{if(S.user&&!qaLocked())LS.set(K_HIDDEN_AT,Date.now())});
+
+const _qaInit=initApp;
+initApp=function(){
+  const r=_qaInit.apply(this,arguments);
+  try{
+    const lk=LS.get(K_LOCKED,'');
+    if(lk&&S.user&&lk===S.user.id)lockNow();
+    else if(S.user&&resumeDue())lockNow();
+    else{if(lk)LS.set(K_LOCKED,'');LS.set(K_HIDDEN_AT,0)}
+    iwSync();setTimeout(qaNudge,1500);
+  }catch(e){console.warn(e)}
+  return r;
+};
+function iwSync(){const q=!!(S.user&&canQuick(S.user.kind||'unit',S.user.id)),s=document.getElementById('iwAct'),l=document.getElementById('hdrLock');if(s)s.textContent=q?'khoá màn hình':'đăng xuất';if(l)l.style.display=q?'':'none'}
+
+/* ---------- cài đặt: Menu → Đăng nhập nhanh ---------- */
+function openQuickLogin(){
+  if(!S.user)return;
+  if(!document.getElementById('qaModal')){
+    const m=document.createElement('div');m.className='modal-overlay';m.id='qaModal';
+    m.innerHTML=`<div class="modal" style="max-width:500px"><div class="modal-hd"><h3>Đăng nhập nhanh</h3><button class="modal-x" onclick="closeM('qaModal')">✕</button></div><div class="modal-bd" id="qaBody"></div><div class="modal-ft"><button class="btn btn-ghost" onclick="closeM('qaModal')">Đóng</button></div></div>`;
+    m.addEventListener('click',e=>{if(e.target===m)closeM('qaModal')});document.body.appendChild(m);
+  }
+  qaRender();openM('qaModal');
+}
+async function qaRender(){
+  const b=document.getElementById('qaBody'),me=qaMe();if(!b||!me)return;
+  const sh=isShared(),sup=await bioSupported(),bio=bioFor(me.id),pin=me.pin&&me.pin.h,lockedPin=pin&&!pinUsable(me);
+  const st=(ok,t)=>`<span class="qa-st ${ok?'on':''}">${t}</span>`;
+  b.innerHTML=`
+  <div class="qa-sec">
+    <div class="qa-h">${IC('ti-key')}<b>Mã PIN</b>${st(pin&&!lockedPin,pin?(lockedPin?'Đang khoá trên máy này':`Đã đặt (${me.pin.n} số)`):'Chưa đặt')}</div>
+    <p class="qa-p">Dùng 4–6 số thay mật khẩu: trên máy dùng chung bấm tên mình rồi gõ PIN; mở khoá màn hình. Dùng được trên mọi máy. Sai ${PIN_MAX_FAIL} lần thì PIN bị khoá trên máy đó tới khi đăng nhập bằng mật khẩu.</p>
+    <div class="qa-form">
+      <label>Mật khẩu hiện tại<input type="password" id="qaCur" autocomplete="current-password" placeholder="Để xác nhận là chính bạn"></label>
+      <div class="qa-2"><label>${pin?'PIN mới':'PIN'} (4–6 số)<input type="password" id="qaPin1" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="new-password"></label>
+      <label>Nhập lại PIN<input type="password" id="qaPin2" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="new-password"></label></div>
+      <div class="qa-btns"><button class="btn btn-pri btn-sm" onclick="qaSavePin()">${pin?'Đổi PIN':'Đặt PIN'}</button>${pin?'<button class="btn btn-ghost btn-sm" onclick="qaDelPin()">Xoá PIN</button>':''}</div>
+    </div>
+  </div>
+  <div class="qa-sec">
+    <div class="qa-h">${IC('ti-fingerprint')}<b>Vân tay / Face ID trên máy này</b>${st(!!bio&&!sh,bio&&!sh?'Đang bật':'Chưa bật')}</div>
+    ${sh?`<p class="qa-p">Máy đang ở chế độ <b>dùng chung</b>: không dùng vân tay / Face ID vì máy chỉ nhận sinh trắc của chủ máy, không phân biệt được từng nhân viên. Hãy dùng mã PIN.</p>`:
+      !sup?`<p class="qa-p">Máy hoặc trình duyệt này chưa hỗ trợ. Cần điện thoại / máy tính có vân tay, Face ID hoặc Windows Hello và mở app qua địa chỉ web (https), không mở file trực tiếp.</p>`:
+      `<p class="qa-p">Mở app bằng vân tay / khuôn mặt thay vì gõ mật khẩu. Dữ liệu sinh trắc nằm trong máy, app không nhận được. Chỉ bật trên điện thoại / máy tính của riêng bạn.</p>
+      <div class="qa-btns">${bio?'<button class="btn btn-ghost btn-sm" onclick="bioRemove()">Tắt trên máy này</button>':'<button class="btn btn-pri btn-sm" onclick="bioRegister()">Bật vân tay / Face ID</button>'}</div>`}
+  </div>
+  <div class="qa-sec">
+    <div class="qa-h">${IC('ti-lock')}<b>Khoá màn hình</b></div>
+    ${sh?`<p class="qa-p">Máy dùng chung: sau 15 phút không thao tác app tự <b>${pinUsable(me)?'khoá màn hình':'đăng xuất'}</b>${pinUsable(me)?' — mở lại bằng PIN, việc đang làm dở vẫn giữ nguyên':'. Đặt PIN để app khoá màn hình thay vì đăng xuất'}.</p>`:
+      `<label class="qa-chk"><input type="checkbox" ${resumeOn()?'checked':''} ${canQuick(S.user.kind||'unit',me.id)?'':'disabled'} onchange="LS.set(K_RESUME,this.checked);toast(this.checked?'Sẽ hỏi PIN / vân tay khi mở lại app sau 30 phút':'Đã tắt khoá khi mở lại')"> <span>Hỏi PIN / vân tay khi mở lại app sau 30 phút không dùng${canQuick(S.user.kind||'unit',me.id)?'':' <small>(cần đặt PIN hoặc bật vân tay trước)</small>'}</span></label>`}
+    ${canQuick(S.user.kind||'unit',me.id)?`<div class="qa-btns"><button class="btn btn-ghost btn-sm" onclick="closeM('qaModal');lockNow(true)">${IC('ti-lock')} Khoá màn hình ngay</button></div>`:''}
+  </div>
+  <div class="qa-sec qa-tip">${IC('ti-shield-lock')}<span>Trên máy riêng, trình duyệt (Chrome, Safari / iCloud Keychain) sẽ hỏi <b>lưu mật khẩu</b> sau khi đăng nhập. Trên máy dùng chung đừng cho trình duyệt lưu mật khẩu.</span></div>`;
+}
+function qaErr(id,msg){const el=document.getElementById(id);if(el){fieldErr(el,msg);el.focus()}}
+function qaSavePin(){
+  const me=qaMe();if(!me)return;
+  const cur=document.getElementById('qaCur').value,p1=document.getElementById('qaPin1').value.trim(),p2=document.getElementById('qaPin2').value.trim();
+  if(cur!==me.password){qaErr('qaCur','Mật khẩu hiện tại không đúng');return}
+  if(!/^\d{4,6}$/.test(p1)){qaErr('qaPin1','PIN gồm 4–6 chữ số');return}
+  if(pinWeak(p1)){qaErr('qaPin1','PIN quá dễ đoán (dãy số liền / trùng nhau) — chọn số khác');return}
+  if(p1!==p2){qaErr('qaPin2','Hai lần nhập PIN không khớp');return}
+  const s=rndSalt();me.pin={h:pinHash(p1,s),s,n:p1.length,at:nowISO()};pinFailSet(me.id,0);persist();
+  toast('Đã lưu mã PIN');qaRender();iwSync();try{renderSide()}catch(e){}
+}
+async function qaDelPin(){
+  const me=qaMe();if(!me)return;
+  if(document.getElementById('qaCur').value!==me.password){qaErr('qaCur','Nhập mật khẩu hiện tại để xoá PIN');return}
+  if(!await askYes('Xoá mã PIN? Lần sau sẽ phải đăng nhập bằng mật khẩu.'))return;
+  delete me.pin;persist();toast('Đã xoá mã PIN');qaRender();iwSync();try{renderSide()}catch(e){}
+}
+/* QTV xoá PIN của người khác (quên PIN / nghi bị lộ) */
+async function pinResetFor(kind,id){
+  if(!hasPerm('users')){toast('🔒 Bạn không có quyền');return}
+  const r=qaById(kind,id);if(!r||!r.pin)return;
+  if((r.isAdmin||r.role==='admin')&&!S.user.isAdmin){toast('🔒 Chỉ Quản trị viên được thao tác tài khoản quản trị');return}
+  if(!await askYes(`Xoá mã PIN của ${r.fullName||r.name||r.username}? Người này sẽ đăng nhập bằng mật khẩu rồi tự đặt PIN mới.`))return;
+  delete r.pin;persist();try{renderAccounts()}catch(e){}toast('Đã xoá PIN của '+(r.username||''));
+}
+/* QTV đặt lại mật khẩu cho người khác → xoá luôn PIN người đó */
+const _qaSavePwd=savePwd;
+savePwd=function(){
+  const t=_pwdTarget,r=t&&_pwdRec(t),had=r&&r.password;
+  const out=_qaSavePwd.apply(this,arguments);
+  try{if(t&&!t.self&&r&&r.password!==had&&r.pin){delete r.pin;persist();try{renderAccounts()}catch(e){}}}catch(e){}
+  return out;
+};
+
+/* ---------- gợi ý một lần sau khi đăng nhập ---------- */
+async function qaNudge(){
+  if(!S.user||qaLocked()||document.getElementById('qaNudge'))return;
+  if(navigator.webdriver&&!window.__qaNudge)return;
+  const me=qaMe();if(!me||me.pin)return;
+  const key='dg2_qanudge_'+me.id;if(LS.get(key,false))return;
+  if(!isShared()&&bioFor(me.id))return;
+  const sup=!isShared()&&await bioSupported();
+  const d=document.createElement('div');d.id='qaNudge';d.className='qa-nudge no-print';
+  d.innerHTML=`<div class="qn-ic">${IC(sup?'ti-fingerprint':'ti-key')}</div><div class="qn-tx"><b>Đăng nhập nhanh hơn</b><span>${isShared()?'Đặt mã PIN 4–6 số: lần sau chỉ cần bấm tên và gõ PIN, hết 15 phút app khoá màn hình thay vì đăng xuất.':sup?'Bật vân tay / Face ID hoặc đặt mã PIN để không phải gõ mật khẩu.':'Đặt mã PIN 4–6 số để không phải gõ mật khẩu mỗi lần.'}</span></div>
+    <div class="qn-act"><button class="btn btn-pri btn-sm" onclick="qaNudgeClose(1);openQuickLogin()">Thiết lập</button><button class="btn btn-ghost btn-sm" onclick="qaNudgeClose(1)">Để sau</button></div>`;
+  document.body.appendChild(d);
+}
+function qaNudgeClose(remember){const d=document.getElementById('qaNudge');if(d)d.remove();if(remember&&S.user)LS.set('dg2_qanudge_'+S.user.id,true)}
+/* nút khoá trên thanh trên cùng cập nhật cùng menu */
+const _qaRenderSide=renderSide;
+renderSide=function(){const r=_qaRenderSide.apply(this,arguments);try{iwSync()}catch(e){}return r};
 // START
 buildLayout();
 STORE.init().then(()=>{S.sums=LS.get(K_SUMS,{});checkSession()});
