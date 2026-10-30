@@ -983,6 +983,7 @@ body:has(.modal-overlay.show) .ai-fab{display:none!important}
 .df-where{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
 .df-where input,.df-where select{width:100%}
 #mtLocsEd{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px}
+.mt-long{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:10px;padding:8px 12px;font-size:13.5px;margin:-2px 0 12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.mt-long .ic{width:16px;height:16px}
 /* ===== KHO: CHỨNG TỪ ===== */
 .im-doc{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
 .im-keep{background:#eef4ff;color:#1e3a8a;border-radius:8px;padding:7px 10px;font-size:13px;margin-bottom:10px}
@@ -8169,7 +8170,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='30.10.2026-61153c';
+const APP_BUILD='30.10.2026-accd93';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -9469,6 +9470,14 @@ function mtStaff(uid){
   return (S.users||[]).filter(a=>{if(a.active===false)return false;const p=acctPerms(a);if(!p.mt_do||a.role==='admin')return false;
     if(!a.unitIds||!a.unitIds.length)return true;return a.unitIds.some(x=>x===uid||dfUid(x)===uid)}).map(a=>({id:a.id,n:a.fullName||a.username}));
 }
+/* thời gian: chờ vật tư tách riêng khỏi thời gian làm */
+function mtHoldMs(d){return (d.holdMs||0)+(d.st==='hold'&&d.holdAt?Math.max(0,Date.now()-new Date(d.holdAt).getTime()):0)}
+function mtHoldEnd(d,now){if(d.st==='hold'&&d.holdAt){d.holdMs=(d.holdMs||0)+Math.max(0,new Date(now).getTime()-new Date(d.holdAt).getTime());d.holdN=(d.holdN||0)+1;delete d.holdAt}}
+function mtRsp(d){return d.accAt?msBetween(d.rspFrom||d.at,d.accAt):null}                 // phản hồi: từ lúc báo (hoặc lúc được giao lại) → tiếp nhận
+function mtWork(d){const w=msBetween(d.accAt||d.at,d.fixedAt);return w==null?null:Math.max(0,w-(d.holdMs||0))}   // làm thực tế = tiếp nhận → xong, trừ chờ vật tư
+function mtNet(d){const t=msBetween(d.at,d.fixedAt);return t==null?null:Math.max(0,t-(d.holdMs||0))}              // tổng trừ chờ vật tư (để xét đúng hạn)
+function mtOnTime(d){const t=mtNet(d);return t!=null&&t<=mtSla(d.unitId)*3600000}
+function mtHeld(d){const from=d.accAt||d.asgAt||d.at;return Math.max(0,Date.now()-new Date(from).getTime()-mtHoldMs(d))}  // đang giữ bao lâu (không tính lúc chờ vật tư)
 function mtMine(d){return S.user&&((d.asg&&d.asg.id===S.user.id)||d.accId===S.user.id)}
 
 /* ---------- Thao tác ---------- */
@@ -9478,7 +9487,7 @@ function mtAssign(id,tid){
   const now=nowISO();
   if(!tid){delete d.asg;d.asgAt=now;d.asgBy=S.user.name}
   else{const t=mtStaff(d.unitId).find(x=>x.id===tid);if(!t)return;
-    if(d.st==='acc'||d.st==='hold'){if(d.accId!==tid){d.st='open';delete d.accId;delete d.accBy;delete d.accAt}}
+    if(d.st==='acc'||d.st==='hold'){if(d.accId!==tid){mtHoldEnd(d,now);d.st='open';delete d.accId;delete d.accBy;delete d.accAt;d.rspFrom=now}}else if(d.asg&&d.asg.id!==tid)d.rspFrom=now;
     d.asg={id:t.id,n:t.n};d.asgAt=now;d.asgBy=S.user.name}
   d.updatedAt=now;persist();dfRerender();toast(tid?`Đã giao ${dfLoc(d)} cho ${d.asg.n}`:'Đã bỏ giao việc');
 }
@@ -9486,7 +9495,7 @@ function mtAccept(id){
   const d=mtFind(id);if(!d||!hasPerm('mt_do'))return;
   if(d.st==='fixed'){toast('Lỗi này đã được sửa');return}
   if(d.asg&&d.asg.id!==S.user.id&&!S.user.isAdmin){toast(`Lỗi đã giao cho ${d.asg.n}`);return}
-  const now=nowISO();Object.assign(d,{st:'acc',accAt:d.accAt&&d.accId===S.user.id?d.accAt:now,accBy:S.user.name,accId:S.user.id,updatedAt:now});
+  const now=nowISO();mtHoldEnd(d,now);Object.assign(d,{st:'acc',accAt:d.accAt&&d.accId===S.user.id?d.accAt:now,accBy:S.user.name,accId:S.user.id,updatedAt:now});
   if(!d.asg)d.asg={id:S.user.id,n:S.user.name};
   persist();dfRerender();toast(`Đã tiếp nhận ${dfLoc(d)}: ${dfTitle(d)}`);
 }
@@ -9505,7 +9514,7 @@ async function mtDoneSave(){
     persist();closeM('dfModal');S._df=null;dfRerender();toast(`${dfLoc(d)}: chuyển sang chờ vật tư`);return;
   }
   if(!d.accAt)Object.assign(d,{accAt:now,accBy:S.user.name,accId:S.user.id});
-  Object.assign(d,{st:'fixed',fixedAt:now,fixedBy:S.user.name,fixedById:S.user.id,fixNote:D.note.trim(),fph:D.photos.length,updatedAt:now});
+  mtHoldEnd(d,now);Object.assign(d,{st:'fixed',fixedAt:now,fixedBy:S.user.name,fixedById:S.user.id,fixNote:D.note.trim(),fph:D.photos.length,updatedAt:now});
   if(D.photos.length){const pid=d.id+'_fix';await chkPhotoPut(pid,D.photos.slice());chkPendAdd(pid);try{uploadChkPhotos(pid)}catch(e){}}
   persist();closeM('dfModal');S._df=null;dfRerender();toast(`Đã báo hoàn thành ${dfLoc(d)}`);
 }
@@ -9545,7 +9554,7 @@ function renderMT(){
   if(V==='mine'){
     const mine=open.filter(d=>mtMine(d)).sort(mtSort),free=open.filter(d=>!d.asg).sort(mtSort);
     const[f,t]=mtPeriod(),fx=all.filter(d=>d.st==='fixed'&&d.fixedById===S.user.id&&isoLocalDate(d.fixedAt)>=f&&isoLocalDate(d.fixedAt)<=t);
-    h+=`<div class="mt-kpis">${mtK('Đang giữ',mine.length,mine.some(d=>d.st==='open')?'warn':'')}${mtK('Chưa ai nhận',free.length,free.length?'err':'')}${mtK('Đã sửa tháng này',fx.length,'ok')}${mtK('TB xử lý',fmtDur(avg(fx.map(d=>msBetween(d.accAt||d.at,d.fixedAt)))),'')}</div>`;
+    h+=`<div class="mt-kpis">${mtK('Đang giữ',mine.length,mine.some(d=>d.st==='open')?'warn':'')}${mtK('Chưa ai nhận',free.length,free.length?'err':'')}${mtK('Đã sửa tháng này',fx.length,'ok')}${mtK('TB làm thực tế',fmtDur(avg(fx.map(mtWork).filter(x=>x!=null))),'')}</div>`;
     h+=mtGroup('Được giao / đang làm',mine,'Bạn chưa có việc nào.',multi)+mtGroup('Chưa giao cho ai — ai rảnh thì tiếp nhận',free,'',multi);
   }else if(V==='open'){
     const fs=S._mtF||'',list=open.filter(d=>!fs||mtSt(d)===fs||(fs==='over'&&over(d))).sort(mtSort);
@@ -9554,8 +9563,8 @@ function renderMT(){
     h+=mtGroup('',list,'Không có lỗi nào đang mở.',multi);
   }else if(V==='done'){
     const[f,t,lbl]=mtPeriod(),list=all.filter(d=>d.st==='fixed'&&isoLocalDate(d.fixedAt)>=f&&isoLocalDate(d.fixedAt)<=t&&(mg||!tech||d.fixedById===S.user.id)).sort((a,b)=>(b.fixedAt||'').localeCompare(a.fixedAt||''));
-    h+=mtPeriodSel()+`<div class="card"><div class="card-title">Đã sửa — ${lbl} (${list.length})</div><div class="tbl-wrap"><table><thead><tr>${multi?'<th>Bộ phận</th>':''}<th>Vị trí</th><th>Lỗi</th><th>Báo lúc</th><th>Người sửa</th><th>Tiếp nhận sau</th><th>Sửa mất</th><th>Tổng</th><th>Ghi chú sửa</th></tr></thead><tbody>${list.map(d=>{const sl=mtSla(d.unitId)*3600000,tot=msBetween(d.at,d.fixedAt);
-      return `<tr>${multi?`<td>${esc(dfUnitName(d.unitId))}</td>`:''}<td><b>${esc(dfLoc(d))}</b></td><td>${esc(dfTitle(d))}${d.note?`<div class="mt-sub">${esc(d.note)}</div>`:''}</td><td>${fmtDateTime(d.at)}</td><td>${esc(d.fixedBy||'')}</td><td>${fmtDur(msBetween(d.at,d.accAt))}</td><td>${fmtDur(msBetween(d.accAt||d.at,d.fixedAt))}</td><td class="${tot>sl?'dur-over':''}">${fmtDur(tot)}</td><td>${esc(d.fixNote||'')}${d.fph?` <button class="btn btn-ghost btn-sm" onclick="mtFixPhotos('${d.id}',this)">${IC('ti-photo')} ${d.fph}</button>`:''}</td></tr>`}).join('')||`<tr><td colspan="${multi?9:8}" style="text-align:center;color:var(--muted)">Chưa có</td></tr>`}</tbody></table></div></div>`;
+    h+=mtPeriodSel()+`<div class="card"><div class="card-title">Đã sửa — ${lbl} (${list.length})</div><div class="tbl-wrap"><table><thead><tr>${multi?'<th>Bộ phận</th>':''}<th>Vị trí</th><th>Lỗi</th><th>Báo lúc</th><th>Người sửa</th><th>Tiếp nhận sau</th><th>Làm thực tế</th><th>Chờ vật tư</th><th>Tổng</th><th>Ghi chú sửa</th></tr></thead><tbody>${list.map(d=>{const sl=mtSla(d.unitId)*3600000,tot=msBetween(d.at,d.fixedAt);
+      return `<tr>${multi?`<td>${esc(dfUnitName(d.unitId))}</td>`:''}<td><b>${esc(dfLoc(d))}</b></td><td>${esc(dfTitle(d))}${d.note?`<div class="mt-sub">${esc(d.note)}</div>`:''}</td><td>${fmtDateTime(d.at)}</td><td>${esc(d.fixedBy||'')}</td><td>${fmtDur(mtRsp(d))}</td><td>${fmtDur(mtWork(d))}</td><td>${d.holdMs?fmtDur(d.holdMs):'–'}</td><td class="${mtOnTime(d)?'':'dur-over'}">${fmtDur(tot)}</td><td>${esc(d.fixNote||'')}${d.fph?` <button class="btn btn-ghost btn-sm" onclick="mtFixPhotos('${d.id}',this)">${IC('ti-photo')} ${d.fph}</button>`:''}</td></tr>`}).join('')||`<tr><td colspan="${multi?10:9}" style="text-align:center;color:var(--muted)">Chưa có</td></tr>`}</tbody></table></div></div>`;
   }else if(V==='cfg')h+=mtCfgHtml(cu);
   else h+=mtStatHtml(uids,mg);
   box.innerHTML=h;
@@ -9598,23 +9607,30 @@ function mtStatHtml(uids,mg){
   const[f,t,lbl]=mtPeriod(),inP=x=>{const d=x&&isoLocalDate(x);return d&&d>=f&&d<=t};
   const all=(S.defects||[]).filter(d=>uids.includes(d.unitId)),rep=all.filter(d=>inP(d.at)),fix=all.filter(d=>d.st==='fixed'&&inP(d.fixedAt));
   const scope=mg?null:S.user.id,fixS=scope?fix.filter(d=>d.fixedById===scope):fix;
-  const resp=fixS.map(d=>msBetween(d.at,d.accAt)).filter(x=>x!=null),work=fixS.map(d=>msBetween(d.accAt||d.at,d.fixedAt)).filter(x=>x!=null),tot=fixS.map(d=>msBetween(d.at,d.fixedAt)).filter(x=>x!=null);
-  const onTime=fixS.filter(d=>{const x=msBetween(d.at,d.fixedAt);return x!=null&&x<=slaOf(d)}).length,openNow=all.filter(d=>d.st!=='fixed'&&(!scope||mtMine(d)));
+  /* tiếp nhận: tính ngay khi bấm Tiếp nhận (không cần đợi sửa xong) */
+  const accP=all.filter(d=>d.accAt&&inP(d.accAt)&&(!scope||d.accId===scope));
+  const resp=accP.map(mtRsp).filter(x=>x!=null),work=fixS.map(mtWork).filter(x=>x!=null),hold=fixS.filter(d=>d.holdMs).map(d=>d.holdMs);
+  const onTime=fixS.filter(mtOnTime).length,openNow=all.filter(d=>d.st!=='fixed'&&(!scope||mtMine(d)));
+  const longest=openNow.filter(d=>d.accId||d.asg).sort((a,b)=>mtHeld(b)-mtHeld(a))[0];
   let h=mtPeriodSel();
-  h+=`<div class="mt-kpis">${mg?mtK('Lỗi được báo',rep.length,''):''}${mtK('Đã sửa',fixS.length,'ok')}${mtK('Đang mở (hiện tại)',openNow.length,openNow.length?'warn':'')}${mtK('TB tiếp nhận',fmtDur(avg(resp)),'')}${mtK('TB sửa',fmtDur(avg(work)),'')}${mtK('Đúng hạn',tot.length?Math.round(onTime/tot.length*100)+'%':'–',tot.length&&onTime/tot.length<.8?'err':'ok')}</div>`;
+  h+=`<div class="mt-kpis">${mg?mtK('Lỗi được báo',rep.length,''):''}${mtK('Đã sửa',fixS.length,'ok')}${mtK('Đang mở (hiện tại)',openNow.length,openNow.length?'warn':'')}${mtK('TB tiếp nhận',fmtDur(avg(resp)),'')}${mtK('TB làm thực tế',fmtDur(avg(work)),'')}${mtK('TB chờ vật tư',hold.length?fmtDur(avg(hold)):'–','')}${mtK('Đúng hạn',fixS.length?Math.round(onTime/fixS.length*100)+'%':'–',fixS.length&&onTime/fixS.length<.8?'err':'ok')}</div>`;
+  if(longest)h+=`<div class="mt-long">${IC('ti-clock')} Đang giữ lâu nhất: <b>${esc(dfLoc(longest))}</b>${multi?' · '+esc(dfUnitName(longest.unitId)):''} — ${esc(dfTitle(longest))} · ${esc((longest.accBy||(longest.asg&&longest.asg.n))||'')} · <b>${fmtDur(mtHeld(longest))}</b>${longest.st==='hold'?' (đang chờ vật tư)':''}</div>`;
   if(mg){
     /* theo nhân viên cơ điện */
-    const st={},stf=[...new Map(uids.flatMap(x=>mtStaff(x)).map(x=>[x.id,x])).values()];stf.forEach(x=>st[x.id]={n:x.n,asg:0,acc:0,fix:0,open:0,r:[],w:[],ok:0,t:0});
-    const g=(id,n)=>st[id]||(st[id]={n:n||'?',asg:0,acc:0,fix:0,open:0,r:[],w:[],ok:0,t:0});
-    rep.forEach(d=>{if(d.asg)g(d.asg.id,d.asg.n).asg++;if(d.accId&&inP(d.accAt))g(d.accId,d.accBy).acc++});
-    all.filter(d=>d.st!=='fixed').forEach(d=>{const id=d.accId||(d.asg&&d.asg.id);if(id)g(id,d.accBy||(d.asg&&d.asg.n)).open++});
-    fix.forEach(d=>{if(!d.fixedById)return;const o=g(d.fixedById,d.fixedBy);o.fix++;const r=msBetween(d.at,d.accAt),w=msBetween(d.accAt||d.at,d.fixedAt),tt=msBetween(d.at,d.fixedAt);if(r!=null)o.r.push(r);if(w!=null)o.w.push(w);if(tt!=null){o.t++;if(tt<=slaOf(d))o.ok++}});
-    const rows=Object.values(st).filter(o=>o.asg||o.acc||o.fix||o.open||stf.some(x=>x.n===o.n)).sort((a,b)=>b.fix-a.fix);
-    h+=`<div class="card"><div class="card-title">${IC('ti-users')} Hiệu suất nhân viên cơ điện — ${lbl}</div><div class="tbl-wrap"><table><thead><tr><th>Nhân viên</th><th style="text-align:center">Được giao</th><th style="text-align:center">Tiếp nhận</th><th style="text-align:center">Hoàn thành</th><th style="text-align:center">Đang giữ</th><th style="text-align:center">TB tiếp nhận</th><th style="text-align:center">TB sửa</th><th style="text-align:center">Đúng hạn</th></tr></thead><tbody>${
-      rows.map(o=>`<tr><td><b>${esc(o.n)}</b></td><td style="text-align:center">${o.asg}</td><td style="text-align:center">${o.acc}</td><td style="text-align:center"><b>${o.fix}</b></td><td style="text-align:center">${o.open||'–'}</td><td style="text-align:center">${fmtDur(avg(o.r))}</td><td style="text-align:center">${fmtDur(avg(o.w))}</td><td style="text-align:center" class="${o.t&&o.ok/o.t<.8?'dur-over':''}">${o.t?Math.round(o.ok/o.t*100)+'%':'–'}</td></tr>`).join('')||`<tr><td colspan="8" style="text-align:center;color:var(--muted)">Chưa có tài khoản cơ điện — tạo ở Thiết lập → Đơn vị & Tài khoản, vai trò "Cơ điện"</td></tr>`}</tbody></table></div>
-      <div class="ss-note">TB tiếp nhận: từ lúc báo đến lúc cơ điện bấm Tiếp nhận · TB sửa: từ lúc tiếp nhận đến lúc báo hoàn thành · Đúng hạn: tổng thời gian ≤ thời hạn xử lý của bộ phận (cài ở mục Cài đặt).</div></div>`;
-    if(multi){const bu={};uids.forEach(x=>bu[x]={rep:0,fix:0,open:0,tot:[],ok:0});rep.forEach(d=>bu[d.unitId].rep++);all.filter(d=>d.st!=='fixed').forEach(d=>bu[d.unitId].open++);fix.forEach(d=>{const o=bu[d.unitId];o.fix++;const x=msBetween(d.at,d.fixedAt);if(x!=null){o.tot.push(x);if(x<=slaOf(d))o.ok++}});
-      h+=`<div class="card"><div class="card-title">${IC('ti-building')} Theo bộ phận — ${lbl}</div><div class="tbl-wrap"><table><thead><tr><th>Bộ phận</th><th style="text-align:center">Lỗi báo</th><th style="text-align:center">Đã sửa</th><th style="text-align:center">Đang mở</th><th style="text-align:center">TB tổng thời gian</th><th style="text-align:center">Đúng hạn</th></tr></thead><tbody>${uids.filter(x=>bu[x].rep||bu[x].fix||bu[x].open).sort((a,b)=>bu[b].rep-bu[a].rep).map(x=>{const o=bu[x];return `<tr><td><b>${esc(dfUnitName(x))}</b></td><td style="text-align:center">${o.rep}</td><td style="text-align:center">${o.fix}</td><td style="text-align:center">${o.open||'–'}</td><td style="text-align:center">${fmtDur(avg(o.tot))}</td><td style="text-align:center">${o.tot.length?Math.round(o.ok/o.tot.length*100)+'%':'–'}</td></tr>`}).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted)">Chưa có</td></tr>'}</tbody></table></div></div>`}
+    const mk=n=>({n,asg:0,acc:0,fix:0,open:0,r:[],w:[],hd:[],ok:0,t:0,lg:null});
+    const st={},stf=[...new Map(uids.flatMap(x=>mtStaff(x)).map(x=>[x.id,x])).values()];stf.forEach(x=>st[x.id]=mk(x.n));
+    const g=(id,n)=>st[id]||(st[id]=mk(n||'?'));
+    rep.forEach(d=>{if(d.asg)g(d.asg.id,d.asg.n).asg++});
+    all.forEach(d=>{if(d.accId&&d.accAt&&inP(d.accAt)){const o=g(d.accId,d.accBy);o.acc++;const r=mtRsp(d);if(r!=null)o.r.push(r)}});
+    all.filter(d=>d.st!=='fixed').forEach(d=>{const id=d.accId||(d.asg&&d.asg.id);if(!id)return;const o=g(id,d.accBy||(d.asg&&d.asg.n));o.open++;const hm=mtHeld(d);if(!o.lg||hm>o.lg.ms)o.lg={ms:hm,d}});
+    fix.forEach(d=>{if(!d.fixedById)return;const o=g(d.fixedById,d.fixedBy);o.fix++;const w=mtWork(d);if(w!=null)o.w.push(w);if(d.holdMs)o.hd.push(d.holdMs);if(mtNet(d)!=null){o.t++;if(mtOnTime(d))o.ok++}});
+    const rows=Object.values(st).filter(o=>o.asg||o.acc||o.fix||o.open||stf.some(x=>x.n===o.n)).sort((a,b)=>b.fix-a.fix||b.acc-a.acc);
+    const C='style="text-align:center"';
+    h+=`<div class="card"><div class="card-title">${IC('ti-users')} Hiệu suất nhân viên cơ điện — ${lbl}</div><div class="tbl-wrap"><table><thead><tr><th>Nhân viên</th><th ${C}>Được giao</th><th ${C}>Tiếp nhận</th><th ${C}>Hoàn thành</th><th ${C}>Đang giữ</th><th ${C}>Giữ lâu nhất</th><th ${C}>TB tiếp nhận</th><th ${C}>TB làm thực tế</th><th ${C}>TB chờ vật tư</th><th ${C}>Đúng hạn</th></tr></thead><tbody>${
+      rows.map(o=>`<tr><td><b>${esc(o.n)}</b></td><td ${C}>${o.asg}</td><td ${C}>${o.acc}</td><td ${C}><b>${o.fix}</b></td><td ${C}>${o.open||'–'}</td><td ${C} class="${o.lg&&o.lg.ms>mtSla(o.lg.d.unitId)*3600000?'dur-over':''}" title="${o.lg?esc(dfLoc(o.lg.d)+' — '+dfTitle(o.lg.d)):''}">${o.lg?fmtDur(o.lg.ms)+`<div class="mt-sub">${esc(dfLoc(o.lg.d))}</div>`:'–'}</td><td ${C}>${fmtDur(avg(o.r))}</td><td ${C}>${fmtDur(avg(o.w))}</td><td ${C}>${o.hd.length?fmtDur(avg(o.hd)):'–'}</td><td ${C} class="${o.t&&o.ok/o.t<.8?'dur-over':''}">${o.t?Math.round(o.ok/o.t*100)+'%':'–'}</td></tr>`).join('')||`<tr><td colspan="10" style="text-align:center;color:var(--muted)">Chưa có tài khoản cơ điện — tạo ở Thiết lập → Đơn vị & Tài khoản, vai trò "Cơ điện"</td></tr>`}</tbody></table></div>
+      <div class="ss-note"><b>TB tiếp nhận</b>: từ lúc báo (hoặc lúc được giao lại) đến lúc bấm Tiếp nhận — tính ngay khi tiếp nhận, không đợi sửa xong · <b>TB làm thực tế</b>: từ lúc tiếp nhận đến lúc báo hoàn thành, <b>đã trừ</b> thời gian chờ vật tư · <b>TB chờ vật tư</b>: chỉ tính các lỗi có chờ · <b>Giữ lâu nhất</b>: lỗi đang giữ chưa xong lâu nhất (không tính lúc chờ vật tư) · <b>Đúng hạn</b>: tổng thời gian trừ chờ vật tư ≤ thời hạn xử lý của bộ phận.</div></div>`;
+    if(multi){const bu={};uids.forEach(x=>bu[x]={rep:0,fix:0,open:0,tot:[],ok:0});rep.forEach(d=>bu[d.unitId].rep++);all.filter(d=>d.st!=='fixed').forEach(d=>bu[d.unitId].open++);fix.forEach(d=>{const o=bu[d.unitId];o.fix++;const x=mtNet(d);if(x!=null){o.tot.push(x);if(mtOnTime(d))o.ok++}});
+      h+=`<div class="card"><div class="card-title">${IC('ti-building')} Theo bộ phận — ${lbl}</div><div class="tbl-wrap"><table><thead><tr><th>Bộ phận</th><th style="text-align:center">Lỗi báo</th><th style="text-align:center">Đã sửa</th><th style="text-align:center">Đang mở</th><th style="text-align:center">TB tổng (trừ chờ vật tư)</th><th style="text-align:center">Đúng hạn</th></tr></thead><tbody>${uids.filter(x=>bu[x].rep||bu[x].fix||bu[x].open).sort((a,b)=>bu[b].rep-bu[a].rep).map(x=>{const o=bu[x];return `<tr><td><b>${esc(dfUnitName(x))}</b></td><td style="text-align:center">${o.rep}</td><td style="text-align:center">${o.fix}</td><td style="text-align:center">${o.open||'–'}</td><td style="text-align:center">${fmtDur(avg(o.tot))}</td><td style="text-align:center">${o.tot.length?Math.round(o.ok/o.tot.length*100)+'%':'–'}</td></tr>`}).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted)">Chưa có</td></tr>'}</tbody></table></div></div>`}
     /* thiết bị & phòng hay hỏng */
     const eq={},rm={},src={};rep.forEach(d=>{(d.items&&d.items.length?d.items:['Lỗi khác']).forEach(n=>{const o=eq[n]||(eq[n]={c:0,rooms:new Set()});o.c++;o.rooms.add((multi?dfUnitName(d.unitId)+' · ':'')+dfLoc(d))});{const k=(multi?dfUnitName(d.unitId)+' · ':'')+dfLoc(d);rm[k]=(rm[k]||0)+1}const s={hk:'Buồng phòng',fo:'Lễ tân',room:'Buồng phòng',list:'Danh sách lỗi',mt:'Cơ điện / bộ phận'}[d.src]||'Khác';src[s]=(src[s]||0)+1});
     const eqR=Object.entries(eq).sort((a,b)=>b[1].c-a[1].c),mx=eqR.length?eqR[0][1].c:1,rmR=Object.entries(rm).sort((a,b)=>b[1]-a[1]).slice(0,10);
