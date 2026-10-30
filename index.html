@@ -842,6 +842,147 @@ body:has(.modal-overlay.show) .ai-fab{display:none!important}
 .asg-r b{font-size:15px}.asg-r span{font-size:11px;color:#64748b}
 .asg-r i{position:absolute;top:3px;right:3px;font-style:normal;background:var(--ac);color:#fff;font-size:9.5px;font-weight:800;border-radius:8px;padding:0 5px}
 
+
+/* ===== giao theo nhóm ===== */
+.rs-asg.team{display:inline-flex;align-items:center;gap:3px}
+.rs-asg .ic{width:12px;height:12px}
+.asg-team{display:inline-block;background:#eef4ff;color:#1e3a8a;border-radius:10px;padding:0 8px;font-size:12px;font-weight:700;margin-left:4px}
+.asg-r.team{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--ac) 16%,#fff) 0 8px,#fff 8px 14px)}
+.asg-r em{font-style:normal;font-size:10px;font-weight:700;color:#334155;margin-top:2px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.asg-s.sel .asg-av{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ac)}
+.tm-note{font-size:12.5px;color:#475569;background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-top:8px;line-height:1.5}
+.tm-k{color:var(--muted);font-weight:600}
+
+/* ===== Ảnh cần chụp ===== */
+.shots{margin-top:14px;padding:12px;border-radius:10px;border:2px dashed var(--border);background:#f8fafc}
+.shots.open{border-color:var(--pri);background:var(--pri-ll)}
+.shots-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.shots-h .ic{width:20px;height:20px;color:var(--pri)}
+.shots-h .ok{color:var(--ok-d);font-weight:600}.shots-h .no{color:var(--err-d);font-weight:600}
+.shots-lock{font-size:13px;color:var(--muted);margin-bottom:8px}
+.shot-list{display:flex;flex-direction:column;gap:8px}
+.shot{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:8px}
+.shot.done{border-color:var(--ok)}
+.shot-th{position:relative;width:64px;height:64px;border-radius:8px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:800;color:#64748b;font-size:18px}
+.shot-th img{width:100%;height:100%;object-fit:cover;cursor:pointer}
+.shot-th .del{position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;font-size:13px;line-height:20px;cursor:pointer;padding:0}
+.shot-tx b{display:block;font-size:14.5px}.shot-tx small{display:block;color:#475569;font-size:12.5px;line-height:1.4;margin-top:2px}
+.shots-more{margin-top:10px}
+.cam-hint{background:#fef3c7;color:#92400e;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:14px;text-align:left}
+.photo-cap{display:flex;flex-direction:column;align-items:center;gap:3px;max-width:100px}
+.photo-cap small{font-size:11.5px;color:#475569;text-align:center;line-height:1.25}
+.setup-sub{margin-top:16px;padding-top:12px;border-top:1px dashed var(--border)}
+.ss-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ss-h .ic{width:18px;height:18px;color:var(--pri)}.ss-h span{font-size:12.5px;color:var(--muted)}
+.ss-note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.shot-ed{display:grid!important;grid-template-columns:minmax(120px,1fr) 2fr auto;gap:6px}
+.shot-ed input,.eq-ed input{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px}
+.eq-grid-ed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.eq-ed{display:flex!important;gap:6px;align-items:center}
+@media (max-width:640px){.shot-ed{grid-template-columns:1fr auto}.shot-ed .sh-g{grid-column:1/2}.shot{grid-template-columns:56px 1fr}.shot>.btn{grid-column:1/-1}}
+
+/* ===== Lỗi thiết bị ===== */
+.df-sec{margin-top:14px;border:1.5px solid #fcd34d;background:#fffbeb;border-radius:10px;padding:10px 12px}
+.df-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.df-h .ic{width:19px;height:19px;color:#b45309}
+.df-none{font-size:12.5px;color:var(--muted)}
+.df-it{background:#fff;border:1px solid #fde68a;border-radius:8px;padding:8px 10px;margin-top:8px}
+.df-it-h{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.df-it-h span{font-size:12px;color:var(--muted)}
+.df-note{font-size:13.5px;margin-top:3px;white-space:pre-wrap}
+.df-act{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.df-act .photos-row{margin:0}
+.rs-df{font-size:11px;font-weight:700;color:#92400e;background:#fef3c7;border-radius:6px;padding:1px 6px;display:inline-flex;align-items:center;gap:3px;margin-top:3px}
+.rs-df .ic{width:12px;height:12px}
+.df-lbl{font-weight:700;font-size:14px;margin:12px 0 6px}.df-lbl span{font-weight:400;color:var(--muted);font-size:12.5px}
+.df-eq{display:flex;flex-wrap:wrap;gap:6px}
+.df-chip{border:1.5px solid var(--border);background:#fff;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer;color:#334155}
+.df-chip.on{background:#fef3c7;border-color:#d97706;color:#92400e}
+.df-note-in{display:flex;gap:8px;align-items:stretch}
+.df-note-in textarea{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;min-height:80px}
+.df-mic{flex:none;width:86px;border:1.5px solid var(--pri);background:#fff;color:var(--pri);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-weight:700;font-size:12.5px;cursor:pointer;text-align:center;padding:6px}
+.df-mic .ic{width:26px;height:26px}
+.df-mic.rec{background:#dc2626;border-color:#dc2626;color:#fff;animation:dfPulse 1.2s infinite}
+@keyframes dfPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}}
+.df-already{background:#fef3c7;color:#92400e;border-radius:8px;padding:8px 10px;font-size:13px;margin-bottom:6px}
+.df-room{margin-bottom:12px}.df-room-h{font-weight:800;font-size:15px}
+.df-fixed{margin-top:10px}.df-fixed summary{cursor:pointer;font-weight:600;color:#475569}.df-fx{font-size:13px;color:#475569;padding:3px 0}
+.fo-df-btn.has{background:#fef3c7;border-color:#f59e0b;color:#92400e}
+.fo-df-btn .ic{width:16px;height:16px}
+#dfListModal{z-index:520}#dfModal{z-index:540}#askYes{z-index:700}
+
+/* ===== Phiếu dọn: các phần thu gọn / mở rộng ===== */
+.cs-bar{display:flex;justify-content:flex-end;gap:6px;align-items:center;font-size:13px;color:var(--muted);margin:2px 0 6px}
+.cs-bar .lnk{background:none;border:0;color:var(--pri);font-weight:600;cursor:pointer;padding:4px 2px;font-size:13px}
+.cs{border:1.5px solid var(--border);border-radius:12px;background:#fff;margin-bottom:10px;overflow:hidden}
+.cs.open{border-color:#c7d2fe}
+.cs-hd{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#f8fafc;border:0;cursor:pointer;text-align:left;font-size:15px;color:var(--txt)}
+.cs.open .cs-hd{background:var(--pri-ll);border-bottom:1px solid #dbeafe}
+.cs-ic{display:flex;color:var(--pri)}.cs-ic .ic{width:20px;height:20px}
+.cs-t{font-weight:700}
+.cs-sum{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+.cs-chip{font-size:12px;font-weight:700;border-radius:10px;padding:2px 9px;background:#f1f5f9;color:#475569;white-space:nowrap}
+.cs-chip.ok{background:var(--ok-l);color:var(--ok-d)}.cs-chip.wait{background:#fef3c7;color:#92400e}.cs-chip.err{background:var(--err-l);color:var(--err-d)}.cs-chip.pur{background:#f5f3ff;color:#6d28d9}
+.cs-more{font-size:13px;font-weight:600;color:var(--pri);white-space:nowrap}
+.cs-car{width:9px;height:9px;border-right:2px solid var(--pri);border-bottom:2px solid var(--pri);transform:rotate(45deg);margin:0 4px 4px 0;transition:transform .15s;flex:none}
+.cs.open .cs-car{transform:rotate(-135deg);margin:4px 4px 0 0}
+.cs-bd{display:none;padding:12px 14px}
+.cs.open .cs-bd{display:block}
+.cs-bd .chk-item:last-child{margin-bottom:0}
+.cs-mb .sup-box{border:0;padding:0;margin:0;background:none}
+.cs-mb .sup-box>b,.cs-mb .sup-box>div:first-child>b{display:none}
+.cs-df .df-sec{margin:0;border:0;background:none;padding:0}
+.cs-df .df-h>.ic,.cs-df .df-h>b,.cs-df .df-h>.badge,.cs-df .df-h>.df-none{display:none}
+.cs-ph .shots{margin-top:0}.cs-ph .shots-h{display:none}
+.cs[data-k="tm"] .cs-bd>div:first-child{margin-top:0!important}
+.cs[data-k="tm"] .cs-bd>div:first-child>div:first-child{display:none}
+@media (max-width:640px){.cs-hd{flex-wrap:wrap;row-gap:6px}.cs-sum{order:5;flex-basis:100%;padding-left:30px}.cs-t{flex:1}}
+.cs-ph .cs-bd>div:not(.shots)>div:first-child{display:none}
+
+/* ===== Cơ điện ===== */
+.mt-info{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:5px}
+.mt-st{font-size:11.5px;font-weight:700;border-radius:10px;padding:1px 8px;white-space:nowrap}
+.mt-st.err{background:var(--err-l);color:var(--err-d)}.mt-st.info{background:var(--pri-ll);color:var(--pri-d)}.mt-st.warn{background:#fef3c7;color:#92400e}.mt-st.ok{background:var(--ok-l);color:var(--ok-d)}
+.mt-who{font-size:12.5px;font-weight:600;color:#334155;display:inline-flex;align-items:center;gap:3px}.mt-who .ic{width:14px;height:14px}
+.mt-hold{font-size:12.5px;color:#92400e;font-style:italic}
+.mt-asg{padding:5px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;max-width:200px}
+.mt-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.mt-k{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.mt-k .v{font-size:24px;font-weight:800}.mt-k .l{font-size:12.5px;color:var(--muted);margin-top:2px}
+.mt-k.ok .v{color:var(--ok)}.mt-k.warn .v{color:var(--warn)}.mt-k.err .v{color:var(--err)}
+.mt-grp .df-it{margin-top:0;border:0;padding:0}
+.mt-row{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+.mt-row:first-of-type{border-top:0}
+.mt-room{font-weight:800;font-size:17px;color:#b45309}
+.mt-sub{font-size:12px;color:var(--muted)}
+.mt-sla{font-size:13.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.mt-sla select{padding:5px 8px;border:1.5px solid var(--border);border-radius:8px}
+.mt-2{display:grid;grid-template-columns:3fr 2fr;gap:12px}
+.mt-bar{display:grid;grid-template-columns:minmax(110px,170px) 1fr 34px;gap:8px;align-items:center;padding:4px 0;font-size:13.5px}
+.mt-bar small{grid-column:1/-1;color:var(--muted);font-size:11.5px;margin-top:-3px}
+.mt-bt{height:9px;background:#f1f5f9;border-radius:5px;overflow:hidden}.mt-bt i{display:block;height:100%;background:#f59e0b;border-radius:5px}
+.mt-src{display:flex;justify-content:space-between;padding:4px 0;font-size:13.5px;border-bottom:1px dashed var(--border)}
+.vt-n{background:var(--err);color:#fff;border-radius:9px;padding:0 6px;font-size:11px;margin-left:2px}
+.mt-today .card-title{display:flex;align-items:center;gap:6px}
+.mt-trow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:6px 0;border-top:1px solid var(--border);font-size:14px}
+.mt-trow small{color:var(--muted)}
+@media (max-width:760px){.mt-2{grid-template-columns:1fr}.mt-row{grid-template-columns:1fr}.mt-room{font-size:15px}}
+
+/* ===== Kiểm tra lại theo cấp ===== */
+.lv-tag{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 7px;white-space:nowrap;vertical-align:1px}
+.lv-tag.lv1{background:#e0f2fe;color:#075985}.lv-tag.lv2{background:#f3e8ff;color:#7e22ce}.lv-tag.lv3{background:#fee2e2;color:#991b1b}
+.au-box{margin-top:14px;border:1.5px solid #c4b5fd;background:#faf5ff;border-radius:10px;padding:12px}
+.au-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.au-h .ic{width:19px;height:19px;color:#7e22ce}
+.au-sub{font-size:13px;color:#475569;margin:6px 0 8px;line-height:1.5}
+.au-box textarea{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px}
+.au-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
+.au-ok{margin-top:10px;font-size:13px;color:#166534;background:var(--ok-l);border-radius:8px;padding:7px 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.au-ok .ic{width:16px;height:16px}
+.mt-scope{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.mt-scope .fchip .ic{width:15px;height:15px}
+.mt-room small{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-top:2px}
+.mt-trow small{color:var(--muted)}
+.df-where{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.df-where input,.df-where select{width:100%}
+#mtLocsEd{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px}
 /* ===== KHO: CHỨNG TỪ ===== */
 .im-doc{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
 .im-keep{background:#eef4ff;color:#1e3a8a;border-radius:8px;padding:7px 10px;font-size:13px;margin-bottom:10px}
@@ -1207,6 +1348,27 @@ html[data-fs="xl"]{zoom:1.25}
 #saveBar .btn-ghost{background:rgba(255,255,255,.1)!important;color:#e2e8f0!important;border-color:transparent!important}
 @media(min-width:901px){#saveBar{left:calc(50% + var(--side-w)/2)}}
 @media(max-width:900px){#saveBar{bottom:74px;gap:6px;padding:7px 8px 7px 12px}#saveBar span{font-size:13px}}
+
+/* ===== Tab tiêu đề trong từng module: to, đậm, màu theo module ===== */
+#sub-fo{--tc:#0d9488}#sub-checks{--tc:#7c3aed}#sub-mt{--tc:#b45309}#sub-inv{--tc:#c2410c}#sub-issues{--tc:#dc2626}
+.vtabs,.evg-tabs{--tc0:var(--tc,#1a56db)}
+.vt-bar{border-bottom:none;margin-bottom:14px;align-items:center}
+.vt-bar > .btn{margin-bottom:0}
+.vtabs{gap:6px;padding:5px;margin-bottom:0;background:color-mix(in srgb,var(--tc0) 9%,#fff);border:1.5px solid color-mix(in srgb,var(--tc0) 22%,#fff);border-radius:14px}
+.vtab{font-size:16.5px;font-weight:800;letter-spacing:.1px;padding:10px 18px;border-radius:10px;border-bottom:none;color:color-mix(in srgb,var(--tc0) 78%,#0f172a)}
+.vtab:hover{background:color-mix(in srgb,var(--tc0) 14%,#fff);color:var(--tc0)}
+.vtab.on{background:var(--tc0);color:#fff;border-bottom:none;box-shadow:0 2px 8px color-mix(in srgb,var(--tc0) 40%,transparent)}
+.vtab.on .vt-n{background:#fff;color:var(--tc0)}
+.vtab .vt-n{font-size:12.5px;line-height:19px;padding:0 7px}
+.evg-tabs{--tc0:#1a56db;gap:6px;padding:5px;background:color-mix(in srgb,var(--tc0) 9%,#fff);border:1.5px solid color-mix(in srgb,var(--tc0) 22%,#fff);border-radius:14px}
+.evg-tab{font-size:16.5px;font-weight:800;padding:10px 18px;gap:8px;border-radius:10px;color:color-mix(in srgb,var(--tc0) 78%,#0f172a)}
+.evg-tab .ic{width:19px;height:19px}
+.evg-tab:hover{background:color-mix(in srgb,var(--tc0) 14%,#fff);color:var(--tc0)}
+.evg-tab.active{background:var(--tc0);color:#fff;box-shadow:0 2px 8px color-mix(in srgb,var(--tc0) 40%,transparent)}
+.evg-tab.active .ic{color:#fff}
+.evg-tab .evg-b{background:#fff;color:var(--err-d)}
+.fo-hist-btn,.fo-df-btn{font-size:14.5px}
+@media(max-width:600px){.vtab,.evg-tab{font-size:15px;padding:9px 13px}.vtabs,.evg-tabs{gap:4px;padding:4px}}
 /* ===== ĐĂNG NHẬP NHANH: PIN, khoá màn hình, vân tay / Face ID ===== */
 .login-bio{width:100%;margin-top:10px;padding:12px;border:1.5px solid var(--pri);border-radius:8px;background:#fff;color:var(--pri);font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
 .login-bio:hover{background:var(--pri-ll)}
@@ -1287,6 +1449,8 @@ body.is-locked{overflow:hidden}
 .hdr-qa{display:inline-flex;align-items:center;gap:6px;font-weight:600}
 .hdr-qa .ic,#hdrLock .ic{width:18px;height:18px}
 @media (max-width:1100px){.hdr-qa span{display:none}}
+@media (max-width:1440px){.hdr-qa span{display:none}}
+.btn-logout,.hdr-qa{white-space:nowrap}
 </style>
 
 </head>
@@ -1320,7 +1484,7 @@ body.is-locked{overflow:hidden}
 </div>
 
 <!-- =============== APP =============== -->
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrow-back-up" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4" /> <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M22 17v-3h-20" /> <path d="M2 8v9" /> <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" /></symbol><symbol id="i-building-skyscraper" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-14l8 -4v18" /> <path d="M19 21v-10l-6 -4" /> <path d="M9 9l0 .01" /> <path d="M9 12l0 .01" /> <path d="M9 15l0 .01" /> <path d="M9 18l0 .01" /></symbol><symbol id="i-building-warehouse" viewBox="0 0 24 24"><path d="M3 21v-13l9 -4l9 4v13" /> <path d="M13 13h4v8h-10v-6h6" /> <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M16 3l0 4" /> <path d="M8 3l0 4" /> <path d="M4 11l16 0" /> <path d="M8 15h2v2h-2z" /></symbol><symbol id="i-chart-pie" viewBox="0 0 24 24"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /> <path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></symbol><symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-clipboard-list" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 12l.01 0" /> <path d="M13 12l2 0" /> <path d="M9 16l.01 0" /> <path d="M13 16l2 0" /></symbol><symbol id="i-clock-exclamation" viewBox="0 0 24 24"><path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" /> <path d="M12 7v5l3 3" /> <path d="M19 16v3" /> <path d="M19 22v.01" /></symbol><symbol id="i-door-enter" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /> <path d="M21 7h-7m3 -3l-3 3l3 3" /></symbol><symbol id="i-door-exit" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /> <path d="M14 7h7m-3 -3l3 3l-3 3" /></symbol><symbol id="i-eye-check" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-file-certificate" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /> <path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" /></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="i-folder-open" viewBox="0 0 24 24"><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-hotel-service" viewBox="0 0 24 24"><path d="M8.5 10a1.5 1.5 0 0 1 -1.5 -1.5a5.5 5.5 0 0 1 11 0v10.5a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2c0 -1.38 .71 -2.444 1.88 -3.175l4.424 -2.765c1.055 -.66 1.696 -1.316 1.696 -2.56a2.5 2.5 0 1 0 -5 0a1.5 1.5 0 0 1 -1.5 1.5z" /></symbol><symbol id="i-list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /> <path d="M11 6l9 0" /> <path d="M11 12l9 0" /> <path d="M11 18l9 0" /></symbol><symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 6l0 -3" /> <path d="M16.25 7.75l2.15 -2.15" /> <path d="M18 12l3 0" /> <path d="M16.25 16.25l2.15 2.15" /> <path d="M12 18l0 3" /> <path d="M7.75 16.25l-2.15 2.15" /> <path d="M6 12l-3 0" /> <path d="M7.75 7.75l-2.15 -2.15" /></symbol><symbol id="i-menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-percentage" viewBox="0 0 24 24"><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M6 18l12 -12" /></symbol><symbol id="i-point" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-signature" viewBox="0 0 24 24"><path d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2" /></symbol><symbol id="i-spray" viewBox="0 0 24 24"><path d="M4 10m0 2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2z" /> <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" /> <path d="M15 7h.01" /> <path d="M18 9h.01" /> <path d="M18 5h.01" /> <path d="M21 3h.01" /> <path d="M21 7h.01" /> <path d="M21 11h.01" /> <path d="M10 7h1" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></symbol><symbol id="i-users-group" viewBox="0 0 24 24"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /> <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M17 10h2a2 2 0 0 1 2 2v1" /> <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z" /> <path d="M15 9h.01" /></symbol><symbol id="i-file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 17h6" /> <path d="M9 13h6" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-device-floppy" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-robot" viewBox="0 0 24 24"><path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /> <path d="M12 2v2" /> <path d="M9 12v9" /> <path d="M15 12v9" /> <path d="M5 16l4 -2" /> <path d="M15 14l4 2" /> <path d="M9 18h6" /> <path d="M10 8v.01" /> <path d="M14 8v.01" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /> <path d="M9 12h12l-3 -3" /> <path d="M18 15l3 -3" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" /> <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="i-checks" viewBox="0 0 24 24"><path d="M7 12l5 5l10 -10" /> <path d="M2 12l5 5m5 -5l5 -5" /></symbol><symbol id="i-layout-list" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-qrcode" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 17l0 .01" /> <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 7l0 .01" /> <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M17 7l0 .01" /> <path d="M14 14l3 0" /> <path d="M20 14l0 .01" /> <path d="M14 14l0 3" /> <path d="M14 20l3 0" /> <path d="M17 17l3 0" /> <path d="M20 17l0 3" /></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></symbol><symbol id="i-arrows-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3l-3 3" /> <path d="M18 20l3 -3l-3 -3" /> <path d="M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5" /> <path d="M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3" /></symbol><symbol id="i-report-analytics" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /> <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /> <path d="M16 5l3 3" /></symbol><symbol id="i-lock-open" viewBox="0 0 24 24"><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M8 11v-5a4 4 0 0 1 8 0" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6 -6" /> <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /> <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 9l5 -5l5 5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-alarm" viewBox="0 0 24 24"><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M12 10l0 3l2 0" /> <path d="M7 4l-2.75 2" /> <path d="M17 4l2.75 2" /></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" /> <path d="M17 8l4 4l-4 4" /> <path d="M3 12l18 0" /></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /> <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /> <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /></symbol><symbol id="i-bath" viewBox="0 0 24 24"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" /> <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" /> <path d="M4 21l1 -1.5" /> <path d="M20 21l-1 -1.5" /></symbol><symbol id="i-bell-ringing" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /> <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /> <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6l0 13" /> <path d="M12 6l0 13" /> <path d="M21 6l0 13" /></symbol><symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 5h4v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2z" /> <path d="M14 3.5c0 1.626 .507 3.212 1.45 4.537l.05 .07a8.093 8.093 0 0 1 1.5 4.694v6.199a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-6.2c0 -1.682 .524 -3.322 1.5 -4.693l.05 -.07a7.823 7.823 0 0 0 1.45 -4.537" /> <path d="M7 14.803a2.4 2.4 0 0 0 1 -.803a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.805" /></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-building-bank" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 10l18 0" /> <path d="M5 6l7 -3l7 3" /> <path d="M4 10l0 11" /> <path d="M20 10l0 11" /> <path d="M8 14l0 3" /> <path d="M12 14l0 3" /> <path d="M16 14l0 3" /></symbol><symbol id="i-building-factory-2" viewBox="0 0 24 24"><path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-building-store" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /> <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /> <path d="M9.7 17l4.6 0" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M11 15h1" /> <path d="M12 15v3" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /> <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-candy" viewBox="0 0 24 24"><path d="M7.05 11.293l4.243 -4.243a2 2 0 0 1 2.828 0l2.829 2.83a2 2 0 0 1 0 2.828l-4.243 4.243a2 2 0 0 1 -2.828 0l-2.829 -2.831a2 2 0 0 1 0 -2.828z" /> <path d="M16.243 9.172l3.086 -.772a1.5 1.5 0 0 0 .697 -2.516l-2.216 -2.217a1.5 1.5 0 0 0 -2.44 .47l-1.248 2.913" /> <path d="M9.172 16.243l-.772 3.086a1.5 1.5 0 0 1 -2.516 .697l-2.217 -2.216a1.5 1.5 0 0 1 .47 -2.44l2.913 -1.248" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></symbol><symbol id="i-chart-bar" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M4 20h14" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></symbol><symbol id="i-confetti" viewBox="0 0 24 24"><path d="M4 5h2" /> <path d="M5 4v2" /> <path d="M11.5 4l-.5 2" /> <path d="M18 5h2" /> <path d="M19 4v2" /> <path d="M15 9l-1 1" /> <path d="M18 13l2 -.5" /> <path d="M18 19h2" /> <path d="M19 18v2" /> <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /> <path d="M3 10l18 0" /> <path d="M7 15l.01 0" /> <path d="M11 15l2 0" /></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" /></symbol><symbol id="i-device-laptop" viewBox="0 0 24 24"><path d="M3 19l18 0" /> <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></symbol><symbol id="i-device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14z" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /> <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6.5 17h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="i-microphone" viewBox="0 0 24 24"><path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z" /> <path d="M5 10a7 7 0 0 0 14 0" /> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /></symbol><symbol id="i-numbers" viewBox="0 0 24 24"><path d="M8 10v-7l-2 2" /> <path d="M6 16a2 2 0 1 1 4 0c0 .591 -.601 1.46 -1 2l-3 3h4" /> <path d="M15 14a2 2 0 1 0 2 -2a2 2 0 1 0 -2 -2" /> <path d="M6.5 10h3" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /> <path d="M13.5 6.5l4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-player-stop" viewBox="0 0 24 24"><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-player-track-next" viewBox="0 0 24 24"><path d="M3 5v14l8 -7z" /> <path d="M14 5v14l8 -7z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9.785 6l8.215 8.215l-2.054 2.054a5.81 5.81 0 1 1 -8.215 -8.215l2.054 -2.054z" /> <path d="M4 20l3.5 -3.5" /> <path d="M15 4l-3.5 3.5" /> <path d="M20 9l-3.5 3.5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol><symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17h-11v-14h-2" /> <path d="M6 5l14 1l-1 7h-13" /></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></symbol><symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" /> <path d="M14.5 10.5l-2.5 2.5" /> <path d="M17 8l1 -1" /> <path d="M14 3h-4" /></symbol><symbol id="i-tool" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></symbol><symbol id="i-tools-kitchen-2" viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1" /> <path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3" /> <path d="M3 13l4 0" /> <path d="M17 13l4 0" /> <path d="M12 20l0 -6" /> <path d="M4 19l3.35 -2" /> <path d="M20 19l-3.35 -2" /> <path d="M4 7l3.75 2.4" /> <path d="M20 7l-3.75 2.4" /></symbol><symbol id="i-photo" viewBox="0 0 24 24"><path d="M15 8h.01" /> <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /> <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /> <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></symbol><symbol id="i-help-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 16v.01" /> <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></symbol><symbol id="i-player-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z" /></symbol><symbol id="i-backspace" viewBox="0 0 24 24"><path d="M20 6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-11l-5 -5a1.5 1.5 0 0 1 0 -2l5 -5z" /> <path d="M12 10l4 4m0 -4l-4 4" /></symbol><symbol id="i-fingerprint" viewBox="0 0 24 24"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" /> <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6" /> <path d="M12 11v2a14 14 0 0 0 2.5 8" /> <path d="M8 15a18 18 0 0 0 1.8 6" /> <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" /></symbol><symbol id="i-shield-lock" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /> <path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12l0 2.5" /></symbol><symbol id="i-switch-horizontal" viewBox="0 0 24 24"><path d="M16 3l4 4l-4 4" /> <path d="M10 7l10 0" /> <path d="M8 13l-4 4l4 4" /> <path d="M4 17l9 0" /></symbol></svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrow-back-up" viewBox="0 0 24 24"><path d="M9 14l-4 -4l4 -4" /> <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M7 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M22 17v-3h-20" /> <path d="M2 8v9" /> <path d="M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5z" /></symbol><symbol id="i-building-skyscraper" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-14l8 -4v18" /> <path d="M19 21v-10l-6 -4" /> <path d="M9 9l0 .01" /> <path d="M9 12l0 .01" /> <path d="M9 15l0 .01" /> <path d="M9 18l0 .01" /></symbol><symbol id="i-building-warehouse" viewBox="0 0 24 24"><path d="M3 21v-13l9 -4l9 4v13" /> <path d="M13 13h4v8h-10v-6h6" /> <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M16 3l0 4" /> <path d="M8 3l0 4" /> <path d="M4 11l16 0" /> <path d="M8 15h2v2h-2z" /></symbol><symbol id="i-chart-pie" viewBox="0 0 24 24"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /> <path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></symbol><symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /> <path d="M14 19l2 2l4 -4" /> <path d="M9 8h4" /> <path d="M9 12h2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-clipboard-list" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 12l.01 0" /> <path d="M13 12l2 0" /> <path d="M9 16l.01 0" /> <path d="M13 16l2 0" /></symbol><symbol id="i-clock-exclamation" viewBox="0 0 24 24"><path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" /> <path d="M12 7v5l3 3" /> <path d="M19 16v3" /> <path d="M19 22v.01" /></symbol><symbol id="i-door-enter" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /> <path d="M21 7h-7m3 -3l-3 3l3 3" /></symbol><symbol id="i-door-exit" viewBox="0 0 24 24"><path d="M13 12v.01" /> <path d="M3 21h18" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /> <path d="M14 7h7m-3 -3l3 3l-3 3" /></symbol><symbol id="i-eye-check" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M11.102 17.957c-3.204 -.307 -5.904 -2.294 -8.102 -5.957c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6a19.5 19.5 0 0 1 -.663 1.032" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-file-certificate" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /> <path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5" /></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="i-folder-open" viewBox="0 0 24 24"><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-hotel-service" viewBox="0 0 24 24"><path d="M8.5 10a1.5 1.5 0 0 1 -1.5 -1.5a5.5 5.5 0 0 1 11 0v10.5a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2c0 -1.38 .71 -2.444 1.88 -3.175l4.424 -2.765c1.055 -.66 1.696 -1.316 1.696 -2.56a2.5 2.5 0 1 0 -5 0a1.5 1.5 0 0 1 -1.5 1.5z" /></symbol><symbol id="i-list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /> <path d="M11 6l9 0" /> <path d="M11 12l9 0" /> <path d="M11 18l9 0" /></symbol><symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 6l0 -3" /> <path d="M16.25 7.75l2.15 -2.15" /> <path d="M18 12l3 0" /> <path d="M16.25 16.25l2.15 2.15" /> <path d="M12 18l0 3" /> <path d="M7.75 16.25l-2.15 2.15" /> <path d="M6 12l-3 0" /> <path d="M7.75 7.75l-2.15 -2.15" /></symbol><symbol id="i-menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-percentage" viewBox="0 0 24 24"><path d="M17 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M7 7m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M6 18l12 -12" /></symbol><symbol id="i-point" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-signature" viewBox="0 0 24 24"><path d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2" /></symbol><symbol id="i-spray" viewBox="0 0 24 24"><path d="M4 10m0 2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2z" /> <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" /> <path d="M15 7h.01" /> <path d="M18 9h.01" /> <path d="M18 5h.01" /> <path d="M21 3h.01" /> <path d="M21 7h.01" /> <path d="M21 11h.01" /> <path d="M10 7h1" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></symbol><symbol id="i-users-group" viewBox="0 0 24 24"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /> <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M17 10h2a2 2 0 0 1 2 2v1" /> <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z" /> <path d="M15 9h.01" /></symbol><symbol id="i-file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 17h6" /> <path d="M9 13h6" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 11l5 5l5 -5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-device-floppy" viewBox="0 0 24 24"><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-robot" viewBox="0 0 24 24"><path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /> <path d="M12 2v2" /> <path d="M9 12v9" /> <path d="M15 12v9" /> <path d="M5 16l4 -2" /> <path d="M15 14l4 2" /> <path d="M9 18h6" /> <path d="M10 8v.01" /> <path d="M14 8v.01" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /> <path d="M9 12h12l-3 -3" /> <path d="M18 15l3 -3" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" /> <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="i-checks" viewBox="0 0 24 24"><path d="M7 12l5 5l10 -10" /> <path d="M2 12l5 5m5 -5l5 -5" /></symbol><symbol id="i-layout-list" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-qrcode" viewBox="0 0 24 24"><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 17l0 .01" /> <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M7 7l0 .01" /> <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M17 7l0 .01" /> <path d="M14 14l3 0" /> <path d="M20 14l0 .01" /> <path d="M14 14l0 3" /> <path d="M14 20l3 0" /> <path d="M17 17l3 0" /> <path d="M20 17l0 3" /></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></symbol><symbol id="i-arrows-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3l-3 3" /> <path d="M18 20l3 -3l-3 -3" /> <path d="M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5" /> <path d="M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3" /></symbol><symbol id="i-report-analytics" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /> <path d="M9 17v-5" /> <path d="M12 17v-1" /> <path d="M15 17v-3" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /> <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /> <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /> <path d="M16 5l3 3" /></symbol><symbol id="i-lock-open" viewBox="0 0 24 24"><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M8 11v-5a4 4 0 0 1 8 0" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6 -6" /> <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /> <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M5 12l14 0" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /> <path d="M7 9l5 -5l5 5" /> <path d="M12 4l0 12" /></symbol><symbol id="i-alarm" viewBox="0 0 24 24"><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M12 10l0 3l2 0" /> <path d="M7 4l-2.75 2" /> <path d="M17 4l2.75 2" /></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></symbol><symbol id="i-arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" /> <path d="M17 8l4 4l-4 4" /> <path d="M3 12l18 0" /></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /> <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /> <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /></symbol><symbol id="i-bath" viewBox="0 0 24 24"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-3a1 1 0 0 1 1 -1z" /> <path d="M6 12v-7a2 2 0 0 1 2 -2h3v2.25" /> <path d="M4 21l1 -1.5" /> <path d="M20 21l-1 -1.5" /></symbol><symbol id="i-bell-ringing" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /> <path d="M9 17v1a3 3 0 0 0 6 0v-1" /> <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /> <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" /></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /> <path d="M3 6l0 13" /> <path d="M12 6l0 13" /> <path d="M21 6l0 13" /></symbol><symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 5h4v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2z" /> <path d="M14 3.5c0 1.626 .507 3.212 1.45 4.537l.05 .07a8.093 8.093 0 0 1 1.5 4.694v6.199a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-6.2c0 -1.682 .524 -3.322 1.5 -4.693l.05 -.07a7.823 7.823 0 0 0 1.45 -4.537" /> <path d="M7 14.803a2.4 2.4 0 0 0 1 -.803a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.805" /></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M9 8l1 0" /> <path d="M9 12l1 0" /> <path d="M9 16l1 0" /> <path d="M14 8l1 0" /> <path d="M14 12l1 0" /> <path d="M14 16l1 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-building-bank" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 10l18 0" /> <path d="M5 6l7 -3l7 3" /> <path d="M4 10l0 11" /> <path d="M20 10l0 11" /> <path d="M8 14l0 3" /> <path d="M12 14l0 3" /> <path d="M16 14l0 3" /></symbol><symbol id="i-building-factory-2" viewBox="0 0 24 24"><path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-building-store" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /> <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /> <path d="M9.7 17l4.6 0" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M11 15h1" /> <path d="M12 15v3" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /> <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="i-candy" viewBox="0 0 24 24"><path d="M7.05 11.293l4.243 -4.243a2 2 0 0 1 2.828 0l2.829 2.83a2 2 0 0 1 0 2.828l-4.243 4.243a2 2 0 0 1 -2.828 0l-2.829 -2.831a2 2 0 0 1 0 -2.828z" /> <path d="M16.243 9.172l3.086 -.772a1.5 1.5 0 0 0 .697 -2.516l-2.216 -2.217a1.5 1.5 0 0 0 -2.44 .47l-1.248 2.913" /> <path d="M9.172 16.243l-.772 3.086a1.5 1.5 0 0 1 -2.516 .697l-2.217 -2.216a1.5 1.5 0 0 1 .47 -2.44l2.913 -1.248" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /> <path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></symbol><symbol id="i-chart-bar" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /> <path d="M4 20h14" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></symbol><symbol id="i-confetti" viewBox="0 0 24 24"><path d="M4 5h2" /> <path d="M5 4v2" /> <path d="M11.5 4l-.5 2" /> <path d="M18 5h2" /> <path d="M19 4v2" /> <path d="M15 9l-1 1" /> <path d="M18 13l2 -.5" /> <path d="M18 19h2" /> <path d="M19 18v2" /> <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /> <path d="M3 10l18 0" /> <path d="M7 15l.01 0" /> <path d="M11 15l2 0" /></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" /></symbol><symbol id="i-device-laptop" viewBox="0 0 24 24"><path d="M3 19l18 0" /> <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></symbol><symbol id="i-device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14z" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /> <path d="M9 9l1 0" /> <path d="M9 13l6 0" /> <path d="M9 17l6 0" /></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /> <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6.5 17h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /> <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="i-microphone" viewBox="0 0 24 24"><path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z" /> <path d="M5 10a7 7 0 0 0 14 0" /> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /></symbol><symbol id="i-numbers" viewBox="0 0 24 24"><path d="M8 10v-7l-2 2" /> <path d="M6 16a2 2 0 1 1 4 0c0 .591 -.601 1.46 -1 2l-3 3h4" /> <path d="M15 14a2 2 0 1 0 2 -2a2 2 0 1 0 -2 -2" /> <path d="M6.5 10h3" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /> <path d="M13.5 6.5l4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-player-stop" viewBox="0 0 24 24"><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-player-track-next" viewBox="0 0 24 24"><path d="M3 5v14l8 -7z" /> <path d="M14 5v14l8 -7z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9.785 6l8.215 8.215l-2.054 2.054a5.81 5.81 0 1 1 -8.215 -8.215l2.054 -2.054z" /> <path d="M4 20l3.5 -3.5" /> <path d="M15 4l-3.5 3.5" /> <path d="M20 9l-3.5 3.5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol><symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17h-11v-14h-2" /> <path d="M6 5l14 1l-1 7h-13" /></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></symbol><symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" /> <path d="M14.5 10.5l-2.5 2.5" /> <path d="M17 8l1 -1" /> <path d="M14 3h-4" /></symbol><symbol id="i-tool" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></symbol><symbol id="i-tools-kitchen-2" viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1" /> <path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3" /> <path d="M3 13l4 0" /> <path d="M17 13l4 0" /> <path d="M12 20l0 -6" /> <path d="M4 19l3.35 -2" /> <path d="M20 19l-3.35 -2" /> <path d="M4 7l3.75 2.4" /> <path d="M20 7l-3.75 2.4" /></symbol><symbol id="i-photo" viewBox="0 0 24 24"><path d="M15 8h.01" /> <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /> <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /> <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></symbol><symbol id="i-help-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 16v.01" /> <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></symbol><symbol id="i-player-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z" /></symbol><symbol id="i-backspace" viewBox="0 0 24 24"><path d="M20 6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-11l-5 -5a1.5 1.5 0 0 1 0 -2l5 -5z" /> <path d="M12 10l4 4m0 -4l-4 4" /></symbol><symbol id="i-fingerprint" viewBox="0 0 24 24"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" /> <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6" /> <path d="M12 11v2a14 14 0 0 0 2.5 8" /> <path d="M8 15a18 18 0 0 0 1.8 6" /> <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" /></symbol><symbol id="i-shield-lock" viewBox="0 0 24 24"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /> <path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M12 12l0 2.5" /></symbol><symbol id="i-switch-horizontal" viewBox="0 0 24 24"><path d="M16 3l4 4l-4 4" /> <path d="M10 7l10 0" /> <path d="M8 13l-4 4l4 4" /> <path d="M4 17l9 0" /></symbol><symbol id="i-door" viewBox="0 0 24 24"><path d="M14 12v.01" /> <path d="M3 21h18" /> <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></symbol></svg>
 <div id="idleWarn" class="idle-warn" role="alert"><div class="iw-tx"><b>Máy dùng chung</b> — sẽ tự <span id="iwAct">đăng xuất</span> sau <span class="iw-s">60</span> giây vì không thao tác.</div><button class="btn btn-pri btn-sm" onclick="idleTouch(true)">Tiếp tục dùng</button></div>
 <div id="app" style="display:none">
   <nav id="sideNav" class="no-print" aria-label="Menu chính"></nav><div id="sideScrim" onclick="closeSide()"></div><nav id="bottomNav" class="no-print" aria-label="Menu nhanh"></nav>
@@ -1372,6 +1536,7 @@ body.is-locked{overflow:hidden}
       <div class="sub" id="sub-evaluate"></div>
       <div class="sub" id="sub-fo"></div>
       <div class="sub" id="sub-checks"></div>
+      <div class="sub" id="sub-mt"></div>
       <div class="sub" id="sub-inv"></div>
       <div class="sub" id="sub-issues">
         <div class="stats" id="uIssueStats"></div>
@@ -1655,6 +1820,7 @@ body.is-locked{overflow:hidden}
 </div><div class="modal-ft"><button class="btn btn-ghost" onclick="closeM('planModal')">Hủy</button><button class="btn btn-pri" onclick="savePlan()">💾 Lưu</button></div></div></div>
 
 <div class="modal-overlay" id="camModal"><div class="modal" style="max-width:520px"><div class="modal-hd"><h3>📸 Chụp ảnh minh chứng</h3><button class="modal-x" onclick="closeCam()">✕</button></div><div class="modal-bd" style="text-align:center">
+  <div id="camHint" class="cam-hint" style="display:none"></div>
   <div style="background:#000;border-radius:8px;overflow:hidden;margin-bottom:12px"><video id="camVid" autoplay playsinline style="width:100%;max-height:360px"></video></div>
   <canvas id="camCvs" style="display:none"></canvas>
   <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
@@ -1843,7 +2009,7 @@ function folder_(path) {
 /* ===========================================================
    STATE & STORAGE
 =========================================================== */
-const K={units:'dg2_units',criteria:'dg2_crit',evals:'dg2_evals',plans:'dg2_plans',feedback:'dg2_fb',users:'dg2_users',checks:'dg2_checks',rstate:'dg2_rstate',inv:'dg2_inv',rlevel:'dg2_rlevel',bookings:'dg2_bookings',hkasg:'dg2_hkasg',fbConfig:'dg2_fb_config',sess:'dg2_sess'};
+const K={units:'dg2_units',criteria:'dg2_crit',evals:'dg2_evals',plans:'dg2_plans',feedback:'dg2_fb',users:'dg2_users',checks:'dg2_checks',rstate:'dg2_rstate',inv:'dg2_inv',rlevel:'dg2_rlevel',bookings:'dg2_bookings',hkasg:'dg2_hkasg',defects:'dg2_defects',fbConfig:'dg2_fb_config',sess:'dg2_sess'};
 // Cấu hình Firebase mặc định của Tổng Công Ty — máy nào CHƯA từng cấu hình sẽ tự dùng và tự kết nối.
 // Máy nào đã lưu cấu hình riêng (localStorage) thì giữ nguyên, không bị ghi đè.
 const DEFAULT_FB_CONFIG={
@@ -1862,7 +2028,7 @@ const CLIENT_ID = (()=>{let c=localStorage.getItem('dg2_client');if(!c){c='cl_'+
 let S={
   user:null,
   month:(()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`})(),
-  units:[],criteria:[],evals:[],plans:[],feedback:[],users:[],checks:[],rstate:[],inv:[],rlevel:[],bookings:[],
+  units:[],criteria:[],evals:[],plans:[],feedback:[],users:[],checks:[],rstate:[],inv:[],rlevel:[],bookings:[],defects:[],
   editUnit:null,editCrit:null,camCtx:null,camStream:null,
   fbApp:null,fbDb:null,fbConnected:false,fbSyncTimer:null,
   _lastLocalEdit:0,_applyingRemote:false
@@ -1877,7 +2043,7 @@ function loadEvalSession(){try{const v=localStorage.getItem('dg2_evalSess');S.ac
    không giới hạn 5 MB, ghi nền không làm khựng máy. App đọc từ bộ nhớ đệm (STORE.mem) nên vẫn đồng bộ, tức thì.
    Thiết lập nhỏ (phiên đăng nhập, cấu hình Firebase, tuỳ chọn…) vẫn ở localStorage.
    Trình duyệt không hỗ trợ / chặn IndexedDB → tự quay về localStorage như cũ. */
-const BIG_KEYS=new Set(['dg2_units','dg2_crit','dg2_evals','dg2_plans','dg2_fb','dg2_users','dg2_checks','dg2_rstate','dg2_inv','dg2_rlevel','dg2_bookings','dg2_hkasg','dg2_syncbase6','dg2_sums','dg2_backups']);
+const BIG_KEYS=new Set(['dg2_units','dg2_crit','dg2_evals','dg2_plans','dg2_fb','dg2_users','dg2_checks','dg2_rstate','dg2_inv','dg2_rlevel','dg2_bookings','dg2_hkasg','dg2_defects','dg2_syncbase6','dg2_sums','dg2_backups']);
 const STORE={db:null,ok:false,ready:false,mem:{},dirty:new Set(),timer:null,
   open(){return new Promise((res,rej)=>{try{const r=indexedDB.open('dg2_data',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);r.onblocked=()=>rej(new Error('blocked'))}catch(e){rej(e)}})},
   async init(){
@@ -1916,9 +2082,9 @@ const LS={
   get(k,d){if(STORE.ok&&BIG_KEYS.has(k))return STORE.get(k,d);try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
   del(k){if(STORE.ok&&BIG_KEYS.has(k)){STORE.del(k);return}try{localStorage.removeItem(k)}catch(e){}}
 };
-function saveAllLocal(){LS.set(K.units,S.units);LS.set(K.criteria,S.criteria);LS.set(K.evals,S.evals);LS.set(K.plans,S.plans);LS.set(K.feedback,S.feedback);LS.set(K.users,S.users);LS.set(K.checks,S.checks);LS.set(K.rstate,S.rstate);LS.set(K.inv,S.inv);LS.set(K.rlevel,S.rlevel);LS.set(K.bookings,S.bookings);LS.set(K.hkasg,S.hkasg||[])}
+function saveAllLocal(){LS.set(K.units,S.units);LS.set(K.criteria,S.criteria);LS.set(K.evals,S.evals);LS.set(K.plans,S.plans);LS.set(K.feedback,S.feedback);LS.set(K.users,S.users);LS.set(K.checks,S.checks);LS.set(K.rstate,S.rstate);LS.set(K.inv,S.inv);LS.set(K.rlevel,S.rlevel);LS.set(K.bookings,S.bookings);LS.set(K.hkasg,S.hkasg||[]);LS.set(K.defects,S.defects||[])}
 function persist(){saveAllLocal();S._lastLocalEdit=Date.now();scheduleSync()}
-function loadLocal(){S.units=LS.get(K.units,[]);S.criteria=LS.get(K.criteria,[]);S.evals=LS.get(K.evals,[]);S.plans=LS.get(K.plans,[]);S.feedback=LS.get(K.feedback,[]);S.users=LS.get(K.users,[]);S.checks=LS.get(K.checks,[]);S.rstate=LS.get(K.rstate,[]);S.inv=LS.get(K.inv,[]);S.rlevel=LS.get(K.rlevel,[]);S.bookings=LS.get(K.bookings,[]);S.hkasg=LS.get(K.hkasg,[]);if(migrateAdminPwd())saveAllLocal()}
+function loadLocal(){S.units=LS.get(K.units,[]);S.criteria=LS.get(K.criteria,[]);S.evals=LS.get(K.evals,[]);S.plans=LS.get(K.plans,[]);S.feedback=LS.get(K.feedback,[]);S.users=LS.get(K.users,[]);S.checks=LS.get(K.checks,[]);S.rstate=LS.get(K.rstate,[]);S.inv=LS.get(K.inv,[]);S.rlevel=LS.get(K.rlevel,[]);S.bookings=LS.get(K.bookings,[]);S.hkasg=LS.get(K.hkasg,[]);S.defects=LS.get(K.defects,[]);if(migrateAdminPwd())saveAllLocal()}
 
 /* Bỏ mọi giá trị undefined trước khi gửi lên Firebase (Firebase từ chối cả gói nếu có undefined) */
 function stripUndefined(o){
@@ -2858,7 +3024,7 @@ function fileUpload(e){
   r.readAsDataURL(f);
 }
 function savePhoto(dataUrl){
-  if(S.camCtx&&S.camCtx.kind==='check'){closeCam();chkCompress(dataUrl).then(d=>{if(S._chk){S._chk.photos.push(d);renderChkModal()}});toast('📸 Đã thêm ảnh');return}
+  if(S.camCtx&&S.camCtx.kind==='check'){const shot=S.camCtx.shot||'';closeCam();chkCompress(dataUrl).then(d=>{if(S._chk){S._chk.photos.push(d);if(S._chk.ptag)S._chk.ptag.push(shot);renderChkModal()}});toast('📸 Đã thêm ảnh');return}
   const ev=getOrMkEval(S.camCtx.cid);ev.photos=ev.photos||[];ev.photos.push(dataUrl);
   toast('📸 Đã chụp ảnh (chưa lưu)');closeCam();renderEval();
 }
@@ -3414,7 +3580,7 @@ const _origUpdateFBStatus=updateFBStatus;
 updateFBStatus=function(){_origUpdateFBStatus();try{renderConnBanner()}catch(e){};try{updateSyncIndicator()}catch(e){}};
 
 /* ---------- #3 Sao lưu & khôi phục ---------- */
-function collectAllData(){return{__app:'HT-DanhGia',__ver:APP_VERSION,__at:nowISO(),units:S.units,criteria:S.criteria,evals:S.evals,plans:S.plans,feedback:S.feedback,users:S.users,checks:S.checks,rstate:S.rstate,inv:S.inv,rlevel:S.rlevel,bookings:S.bookings,hkasg:S.hkasg||[]}}
+function collectAllData(){return{__app:'HT-DanhGia',__ver:APP_VERSION,__at:nowISO(),units:S.units,criteria:S.criteria,evals:S.evals,plans:S.plans,feedback:S.feedback,users:S.users,checks:S.checks,rstate:S.rstate,inv:S.inv,rlevel:S.rlevel,bookings:S.bookings,hkasg:S.hkasg||[],defects:S.defects||[]}}
 function exportData(){
   const blob=new Blob([JSON.stringify(collectAllData(),null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
@@ -3422,7 +3588,7 @@ function exportData(){
   setTimeout(()=>URL.revokeObjectURL(a.href),3000);toast('⬇️ Đã xuất file sao lưu');
 }
 function applyImported(d){
-  if(d.units)S.units=d.units;if(d.criteria)S.criteria=d.criteria;if(d.evals)S.evals=d.evals;if(d.plans)S.plans=d.plans;if(d.feedback)S.feedback=d.feedback;if(d.users)S.users=d.users;if(d.checks)S.checks=d.checks;if(d.rstate)S.rstate=d.rstate;if(d.inv)S.inv=d.inv;if(d.rlevel)S.rlevel=d.rlevel;if(d.bookings)S.bookings=d.bookings;if(d.hkasg)S.hkasg=d.hkasg;migrateAdminPwd();
+  if(d.units)S.units=d.units;if(d.criteria)S.criteria=d.criteria;if(d.evals)S.evals=d.evals;if(d.plans)S.plans=d.plans;if(d.feedback)S.feedback=d.feedback;if(d.users)S.users=d.users;if(d.checks)S.checks=d.checks;if(d.rstate)S.rstate=d.rstate;if(d.inv)S.inv=d.inv;if(d.rlevel)S.rlevel=d.rlevel;if(d.bookings)S.bookings=d.bookings;if(d.hkasg)S.hkasg=d.hkasg;if(d.defects)S.defects=d.defects;migrateAdminPwd();
   saveAllLocal();S._lastLocalEdit=Date.now();scheduleSync();
   const a=document.querySelector('.nav-tab.active');if(a)goTab(a.dataset.tab);
 }
@@ -4145,7 +4311,7 @@ setInterval(unitAcctAutoMigrate,20000);
    Mỗi người chỉ mở các ngăn của THÁNG ĐANG XEM, ĐƠN VỊ trong phạm vi và MODULE được phân quyền.
    Ghi: chỉ gửi bản ghi thay đổi. Mất mạng: giữ trên máy, tự gửi khi có mạng.
 =========================================================== */
-const GLOBAL_COLS=['units','users','plans','rstate','rlevel'];
+const GLOBAL_COLS=['units','users','plans','rstate','rlevel','defects'];
 const PART_COLS=['criteria','evals','feedback','checks','bookings','hkasg'];
 const UNIT_COLS=['inv'];
 const ALL_COLS=GLOBAL_COLS.concat(PART_COLS,UNIT_COLS);
@@ -4376,7 +4542,7 @@ function wantedParts(){
   if(!S.user)return w;
   w.add('g/plans');
   const us=availUnits(),inScope=id=>us.some(x=>x.id===id);
-  if(chkPerm()||foPerm())w.add('g/rstate');
+  if(chkPerm()||foPerm()){w.add('g/rstate');w.add('g/defects')}
   if(chkPerm()||invPerm())w.add('g/rlevel');
   if(corePerm()){
     w.add('g/misc_feedback');
@@ -4512,7 +4678,7 @@ function disconnectFB(){
 }
 
 /* ---------- Chỉ báo số thay đổi chờ gửi ---------- */
-const COL_VN={hkasg:'Phân công buồng phòng',criteria:'Tiêu chí',evals:'Kết quả đánh giá',feedback:'Ý kiến / duyệt / khắc phục',checks:'Phiếu kiểm tra phòng',bookings:'Đặt phòng',inv:'Phiếu kho',units:'Đơn vị',users:'Tài khoản',plans:'Kế hoạch',rstate:'Tình trạng phòng',rlevel:'Minibar trong phòng'};
+const COL_VN={defects:'Lỗi thiết bị',hkasg:'Phân công buồng phòng',criteria:'Tiêu chí',evals:'Kết quả đánh giá',feedback:'Ý kiến / duyệt / khắc phục',checks:'Phiếu kiểm tra phòng',bookings:'Đặt phòng',inv:'Phiếu kho',units:'Đơn vị',users:'Tài khoản',plans:'Kế hoạch',rstate:'Tình trạng phòng',rlevel:'Minibar trong phòng'};
 function partLabel(p){const a=p.split('/');if(a[0]==='m'){const u=S.units.find(x=>encKey(x.id)===a[2]);return `${COL_VN[a[3]]||a[3]} · ${a[1].split('-').reverse().join('/')} · ${u?u.code:a[2]==='_all'?'chung':a[2]}`}
   if(a[0]==='u'){const u=S.units.find(x=>encKey(x.id)===a[1]);return `${COL_VN[a[2]]||a[2]} · ${u?u.name:a[1]}`}return COL_VN[(a[1]||'').replace('misc_','')]||p}
 function openSyncInfo(){
@@ -4679,7 +4845,7 @@ function goSub(pg,sub){
   document.querySelectorAll('#pg-'+pg+' .sub').forEach(d=>d.classList.toggle('active',d.id==='sub-'+sub));
   if(pg==='unit'){
     renderWsHead();
-    ({evaluate:renderEval,fo:renderFO,checks:renderChecks,inv:renderInv,issues:()=>renderIssues('unit'),report:renderReport,profile:renderProfile,plan:renderPlan})[sub]();
+    ({evaluate:renderEval,fo:renderFO,checks:renderChecks,inv:renderInv,issues:()=>renderIssues('unit'),report:renderReport,profile:renderProfile,plan:renderPlan,mt:renderMT})[sub]();
   }else{
     if(sub==='units'){
       document.getElementById('setupUnitsList').style.display=hasPerm('units')?'':'none';
@@ -5079,16 +5245,17 @@ function chkMapHtml(uid,cfg,date,isToday){
     if(hasPerm('check_do')&&redo.length)html+=`<div class="nudge err">↩️ <span><b>${redo.length} phòng phải làm lại:</b> ${redo.slice(0,12).map(c=>`<a href="javascript:void 0" onclick="openChkById('${c.id}')">P.${esc(c.room)}</a>`).join(', ')}</span></div>`;
     const shRooms=roomsShort(uid);if(shRooms.length)html+=`<div class="nudge err">⚠️ <span><b>${shRooms.length} phòng đang thiếu minibar / đồ miễn phí:</b> ${shRooms.slice(0,10).map(x=>'P.'+esc(x.room)+' ('+x.list.map(s=>esc(s.i.name)+' '+s.miss).join(', ')+')').join(' · ')}</span>${invPerm()?`<span style="flex:1"></span><a href="javascript:void 0" onclick="S._invView='stock';openUnit('${uid}','inv')">Xem kho</a>`:''}</div>`;
     const exRooms=roomsExpiring(uid);if(exRooms.length)html+=`<div class="nudge warn">⏰ <span><b>${exRooms.length} phòng có minibar / đồ dùng sắp hoặc đã hết hạn:</b> ${exRooms.slice(0,10).map(x=>'P.'+esc(x.room)+' ('+x.list.map(s=>esc(s.i.name)+' '+fmtExp(s.exp)).join(', ')+')').join(' · ')} — thay ở lần dọn tới.</span></div>`;
+    html+=dfNudgeHtml(uid);
     const pri=hkPriority(uid);if(pri.length)html+=`<div class="nudge err">⏩ <span><b>Ưu tiên dọn — có khách đến:</b> ${pri.slice(0,10).map(b=>`P.${esc(b.room)} (đến ${tPart(b.arr)} · ${(RS_SHORT[roomState(uid,b.room).st]||RS_SHORT.unknown)[0].toLowerCase()})`).join(' · ')}</span></div>`;
     const rts=roomTypes(uid),rf=S._rtFilter&&rts.some(t=>t.id===S._rtFilter)?S._rtFilter:null;
     if(rts.length){const tc=t=>rooms.filter(r=>roomInfo(uid,r).type===t).length;html+=`<div class="fchips" style="margin-top:-4px"><span style="font-size:12.5px;color:var(--muted);align-self:center">Loại phòng:</span>${rts.filter(t=>tc(t.id)).map(t=>`<button class="fchip${rf===t.id?' on':''}" onclick="S._rtFilter=S._rtFilter==='${t.id}'?null:'${t.id}';renderChecks()"><span class="dot" style="background:${rtColor(uid,t)}"></span>${esc(t.name)} <b>${tc(t.id)}</b></button>`).join('')}</div>`}
     html+=asgBarHtml(uid,date,rooms);const asgR=hkAsgRec(uid,date);
-    if(S._asgF===undefined){S._asgF=asgR&&asgR.a&&Object.values(asgR.a).includes(S.user.id)&&!canAssign()?'me':''}
+    if(S._asgF===undefined){S._asgF=asgRoomsOf(asgR,S.user.id).length&&!canAssign()?'me':''}
     const shown=sts.map((x,i)=>({...x,i})).filter(x=>(!f||x.s.st===f)&&(!rf||roomInfo(uid,x.r).type===rf)&&asgFilter(uid,date,x.r));
     html+=`<div class="room-grid">${shown.map(({r,s:rs,i})=>{const s=ROOM_ST[rs.st]||ROOM_ST.unknown;const l=rs.chk?lastRound(rs.chk)||{}:{};
-        const who=rs.st==='cleaning'?l.by:rs.st==='inspecting'?l.ib:'';
+        const who=rs.st==='cleaning'?roundTeamNames(l):rs.st==='inspecting'?l.ib:'';
         const timer=['cleaning','wait','inspecting'].includes(rs.st)&&rs.since?` · <span class="tick" data-fmt="min" data-since="${rs.since}" data-std="${rs.st==='cleaning'?cfg.stdClean||30:rs.st==='inspecting'?cfg.stdInspect||10:0}"></span>`:'';
-        return `<button class="room ${s.cls}" onclick="openRoom(${i})">${asgTag(uid,r,asgR)}<div>${esc(r)}${rtLabel(uid,r)}</div>${roomBkTag(uid,r)}<div class="rs">${(RS_SHORT[rs.st]||RS_SHORT.unknown)[0]}${timer}</div>${who?`<div class="rs-who">${esc(who)}</div>`:rs.st==='ooo'&&rs.note?`<div class="rs-who">${esc(rs.note)}</div>`:''}${roomShort(uid,r).length?'<div class="rs-short">thiếu minibar</div>':''}${(()=>{const e=roomExpiring(uid,r);return e.length?`<div class="rs-exp">${e.some(x=>x.st==='expired')?'hết hạn':'sắp hết hạn'}</div>`:''})()}</button>`}).join('')||'<div style="color:var(--muted);padding:10px">Không có phòng ở trạng thái này.</div>'}</div>`;
+        return `<button class="room ${s.cls}" onclick="openRoom(${i})">${asgTag(uid,r,asgR)}<div>${esc(r)}${rtLabel(uid,r)}</div>${roomBkTag(uid,r)}<div class="rs">${(RS_SHORT[rs.st]||RS_SHORT.unknown)[0]}${timer}</div>${who?`<div class="rs-who">${esc(who)}</div>`:rs.st==='ooo'&&rs.note?`<div class="rs-who">${esc(rs.note)}</div>`:''}${roomShort(uid,r).length?'<div class="rs-short">thiếu minibar</div>':''}${dfBadge(uid,r)}${(()=>{const e=roomExpiring(uid,r);return e.length?`<div class="rs-exp">${e.some(x=>x.st==='expired')?'hết hạn':'sắp hết hạn'}</div>`:''})()}</button>`}).join('')||'<div style="color:var(--muted);padding:10px">Không có phòng ở trạng thái này.</div>'}</div>`;
   }else{
     const st=rooms.map(r=>{const c=chkFor(uid,r,date);return c?c.status:'none'});
     const cnt=k=>st.filter(x=>x===k).length;
@@ -5117,14 +5284,15 @@ function openChkEdit(rec){
   const d=S._drafts[rec.id]||(S._drafts[rec.id]={ticks:{},photos:[],note:'',use:{},left:{...(rec.left||{})}});d.use=d.use||{};d.left=d.left||{};d.fill=d.fill||{};d.rm=d.rm||{};d.lot=d.lot||{};
   if(!d.ex){d.ex={};if(rec.v===2&&rec.submittedAt)Object.assign(d.ex,rec.exIn||{});else roomItems(rec.unitId).forEach(i=>{const e=roomExp(rec.unitId,rec.room,i.id);if(e)d.ex[i.id]=e})}
   if(!d.base){d.base={};if(rec.v===2&&rec.submittedAt)Object.assign(d.base,rec.base||{});else roomItems(rec.unitId).forEach(i=>{const b=roomBase(rec.unitId,rec.room,i.id,i.par);if(b!==i.par)d.base[i.id]=b})}
-  S._chk={recId:rec.id,mode:'edit',unitId:rec.unitId,room:rec.room,date:rec.date,ticks:d.ticks,photos:d.photos,note:d.note,use:d.use,left:d.left,fill:d.fill,base:d.base,rm:d.rm,lot:d.lot,ex:d.ex,draft:d};
+  d.ptag=d.ptag||[];
+  S._chk={recId:rec.id,mode:'edit',unitId:rec.unitId,room:rec.room,date:rec.date,ticks:d.ticks,photos:d.photos,ptag:d.ptag,note:d.note,use:d.use,left:d.left,fill:d.fill,base:d.base,rm:d.rm,lot:d.lot,ex:d.ex,draft:d};
   openM('chkModal');renderChkModal();
 }
 function chkTick(id,on){S._chk.ticks[id]=on;renderChkModal()}
-function chkRmPhoto(i){S._chk.photos.splice(i,1);renderChkModal()}
+function chkRmPhoto(i){S._chk.photos.splice(i,1);if(S._chk.ptag)S._chk.ptag.splice(i,1);renderChkModal()}
 function chkShowPhoto(i,view){const a=view?S._chk.viewPhotos:S._chk.photos;if(a&&a[i])showIV(a[i])}
 function openCamForCheck(){
-  S.camCtx={kind:'check'};openM('camModal');
+  S.camCtx={kind:'check'};openM('camModal');{const h=document.getElementById('camHint');if(h){h.innerHTML='';h.style.display='none'}}
   const v=document.getElementById('camVid');
   navigator.mediaDevices&&navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false})
     .then(st=>{S.camStream=st;v.srcObject=st}).catch(()=>{v.style.display='none'});
@@ -5138,13 +5306,13 @@ function chkStartClean(){
   if(c&&CHK_ACTIVE.includes(c.status)&&!chkLive(c)){c.status='closed';c.closedAt=now;c.closedBy=S.user.name;c.updatedAt=now}
   if(c&&c.status==='closed')c=null;
   if(c&&c.status==='approved')c=null;
-  if(c&&c.status==='cleaning'){openChkEdit(c);return}
+  if(c&&c.status==='cleaning'){const l=lastRound(c);if(roundJoin(l)){c.updatedAt=now;persist();renderChecks();toast(`🧹 Bạn đã vào nhóm dọn phòng ${room} (${roundTeamNames(l)})`)}openChkEdit(c);return}
   if(c&&(c.status==='submitted'||c.status==='inspecting')){toast('⚠️ Phòng đang chờ / đang được kiểm tra');return}
-  const me={by:S.user.name,byId:S.user.id};
-  if(c&&c.status==='redo'){c.round=(c.round||1)+1;c.rounds=(c.rounds||[]).concat([{n:c.round,...me,cs:now}]);c.status='cleaning';c.updatedAt=now;S._drafts[c.id]={ticks:{},photos:[],note:'',use:{...(c.use||{})},left:{...(c.left||{})}}}
-  else{c={id:'chk_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,6),unitId:uid,room,date:localToday(),status:'cleaning',round:1,rounds:[{n:1,...me,cs:now}],items:[],reviews:[],...me,startedAt:now,updatedAt:now};S.checks.push(c)}
+  const me={by:S.user.name,byId:S.user.id},team=asgTeamFor(uid,room,localToday()),rd=team?{team}:{};
+  if(c&&c.status==='redo'){c.round=(c.round||1)+1;c.rounds=(c.rounds||[]).concat([{n:c.round,...me,...rd,cs:now}]);c.status='cleaning';c.updatedAt=now;S._drafts[c.id]={ticks:{},photos:[],note:'',use:{...(c.use||{})},left:{...(c.left||{})}}}
+  else{c={id:'chk_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,6),unitId:uid,room,date:localToday(),status:'cleaning',round:1,rounds:[{n:1,...me,...rd,cs:now}],items:[],reviews:[],...me,startedAt:now,updatedAt:now};S.checks.push(c)}
   persist();openChkEdit(c);renderChecks();
-  toast(`🧹 Bắt đầu dọn phòng ${room} — đang tính giờ`);
+  toast(team?`🧹 Nhóm ${team.map(x=>x.n).join(' + ')} bắt đầu dọn phòng ${room} — đang tính giờ`:`🧹 Bắt đầu dọn phòng ${room} — đang tính giờ`);
 }
 function chkCancelClean(){
   const c=S.checks.find(x=>x.id===S._chk.recId);if(!c||c.status!=='cleaning')return;
@@ -5160,12 +5328,13 @@ async function submitChk(){
   const items=cfg.items||[];
   if(!items.length||items.some(it=>!c.ticks[it.id])){toast('⚠️ Cần tích đủ tất cả tiêu chí');return}
   if(c.photos.length<(cfg.minPhotos||2)){toast(`⚠️ Cần tối thiểu ${cfg.minPhotos||2} ảnh`);return}
+  if(chkShots(cfg).length){if(!chkPhotosOk(c,cfg)){toast('⚠️ Cần chụp đủ các ảnh bắt buộc');return}chkSortShots(c,cfg)}
   const rec=S.checks.find(x=>x.id===c.recId);if(!rec)return;
   const now=nowISO();
-  const l=lastRound(rec);if(l){l.ce=now;l.by=S.user.name;l.byId=S.user.id}
+  const l=lastRound(rec);if(l){if(l.team||(l.byId&&l.byId!==S.user.id)){if(!l.team)l.team=roundTeam(l).slice();roundJoin(l)}l.ce=now;l.by=S.user.name;l.byId=S.user.id}
   const mb=chkMb(c);
   if(roomItems(c.unitId).length)chkSaveLevel(c.unitId,c.room,mb.after,mb.exAfter);
-  Object.assign(rec,{status:'submitted',v:2,use:mb.use,fill:mb.fill,left:mb.left,base:mb.base,short:mb.short,rm:mb.rm,fillLot:mb.fillLot,exIn:{...(c.ex||{})},useAmt:useAmount(c.unitId,mb.use),items:items.map(it=>({id:it.id,name:it.name,ok:true})),photoCount:c.photos.length,by:S.user.name,byId:S.user.id,submittedAt:now,updatedAt:now,note:c.note||''});
+  Object.assign(rec,{status:'submitted',v:2,use:mb.use,fill:mb.fill,left:mb.left,base:mb.base,short:mb.short,rm:mb.rm,fillLot:mb.fillLot,exIn:{...(c.ex||{})},useAmt:useAmount(c.unitId,mb.use),items:items.map(it=>({id:it.id,name:it.name,ok:true})),photoCount:c.photos.length,ptags:(c.ptag||[]).map(id=>{const s=chkShots(cfg).find(x=>x.id===id);return s?s.name:''}),by:S.user.name,byId:S.user.id,submittedAt:now,updatedAt:now,note:c.note||''});
   await chkPhotoPut(rec.id,c.photos.slice());
   chkPendAdd(rec.id);uploadChkPhotos(rec.id);
   delete S._drafts[rec.id];
@@ -5220,7 +5389,7 @@ function roundsTable(rec,cfg){
   const sc=(cfg&&cfg.stdClean)||30,si=(cfg&&cfg.stdInspect)||10;
   return `<div style="margin-top:14px"><div style="font-weight:700;margin-bottom:6px">⏱️ Thời gian từng lượt</div><div class="tbl-wrap"><table><thead><tr><th>Lượt</th><th>Người dọn</th><th>Bắt đầu</th><th>Dọn</th><th>Chờ</th><th>Người kiểm</th><th>Kiểm</th><th>KQ</th></tr></thead><tbody>${
     rs.map(r=>{const cd=msBetween(r.cs,r.ce),w=msBetween(r.ce,r.is),id=msBetween(r.is,r.ie);
-      return `<tr><td>${r.n}</td><td>${esc(r.by||'')}</td><td>${fmtHM(r.cs)}</td><td class="${cd>sc*60000?'dur-over':''}">${r.ce?fmtDur(cd):'<span class="tick" data-since="'+r.cs+'"></span>'}</td><td>${r.is?fmtDur(w):r.ce?'<span class="tick" data-since="'+r.ce+'"></span>':'–'}</td><td>${esc(r.ib||'–')}</td><td class="${id>si*60000?'dur-over':''}">${r.ie?fmtDur(id):r.is?'<span class="tick" data-since="'+r.is+'"></span>':'–'}</td><td>${r.d==='approve'?'✅':r.d==='redo'?'↩️':'…'}</td></tr>`}).join('')}</tbody></table></div></div>`;
+      return `<tr><td>${r.n}</td><td>${esc(roundTeamNames(r))}</td><td>${fmtHM(r.cs)}</td><td class="${cd>sc*60000?'dur-over':''}">${r.ce?fmtDur(cd):'<span class="tick" data-since="'+r.cs+'"></span>'}</td><td>${r.is?fmtDur(w):r.ce?'<span class="tick" data-since="'+r.ce+'"></span>':'–'}</td><td>${esc(r.ib||'–')}</td><td class="${id>si*60000?'dur-over':''}">${r.ie?fmtDur(id):r.is?'<span class="tick" data-since="'+r.is+'"></span>':'–'}</td><td>${r.d==='approve'?'✅':r.d==='redo'?'↩️':'…'}</td></tr>`}).join('')}</tbody></table></div></div>`;
 }
 
 /* ---------- Hộp thoại phòng / phiếu ---------- */
@@ -5239,6 +5408,7 @@ function renderChkModal(){
       ${(()=>{const t=bkToday(c.unitId,c.room);return (t.dep||t.arr)?`<div class="warn-banner" style="display:block;background:#eff6ff;color:#1e40af">${t.dep?`Khách trả phòng ${fmtDT(t.dep.dep)}. `:''}${t.arr?`<b>Khách mới đến ${tPart(t.arr.arr)} hôm nay — ưu tiên dọn.</b>`:''}</div>`:''})()}
       ${roomExpiring(c.unitId,c.room).length?`<div class="warn-banner" style="display:block;background:#fffbeb;color:#92400e">⏰ Hàng trong phòng: ${roomExpiring(c.unitId,c.room).map(x=>esc(x.i.name)+' '+expBadge(c.unitId,x.exp)).join(' ')}</div>`:''}
       ${hasPerm('check_do')?`<button class="btn btn-ok btn-lg" style="width:100%;justify-content:center" onclick="chkStartClean()">🧹 Bắt đầu dọn phòng (bấm giờ)</button>`:''}
+      ${auditHtml(rs.last)}${dfSectionHtml(c.unitId,c.room,'room')}
       ${roomStatusButtons()}`;
     updateTicks();return;
   }
@@ -5247,27 +5417,33 @@ function renderChkModal(){
   const s=CHK_STATUS[rec.status]||CHK_STATUS.none;const l=lastRound(rec)||{};
   T.innerHTML=`🛏️ Phòng ${esc(c.room)}${roomTypeOf(c.unitId,c.room)?' · '+esc(roomTypeOf(c.unitId,c.room).code||roomTypeOf(c.unitId,c.room).name):''} · ${fmtDate(c.date)} <span class="badge" style="background:rgba(255,255,255,.2);color:#fff;margin-left:6px">${s.ic} ${s.lbl}${rec.round>1?' · lần '+rec.round:''}</span>`;
   const lastRev=(rec.reviews||[]).slice(-1)[0];
-  const revHist=(rec.reviews||[]).length?`<div style="margin-top:14px"><div style="font-weight:700;margin-bottom:6px">📜 Lịch sử kiểm tra</div>${(rec.reviews||[]).map(r=>`<div style="padding:7px 10px;border-radius:6px;margin-bottom:4px;font-size:13px;background:${r.decision==='approve'?'var(--ok-l)':'var(--err-l)'}"><b>${r.decision==='approve'?'✅ Duyệt đạt':'↩️ Yêu cầu làm lại'}</b> · ${esc(r.by||'')} · ${fmtDateTime(r.at)}${r.note?`<div>${esc(r.note)}</div>`:''}</div>`).join('')}</div>`:'';
+  const revHist=(rec.reviews||[]).length?`<div style="margin-top:14px"><div style="font-weight:700;margin-bottom:6px">📜 Lịch sử kiểm tra</div>${(rec.reviews||[]).map(r=>`<div style="padding:7px 10px;border-radius:6px;margin-bottom:4px;font-size:13px;background:${r.decision==='approve'?'var(--ok-l)':'var(--err-l)'}"><b>${r.decision==='approve'?(r.audit?'✅ Kiểm tra lại: đạt':'✅ Duyệt đạt'):(r.audit?'↩️ Kiểm tra lại: yêu cầu làm lại':'↩️ Yêu cầu làm lại')}</b>${r.lv>1?' '+lvTag(r.lv):''} · ${esc(r.by||'')} · ${fmtDateTime(r.at)}${r.note?`<div>${esc(r.note)}</div>`:''}</div>`).join('')}</div>`:'';
   let h='';
   if(c.mode==='edit'){
     const items=cfg.items||[];const n=items.filter(it=>c.ticks[it.id]).length;const all=items.length>0&&n===items.length;
-    const minP=cfg.minPhotos||2;const canSend=all&&c.photos.length>=minP;
+    const minP=cfg.minPhotos||2,hasShots=chkShots(cfg).length>0;const canSend=all&&(hasShots?chkPhotosOk(c,cfg):c.photos.length>=minP);
     h+=`<div class="timer-bar">🧹 Đang dọn <b class="tick" data-since="${l.cs}" data-std="${cfg.stdClean||30}"></b><span style="font-size:13px;color:var(--muted);margin-left:8px">bắt đầu ${fmtHM(l.cs)} · ${esc(l.by||'')} · định mức ${cfg.stdClean||30} phút</span></div>`;
-    if(rec.round>1&&lastRev&&lastRev.decision==='redo')h+=`<div class="warn-banner err" style="display:block">↩️ <b>Lý do làm lại</b> (${esc(lastRev.by||'')}): ${esc(lastRev.note||'')}</div>`;
-    h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b>Tiêu chí kiểm tra</b><span class="badge ${all?'badge-ok':'badge-wait'}">${n}/${items.length}</span></div>
-      <div>${items.map(it=>`<label class="chk-item${c.ticks[it.id]?' on':''}"><input type="checkbox" ${c.ticks[it.id]?'checked':''} onchange="chkTick('${it.id}',this.checked)"><span>${esc(it.name)}</span></label>`).join('')}</div>${chkSupplyHtml(c)}
-      <div style="margin-top:14px;padding:12px;border-radius:10px;border:2px dashed ${all?'var(--pri)':'var(--border)'};background:${all?'var(--pri-ll)':'#f8fafc'}">
+    if(rec.round>1&&lastRev&&lastRev.decision==='redo')h+=`<div class="warn-banner err" style="display:block">↩️ <b>Lý do làm lại</b> (${esc(lastRev.by||'')}${lastRev.lv>1?' · '+lvTag(lastRev.lv):''}): ${esc(lastRev.note||'')}</div>`;
+    const nDf=dfOpenList(c.unitId,c.room).length,shN=chkShots(cfg),shDone=shN.filter(x=>chkShotDone(c,x.id)).length,phOk=hasShots?chkPhotosOk(c,cfg):c.photos.length>=minP;
+    const critBody=`<div>${items.map(it=>`<label class="chk-item${c.ticks[it.id]?' on':''}"><input type="checkbox" ${c.ticks[it.id]?'checked':''} onchange="chkTick('${it.id}',this.checked)"><span>${esc(it.name)}</span></label>`).join('')}</div>`;
+    const photoBody=hasShots?chkShotsHtml(c,cfg,all):`<div style="padding:12px;border-radius:10px;border:2px dashed ${all?'var(--pri)':'var(--border)'};background:${all?'var(--pri-ll)':'#f8fafc'}">
         <div style="font-weight:800;margin-bottom:8px">📸 Ảnh căn cứ <span style="font-weight:600;color:${c.photos.length>=minP?'var(--ok-d)':'var(--err-d)'}">(${c.photos.length}/${minP} tối thiểu)</span></div>
         ${all?`<div class="photos-row" style="margin-bottom:8px">${c.photos.map((p,i)=>`<div class="photo-th"><img src="${p}" onclick="chkShowPhoto(${i})"><button class="del" onclick="chkRmPhoto(${i})">×</button></div>`).join('')}</div>
           <button class="btn btn-pri" onclick="openCamForCheck()">📸 Chụp / chọn ảnh</button>`
         :'<div style="color:var(--muted);font-size:14px">Tích đủ tất cả tiêu chí để mở phần chụp ảnh.</div>'}
-      </div>
+      </div>`;
+    h+=csBar()
+      +csSec('crit',IC('ti-checklist'),'Tiêu chí kiểm tra',`<span class="cs-chip ${all?'ok':'wait'}">${n}/${items.length}</span>`,critBody,!all)
+      +csSec('mb',IC('ti-bottle'),'Minibar & đồ miễn phí',csMbSum(c),chkSupplyHtml(c),false,'cs-mb')
+      +csSec('df',IC('ti-tool'),'Lỗi thiết bị',nDf?`<span class="cs-chip err">${nDf} chưa sửa</span>`:'<span class="cs-chip">không có</span>',dfSectionHtml(c.unitId,c.room,'hk',rec.id),false,'cs-df')
+      +csSec('ph',IC('ti-camera'),hasShots?'Ảnh cần chụp':'Ảnh căn cứ',`<span class="cs-chip ${phOk?'ok':'wait'}">${hasShots?shDone+'/'+shN.length:c.photos.length+'/'+minP}</span>`,photoBody,all&&!phOk,'cs-ph');
+    h+=`
       <div class="fg" style="margin-top:12px"><label>Ghi chú (tuỳ chọn)</label><input id="chkNote" value="${esc(c.note||'')}" oninput="S._chk.note=this.value;if(S._chk.draft)S._chk.draft.note=this.value" placeholder="VD: đã thay bóng đèn nhà tắm"></div>
       <div style="display:flex;gap:8px;justify-content:space-between;margin-top:16px;flex-wrap:wrap">
         <button class="btn btn-ghost btn-sm" onclick="chkCancelClean()">🗑️ Huỷ lượt dọn</button>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="closeM('chkModal')">Đóng (vẫn tính giờ)</button>
         <button class="btn btn-ok btn-lg" ${canSend?'':'disabled style="opacity:.45;cursor:not-allowed"'} onclick="submitChk()">📤 Gửi kiểm tra</button></div>
-      </div>${roundsTable(rec,cfg)}${revHist}`;
+      </div>${(rec.rounds||[]).length?csSec('tm',IC('ti-clock'),'Thời gian từng lượt',`<span class="cs-chip">${(rec.rounds||[]).length} lượt</span>`,roundsTable(rec,cfg)+revHist,false):revHist}`;
   }else{
     const ph=c.viewPhotos;
     if(rec.status==='closed')h+=`<div class="warn-banner">⏹ Phiếu đã đóng ${fmtDateTime(rec.closedAt)}${rec.closedBy?' bởi '+esc(rec.closedBy):''}${rec.closedTo?' — phòng chuyển sang "'+ROOM_ST[rec.closedTo].lbl+'"':''}.</div>`;
@@ -5278,7 +5454,7 @@ function renderChkModal(){
       h+=`<div>${(rec.items||[]).map(it=>`<div class="chk-item on" style="cursor:default">${it.ok?'✅':'⬜'} <span>${esc(it.name)}</span></div>`).join('')}</div>${chkUseView(rec)}
       ${rec.note?`<div style="margin-top:8px;font-size:14px">📝 ${esc(rec.note)}</div>`:''}
       <div style="margin-top:12px;font-weight:800">📸 Ảnh căn cứ</div>
-      ${ph===null?'<div style="color:var(--muted);padding:8px 0">⏳ Đang tải ảnh…</div>':ph.length?`<div class="photos-row">${ph.map((p,i)=>`<div class="photo-th" style="width:96px;height:96px"><img src="${p}" onclick="chkShowPhoto(${i},1)"></div>`).join('')}</div>`
+      ${ph===null?'<div style="color:var(--muted);padding:8px 0">⏳ Đang tải ảnh…</div>':ph.length?`<div class="photos-row">${ph.map((p,i)=>`<div class="photo-cap"><div class="photo-th" style="width:96px;height:96px"><img src="${p}" onclick="chkShowPhoto(${i},1)"></div>${(rec.ptags||[])[i]?`<small>${esc(rec.ptags[i])}</small>`:''}</div>`).join('')}</div>`
         :'<div style="color:var(--warn-d);padding:8px 0">⚠️ Chưa có ảnh trên máy chủ — máy người làm có thể đang mất mạng (ảnh sẽ tự gửi khi có mạng), hoặc ảnh đã quá 40 ngày.</div>'}`;
     }
     const self=rec.byId===S.user.id&&!S.user.isAdmin;
@@ -5295,7 +5471,7 @@ function renderChkModal(){
       if(lastRev)h+=`<div class="warn-banner err" style="display:block;margin-top:14px">↩️ <b>Yêu cầu làm lại:</b> ${esc(lastRev.note||'')}</div>`;
       if(hasPerm('check_do'))h+=`<button class="btn btn-pri btn-lg" style="width:100%;justify-content:center;margin-top:10px" onclick="chkStartClean()">🔁 Bắt đầu làm lại (bấm giờ)</button>`;
     }
-    h+=roundsTable(rec,cfg)+revHist;
+    h+=auditHtml(rec)+roundsTable(rec,cfg)+revHist;
     if(c.date===localToday()||CHK_ACTIVE.includes(rec.status))h+=roomStatusButtons();
   }
   B.innerHTML=h;updateTicks();
@@ -5327,8 +5503,11 @@ function chkTimesHtml(uid,cfg,date){
   const staff={},insp={};
   R.forEach(({r})=>{
     const cd=msBetween(r.cs,r.ce);
-    if(r.by){const o=staff[r.by]||(staff[r.by]={n:0,d:[],redo:0,over:0});o.n++;if(cd!=null){o.d.push(cd);if(cd>sc)o.over++}if(r.d==='redo')o.redo++}
-    if(r.ib){const o=insp[r.ib]||(insp[r.ib]={n:0,d:[],w:[],redo:0});o.n++;const id=msBetween(r.is,r.ie);if(id!=null)o.d.push(id);const w=msBetween(r.ce,r.is);if(w!=null)o.w.push(w);if(r.d==='redo')o.redo++}
+    /* làm nhóm: mỗi người được 1/k phòng; thời gian quy về phút công/phòng = thời gian dọn × k (so với chuẩn 1 người) */
+    const tm=roundTeam(r),k=tm.length||1;
+    tm.forEach(m=>{const key=m.n||'?',o=staff[key]||(staff[key]={n:0,grp:0,share:0,d:[],redo:0,over:0});o.n++;o.share+=1/k;if(k>1)o.grp++;
+      if(cd!=null){const ef=cd*k;o.d.push(ef);if(ef>sc)o.over++}if(r.d==='redo')o.redo++;if(r.au&&r.au.d==='redo')o.aud=(o.aud||0)+1});
+    if(r.ib){const o=insp[r.ib]||(insp[r.ib]={n:0,d:[],w:[],redo:0,aud:0});o.n++;if(r.au&&r.au.d==='redo')o.aud++;const id=msBetween(r.is,r.ie);if(id!=null)o.d.push(id);const w=msBetween(r.ce,r.is);if(w!=null)o.w.push(w);if(r.d==='redo')o.redo++}
   });
   const cls=(v,std)=>v!=null&&v>std?'dur-over':'';
   return `<div class="card"><div class="card-title"><span class="ct-icon">⏱️</span>Thời gian dọn & kiểm tra — ${label}</div>
@@ -5340,13 +5519,14 @@ function chkTimesHtml(uid,cfg,date){
       <div class="prof-kpi"><div class="v" style="color:${over?'var(--err)':'var(--ok)'}">${over}</div><div class="l">Lượt dọn vượt chuẩn</div></div>
       <div class="prof-kpi"><div class="v">${firsts?Math.round(firstOk/firsts*100)+'%':'–'}</div><div class="l">Đạt ngay lần đầu</div></div>
     </div></div>
-  <div class="card"><div class="card-title"><span class="ct-icon">🧹</span>Theo nhân viên dọn</div><div class="tbl-wrap"><table><thead><tr><th>Nhân viên</th><th style="text-align:center">Lượt</th><th style="text-align:center">TB</th><th style="text-align:center">Nhanh nhất</th><th style="text-align:center">Chậm nhất</th><th style="text-align:center">Vượt chuẩn</th><th style="text-align:center">Bị làm lại</th></tr></thead><tbody>${
-    Object.entries(staff).sort((a,b)=>(avg(a[1].d)||0)-(avg(b[1].d)||0)).map(([k,o])=>`<tr><td><b>${esc(k)}</b></td><td style="text-align:center">${o.n}</td><td style="text-align:center" class="${cls(avg(o.d),sc)}">${fmtDur(avg(o.d))}</td><td style="text-align:center">${o.d.length?fmtDur(Math.min(...o.d)):'–'}</td><td style="text-align:center" class="${o.d.length&&Math.max(...o.d)>sc?'dur-over':''}">${o.d.length?fmtDur(Math.max(...o.d)):'–'}</td><td style="text-align:center">${o.over}</td><td style="text-align:center">${o.redo}</td></tr>`).join('')}</tbody></table></div></div>
-  <div class="card"><div class="card-title"><span class="ct-icon">🔎</span>Theo người kiểm tra</div><div class="tbl-wrap"><table><thead><tr><th>Người kiểm</th><th style="text-align:center">Lượt kiểm</th><th style="text-align:center">TB kiểm</th><th style="text-align:center">TB phòng chờ trước khi kiểm</th><th style="text-align:center">Yêu cầu làm lại</th></tr></thead><tbody>${
-    Object.entries(insp).map(([k,o])=>`<tr><td><b>${esc(k)}</b></td><td style="text-align:center">${o.n}</td><td style="text-align:center" class="${cls(avg(o.d),si)}">${fmtDur(avg(o.d))}</td><td style="text-align:center">${fmtDur(avg(o.w))}</td><td style="text-align:center">${o.redo}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa có lượt kiểm tra</td></tr>'}</tbody></table></div></div>
+  <div class="card"><div class="card-title"><span class="ct-icon">🧹</span>Theo nhân viên dọn</div><div class="tbl-wrap"><table><thead><tr><th>Nhân viên</th><th style="text-align:center">Lượt</th><th style="text-align:center">Làm nhóm</th><th style="text-align:center">Phòng quy đổi</th><th style="text-align:center">TB / phòng</th><th style="text-align:center">Nhanh nhất</th><th style="text-align:center">Chậm nhất</th><th style="text-align:center">Vượt chuẩn</th><th style="text-align:center">Bị làm lại</th><th style="text-align:center">Cấp trên trả lại</th></tr></thead><tbody>${
+    Object.entries(staff).sort((a,b)=>(avg(a[1].d)||0)-(avg(b[1].d)||0)).map(([k,o])=>`<tr><td><b>${esc(k)}</b></td><td style="text-align:center">${o.n}</td><td style="text-align:center">${o.grp||'–'}</td><td style="text-align:center"><b>${+o.share.toFixed(2)}</b></td><td style="text-align:center" class="${cls(avg(o.d),sc)}">${fmtDur(avg(o.d))}</td><td style="text-align:center">${o.d.length?fmtDur(Math.min(...o.d)):'–'}</td><td style="text-align:center" class="${o.d.length&&Math.max(...o.d)>sc?'dur-over':''}">${o.d.length?fmtDur(Math.max(...o.d)):'–'}</td><td style="text-align:center">${o.over}</td><td style="text-align:center">${o.redo}</td><td style="text-align:center" class="${o.aud?'dur-over':''}">${o.aud||'–'}</td></tr>`).join('')}</tbody></table></div>
+    ${Object.values(staff).some(o=>o.grp)?`<div class="tm-note">Phòng làm nhóm: mỗi người được tính <b>1/số người</b> phòng (cột Phòng quy đổi); thời gian quy về <b>phút công / phòng</b> = thời gian dọn × số người, để so công bằng với chuẩn ${cfg.stdClean||30}′ của 1 người. Ví dụ 2 người dọn xong trong 12′ = 24 phút công.</div>`:''}</div>
+  <div class="card"><div class="card-title"><span class="ct-icon">🔎</span>Theo người kiểm tra</div><div class="tbl-wrap"><table><thead><tr><th>Người kiểm</th><th style="text-align:center">Lượt kiểm</th><th style="text-align:center">TB kiểm</th><th style="text-align:center">TB phòng chờ trước khi kiểm</th><th style="text-align:center">Yêu cầu làm lại</th><th style="text-align:center">Duyệt bị cấp trên trả lại</th></tr></thead><tbody>${
+    Object.entries(insp).map(([k,o])=>`<tr><td><b>${esc(k)}</b></td><td style="text-align:center">${o.n}</td><td style="text-align:center" class="${cls(avg(o.d),si)}">${fmtDur(avg(o.d))}</td><td style="text-align:center">${fmtDur(avg(o.w))}</td><td style="text-align:center">${o.redo}</td><td style="text-align:center" class="${o.aud?'dur-over':''}">${o.aud||'–'}</td></tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted)">Chưa có lượt kiểm tra</td></tr>'}</tbody></table></div></div>
   <div class="card"><div class="card-title"><span class="ct-icon">📋</span>Chi tiết từng lượt (${R.length})</div><div class="tbl-wrap"><table><thead><tr><th>Ngày</th><th>Phòng</th><th>Lượt</th><th>Người dọn</th><th>Bắt đầu</th><th>Dọn</th><th>Chờ</th><th>Người kiểm</th><th>Kiểm</th><th>KQ</th></tr></thead><tbody>${
     R.slice(0,300).map(({c,r})=>{const cd=msBetween(r.cs,r.ce),id=msBetween(r.is,r.ie);
-      return `<tr style="cursor:pointer" onclick="openChkById('${c.id}')"><td>${fmtDate(isoLocalDate(r.cs))}</td><td><b>${esc(c.room)}</b></td><td>${r.n}</td><td>${esc(r.by||'')}</td><td>${fmtHM(r.cs)}</td><td class="${cls(cd,sc)}">${r.ce?fmtDur(cd):'🧹 đang dọn'}</td><td>${fmtDur(msBetween(r.ce,r.is))}</td><td>${esc(r.ib||'–')}</td><td class="${cls(id,si)}">${r.ie?fmtDur(id):r.is?'🔎 đang kiểm':'–'}</td><td>${r.d==='approve'?'✅':r.d==='redo'?'↩️':'…'}</td></tr>`}).join('')}</tbody></table></div>
+      return `<tr style="cursor:pointer" onclick="openChkById('${c.id}')"><td>${fmtDate(isoLocalDate(r.cs))}</td><td><b>${esc(c.room)}</b></td><td>${r.n}</td><td>${esc(roundTeamNames(r))}</td><td>${fmtHM(r.cs)}</td><td class="${cls(cd!=null?cd*(roundTeam(r).length||1):null,sc)}">${r.ce?fmtDur(cd)+(roundTeam(r).length>1?` <small class="tm-k">×${roundTeam(r).length} người</small>`:''):'🧹 đang dọn'}</td><td>${fmtDur(msBetween(r.ce,r.is))}</td><td>${esc(r.ib||'–')}</td><td class="${cls(id,si)}">${r.ie?fmtDur(id):r.is?'🔎 đang kiểm':'–'}</td><td>${r.d==='approve'?'✅':r.d==='redo'?'↩️':'…'}${r.au?` <span class="lv-tag lv${r.au.lv}" title="${esc(r.au.by||'')}${r.au.note?': '+esc(r.au.note):''}">C${r.au.lv} ${r.au.d==='redo'?'trả lại':'đạt'}</span>`:''}</td></tr>`}).join('')}</tbody></table></div>
     ${R.length>300?'<div style="font-size:12px;color:var(--muted);margin-top:6px">Hiển thị 300 lượt gần nhất.</div>':''}</div>`;
 }
 
@@ -5383,6 +5563,7 @@ function renderChkSetup(){
         <button class="btn btn-ghost btn-sm" onclick="chkAddItem('')">+ Thêm tiêu chí</button>
         <button class="btn btn-ghost btn-sm" onclick="chkUseTemplate()">📋 Dùng mẫu buồng phòng (${HK_TEMPLATE.length} tiêu chí)</button>
       </div>
+      ${chkSetupExtraHtml(cfg)}
     </div>
     <div style="text-align:right;margin-top:14px"><button class="btn btn-pri" onclick="saveChkSetup()">💾 Lưu checklist</button></div>
   </div>`;
@@ -5405,9 +5586,10 @@ function saveChkSetup(){
   if(enabled&&!rooms.length){toast('⚠️ Nhập danh sách phòng');return}
   if(enabled&&!items.length){toast('⚠️ Thêm ít nhất 1 tiêu chí');return}
   const rt=rtCollect(rooms);if(rt&&rt.err){toast(rt.err);return}
+  const ex=chkSetupExtraRead();
   const lk=document.getElementById('chkLink');const link=!enabled&&lk?lk.value:'';
   if(link)u.roomLink=link;else delete u.roomLink;
-  u.checklist={...(u.checklist||{}),...(rt?{roomTypes:rt.types,roomInfo:rt.info,hourly:rt.hourly||(u.checklist||{}).hourly}:{}),enabled,minPhotos:num('chkMin',2,1,10),stdClean:num('chkStdC',30,1,600),stdInspect:num('chkStdI',10,1,120),rooms,items};
+  u.checklist={...(u.checklist||{}),...(rt?{roomTypes:rt.types,roomInfo:rt.info,hourly:rt.hourly||(u.checklist||{}).hourly}:{}),enabled,minPhotos:num('chkMin',2,1,10),stdClean:num('chkStdC',30,1,600),stdInspect:num('chkStdI',10,1,120),rooms,items,shots:ex.shots,equip:ex.equip};
   persist();formSaved();renderChkSetup();toast(enabled?`✅ Đã lưu checklist: ${rooms.length} phòng, ${items.length} tiêu chí`:link?`🔗 Đã liên kết lễ tân với ${(S.units.find(x=>x.id===link)||{}).name||''} — tab Lễ tân đã có ở đơn vị này`:'✅ Đã tắt checklist');
 }
 
@@ -6314,7 +6496,7 @@ function renderFO(){
   const cu=curUnitId(),hostU=S.units.find(x=>x.id===uid),linked=uid!==cu;
   let h=(linked?`<div class="link-chip" title="Mọi thay đổi đặt phòng đồng bộ hai bên">${IC('ti-link')}<span>Dùng chung phòng với <b>${esc(hostU.name||'')}</b></span></div>`:(roomLinkedFrom(uid).length?`<div class="link-chip" title="Cùng dữ liệu đặt phòng">${IC('ti-link')}<span>Lễ tân cũng làm việc tại <b>${roomLinkedFrom(uid).map(u=>esc(u.name)).join(', ')}</b></span></div>`:''))
     +`<div class="chk-bar vt-bar no-print"><div class="vtabs" role="tablist">${views.filter(([k])=>k!=='hist').map(([k,l])=>`<button role="tab" aria-selected="${S._foView===k}" class="vtab${S._foView===k?' on':''}" onclick="S._foView='${k}';renderFO()">${l}</button>`).join('')}</div><span style="flex:1"></span>
-    <button class="btn btn-sm fo-hist-btn${S._foView==='hist'?' on':''}" onclick="S._foView=S._foView==='hist'?'list':'hist';renderFO()" title="Lịch sử đặt phòng">${IC('ti-history')} Lịch sử</button>${hasPerm('fo')?`<button class="btn btn-pri btn-sm" onclick="openBk()">+ Đặt phòng</button>`:''}</div>`;
+    ${(()=>{const n=dfOpenList(uid).length;return dfCanReport()||n?`<button class="btn btn-sm fo-df-btn${n?' has':''}" onclick="dfListOpen('${uid}')" title="Lỗi thiết bị trong phòng">${IC('ti-tool')} Lỗi thiết bị${n?` <b>${n}</b>`:''}</button>`:''})()}<button class="btn btn-sm fo-hist-btn${S._foView==='hist'?' on':''}" onclick="S._foView=S._foView==='hist'?'list':'hist';renderFO()" title="Lịch sử đặt phòng">${IC('ti-history')} Lịch sử</button>${hasPerm('fo')?`<button class="btn btn-pri btn-sm" onclick="openBk()">+ Đặt phòng</button>`:''}</div>`;
   setTimeout(()=>{try{updateTicks()}catch(e){}},0);
   h+=({hist:foHistHtml,rack:foRackHtml,today:foTodayHtml,cal:foCalHtml,list:foListHtml,rep:foRepHtml,shift:foShiftHtml,cfg:foCfgHtml})[S._foView](uid,cfg);
   box.innerHTML=h;
@@ -6362,6 +6544,7 @@ function foRackHtml(uid,cfg){
         ${x.arr?`<div class="rk-arr${notReady?' warn':''}">Đến ${tPart(x.arr.arr)} · ${esc(x.arr.guest||'')}${notReady?' — chưa sẵn sàng':''}</div>`:''}
         ${!x.inh&&!x.arr&&x.next?`<div class="rk-t">Đặt: ${fmtDT(x.next.arr)}</div>`:''}
         ${!x.inh&&!x.arr&&x.k==='vc'&&p!=null?`<div class="rk-t">${fmtMoney(p)}</div>`:''}
+        ${dfBadge(uid,x.r)}
       </button>`}).join('')||'<div style="color:var(--muted);padding:10px">Không có phòng ở trạng thái này.</div>'}</div>
     <div style="font-size:12.5px;color:var(--muted);margin-top:8px">Bấm phòng có khách để xem hoá đơn / trả phòng · bấm phòng trống để đặt phòng nhanh. Tình trạng sạch / bẩn cập nhật trực tiếp từ buồng phòng.</div>`;
 }
@@ -6567,7 +6750,7 @@ function renderBkView(){
       ${b.status==='out'&&v.due<=0?`<button class="btn btn-pri btn-sm" onclick="bkClose()">Chốt hoá đơn</button>`:''}</div>`:''}
     ${v.due>0&&can&&!['cancel','noshow'].includes(b.status)?`<div style="margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="bkQrToggle()">${IC('ti-qrcode')} ${S._bkQr?'Ẩn mã QR':'Mã QR chuyển khoản'}</button></div>${S._bkQr?bkQrHtml(b,v):''}`:''}
     ${!['cancel','noshow'].includes(b.status)?`<div class="bk-print"><span>In:</span><button class="btn btn-ghost btn-sm" onclick="bkPrint('a5')">${IC('ti-printer')} Hoá đơn A5</button><button class="btn btn-ghost btn-sm" onclick="bkPrint('80')">${IC('ti-receipt')} Máy in nhiệt 80mm</button></div>`:''}
-    </div>`;
+    </div>${dfSectionHtml(uid,b.room,'fo')}`;
 }
 function bkCur(){return S.bookings.find(x=>x.id===S._bk)}
 function bkSurToggle(i){const b=bkCur();if(!b||!b.sur[i])return;b.sur[i].off=!b.sur[i].off;persist();renderBkView();renderFO()}
@@ -6732,7 +6915,7 @@ function renderSide(){
       <div class="sn-fs" role="group" aria-label="Cỡ chữ"><span>Cỡ chữ</span>${FS_LV.map(([k,l],i)=>`<button class="${fsGet()===k?'on':''}" onclick="fsSet('${k}')" title="${l}" style="font-size:${11+i*2}px">A</button>`).join('')}</div>
       <div class="sn-ver">Phiên bản ${APP_BUILD}</div></div>`;
   if(bn){
-    const pri=['fo','checks','evg','inv','overview','units','criteria','system','log'];
+    const pri=['fo','checks','mt','evg','inv','overview','units','criteria','system','log'];
     const pick=[items.find(i=>i.k==='today')].filter(Boolean);
     pri.forEach(k=>{const f=items.find(i=>i.k===k);if(f&&pick.length<4&&!pick.includes(f))pick.push(f)});
     bn.innerHTML=pick.map(i=>`<button class="${i.k===cur?'active':''}" onclick="${i.go}" aria-label="${esc(i.lbl)}">${IC(i.ic)}<span>${esc(BN_SHORT[i.k]||i.lbl)}</span>${i.b?`<span class="bn-b">${i.b.n>99?'99+':i.b.n}</span>`:''}</button>`).join('')
@@ -6973,7 +7156,7 @@ function applyFlt(tab){
    NHẬT KÝ THAY ĐỔI — ghi kèm mỗi lần gửi dữ liệu lên máy chủ
    dgData/log/<YYYY-MM>/<mã> = {t, by, uid, role, col, rid, u, op, lbl, ch:[{f,o,n}]}
 =========================================================== */
-const LOG_COL_LBL={hkasg:'Phân công buồng phòng',units:'Đơn vị',users:'Tài khoản',plans:'Lịch đánh giá',criteria:'Tiêu chí',evals:'Chấm điểm',feedback:'Khắc phục / ý kiến',checks:'Kiểm tra phòng',bookings:'Lễ tân',inv:'Kho',rstate:'Tình trạng phòng',rlevel:'Minibar phòng',log:'Nhật ký'};
+const LOG_COL_LBL={defects:'Lỗi thiết bị',hkasg:'Phân công buồng phòng',units:'Đơn vị',users:'Tài khoản',plans:'Lịch đánh giá',criteria:'Tiêu chí',evals:'Chấm điểm',feedback:'Khắc phục / ý kiến',checks:'Kiểm tra phòng',bookings:'Lễ tân',inv:'Kho',rstate:'Tình trạng phòng',rlevel:'Minibar phòng',log:'Nhật ký'};
 const LOG_F={org:'Thông tin công ty',closed:'Đã chốt hoá đơn',extras:'Dịch vụ thêm',disc:'Giảm giá',src:'Nguồn đặt',result:'Kết quả',score:'Điểm',notes:'Ghi chú',status:'Trạng thái',st:'Tình trạng',name:'Tên',code:'Mã',rate:'Giá',arr:'Giờ đến',dep:'Giờ đi',ain:'Nhận phòng thực tế',aout:'Trả phòng thực tế',guest:'Khách',phone4:'SĐT',pax:'Số khách',qty:'Số lượng',type:'Loại',password:'Mật khẩu',role:'Vai trò',perms:'Quyền',unitIds:'Phạm vi',content:'Nội dung',dueDate:'Hạn KP',maxScore:'Điểm tối đa',desc:'Mô tả',method:'Phương pháp',group:'Nhóm',date:'Ngày',note:'Ghi chú',pays:'Thanh toán',room:'Phòng',active:'Hoạt động',fullName:'Họ tên',manager:'Phụ trách',checklist:'Cấu hình phòng / checklist',inv:'Danh mục kho',drive:'Lưu ảnh Drive',fo:'Cài đặt lễ tân',roomLink:'Liên kết phòng',committed:'Đã lưu',lv:'Mức minibar',price:'Giá',lot:'Lô',sur:'Phụ thu',reviews:'Duyệt',rounds:'Lượt dọn',round:'Lượt',use:'Khách dùng',fill:'Bổ sung'};
 const LOG_SECRET=/^(password|pass|token|key|apiKey|pin|pw)$/i;
 const LOG_SKIP=new Set(['updatedAt','updatedBy','at','by','byId','writer','v','closedAt']);
@@ -7012,6 +7195,7 @@ function logLabel(col,r){
     case 'bookings':return `P.${r.room||''} · ${r.guest||''}`;
     case 'inv':{const it=invItems(r.unitId).find(i=>i.id===r.itemId);return `${r.type==='in'?'Nhập':r.type==='out'?'Xuất':r.type||''} ${r.qty||''} ${it?it.name:''}`}
     case 'rstate':case 'rlevel':return `P.${r.room||''}`;
+    case 'defects':return `P.${r.room||''} · ${(r.items||[]).join(', ')||'lỗi khác'}${r.st==='fixed'?' (đã sửa)':''}`;
     case 'hkasg':return `${r.date||''} · ${Object.keys(r.a||{}).length} phòng`;
   }
   return r.name||r.id||'';
@@ -7327,8 +7511,15 @@ function foPayCfgHtml(uid){
 
 /* ===========================================================
    PHÂN CÔNG DỌN PHÒNG THEO NHÂN VIÊN (theo ngày)
-   S.hkasg: {id:'hka_<unit>_<date>', unitId, date, a:{phòng: mã NV}, n:{mã NV: tên}, by, at}
+   S.hkasg: {id:'hka_<unit>_<date>', unitId, date, a:{phòng: mã NV | [mã NV,…]}, n:{mã NV: tên}, by, at}
+   - Một phòng có thể giao cho NHIỀU người (làm theo nhóm): a[phòng] là mảng; một người thì vẫn lưu chuỗi như cũ
 =========================================================== */
+function asgIds(rec,room){const v=rec&&rec.a&&rec.a[room];return !v?[]:Array.isArray(v)?v.filter(Boolean):[v]}
+function asgHas(rec,room,id){return asgIds(rec,room).includes(id)}
+function asgPut(a,room,ids){ids=[...new Set(ids||[])].filter(Boolean);if(!ids.length)delete a[room];else a[room]=ids.length===1?ids[0]:ids}
+function asgAllIds(rec){const o=new Set();Object.keys((rec&&rec.a)||{}).forEach(r=>asgIds(rec,r).forEach(id=>o.add(id)));return [...o]}
+function asgRoomsOf(rec,id){return Object.keys((rec&&rec.a)||{}).filter(r=>asgHas(rec,r,id))}
+function asgNames(rec,ids){return ids.map(id=>hkInitials((rec.n||{})[id]||'?'))}
 function hkAsgRec(uid,date){return (S.hkasg||[]).find(x=>x.unitId===uid&&x.date===date)||null}
 function hkStaff(uid){
   const out=[];
@@ -7341,23 +7532,27 @@ function hkAv(n){const w=String(n||'').trim().split(/\s+/);return ((w[w.length-1
 const ASG_COLORS=['#2563eb','#db2777','#059669','#d97706','#7c3aed','#0891b2','#dc2626','#4d7c0f','#9333ea','#0f766e'];
 function asgColor(rec,sid){const ids=Object.keys((rec&&rec.n)||{});const i=ids.indexOf(sid);return ASG_COLORS[(i<0?0:i)%ASG_COLORS.length]}
 function canAssign(){return hasPerm('check_review')||hasPerm('criteria')||(S.user&&S.user.isAdmin)}
-function asgTag(uid,room,rec){if(!rec||!rec.a||!rec.a[room])return '';const sid=rec.a[room],nm=(rec.n||{})[sid]||'?';return `<div class="rs-asg" style="--ac:${asgColor(rec,sid)}" title="Phân công: ${esc(nm)}">${esc(hkInitials(nm))}</div>`}
+function asgTag(uid,room,rec){
+  const ids=asgIds(rec,room);if(!ids.length)return '';
+  const full=ids.map(id=>(rec.n||{})[id]||'?').join(', '),sh=asgNames(rec,ids),lbl=sh.length>2?sh.slice(0,2).join('+')+' +'+(sh.length-2):sh.join('+');
+  const bg=ids.length>1?`linear-gradient(90deg,${ids.slice(0,3).map((id,i,a)=>`${asgColor(rec,id)} ${Math.round(i/a.length*100)}% ${Math.round((i+1)/a.length*100)}%`).join(',')})`:asgColor(rec,ids[0]);
+  return `<div class="rs-asg${ids.length>1?' team':''}" style="--ac:${asgColor(rec,ids[0])};background:${bg}" title="Phân công${ids.length>1?' (nhóm)':''}: ${esc(full)}">${ids.length>1?IC('ti-users'):''}${esc(lbl)}</div>`}
 const ASG_DONE=['ready'],ASG_WIP=['cleaning','wait','inspecting'];
 function asgBarHtml(uid,date,rooms){
   const rec=hkAsgRec(uid,date),me=S.user.id,f=S._asgF;
-  const mine=rec&&rec.a?Object.keys(rec.a).filter(r=>rec.a[r]===me):[];
+  const mine=asgRoomsOf(rec,me);
   let h='';
   if(rec&&rec.a&&Object.keys(rec.a).length){
     const ids=Object.keys(rec.n||{});
     const chips=[];
     if(mine.length)chips.push(`<button class="fchip${f==='me'?' on':''}" onclick="S._asgF=S._asgF==='me'?'':'me';renderChecks()">👤 Phòng của tôi <b>${mine.length}</b></button>`);
-    if(canAssign()){ids.forEach(id=>{const n=Object.values(rec.a).filter(x=>x===id).length;if(n&&id!==me)chips.push(`<button class="fchip${f===id?' on':''}" onclick="S._asgF=S._asgF==='${id}'?'':'${id}';renderChecks()"><span class="dot" style="background:${asgColor(rec,id)}"></span>${esc(rec.n[id])} <b>${n}</b></button>`)});
-      const un=rooms.filter(r=>!rec.a[r]).length;if(un)chips.push(`<button class="fchip${f==='_none'?' on':''}" onclick="S._asgF=S._asgF==='_none'?'':'_none';renderChecks()">Chưa phân công <b>${un}</b></button>`)}
+    if(canAssign()){ids.forEach(id=>{const n=asgRoomsOf(rec,id).length;if(n&&id!==me)chips.push(`<button class="fchip${f===id?' on':''}" onclick="S._asgF=S._asgF==='${id}'?'':'${id}';renderChecks()"><span class="dot" style="background:${asgColor(rec,id)}"></span>${esc(rec.n[id])} <b>${n}</b></button>`)});
+      const un=rooms.filter(r=>!asgIds(rec,r).length).length;if(un)chips.push(`<button class="fchip${f==='_none'?' on':''}" onclick="S._asgF=S._asgF==='_none'?'':'_none';renderChecks()">Chưa phân công <b>${un}</b></button>`)}
     if(chips.length||canAssign())h+=`<div class="fchips asg-chips"><span class="asg-lbl">Phân công:</span>${chips.join('')}${canAssign()?`<button class="btn btn-ghost btn-sm" onclick="openAsg()">${IC('ti-users')} Sửa phân công</button>`:''}</div>`;
     if(canAssign()){
-      const rows=ids.map(id=>{const rs=Object.keys(rec.a).filter(r=>rec.a[r]===id);if(!rs.length)return '';const st=rs.map(r=>roomState(uid,r).st);
+      const rows=ids.map(id=>{const rs=asgRoomsOf(rec,id);if(!rs.length)return '';const st=rs.map(r=>roomState(uid,r).st),tm=rs.filter(r=>asgIds(rec,r).length>1).length;
         const done=st.filter(s=>ASG_DONE.includes(s)).length,wip=st.filter(s=>ASG_WIP.includes(s)).length,pct=Math.round(done/rs.length*100);
-        return `<div class="asg-p"><span class="asg-n"><span class="dot" style="background:${asgColor(rec,id)}"></span>${esc(rec.n[id])}</span><div class="asg-bar"><i style="width:${pct}%;background:${asgColor(rec,id)}"></i></div><span class="asg-c"><b>${done}</b>/${rs.length} xong${wip?` · ${wip} đang làm`:''}</span></div>`}).join('');
+        return `<div class="asg-p"><span class="asg-n"><span class="dot" style="background:${asgColor(rec,id)}"></span>${esc(rec.n[id])}</span><div class="asg-bar"><i style="width:${pct}%;background:${asgColor(rec,id)}"></i></div><span class="asg-c"><b>${done}</b>/${rs.length} xong${wip?` · ${wip} đang làm`:''}${tm?` · ${tm} phòng làm nhóm`:''}</span></div>`}).join('');
       if(rows)h+=`<details class="asg-prog"${S._asgOpen?' open':''} ontoggle="S._asgOpen=this.open"><summary>Tiến độ theo nhân viên</summary>${rows}</details>`;
     }
   }else if(canAssign()&&date===localToday()){
@@ -7367,15 +7562,16 @@ function asgBarHtml(uid,date,rooms){
 }
 function asgFilter(uid,date,room){
   const f=S._asgF;if(!f)return true;const rec=hkAsgRec(uid,date);if(!rec||!rec.a)return true;
-  if(f==='me')return rec.a[room]===S.user.id;if(f==='_none')return !rec.a[room];return rec.a[room]===f;
+  if(f==='me')return asgHas(rec,room,S.user.id);if(f==='_none')return !asgIds(rec,room).length;return asgHas(rec,room,f);
 }
 /* ---------- Hộp phân công ---------- */
 function openAsg(){
   const uid=curUnitId(),date=S._chkDate||localToday(),rec=hkAsgRec(uid,date);
-  S._asgEd={uid,date,a:{...((rec&&rec.a)||{})},n:{...((rec&&rec.n)||{})},sel:null,on:new Set()};
+  const a={};Object.keys((rec&&rec.a)||{}).forEach(r=>{const ids=asgIds(rec,r);if(ids.length)a[r]=ids.slice()});
+  S._asgEd={uid,date,a,n:{...((rec&&rec.n)||{})},sel:new Set(),on:new Set()};
   const staff=hkStaff(uid);staff.forEach(s=>{S._asgEd.n[s.id]=s.name});
-  Object.values(S._asgEd.a).forEach(id=>S._asgEd.on.add(id));if(!S._asgEd.on.size)staff.forEach(s=>S._asgEd.on.add(s.id));
-  S._asgEd.sel=[...S._asgEd.on][0]||null;
+  asgAllIds({a}).forEach(id=>S._asgEd.on.add(id));if(!S._asgEd.on.size)staff.forEach(s=>S._asgEd.on.add(s.id));
+  const f=[...S._asgEd.on][0];if(f)S._asgEd.sel.add(f);
   let o=document.getElementById('asgModal');if(!o){o=document.createElement('div');o.id='asgModal';o.className='modal-overlay';document.body.appendChild(o)}
   o.classList.add('show');renderAsg();
 }
@@ -7383,42 +7579,73 @@ function renderAsg(){
   const E=S._asgEd,o=document.getElementById('asgModal');if(!E||!o)return;
   const cfg=chkCfg(E.uid),rooms=(cfg&&cfg.rooms)||[],staff=hkStaff(E.uid);
   Object.keys(E.n).forEach(id=>{if(!staff.some(s=>s.id===id))staff.push({id,name:E.n[id]})});
-  const fake={n:E.n},cnt=id=>Object.values(E.a).filter(x=>x===id).length;
+  const fake={n:E.n},cnt=id=>Object.values(E.a).filter(x=>x.includes(id)).length,sel=[...E.sel],selN=sel.map(id=>E.n[id]||'').join(', ');
   o.innerHTML=`<div class="modal" style="max-width:760px"><div class="modal-hd"><h3>Phân công dọn phòng · ${fmtDate(E.date)}</h3><button class="modal-x" onclick="closeM('asgModal')" aria-label="Đóng">✕</button></div>
     <div class="modal-bd">
-      <div class="asg-step">1. Chọn nhân viên làm ca (bấm để bật / tắt), rồi chọn người đang giao:</div>
-      <div class="asg-staff">${staff.map(s=>`<div class="asg-s${E.on.has(s.id)?' on':''}${E.sel===s.id?' sel':''}" style="--ac:${asgColor(fake,s.id)}">
+      <div class="asg-step">1. Chọn nhân viên làm ca (bấm ✓ / + để bật / tắt), rồi bấm tên người đang giao — <b>bấm nhiều tên để giao theo nhóm</b>:</div>
+      <div class="asg-staff">${staff.map(s=>`<div class="asg-s${E.on.has(s.id)?' on':''}${E.sel.has(s.id)?' sel':''}" style="--ac:${asgColor(fake,s.id)}">
         <button type="button" class="asg-tog" onclick="asgTog('${s.id}')" aria-label="${E.on.has(s.id)?'Bỏ khỏi ca':'Thêm vào ca'}">${E.on.has(s.id)?'✓':'+'}</button>
-        <button type="button" class="asg-pick" onclick="asgPick('${s.id}')" ${E.on.has(s.id)?'':'disabled'}><span class="asg-av">${esc(hkAv(s.name))}</span>${esc(s.name)} <b>${cnt(s.id)}</b></button></div>`).join('')||'<div style="color:var(--muted)">Chưa có tài khoản nhân viên buồng phòng cho đơn vị này (Thiết lập → Đơn vị & Tài khoản).</div>'}</div>
+        <button type="button" class="asg-pick" onclick="asgPick('${s.id}')" aria-pressed="${E.sel.has(s.id)}" ${E.on.has(s.id)?'':'disabled'}><span class="asg-av">${E.sel.has(s.id)?'✓':esc(hkAv(s.name))}</span>${esc(s.name)} <b>${cnt(s.id)}</b></button></div>`).join('')||'<div style="color:var(--muted)">Chưa có tài khoản nhân viên buồng phòng cho đơn vị này (Thiết lập → Đơn vị & Tài khoản).</div>'}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0">
         <button type="button" class="btn btn-ghost btn-sm" onclick="asgAuto()">${IC('ti-arrows-shuffle')} Chia đều phòng cần dọn</button>
+        ${sel.length>1?`<button type="button" class="btn btn-ghost btn-sm" onclick="asgTeamAll()">${IC('ti-users')} Giao mọi phòng cần dọn cho nhóm đang chọn</button>`:''}
         <button type="button" class="btn btn-ghost btn-sm" onclick="asgClear()">Xoá hết</button></div>
-      <div class="asg-step">2. Chạm vào phòng để giao cho <b>${E.sel?esc(E.n[E.sel]||''):'—'}</b> (chạm lại để bỏ):</div>
-      <div class="asg-rooms">${rooms.map(r=>{const id=E.a[r],st=roomState(E.uid,r).st,need=asgNeed(st);return `<button type="button" class="asg-r${id?' has':''}${need?' need':''}" style="--ac:${id?asgColor(fake,id):'#cbd5e1'}" onclick="asgRoom('${esc(r)}')"><b>${esc(r)}</b><span>${(RS_SHORT[st]||RS_SHORT.unknown)[0]}</span>${id?`<i>${esc(hkInitials(E.n[id]))}</i>`:''}</button>`}).join('')}</div>
-      <div style="font-size:12.5px;color:var(--muted);margin-top:8px">Viền đậm = phòng cần dọn (bẩn, có khách ở lại, làm lại, chưa rõ).</div>
+      <div class="asg-step">2. Chạm vào phòng để giao cho <b>${sel.length?esc(selN):'—'}</b>${sel.length>1?' <span class="asg-team">nhóm '+sel.length+' người</span>':''} (chạm lại để bỏ):</div>
+      <div class="asg-rooms">${rooms.map(r=>{const ids=E.a[r]||[],st=roomState(E.uid,r).st,need=asgNeed(st);return `<button type="button" class="asg-r${ids.length?' has':''}${ids.length>1?' team':''}${need?' need':''}" style="--ac:${ids.length?asgColor(fake,ids[0]):'#cbd5e1'}" onclick="asgRoom('${esc(r)}')"><b>${esc(r)}</b><span>${(RS_SHORT[st]||RS_SHORT.unknown)[0]}</span>${ids.length?`<i>${esc(ids.length>1?ids.length+' người':hkInitials(E.n[ids[0]]))}</i>`:''}${ids.length>1?`<em>${esc(ids.map(id=>hkInitials(E.n[id])).join('+'))}</em>`:''}</button>`}).join('')}</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-top:8px">Viền đậm = phòng cần dọn (bẩn, có khách ở lại, làm lại, chưa rõ). Phòng giao cho nhóm: hiệu suất mỗi người tính theo phần chia (2 người = mỗi người ½ phòng) và phút công.</div>
     </div>
     <div class="modal-ft"><button class="btn btn-ghost" onclick="closeM('asgModal')">Huỷ</button><button class="btn btn-pri" onclick="saveAsg()">Lưu phân công</button></div></div>`;
 }
 function asgNeed(st){return ['dirty','redo','occupied','unknown'].includes(st)}
-function asgTog(id){const E=S._asgEd;if(E.on.has(id)){E.on.delete(id);if(E.sel===id)E.sel=[...E.on][0]||null}else{E.on.add(id);if(!E.sel)E.sel=id}renderAsg()}
-function asgPick(id){S._asgEd.sel=id;renderAsg()}
-function asgRoom(r){const E=S._asgEd;if(!E.sel){toast('Chọn nhân viên trước');return}if(E.a[r]===E.sel)delete E.a[r];else E.a[r]=E.sel;renderAsg()}
+function asgTog(id){const E=S._asgEd;if(E.on.has(id)){E.on.delete(id);E.sel.delete(id)}else{E.on.add(id);if(!E.sel.size)E.sel.add(id)}renderAsg()}
+/* bấm tên: chọn / bỏ chọn (chọn nhiều tên = giao theo nhóm) */
+function asgPick(id){const E=S._asgEd;if(E.sel.has(id))E.sel.delete(id);else E.sel.add(id);renderAsg()}
+/* chạm phòng: giao đúng cho những người đang chọn; chạm lại (cùng nhóm) để bỏ */
+function asgRoom(r){
+  const E=S._asgEd,sel=[...E.sel];if(!sel.length){toast('Chọn nhân viên trước');return}
+  const cur=E.a[r]||[],same=cur.length===sel.length&&sel.every(id=>cur.includes(id));
+  if(same)delete E.a[r];else E.a[r]=sel.slice();renderAsg();
+}
+function asgTeamAll(){
+  const E=S._asgEd,sel=[...E.sel];if(sel.length<2)return;
+  const cfg=chkCfg(E.uid),need=((cfg&&cfg.rooms)||[]).filter(r=>asgNeed(roomState(E.uid,r).st));
+  if(!need.length){toast('Không có phòng cần dọn');return}
+  need.forEach(r=>{E.a[r]=sel.slice()});renderAsg();toast(`Đã giao ${need.length} phòng cho nhóm ${sel.length} người`);
+}
 function asgClear(){S._asgEd.a={};renderAsg()}
 function asgAuto(){
   const E=S._asgEd,ids=[...E.on];if(!ids.length){toast('Chọn ít nhất 1 nhân viên làm ca');return}
   const cfg=chkCfg(E.uid),need=((cfg&&cfg.rooms)||[]).filter(r=>asgNeed(roomState(E.uid,r).st));
   if(!need.length){toast('Không có phòng cần dọn');return}
-  E.a={};const per=Math.ceil(need.length/ids.length);need.forEach((r,i)=>{E.a[r]=ids[Math.min(ids.length-1,Math.floor(i/per))]});
+  E.a={};const per=Math.ceil(need.length/ids.length);need.forEach((r,i)=>{E.a[r]=[ids[Math.min(ids.length-1,Math.floor(i/per))]]});
   renderAsg();toast(`Đã chia ${need.length} phòng cho ${ids.length} người (theo thứ tự phòng)`);
 }
 function saveAsg(){
   if(!canAssign()){toast('🔒 Bạn không có quyền');return}
-  const E=S._asgEd,id=`hka_${E.uid}_${E.date}`,used=new Set(Object.values(E.a)),n={};used.forEach(k=>{n[k]=E.n[k]||k});
+  const E=S._asgEd,id=`hka_${E.uid}_${E.date}`,a={};Object.keys(E.a).forEach(r=>asgPut(a,r,E.a[r]));
+  const n={};asgAllIds({a}).forEach(k=>{n[k]=E.n[k]||k});
   S.hkasg=(S.hkasg||[]).filter(x=>x.id!==id);
-  if(Object.keys(E.a).length)S.hkasg.push({id,unitId:E.uid,date:E.date,a:E.a,n,by:S.user.name,at:nowISO()});
-  persist();closeM('asgModal');renderChecks();toast(Object.keys(E.a).length?`Đã phân công ${Object.keys(E.a).length} phòng`:'Đã xoá phân công');
+  if(Object.keys(a).length)S.hkasg.push({id,unitId:E.uid,date:E.date,a,n,by:S.user.name,at:nowISO()});
+  const nt=Object.values(a).filter(Array.isArray).length;
+  persist();closeM('asgModal');renderChecks();toast(Object.keys(a).length?`Đã phân công ${Object.keys(a).length} phòng${nt?` (${nt} phòng làm nhóm)`:''}`:'Đã xoá phân công');
 }
 
+
+/* ---------- Nhóm dọn trong từng lượt (round.team=[{id,n}]) ---------- */
+function roundTeam(r){if(!r)return [];if(Array.isArray(r.team)&&r.team.length)return r.team;return r.by?[{id:r.byId||'',n:r.by}]:[]}
+function roundTeamNames(r){return roundTeam(r).map(x=>x.n).filter(Boolean).join(' + ')}
+/* lúc bắt đầu dọn: nếu người bấm nằm trong nhóm được phân công → cả nhóm cùng tính cho lượt này */
+function asgTeamFor(uid,room,date){
+  const rec=hkAsgRec(uid,date),ids=asgIds(rec,room),me=S.user.id;
+  if(ids.length<2||!ids.includes(me))return null;
+  return ids.map(id=>({id,n:id===me?S.user.name:((rec.n||{})[id]||id)}));
+}
+/* người khác mở phòng đang dọn → vào nhóm của lượt đó */
+function roundJoin(r){
+  if(!r||!S.user)return false;const t=roundTeam(r).slice();
+  if(t.some(x=>(x.id&&x.id===S.user.id)||(!x.id&&x.n===S.user.name)))return false;
+  t.push({id:S.user.id,n:S.user.name});r.team=t;return true;
+}
 /* ===========================================================
    KHO: chứng từ · nhà cung cấp · phiếu nhiều dòng · kiểm kê hàng loạt · dự báo hết hàng
 =========================================================== */
@@ -7942,7 +8169,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='29.10.2026-f82ec8';
+const APP_BUILD='30.10.2026-61153c';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -8001,7 +8228,7 @@ function errClear(){
    - Xoá lớn (đơn vị, tài khoản): vẫn hỏi lại; tài khoản vẫn hoàn tác được
    - askYes(): thay hộp confirm() mặc định của trình duyệt (trông thô, chặn màn hình)
 =========================================================== */
-const UNDO_COLS=['units','users','plans','rstate','rlevel','criteria','evals','feedback','checks','bookings','hkasg','inv'];
+const UNDO_COLS=['units','users','plans','rstate','rlevel','criteria','evals','feedback','checks','bookings','hkasg','inv','defects'];
 function undoSnap(){const s={};UNDO_COLS.forEach(c=>{const m=new Map();(S[c]||[]).forEach(r=>{if(r&&r.id!=null)m.set(r.id,JSON.stringify(r))});s[c]=m});return s}
 function undoDiff(before){
   const d={};let n=0;
@@ -8408,7 +8635,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 
 /* ---------- Xem (Hệ thống → Dung lượng tải) ---------- */
 S._uRows=null;
-const U_CAT_LBL={checks:'Kiểm tra phòng',bookings:'Đặt phòng',evals:'Chấm điểm',criteria:'Tiêu chí',feedback:'Khắc phục / ý kiến',hkasg:'Phân công',inv:'Kho',units:'Đơn vị',users:'Tài khoản',plans:'Lịch',rstate:'Tình trạng phòng',rlevel:'Minibar phòng','tổng hợp':'Bảng tổng hợp',log:'Nhật ký',err:'Lỗi app',photos:'Ảnh (cũ)',org:'Logo',meta:'Hệ thống'};
+const U_CAT_LBL={checks:'Kiểm tra phòng',bookings:'Đặt phòng',evals:'Chấm điểm',criteria:'Tiêu chí',feedback:'Khắc phục / ý kiến',hkasg:'Phân công',defects:'Lỗi thiết bị',inv:'Kho',units:'Đơn vị',users:'Tài khoản',plans:'Lịch',rstate:'Tình trạng phòng',rlevel:'Minibar phòng','tổng hợp':'Bảng tổng hợp',log:'Nhật ký',err:'Lỗi app',photos:'Ảnh (cũ)',org:'Logo',meta:'Hệ thống'};
 function usageLoad(){
   if(!S.fbDb){S._uRows=[];renderUsageBox();return}
   const days=[];let d=new Date(nowMs());for(let i=0;i<7;i++){days.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);d=new Date(d.getTime()-864e5)}
@@ -8966,6 +9193,535 @@ const _pwLoadLocal=loadLocal;
 loadLocal=function(){const r=_pwLoadLocal.apply(this,arguments);try{if(pwMigrate())persist()}catch(e){console.warn(e)}return r};
 /* dữ liệu đồng bộ từ máy khác (có thể là máy chạy bản cũ) → kiểm tra định kỳ */
 setInterval(()=>{try{if(pwMigrate())persist()}catch(e){}},4000);
+/* ===========================================================
+   1) ẢNH CẦN CHỤP: quản lý cài danh sách ảnh bắt buộc kèm hướng dẫn (checklist.shots=[{id,name,note}])
+      → lúc dọn, mỗi ảnh là một ô có tên + hướng dẫn, bấm "Chụp" đúng ô; phải đủ mọi ô mới gửi kiểm tra.
+      Ảnh lưu như cũ (S._chk.photos), nhãn từng ảnh ở S._chk.ptag[i] (mã ô); khi gửi lưu tên vào rec.ptags.
+   2) LỖI THIẾT BỊ: quản lý cài thiết bị cố định (checklist.equip=[tên]).
+      Buồng phòng / lễ tân tích thiết bị hỏng, ghi mô tả (gõ hoặc NÓI qua micro), đính kèm ảnh.
+      S.defects (đồng bộ g/defects): {id,unitId,room,items:[tên],note,ph,st:'open'|'fixed',by,byId,at,src,chkId,fixedAt,fixedBy}
+      Ảnh lỗi lưu cùng kho ảnh phiếu (IndexedDB → Drive / Firebase) theo mã lỗi.
+=========================================================== */
+const SHOT_TEMPLATE=[['Toàn cảnh phòng','Đứng ở cửa, chụp ngang thấy cả giường và cửa sổ'],['Giường & gối','Ga phẳng, gối xếp đúng vị trí'],['Nhà tắm','Thấy bồn cầu, vòi sen, sàn khô'],['Bồn rửa & gương','Gương không vệt nước, đồ dùng xếp gọn'],['Minibar','Mở cửa tủ, thấy đủ đồ uống']];
+const EQUIP_TEMPLATE=['TV','Điều hoà','Remote TV / điều hoà','Đèn phòng','Đèn đầu giường','Ổ cắm điện','Tủ lạnh minibar','Ấm siêu tốc','Két sắt','Máy sấy tóc','Vòi sen / nóng lạnh','Vòi lavabo','Bồn cầu / xả nước','Rèm cửa','Khoá cửa / thẻ từ','Wifi'];
+
+/* ---------- Thiết lập (Bộ tiêu chí → Checklist) ---------- */
+function shotRow(s){s=s||{};return `<div class="chk-ed-row shot-ed" data-id="${s.id||('sh_'+Math.random().toString(36).slice(2,8))}"><input class="sh-n" value="${esc(s.name||'')}" placeholder="Tên ảnh, VD: Nhà tắm"><input class="sh-g" value="${esc(s.note||'')}" placeholder="Hướng dẫn chụp, VD: thấy bồn cầu, sàn khô"><button class="btn btn-ghost btn-sm" onclick="this.parentNode.remove()" title="Xoá">🗑️</button></div>`}
+function equipRow(n){return `<div class="chk-ed-row eq-ed"><input class="eq-n" value="${esc(n||'')}" placeholder="Tên thiết bị, VD: Điều hoà"><button class="btn btn-ghost btn-sm" onclick="this.parentNode.remove()" title="Xoá">🗑️</button></div>`}
+function chkSetupExtraHtml(cfg){
+  return `<div class="setup-sub"><div class="ss-h">${IC('ti-camera')} <b>Ảnh cần chụp</b> <span>hướng dẫn nhân viên chụp đúng — mỗi ảnh một ô riêng khi dọn</span></div>
+      <div id="shotEd">${(cfg.shots||[]).map(shotRow).join('')}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('shotEd').insertAdjacentHTML('beforeend',shotRow());document.querySelector('#shotEd .shot-ed:last-child .sh-n').focus()">+ Thêm ảnh</button>
+      <button class="btn btn-ghost btn-sm" onclick="setupFill('shotEd',SHOT_TEMPLATE.map(([name,note])=>shotRow({name,note})).join(''))">Dùng mẫu (${SHOT_TEMPLATE.length} ảnh)</button></div>
+      <div class="ss-note">Bỏ trống = chỉ yêu cầu đủ số ảnh tối thiểu như cũ. Có danh sách = phải chụp đủ từng ảnh trong danh sách (số ảnh tối thiểu vẫn áp dụng).</div></div>
+    <div class="setup-sub"><div class="ss-h">${IC('ti-tool')} <b>Thiết bị cố định trong phòng</b> <span>để buồng phòng / lễ tân tích khi hỏng</span></div>
+      <div id="equipEd" class="eq-grid-ed">${(cfg.equip||[]).map(equipRow).join('')}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('equipEd').insertAdjacentHTML('beforeend',equipRow());document.querySelector('#equipEd .eq-ed:last-child .eq-n').focus()">+ Thêm thiết bị</button>
+      <button class="btn btn-ghost btn-sm" onclick="setupFill('equipEd',EQUIP_TEMPLATE.map(equipRow).join(''))">Dùng mẫu (${EQUIP_TEMPLATE.length} thiết bị)</button></div></div>`;
+}
+function setupFill(id,html){const b=document.getElementById(id);const go=()=>{b.innerHTML=html;try{b.dispatchEvent(new Event('input',{bubbles:true}))}catch(e){}toast('Đã điền mẫu — bấm Lưu checklist để áp dụng')};if(b.querySelector('.chk-ed-row'))delayedConfirm('Dùng mẫu','Thay danh sách hiện tại bằng mẫu?',go);else go()}
+function chkSetupExtraRead(){
+  const shots=[...document.querySelectorAll('#shotEd .shot-ed')].map(r=>({id:r.dataset.id,name:r.querySelector('.sh-n').value.trim(),note:r.querySelector('.sh-g').value.trim()})).filter(x=>x.name);
+  const equip=[...new Set([...document.querySelectorAll('#equipEd .eq-n')].map(i=>i.value.trim()).filter(Boolean))];
+  return{shots,equip};
+}
+
+/* ---------- Ảnh cần chụp khi dọn ---------- */
+function chkShots(cfg){return (cfg&&cfg.shots)||[]}
+function chkShotDone(c,id){return (c.ptag||[]).includes(id)}
+function chkPhotosOk(c,cfg){const minP=cfg.minPhotos||2;return c.photos.length>=minP&&chkShots(cfg).every(s=>chkShotDone(c,s.id))}
+function chkShotsHtml(c,cfg,all){
+  const shots=chkShots(cfg),minP=cfg.minPhotos||2,done=shots.filter(s=>chkShotDone(c,s.id)).length,ok=chkPhotosOk(c,cfg);
+  const extra=c.photos.map((p,i)=>({p,i})).filter(x=>!shots.some(s=>s.id===(c.ptag||[])[x.i]));
+  return `<div class="shots${all?' open':''}">
+    <div class="shots-h">${IC('ti-camera')} <b>Ảnh cần chụp</b> <span class="${ok?'ok':'no'}">${done}/${shots.length} ảnh bắt buộc${c.photos.length<minP?` · tối thiểu ${minP} ảnh`:''}</span></div>
+    ${all?'':'<div class="shots-lock">Tích đủ tất cả tiêu chí để mở phần chụp ảnh. Xem trước các ảnh cần chụp:</div>'}
+    <div class="shot-list">${shots.map((s,k)=>{const i=(c.ptag||[]).indexOf(s.id),p=i>=0?c.photos[i]:null;
+      return `<div class="shot${p?' done':''}"><div class="shot-th">${p?`<img src="${p}" onclick="chkShowPhoto(${i})" alt=""><button class="del" onclick="chkRmPhoto(${i})" aria-label="Xoá ảnh">×</button>`:`<span>${k+1}</span>`}</div>
+        <div class="shot-tx"><b>${esc(s.name)}</b>${s.note?`<small>${esc(s.note)}</small>`:''}</div>
+        ${all?`<button class="btn ${p?'btn-ghost':'btn-pri'} btn-sm" onclick="openCamForShot('${s.id}')">${IC('ti-camera')} ${p?'Chụp lại':'Chụp'}</button>`:''}</div>`}).join('')}</div>
+    ${all?`<div class="shots-more">${extra.length?`<div class="photos-row">${extra.map(x=>`<div class="photo-th"><img src="${x.p}" onclick="chkShowPhoto(${x.i})"><button class="del" onclick="chkRmPhoto(${x.i})">×</button></div>`).join('')}</div>`:''}
+      <button class="btn btn-ghost btn-sm" onclick="openCamForShot('')">${IC('ti-photo')} Thêm ảnh khác</button></div>`:''}
+  </div>`;
+}
+/* trước khi gửi: xếp ảnh theo thứ tự danh sách, ảnh thêm ở cuối */
+function chkSortShots(c,cfg){
+  const order=chkShots(cfg).map(s=>s.id),idx=c.photos.map((p,i)=>i);
+  idx.sort((a,b)=>{const ka=order.indexOf((c.ptag||[])[a]),kb=order.indexOf((c.ptag||[])[b]);return (ka<0?999:ka)-(kb<0?999:kb)||a-b});
+  const ph=idx.map(i=>c.photos[i]),tg=idx.map(i=>(c.ptag||[])[i]||'');
+  c.photos.splice(0,c.photos.length,...ph);if(c.ptag)c.ptag.splice(0,c.ptag.length,...tg);
+}
+function openCamForShot(id){
+  const c=S._chk,cfg=chkCfg(c.unitId)||{},s=chkShots(cfg).find(x=>x.id===id);
+  if(id&&chkShotDone(c,id)){const i=c.ptag.indexOf(id);c.photos.splice(i,1);c.ptag.splice(i,1)}   // chụp lại → thay ảnh cũ
+  openCamForCheck();S.camCtx.shot=id||'';
+  const h=document.getElementById('camHint');if(h){h.innerHTML=s?`<b>${esc(s.name)}</b>${s.note?' — '+esc(s.note):''}`:'';h.style.display=s?'':'none'}
+}
+
+/* ---------- Lỗi thiết bị ---------- */
+function dfUid(uid){try{return roomUnit(uid)}catch(e){return uid}}
+function dfEquip(uid){uid=dfUid(uid);const c=chkCfg(uid),u=S.units.find(x=>x.id===uid);return (c&&c.equip&&c.equip.length?c.equip:(u&&u.mtEquip))||[]}
+/* vị trí: phòng khách sạn ("P.701") hoặc khu vực tự ghi (sảnh, bếp, kho, dây chuyền 2…) */
+function dfIsRoom(uid,room){const c=chkCfg(dfUid(uid));return !!(c&&(c.rooms||[]).includes(room))}
+function dfLoc(d){return d.loc||!dfIsRoom(d.unitId,d.room)?(d.room||'—'):'P.'+d.room}
+function dfLocs(uid){uid=dfUid(uid);const u=S.units.find(x=>x.id===uid);return [...new Set([...((u&&u.mtLocs)||[]),...(S.defects||[]).filter(d=>d.unitId===uid&&!dfIsRoom(uid,d.room)).map(d=>d.room)])].filter(Boolean)}
+function dfUnitName(uid){const u=S.units.find(x=>x.id===uid);return u?u.name:''}
+function dfOpenList(uid,room){uid=dfUid(uid);return (S.defects||[]).filter(d=>d.unitId===uid&&(room==null||d.room===room)&&d.st!=='fixed').sort((a,b)=>(b.at||'').localeCompare(a.at||''))}
+function dfCanReport(){return hasPerm('check_do')||hasPerm('check_review')||hasPerm('fo')||(S.user&&S.user.isAdmin)}
+function dfCanFix(){return hasPerm('check_review')||hasPerm('fo')||hasPerm('criteria')||(S.user&&S.user.isAdmin)}
+function dfTitle(d){return (d.items||[]).length?d.items.join(', '):'Lỗi khác'}
+function dfItemHtml(d){
+  const M=typeof mtItemHtml==='function'?mtItemHtml(d):{info:'',act:''};
+  return `<div class="df-it" data-id="${d.id}"><div class="df-it-h"><b>${esc(dfTitle(d))}</b><span>${fmtDateTime(d.at)} · ${esc(d.by||'')}</span></div>
+    ${d.note?`<div class="df-note">${esc(d.note)}</div>`:''}${M.info?`<div class="mt-info">${M.info}</div>`:''}
+    <div class="df-act">${M.act}${d.ph?`<span class="df-ph"><button class="btn btn-ghost btn-sm" onclick="dfShowPhotos('${d.id}',this)">${IC('ti-photo')} Xem ${d.ph} ảnh</button></span>`:''}
+      ${dfCanFix()&&d.st!=='fixed'?`<button class="btn btn-ghost btn-sm" onclick="dfFix('${d.id}')">Đóng lỗi (đã sửa)</button>`:''}</div></div>`;
+}
+function dfSectionHtml(uid,room,src,chkId){
+  uid=dfUid(uid);const list=dfOpenList(uid,room),can=dfCanReport();if(!list.length&&!can)return '';
+  return `<div class="df-sec"><div class="df-h">${IC('ti-tool')}<b>Lỗi thiết bị</b>${list.length?`<span class="badge badge-err">${list.length} chưa sửa</span>`:'<span class="df-none">không có lỗi đang mở</span>'}<span style="flex:1"></span>
+    ${can?`<button class="btn btn-warn btn-sm" onclick="dfOpen('${uid}','${esc(room)}','${src||''}','${chkId||''}')">+ Báo lỗi</button>`:''}</div>${list.map(dfItemHtml).join('')}</div>`;
+}
+function dfBadge(uid,room){const n=dfOpenList(uid,room).length;return n?`<div class="rs-df" title="${n} lỗi thiết bị chưa sửa">${IC('ti-tool')} ${n} lỗi</div>`:''}
+async function dfShowPhotos(id,btn){
+  const b=btn&&btn.closest('.df-ph');if(!b)return;b.innerHTML='<span style="font-size:12.5px;color:var(--muted)">Đang tải ảnh…</span>';
+  const p=await chkLoadPhotos(id);S._dfView=p;
+  if(b.isConnected)b.innerHTML=p.length?`<div class="photos-row">${p.map((x,i)=>`<div class="photo-th"><img src="${x}" onclick="showIV(S._dfView[${i}])"></div>`).join('')}</div>`:'<span style="font-size:12.5px;color:var(--warn-d)">Chưa có ảnh trên máy chủ (máy người báo có thể đang mất mạng).</span>';
+}
+async function dfFix(id){
+  const d=(S.defects||[]).find(x=>x.id===id);if(!d||!dfCanFix())return;
+  if(!await askYes(`Xác nhận ${dfLoc(d)}: "${dfTitle(d)}" đã sửa xong?`,{yes:'Đóng lỗi'}))return;
+  Object.assign(d,{st:'fixed',fixedAt:nowISO(),fixedBy:S.user.name,fixedById:S.user.id,updatedAt:nowISO()});persist();dfRerender();toast(`Đã đóng lỗi ${dfLoc(d)}`);
+}
+function dfRerender(){
+  try{if(S._chk&&document.getElementById('chkModal').classList.contains('show'))renderChkModal()}catch(e){}
+  try{if(document.getElementById('bkViewModal')&&document.getElementById('bkViewModal').classList.contains('show'))renderBkView()}catch(e){}
+  try{if(document.getElementById('dfListModal')&&document.getElementById('dfListModal').classList.contains('show'))dfListRender()}catch(e){}
+  try{if(S._curTab==='unit'&&S._sub&&S._sub.unit==='checks')renderChecks()}catch(e){}
+  try{if(S._curTab==='unit'&&S._sub&&S._sub.unit==='fo')renderFO()}catch(e){}
+}
+
+/* hộp báo hoàn thành / chờ vật tư (cơ điện) — dùng chung micro + ảnh */
+function dfDoneHtml(D){
+  const d=(S.defects||[]).find(x=>x.id===D.ref)||{},done=D.mode==='done',SR=!!(window.SpeechRecognition||window.webkitSpeechRecognition);
+  return `<div class="modal" style="max-width:600px"><div class="modal-hd" style="background:${done?'#047857':'#b45309'}"><h3>${IC(done?'ti-circle-check':'ti-clock')} ${done?'Báo hoàn thành':'Chờ vật tư'} · ${esc(d.room?dfLoc(d):'')}</h3><button class="modal-x" onclick="dfClose()" aria-label="Đóng">✕</button></div>
+    <div class="modal-bd">
+      <div class="df-already" style="background:#f8fafc;color:#334155"><b>${esc(dfTitle(d))}</b>${d.note?' — '+esc(d.note):''}<br><small>Báo ${fmtDateTime(d.at)} · ${esc(d.by||'')}${d.accAt?' · tiếp nhận '+fmtDateTime(d.accAt):''}</small></div>
+      <div class="df-lbl">${done?'Đã làm gì / thay gì':'Đang chờ vật tư gì, lý do'} <span>(gõ, hoặc bấm micro rồi nói)</span></div>
+      <div class="df-note-in"><textarea id="dfNote" rows="3" placeholder="${done?'VD: thay tụ điều hoà, vệ sinh lưới lọc':'VD: chờ mua remote mới, dự kiến thứ Hai'}" oninput="S._df.note=this.value">${esc(D.note)}</textarea>
+        <button type="button" id="dfMicBtn" class="df-mic${_dfRec?' rec':''}" onclick="dfMic()" title="${SR?'Nói để nhập chữ':'Máy này chưa hỗ trợ — dùng micro trên bàn phím'}" aria-label="Nhập bằng giọng nói">${IC(_dfRec?'ti-player-stop':'ti-microphone')}<span>${_dfRec?'Đang nghe… bấm để dừng':'Nói'}</span></button></div>
+      ${done?`<div class="df-lbl">Ảnh sau khi sửa <span>(tuỳ chọn, tối đa 6)</span></div>
+      <div class="photos-row">${D.photos.map((p,i)=>`<div class="photo-th"><img src="${p}" onclick="showIV(S._df.photos[${i}])"><button class="del" onclick="S._df.photos.splice(${i},1);dfRender()">×</button></div>`).join('')}</div>
+      ${D.photos.length<6?`<div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn btn-ghost btn-sm">${IC('ti-camera')} Chụp ảnh<input type="file" accept="image/*" capture="environment" onchange="dfFiles(this)" hidden></label><label class="btn btn-ghost btn-sm">${IC('ti-photo')} Chọn ảnh có sẵn<input type="file" accept="image/*" multiple onchange="dfFiles(this)" hidden></label></div>`:''}`:''}
+    </div>
+    <div class="modal-ft"><button class="btn btn-ghost" onclick="dfClose()">Huỷ</button><button class="btn ${done?'btn-ok':'btn-pri'}" onclick="dfSave()">${done?'Xác nhận đã sửa xong':'Lưu — chờ vật tư'}</button></div></div>`;
+}
+/* hộp báo lỗi */
+function dfOpen(uid,room,src,chkId){
+  if(!dfCanReport()){toast('🔒 Bạn không có quyền báo lỗi');return}
+  uid=dfUid(uid);S._df={uid,room:room||'',lock:!!room,loc:!!room&&!dfIsRoom(uid,room),src:src||'',chkId:chkId||'',items:new Set(),note:'',photos:[]};
+  let o=document.getElementById('dfModal');if(!o){o=document.createElement('div');o.id='dfModal';o.className='modal-overlay';o.addEventListener('click',e=>{if(e.target===o)dfClose()});document.body.appendChild(o)}
+  o.classList.add('show');dfRender();
+}
+function dfRender(){
+  const D=S._df,o=document.getElementById('dfModal');if(!D||!o)return;
+  if(D.mode==='done'||D.mode==='hold'){o.innerHTML=dfDoneHtml(D);return}
+  const eq=dfEquip(D.uid),rooms=(chkCfg(D.uid)||{}).rooms||[],open=D.room?dfOpenList(D.uid,D.room):[];
+  const SR=!!(window.SpeechRecognition||window.webkitSpeechRecognition);
+  const us=[...new Set(availUnits().map(u=>dfUid(u.id)))],locs=dfLocs(D.uid),free=D.loc||!rooms.length;
+  const locName=D.room?(D.loc||!dfIsRoom(D.uid,D.room)?D.room:'P.'+D.room):'';
+  o.innerHTML=`<div class="modal" style="max-width:620px"><div class="modal-hd" style="background:#b45309"><h3>${IC('ti-tool')} Báo lỗi thiết bị${D.lock&&locName?' · '+esc(locName):''}</h3><button class="modal-x" onclick="dfClose()" aria-label="Đóng">✕</button></div>
+    <div class="modal-bd">
+      ${D.lock?'':`<div class="df-where">${us.length>1?`<div class="fg"><label>Bộ phận *</label><select id="dfUnit" onchange="dfPickUnit(this.value)">${us.map(id=>`<option value="${id}"${id===D.uid?' selected':''}>${esc(dfUnitName(id))}</option>`).join('')}</select></div>`:''}
+        <div class="fg"><label>${rooms.length?'Phòng / khu vực':'Vị trí / khu vực'} *</label>
+        ${rooms.length?`<select id="dfRoom" onchange="if(this.value==='__o'){S._df.loc=true;S._df.room=''}else{S._df.loc=false;S._df.room=this.value}dfRender()"><option value="">— Chọn phòng —</option>${rooms.map(r=>`<option${!D.loc&&D.room===r?' selected':''}>${esc(r)}</option>`).join('')}<option value="__o"${D.loc?' selected':''}>Khu vực khác (sảnh, bếp, kho…)</option></select>`:''}
+        ${free?`<input id="dfLoc" list="dfLocList" value="${esc(D.loc||!rooms.length?D.room:'')}" placeholder="VD: Sảnh tầng 1, Bếp, Kho lạnh, Dây chuyền 2" oninput="S._df.room=this.value.trim();S._df.loc=true" style="${rooms.length?'margin-top:6px':''}"><datalist id="dfLocList">${locs.map(l=>`<option value="${esc(l)}">`).join('')}</datalist>`:''}</div></div>`}
+      ${open.length&&!D.loc?`<div class="df-already">Phòng này đang có ${open.length} lỗi chưa sửa: ${open.map(d=>esc(dfTitle(d))).join(' · ')}</div>`:''}
+      <div class="df-lbl">1. Tích thiết bị bị hỏng</div>
+      ${eq.length?`<div class="df-eq">${eq.map((n,i)=>`<button type="button" class="df-chip${D.items.has(n)?' on':''}" aria-pressed="${D.items.has(n)}" onclick="dfTog(${i})">${D.items.has(n)?'✓ ':''}${esc(n)}</button>`).join('')}</div>`
+        :`<div class="ss-note">Chưa cài danh sách thiết bị cố định${hasPerm('criteria')?' — vào Thiết lập → Bộ tiêu chí → Checklist để thêm':''}. Hãy mô tả lỗi ở dưới.</div>`}
+      <div class="df-lbl">2. Mô tả lỗi <span>(gõ, hoặc bấm micro rồi nói)</span></div>
+      <div class="df-note-in"><textarea id="dfNote" rows="3" placeholder="VD: Điều hoà chảy nước, remote không nhận pin" oninput="S._df.note=this.value">${esc(D.note)}</textarea>
+        <button type="button" id="dfMicBtn" class="df-mic${_dfRec?' rec':''}" onclick="dfMic()" title="${SR?'Nói để nhập chữ':'Máy này chưa hỗ trợ — dùng micro trên bàn phím'}" aria-label="Nhập bằng giọng nói">${IC(_dfRec?'ti-player-stop':'ti-microphone')}<span>${_dfRec?'Đang nghe… bấm để dừng':'Nói'}</span></button></div>
+      <div class="df-lbl">3. Ảnh đính kèm <span>(tuỳ chọn, tối đa 6)</span></div>
+      <div class="photos-row">${D.photos.map((p,i)=>`<div class="photo-th"><img src="${p}" onclick="showIV(S._df.photos[${i}])"><button class="del" onclick="S._df.photos.splice(${i},1);dfRender()">×</button></div>`).join('')}</div>
+      ${D.photos.length<6?`<div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn btn-ghost btn-sm">${IC('ti-camera')} Chụp ảnh<input type="file" accept="image/*" capture="environment" onchange="dfFiles(this)" hidden></label>
+        <label class="btn btn-ghost btn-sm">${IC('ti-photo')} Chọn ảnh có sẵn<input type="file" accept="image/*" multiple onchange="dfFiles(this)" hidden></label></div>`:''}
+    </div>
+    <div class="modal-ft"><button class="btn btn-ghost" onclick="dfClose()">Huỷ</button><button class="btn btn-pri" onclick="dfSave()">Gửi báo lỗi</button></div></div>`;
+}
+function dfTog(i){const D=S._df,n=dfEquip(D.uid)[i];if(n==null)return;if(D.items.has(n))D.items.delete(n);else D.items.add(n);const t=document.getElementById('dfNote');if(t)D.note=t.value;dfRender()}
+async function dfFiles(inp){
+  const D=S._df,fs=[...(inp.files||[])].slice(0,6-D.photos.length);inp.value='';
+  for(const f of fs){const url=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>res(null);r.readAsDataURL(f)});if(url)D.photos.push(await chkCompress(url))}
+  const t=document.getElementById('dfNote');if(t)D.note=t.value;dfRender();
+}
+/* nói thành chữ (Web Speech API, tiếng Việt) */
+let _dfRec=null;
+function dfMic(){
+  const SRc=window.SpeechRecognition||window.webkitSpeechRecognition,ta=document.getElementById('dfNote');
+  if(!SRc){toast('⚠ Trình duyệt này chưa hỗ trợ nói thành chữ — bấm vào ô mô tả rồi dùng nút micro trên bàn phím điện thoại');if(ta)ta.focus();return}
+  if(_dfRec){try{_dfRec.stop()}catch(e){}return}
+  const r=new SRc();r.lang='vi-VN';r.interimResults=true;r.continuous=true;
+  const base=ta&&ta.value.trim()?ta.value.trim()+' ':'';let fin='';
+  r.onresult=e=>{let tmp='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=t.trim()+' ';else tmp+=t}
+    const el=document.getElementById('dfNote');if(el){el.value=base+fin+tmp;S._df.note=el.value}};
+  r.onerror=e=>{toast(e.error==='not-allowed'||e.error==='service-not-allowed'?'⚠ Chưa cho phép dùng micro — bật quyền micro cho trang này':e.error==='no-speech'?'Không nghe thấy tiếng nói':'⚠ Micro: '+e.error)};
+  r.onend=()=>{_dfRec=null;const el=document.getElementById('dfNote');if(el&&S._df){el.value=(base+fin).trim()||el.value;S._df.note=el.value}dfMicUi()};
+  try{r.start();_dfRec=r;dfMicUi()}catch(e){_dfRec=null;toast('⚠ '+e.message)}
+}
+function dfMicUi(){const b=document.getElementById('dfMicBtn');if(!b)return;b.classList.toggle('rec',!!_dfRec);b.innerHTML=`${IC(_dfRec?'ti-player-stop':'ti-microphone')}<span>${_dfRec?'Đang nghe… bấm để dừng':'Nói'}</span>`}
+function dfClose(){if(_dfRec){try{_dfRec.abort()}catch(e){}_dfRec=null}closeM('dfModal');S._df=null}
+function dfPickUnit(id){const D=S._df;D.uid=id;D.room='';D.loc=false;D.items=new Set();const t=document.getElementById('dfNote');if(t)D.note=t.value;dfRender()}
+async function dfSave(){
+  const D=S._df;if(!D)return;if(D.mode==='done'||D.mode==='hold')return mtDoneSave();const t=document.getElementById('dfNote');if(t)D.note=t.value;
+  {const li=document.getElementById('dfLoc');if(li&&D.loc)D.room=li.value.trim()}
+  if(!D.room){const li=document.getElementById('dfLoc')||document.getElementById('dfRoom');if(li){fieldErr(li,'Chọn phòng hoặc ghi vị trí');li.focus()}else toast('⚠ Chọn vị trí');return}
+  if(!D.items.size&&!D.note.trim()){const el=document.getElementById('dfNote');if(el){fieldErr(el,'Tích thiết bị hỏng hoặc mô tả lỗi');el.focus()}return}
+  if(_dfRec){try{_dfRec.stop()}catch(e){}}
+  const id='dfx_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,6),now=nowISO();
+  const rec={id,unitId:D.uid,room:D.room,...(D.loc||!dfIsRoom(D.uid,D.room)?{loc:1}:{}),items:[...D.items],note:D.note.trim(),ph:D.photos.length,st:'open',by:S.user.name,byId:S.user.id,at:now,src:D.src||'',chkId:D.chkId||'',updatedAt:now};
+  S.defects=S.defects||[];S.defects.push(rec);
+  if(D.photos.length){await chkPhotoPut(id,D.photos.slice());chkPendAdd(id);try{uploadChkPhotos(id)}catch(e){}}
+  persist();closeM('dfModal');S._df=null;dfRerender();toast(`Đã báo lỗi ${dfLoc(rec)}: ${dfTitle(rec)}`);
+}
+
+/* danh sách lỗi chưa sửa của đơn vị */
+function dfListOpen(uid){S._dfList=dfUid(uid);let o=document.getElementById('dfListModal');if(!o){o=document.createElement('div');o.id='dfListModal';o.className='modal-overlay';o.addEventListener('click',e=>{if(e.target===o)closeM('dfListModal')});document.body.appendChild(o)}o.classList.add('show');dfListRender()}
+function dfListRender(){
+  const o=document.getElementById('dfListModal'),uid=S._dfList;if(!o)return;
+  const list=dfOpenList(uid),fixed=(S.defects||[]).filter(d=>d.unitId===uid&&d.st==='fixed').sort((a,b)=>(b.fixedAt||'').localeCompare(a.fixedAt||'')).slice(0,20);
+  const byRoom={};list.forEach(d=>{(byRoom[d.room]=byRoom[d.room]||[]).push(d)});
+  o.innerHTML=`<div class="modal" style="max-width:680px"><div class="modal-hd" style="background:#b45309"><h3>${IC('ti-tool')} Lỗi thiết bị chưa sửa (${list.length})</h3><button class="modal-x" onclick="closeM('dfListModal')" aria-label="Đóng">✕</button></div>
+    <div class="modal-bd">${dfCanReport()?`<div style="text-align:right;margin-bottom:8px"><button class="btn btn-warn btn-sm" onclick="dfOpen('${uid}','','list')">+ Báo lỗi</button></div>`:''}
+      ${list.length?Object.keys(byRoom).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).map(r=>`<div class="df-room"><div class="df-room-h">${esc(dfLoc(byRoom[r][0]))}</div>${byRoom[r].map(dfItemHtml).join('')}</div>`).join(''):'<div style="text-align:center;color:var(--muted);padding:20px">Không có lỗi thiết bị nào đang mở.</div>'}
+      ${fixed.length?`<details class="df-fixed"><summary>Đã sửa gần đây (${fixed.length})</summary>${fixed.map(d=>`<div class="df-fx">${esc(dfLoc(d))} · ${esc(dfTitle(d))} — sửa ${fmtDateTime(d.fixedAt)} · ${esc(d.fixedBy||'')}</div>`).join('')}</details>`:''}</div>
+    <div class="modal-ft"><button class="btn btn-ghost" onclick="closeM('dfListModal')">Đóng</button></div></div>`;
+}
+function dfNudgeHtml(uid){
+  const list=dfOpenList(uid);if(!list.length)return '';
+  const rooms=[...new Set(list.map(d=>d.room))];
+  return `<div class="nudge warn">${IC('ti-tool')} <span><b>${list.length} lỗi thiết bị chưa sửa</b> ở ${rooms.length} vị trí: ${rooms.slice(0,8).map(r=>esc(dfLoc(list.find(d=>d.room===r)))).join(', ')}${rooms.length>8?'…':''}</span><span style="flex:1"></span><button class="btn btn-ghost btn-sm" onclick="dfListOpen('${uid}')">Xem</button></div>`;
+}
+/* lỗi đã sửa quá 6 tháng: tự xoá để danh sách chung luôn nhẹ */
+setInterval(()=>{try{if(!S.user||!S._syncReady||!dfCanFix())return;const lim=new Date(Date.now()-183*86400000).toISOString(),n=(S.defects||[]).length;
+  S.defects=(S.defects||[]).filter(d=>!(d.st==='fixed'&&(d.fixedAt||'')<lim));if(S.defects.length!==n)persist()}catch(e){}},10*60*1000);
+/* ===========================================================
+   THU GỌN / MỞ RỘNG TỪNG PHẦN TRONG PHIẾU DỌN PHÒNG
+   Mỗi phần (tiêu chí, minibar, lỗi thiết bị, ảnh, thời gian) là một khối gập được:
+   tiêu đề + tóm tắt luôn hiện, bấm để "Xem thêm" / "Thu gọn".
+   Mặc định: đang làm phần nào thì mở phần đó (chưa tích đủ → mở tiêu chí; tích đủ → mở ảnh).
+   Người dùng bấm mở / gập thì app nhớ theo phiếu, không tự đổi nữa.
+=========================================================== */
+function csOpen(k,def){const o=S._chkOpen;return o&&o.id===(S._chk&&S._chk.recId)&&k in o.v?o.v[k]:def}
+function csToggle(k,def){
+  const id=S._chk&&S._chk.recId;if(!S._chkOpen||S._chkOpen.id!==id)S._chkOpen={id,v:{}};
+  S._chkOpen.v[k]=!csOpen(k,def);
+  const el=document.querySelector(`#chkModal .cs[data-k="${k}"]`);
+  if(el){const on=S._chkOpen.v[k];el.classList.toggle('open',on);const b=el.querySelector('.cs-hd');b.setAttribute('aria-expanded',on);b.querySelector('.cs-more').textContent=on?'Thu gọn':'Xem thêm'}
+}
+function csAll(on){
+  const id=S._chk&&S._chk.recId;S._chkOpen={id,v:{}};
+  document.querySelectorAll('#chkModal .cs').forEach(el=>{S._chkOpen.v[el.dataset.k]=on});renderChkModal();
+}
+function csSec(k,ic,title,sum,body,def,cls){
+  const on=csOpen(k,def);
+  return `<section class="cs${on?' open':''}${cls?' '+cls:''}" data-k="${k}">
+    <button type="button" class="cs-hd" aria-expanded="${on}" onclick="csToggle('${k}',${def})">
+      <span class="cs-ic">${ic}</span><span class="cs-t">${title}</span><span class="cs-sum">${sum||''}</span>
+      <span class="cs-more">${on?'Thu gọn':'Xem thêm'}</span><span class="cs-car" aria-hidden="true"></span></button>
+    <div class="cs-bd">${body}</div></section>`;
+}
+function csBar(){return `<div class="cs-bar"><button type="button" class="lnk" onclick="csAll(true)">Mở tất cả</button><span>·</span><button type="button" class="lnk" onclick="csAll(false)">Thu gọn tất cả</button></div>`}
+/* tóm tắt minibar cho tiêu đề */
+function csMbSum(c){
+  try{const its=roomItems(c.unitId);if(!its.length)return '<span class="cs-chip">chưa cài</span>';
+    const mb=chkMb(c),amt=useAmount(c.unitId,mb.use),ns=Object.keys(mb.short||{}).length,nu=Object.values(mb.use||{}).filter(v=>v>0).length;
+    return [nu?`<span class="cs-chip pur">${nu} món dùng${amt?' · '+fmtMoney(amt):''}</span>`:'<span class="cs-chip">không phát sinh</span>',ns?`<span class="cs-chip err">thiếu ${ns}</span>`:''].join('');
+  }catch(e){return ''}
+}
+/* ===========================================================
+   CƠ ĐIỆN — tiếp nhận & sửa lỗi thiết bị, giao việc, thống kê, đo hiệu suất
+   Quyền mới: mt_do (cơ điện: tiếp nhận, báo hoàn thành) · mt_manage (giao việc, thống kê)
+   Vai trò mới: tech (Cơ điện)
+   Trạng thái lỗi (S.defects[].st): open (chờ tiếp nhận) → acc (đang xử lý) ⇄ hold (chờ vật tư) → fixed (đã sửa)
+   Trường thêm: asg{id,n} asgAt asgBy · accAt accBy accId · holdAt holdNote · fixedAt fixedBy fixedById fixNote fph
+=========================================================== */
+PERMS.push(['mt_report','🔧 Báo lỗi thiết bị cho cơ điện'],['mt_do','🔧 Cơ điện: tiếp nhận & báo hoàn thành sửa chữa'],['mt_manage','🛠️ Giao việc cơ điện & thống kê lỗi thiết bị']);
+ROLES.admin.perms.push('mt_report','mt_do','mt_manage');['manager','evaluator','unit','hk_staff','frontdesk','hk_super'].forEach(k=>ROLES[k]&&ROLES[k].perms.push('mt_report'));
+ROLES.manager.perms.push('mt_manage');ROLES.hk_super.perms.push('mt_manage');
+ROLES.tech={label:'🔧 Cơ điện',color:'#b45309',perms:['mt_do']};
+TAB_DEFS.find(t=>t[0]==='unit')[3].push('mt_report','mt_do','mt_manage');TAB_DEFS.find(t=>t[0]==='today')[3].push('mt_report','mt_do','mt_manage');
+SUBS.unit.splice(SUBS.unit.findIndex(x=>x[0]==='inv'),0,['mt','🔧','Cơ điện',['mt_report','mt_do','mt_manage']]);
+SUB_COLOR.mt='#b45309';SIDE_IC.mt='ti-tool';BN_SHORT.mt='Cơ điện';
+function mtPerm(){return hasPerm('mt_do')||hasPerm('mt_manage')||hasPerm('mt_report')}
+/* phạm vi đang xem: bộ phận đang chọn, hoặc tất cả bộ phận trong phạm vi tài khoản */
+function mtAllUids(){return [...new Set(availUnits().map(u=>dfUid(u.id)))]}
+function mtAllOn(){if(S._mtAll===undefined)S._mtAll=hasPerm('mt_do')&&mtAllUids().length>1;return S._mtAll&&mtAllUids().length>1}
+function mtScope(){return mtAllOn()?mtAllUids():[dfUid(curUnitId())]}
+const MT_ST={open:{l:'Chờ tiếp nhận',c:'err'},acc:{l:'Đang xử lý',c:'info'},hold:{l:'Chờ vật tư',c:'warn'},fixed:{l:'Đã sửa',c:'ok'}};
+const MT_SLA_DEF=24;
+function mtSla(uid){uid=dfUid(uid);const u=S.units.find(x=>x.id===uid),c=chkCfg(uid);return (u&&+u.mtSla)||(c&&+c.mtSla)||MT_SLA_DEF}
+function mtSt(d){return MT_ST[d.st]?d.st:'open'}
+/* danh sách nhân viên cơ điện của khách sạn */
+function mtStaff(uid){
+  uid=dfUid(uid);
+  return (S.users||[]).filter(a=>{if(a.active===false)return false;const p=acctPerms(a);if(!p.mt_do||a.role==='admin')return false;
+    if(!a.unitIds||!a.unitIds.length)return true;return a.unitIds.some(x=>x===uid||dfUid(x)===uid)}).map(a=>({id:a.id,n:a.fullName||a.username}));
+}
+function mtMine(d){return S.user&&((d.asg&&d.asg.id===S.user.id)||d.accId===S.user.id)}
+
+/* ---------- Thao tác ---------- */
+function mtFind(id){return (S.defects||[]).find(x=>x.id===id)}
+function mtAssign(id,tid){
+  const d=mtFind(id);if(!d||!(hasPerm('mt_manage')||S.user.isAdmin))return;
+  const now=nowISO();
+  if(!tid){delete d.asg;d.asgAt=now;d.asgBy=S.user.name}
+  else{const t=mtStaff(d.unitId).find(x=>x.id===tid);if(!t)return;
+    if(d.st==='acc'||d.st==='hold'){if(d.accId!==tid){d.st='open';delete d.accId;delete d.accBy;delete d.accAt}}
+    d.asg={id:t.id,n:t.n};d.asgAt=now;d.asgBy=S.user.name}
+  d.updatedAt=now;persist();dfRerender();toast(tid?`Đã giao ${dfLoc(d)} cho ${d.asg.n}`:'Đã bỏ giao việc');
+}
+function mtAccept(id){
+  const d=mtFind(id);if(!d||!hasPerm('mt_do'))return;
+  if(d.st==='fixed'){toast('Lỗi này đã được sửa');return}
+  if(d.asg&&d.asg.id!==S.user.id&&!S.user.isAdmin){toast(`Lỗi đã giao cho ${d.asg.n}`);return}
+  const now=nowISO();Object.assign(d,{st:'acc',accAt:d.accAt&&d.accId===S.user.id?d.accAt:now,accBy:S.user.name,accId:S.user.id,updatedAt:now});
+  if(!d.asg)d.asg={id:S.user.id,n:S.user.name};
+  persist();dfRerender();toast(`Đã tiếp nhận ${dfLoc(d)}: ${dfTitle(d)}`);
+}
+/* báo hoàn thành / chờ vật tư: dùng chung hộp báo lỗi (micro + ảnh) */
+function mtDoneOpen(id,mode){
+  const d=mtFind(id);if(!d)return;
+  dfOpen(d.unitId,d.room,'mt');Object.assign(S._df,{mode:mode||'done',ref:id});dfRender();
+}
+async function mtDoneSave(){
+  const D=S._df,d=mtFind(D.ref);if(!d)return;const t=document.getElementById('dfNote');if(t)D.note=t.value;
+  if(_dfRec){try{_dfRec.stop()}catch(e){}}
+  const now=nowISO();
+  if(D.mode==='hold'){
+    if(!D.note.trim()){const el=document.getElementById('dfNote');if(el){fieldErr(el,'Ghi rõ đang chờ vật tư / lý do gì');el.focus()}return}
+    Object.assign(d,{st:'hold',holdAt:now,holdNote:D.note.trim(),updatedAt:now});if(!d.accId)Object.assign(d,{accAt:now,accBy:S.user.name,accId:S.user.id});
+    persist();closeM('dfModal');S._df=null;dfRerender();toast(`${dfLoc(d)}: chuyển sang chờ vật tư`);return;
+  }
+  if(!d.accAt)Object.assign(d,{accAt:now,accBy:S.user.name,accId:S.user.id});
+  Object.assign(d,{st:'fixed',fixedAt:now,fixedBy:S.user.name,fixedById:S.user.id,fixNote:D.note.trim(),fph:D.photos.length,updatedAt:now});
+  if(D.photos.length){const pid=d.id+'_fix';await chkPhotoPut(pid,D.photos.slice());chkPendAdd(pid);try{uploadChkPhotos(pid)}catch(e){}}
+  persist();closeM('dfModal');S._df=null;dfRerender();toast(`Đã báo hoàn thành ${dfLoc(d)}`);
+}
+/* phần trạng thái + nút trong mỗi lỗi (gọi từ dfItemHtml) */
+function mtItemHtml(d){
+  const st=mtSt(d),s=MT_ST[st],me=S.user&&S.user.id,mg=hasPerm('mt_manage')||(S.user&&S.user.isAdmin),tech=hasPerm('mt_do');
+  const staff=mg?mtStaff(d.unitId):[];
+  const age=Date.now()-new Date(d.at).getTime(),over=st!=='fixed'&&age>mtSla(d.unitId)*3600000;
+  let info=`<span class="mt-st ${s.c}">${s.l}</span>${d.asg?`<span class="mt-who">${IC('ti-user')} ${esc(d.asg.n)}</span>`:''}${over?`<span class="mt-st err">Quá hạn ${Math.floor(age/3600000)} giờ</span>`:''}`;
+  if(st==='hold'&&d.holdNote)info+=`<span class="mt-hold">${esc(d.holdNote)}</span>`;
+  let act='';
+  if(mg&&st!=='fixed')act+=`<select class="mt-asg" aria-label="Giao cho cơ điện" onchange="mtAssign('${d.id}',this.value)"><option value="">${d.asg?'— Bỏ giao —':'Giao cho cơ điện…'}</option>${staff.map(t=>`<option value="${t.id}"${d.asg&&d.asg.id===t.id?' selected':''}>${esc(t.n)}</option>`).join('')}</select>`;
+  if(tech&&st==='open'&&(!d.asg||d.asg.id===me||S.user.isAdmin))act+=`<button class="btn btn-pri btn-sm" onclick="mtAccept('${d.id}')">Tiếp nhận</button>`;
+  if(tech&&(st==='acc'||st==='hold')&&(d.accId===me||S.user.isAdmin)){act+=`<button class="btn btn-ok btn-sm" onclick="mtDoneOpen('${d.id}','done')">Báo hoàn thành</button>`;if(st==='acc')act+=`<button class="btn btn-ghost btn-sm" onclick="mtDoneOpen('${d.id}','hold')">Chờ vật tư</button>`;else act+=`<button class="btn btn-ghost btn-sm" onclick="mtAccept('${d.id}')">Tiếp tục sửa</button>`}
+  return{info,act};
+}
+
+/* ---------- Màn hình Cơ điện ---------- */
+function mtPeriod(){
+  const k=S._mtP||'m',td=localToday();
+  if(k==='7'||k==='30'){const d=new Date(td+'T12:00:00');d.setDate(d.getDate()-(+k-1));return[isoLocalDate(d.toISOString()),td,k+' ngày gần nhất']}
+  const m=k==='pm'?prevMonthOf(S.month):S.month,[y,mm]=m.split('-').map(Number);
+  return[m+'-01',`${m}-${String(new Date(y,mm,0).getDate()).padStart(2,'0')}`,'tháng '+m.split('-').reverse().join('/')];
+}
+function renderMT(){
+  const box=document.getElementById('sub-mt');if(!box)return;
+  const cu=dfUid(curUnitId()),uids=mtScope(),multi=uids.length>1,inS=d=>uids.includes(d.unitId);
+  const mg=hasPerm('mt_manage')||S.user.isAdmin,tech=hasPerm('mt_do');
+  const views=[].concat(tech?[['mine','Việc của tôi']]:[],[['open','Lỗi đang mở'],['done','Đã sửa']],mg||tech?[['stat',mg?'Thống kê':'Hiệu suất của tôi']]:[],mg?[['cfg','Cài đặt']]:[]);
+  if(!views.some(v=>v[0]===S._mtV))S._mtV=mg?'open':views[0][0];
+  const all=(S.defects||[]).filter(inS),open=all.filter(d=>d.st!=='fixed');
+  const nMine=open.filter(d=>mtMine(d)||(!d.asg&&tech)).length,nAll=mtAllUids().length;
+  let h=nAll>1?`<div class="mt-scope"><span>Phạm vi:</span><button class="fchip${!multi?' on':''}" onclick="S._mtAll=false;renderMT()">${esc(dfUnitName(cu))}</button><button class="fchip${multi?' on':''}" onclick="S._mtAll=true;renderMT()">${IC('ti-building')} Tất cả bộ phận <b>${nAll}</b></button></div>`:'';
+  h+=`<div class="chk-bar vt-bar no-print"><div class="vtabs" role="tablist">${views.map(([k,l])=>`<button role="tab" aria-selected="${S._mtV===k}" class="vtab${S._mtV===k?' on':''}" onclick="S._mtV='${k}';renderMT()">${l}${k==='mine'&&nMine?` <b class="vt-n">${nMine}</b>`:k==='open'&&open.length?` <b class="vt-n">${open.length}</b>`:''}</button>`).join('')}</div><span style="flex:1"></span>
+    ${dfCanReport()?`<button class="btn btn-warn btn-sm" onclick="dfOpen('${cu}','','mt')">+ Báo lỗi</button>`:''}</div>`;
+  const V=S._mtV,over=d=>Date.now()-new Date(d.at).getTime()>mtSla(d.unitId)*3600000;
+  if(V==='mine'){
+    const mine=open.filter(d=>mtMine(d)).sort(mtSort),free=open.filter(d=>!d.asg).sort(mtSort);
+    const[f,t]=mtPeriod(),fx=all.filter(d=>d.st==='fixed'&&d.fixedById===S.user.id&&isoLocalDate(d.fixedAt)>=f&&isoLocalDate(d.fixedAt)<=t);
+    h+=`<div class="mt-kpis">${mtK('Đang giữ',mine.length,mine.some(d=>d.st==='open')?'warn':'')}${mtK('Chưa ai nhận',free.length,free.length?'err':'')}${mtK('Đã sửa tháng này',fx.length,'ok')}${mtK('TB xử lý',fmtDur(avg(fx.map(d=>msBetween(d.accAt||d.at,d.fixedAt)))),'')}</div>`;
+    h+=mtGroup('Được giao / đang làm',mine,'Bạn chưa có việc nào.',multi)+mtGroup('Chưa giao cho ai — ai rảnh thì tiếp nhận',free,'',multi);
+  }else if(V==='open'){
+    const fs=S._mtF||'',list=open.filter(d=>!fs||mtSt(d)===fs||(fs==='over'&&over(d))).sort(mtSort);
+    const cnt=k=>open.filter(d=>mtSt(d)===k).length,nOver=open.filter(over).length;
+    h+=`<div class="fchips"><button class="fchip${!fs?' on':''}" onclick="S._mtF='';renderMT()">Tất cả <b>${open.length}</b></button>${['open','acc','hold'].map(k=>`<button class="fchip${fs===k?' on':''}" onclick="S._mtF='${k}';renderMT()">${MT_ST[k].l} <b>${cnt(k)}</b></button>`).join('')}${nOver?`<button class="fchip${fs==='over'?' on':''}" onclick="S._mtF='over';renderMT()" style="color:var(--err-d)">Quá hạn <b>${nOver}</b></button>`:''}</div>`;
+    h+=mtGroup('',list,'Không có lỗi nào đang mở.',multi);
+  }else if(V==='done'){
+    const[f,t,lbl]=mtPeriod(),list=all.filter(d=>d.st==='fixed'&&isoLocalDate(d.fixedAt)>=f&&isoLocalDate(d.fixedAt)<=t&&(mg||!tech||d.fixedById===S.user.id)).sort((a,b)=>(b.fixedAt||'').localeCompare(a.fixedAt||''));
+    h+=mtPeriodSel()+`<div class="card"><div class="card-title">Đã sửa — ${lbl} (${list.length})</div><div class="tbl-wrap"><table><thead><tr>${multi?'<th>Bộ phận</th>':''}<th>Vị trí</th><th>Lỗi</th><th>Báo lúc</th><th>Người sửa</th><th>Tiếp nhận sau</th><th>Sửa mất</th><th>Tổng</th><th>Ghi chú sửa</th></tr></thead><tbody>${list.map(d=>{const sl=mtSla(d.unitId)*3600000,tot=msBetween(d.at,d.fixedAt);
+      return `<tr>${multi?`<td>${esc(dfUnitName(d.unitId))}</td>`:''}<td><b>${esc(dfLoc(d))}</b></td><td>${esc(dfTitle(d))}${d.note?`<div class="mt-sub">${esc(d.note)}</div>`:''}</td><td>${fmtDateTime(d.at)}</td><td>${esc(d.fixedBy||'')}</td><td>${fmtDur(msBetween(d.at,d.accAt))}</td><td>${fmtDur(msBetween(d.accAt||d.at,d.fixedAt))}</td><td class="${tot>sl?'dur-over':''}">${fmtDur(tot)}</td><td>${esc(d.fixNote||'')}${d.fph?` <button class="btn btn-ghost btn-sm" onclick="mtFixPhotos('${d.id}',this)">${IC('ti-photo')} ${d.fph}</button>`:''}</td></tr>`}).join('')||`<tr><td colspan="${multi?9:8}" style="text-align:center;color:var(--muted)">Chưa có</td></tr>`}</tbody></table></div></div>`;
+  }else if(V==='cfg')h+=mtCfgHtml(cu);
+  else h+=mtStatHtml(uids,mg);
+  box.innerHTML=h;
+}
+/* cài đặt cơ điện cho bộ phận đang chọn: thiết bị, khu vực, thời hạn */
+function mtCfgHtml(uid){
+  const u=S.units.find(x=>x.id===uid),hotel=!!chkCfg(uid);if(!u)return '';
+  return `<div class="card guard"><div class="card-title">${IC('ti-settings')} Cài đặt cơ điện — ${esc(u.name)}</div>
+    <div class="mt-sla">Thời hạn xử lý: <select id="mtSlaSel">${[2,4,8,12,24,48,72].map(x=>`<option value="${x}"${mtSla(uid)===x?' selected':''}>${x} giờ</option>`).join('')}</select> kể từ lúc báo lỗi</div>
+    <div class="setup-sub"><div class="ss-h">${IC('ti-tool')} <b>Thiết bị cố định</b> <span>để người báo lỗi tích nhanh${hotel?' — dùng chung với checklist kiểm tra phòng':''}</span></div>
+      <div id="equipEd" class="eq-grid-ed">${dfEquip(uid).map(equipRow).join('')}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('equipEd').insertAdjacentHTML('beforeend',equipRow());document.querySelector('#equipEd .eq-ed:last-child .eq-n').focus()">+ Thêm thiết bị</button>
+      <button class="btn btn-ghost btn-sm" onclick="setupFill('equipEd',(${hotel}?EQUIP_TEMPLATE:EQUIP_TEMPLATE_GEN).map(equipRow).join(''))">Dùng mẫu</button></div></div>
+    <div class="setup-sub"><div class="ss-h">${IC('ti-map-pin')} <b>Vị trí / khu vực</b> <span>gợi ý khi báo lỗi${hotel?' ngoài phòng (sảnh, bếp…)':''}</span></div>
+      <textarea id="mtLocsEd" rows="3" placeholder="Mỗi dòng một vị trí, VD: Sảnh tầng 1&#10;Bếp&#10;Kho lạnh">${esc((u.mtLocs||[]).join('\n'))}</textarea></div>
+    <div style="text-align:right;margin-top:12px"><button class="btn btn-pri" onclick="mtCfgSave('${uid}')">Lưu cài đặt</button></div></div>`;
+}
+const EQUIP_TEMPLATE_GEN=['Điều hoà','Đèn chiếu sáng','Ổ cắm / công tắc','Quạt','Máy tính','Máy in','Wifi / mạng','Tủ lạnh / tủ mát','Bếp / thiết bị bếp','Máy bơm nước','Vòi nước / bồn rửa','Bồn cầu / xả nước','Cửa / khoá','Thang máy','Camera','Máy phát điện'];
+function mtCfgSave(uid){
+  if(!(hasPerm('mt_manage')||S.user.isAdmin))return;
+  const u=S.units.find(x=>x.id===uid);if(!u)return;
+  const equip=[...new Set([...document.querySelectorAll('#equipEd .eq-n')].map(i=>i.value.trim()).filter(Boolean))];
+  const c=chkCfg(uid);if(c)c.equip=equip;else u.mtEquip=equip;
+  u.mtLocs=[...new Set(document.getElementById('mtLocsEd').value.split('\n').map(x=>x.trim()).filter(Boolean))];
+  u.mtSla=+document.getElementById('mtSlaSel').value||MT_SLA_DEF;
+  persist();formSaved();renderMT();toast('Đã lưu cài đặt cơ điện');
+}
+function mtSort(a,b){const o={open:0,acc:1,hold:2};return (o[mtSt(a)]-o[mtSt(b)])||(a.at||'').localeCompare(b.at||'')}
+function mtK(l,v,c){return `<div class="mt-k ${c||''}"><div class="v">${v}</div><div class="l">${l}</div></div>`}
+function mtGroup(title,list,empty,multi){
+  if(!list.length&&!empty)return '';
+  return `<div class="card mt-grp">${title?`<div class="card-title">${title} <span class="badge">${list.length}</span></div>`:''}${list.length?list.map(d=>`<div class="mt-row"><div class="mt-room">${esc(dfLoc(d))}${multi?`<small>${esc(dfUnitName(d.unitId))}</small>`:''}</div><div class="mt-body">${dfItemHtml(d)}</div></div>`).join(''):`<div style="color:var(--muted);padding:6px 0">${empty}</div>`}</div>`;
+}
+function mtPeriodSel(){return `<div class="fchips">${[['m','Tháng đang xem'],['pm','Tháng trước'],['7','7 ngày'],['30','30 ngày']].map(([k,l])=>`<button class="fchip${(S._mtP||'m')===k?' on':''}" onclick="S._mtP='${k}';renderMT()">${l}</button>`).join('')}</div>`}
+async function mtFixPhotos(id,btn){const p=await chkLoadPhotos(id+'_fix');S._dfView=p;if(p.length)showIV(p[0]);else toast('Chưa có ảnh trên máy chủ')}
+
+/* ---------- Thống kê & hiệu suất ---------- */
+function mtStatHtml(uids,mg){
+  uids=[].concat(uids);const uid=uids[0],multi=uids.length>1,slaOf=d=>mtSla(d.unitId)*3600000;
+  const[f,t,lbl]=mtPeriod(),inP=x=>{const d=x&&isoLocalDate(x);return d&&d>=f&&d<=t};
+  const all=(S.defects||[]).filter(d=>uids.includes(d.unitId)),rep=all.filter(d=>inP(d.at)),fix=all.filter(d=>d.st==='fixed'&&inP(d.fixedAt));
+  const scope=mg?null:S.user.id,fixS=scope?fix.filter(d=>d.fixedById===scope):fix;
+  const resp=fixS.map(d=>msBetween(d.at,d.accAt)).filter(x=>x!=null),work=fixS.map(d=>msBetween(d.accAt||d.at,d.fixedAt)).filter(x=>x!=null),tot=fixS.map(d=>msBetween(d.at,d.fixedAt)).filter(x=>x!=null);
+  const onTime=fixS.filter(d=>{const x=msBetween(d.at,d.fixedAt);return x!=null&&x<=slaOf(d)}).length,openNow=all.filter(d=>d.st!=='fixed'&&(!scope||mtMine(d)));
+  let h=mtPeriodSel();
+  h+=`<div class="mt-kpis">${mg?mtK('Lỗi được báo',rep.length,''):''}${mtK('Đã sửa',fixS.length,'ok')}${mtK('Đang mở (hiện tại)',openNow.length,openNow.length?'warn':'')}${mtK('TB tiếp nhận',fmtDur(avg(resp)),'')}${mtK('TB sửa',fmtDur(avg(work)),'')}${mtK('Đúng hạn',tot.length?Math.round(onTime/tot.length*100)+'%':'–',tot.length&&onTime/tot.length<.8?'err':'ok')}</div>`;
+  if(mg){
+    /* theo nhân viên cơ điện */
+    const st={},stf=[...new Map(uids.flatMap(x=>mtStaff(x)).map(x=>[x.id,x])).values()];stf.forEach(x=>st[x.id]={n:x.n,asg:0,acc:0,fix:0,open:0,r:[],w:[],ok:0,t:0});
+    const g=(id,n)=>st[id]||(st[id]={n:n||'?',asg:0,acc:0,fix:0,open:0,r:[],w:[],ok:0,t:0});
+    rep.forEach(d=>{if(d.asg)g(d.asg.id,d.asg.n).asg++;if(d.accId&&inP(d.accAt))g(d.accId,d.accBy).acc++});
+    all.filter(d=>d.st!=='fixed').forEach(d=>{const id=d.accId||(d.asg&&d.asg.id);if(id)g(id,d.accBy||(d.asg&&d.asg.n)).open++});
+    fix.forEach(d=>{if(!d.fixedById)return;const o=g(d.fixedById,d.fixedBy);o.fix++;const r=msBetween(d.at,d.accAt),w=msBetween(d.accAt||d.at,d.fixedAt),tt=msBetween(d.at,d.fixedAt);if(r!=null)o.r.push(r);if(w!=null)o.w.push(w);if(tt!=null){o.t++;if(tt<=slaOf(d))o.ok++}});
+    const rows=Object.values(st).filter(o=>o.asg||o.acc||o.fix||o.open||stf.some(x=>x.n===o.n)).sort((a,b)=>b.fix-a.fix);
+    h+=`<div class="card"><div class="card-title">${IC('ti-users')} Hiệu suất nhân viên cơ điện — ${lbl}</div><div class="tbl-wrap"><table><thead><tr><th>Nhân viên</th><th style="text-align:center">Được giao</th><th style="text-align:center">Tiếp nhận</th><th style="text-align:center">Hoàn thành</th><th style="text-align:center">Đang giữ</th><th style="text-align:center">TB tiếp nhận</th><th style="text-align:center">TB sửa</th><th style="text-align:center">Đúng hạn</th></tr></thead><tbody>${
+      rows.map(o=>`<tr><td><b>${esc(o.n)}</b></td><td style="text-align:center">${o.asg}</td><td style="text-align:center">${o.acc}</td><td style="text-align:center"><b>${o.fix}</b></td><td style="text-align:center">${o.open||'–'}</td><td style="text-align:center">${fmtDur(avg(o.r))}</td><td style="text-align:center">${fmtDur(avg(o.w))}</td><td style="text-align:center" class="${o.t&&o.ok/o.t<.8?'dur-over':''}">${o.t?Math.round(o.ok/o.t*100)+'%':'–'}</td></tr>`).join('')||`<tr><td colspan="8" style="text-align:center;color:var(--muted)">Chưa có tài khoản cơ điện — tạo ở Thiết lập → Đơn vị & Tài khoản, vai trò "Cơ điện"</td></tr>`}</tbody></table></div>
+      <div class="ss-note">TB tiếp nhận: từ lúc báo đến lúc cơ điện bấm Tiếp nhận · TB sửa: từ lúc tiếp nhận đến lúc báo hoàn thành · Đúng hạn: tổng thời gian ≤ thời hạn xử lý của bộ phận (cài ở mục Cài đặt).</div></div>`;
+    if(multi){const bu={};uids.forEach(x=>bu[x]={rep:0,fix:0,open:0,tot:[],ok:0});rep.forEach(d=>bu[d.unitId].rep++);all.filter(d=>d.st!=='fixed').forEach(d=>bu[d.unitId].open++);fix.forEach(d=>{const o=bu[d.unitId];o.fix++;const x=msBetween(d.at,d.fixedAt);if(x!=null){o.tot.push(x);if(x<=slaOf(d))o.ok++}});
+      h+=`<div class="card"><div class="card-title">${IC('ti-building')} Theo bộ phận — ${lbl}</div><div class="tbl-wrap"><table><thead><tr><th>Bộ phận</th><th style="text-align:center">Lỗi báo</th><th style="text-align:center">Đã sửa</th><th style="text-align:center">Đang mở</th><th style="text-align:center">TB tổng thời gian</th><th style="text-align:center">Đúng hạn</th></tr></thead><tbody>${uids.filter(x=>bu[x].rep||bu[x].fix||bu[x].open).sort((a,b)=>bu[b].rep-bu[a].rep).map(x=>{const o=bu[x];return `<tr><td><b>${esc(dfUnitName(x))}</b></td><td style="text-align:center">${o.rep}</td><td style="text-align:center">${o.fix}</td><td style="text-align:center">${o.open||'–'}</td><td style="text-align:center">${fmtDur(avg(o.tot))}</td><td style="text-align:center">${o.tot.length?Math.round(o.ok/o.tot.length*100)+'%':'–'}</td></tr>`}).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted)">Chưa có</td></tr>'}</tbody></table></div></div>`}
+    /* thiết bị & phòng hay hỏng */
+    const eq={},rm={},src={};rep.forEach(d=>{(d.items&&d.items.length?d.items:['Lỗi khác']).forEach(n=>{const o=eq[n]||(eq[n]={c:0,rooms:new Set()});o.c++;o.rooms.add((multi?dfUnitName(d.unitId)+' · ':'')+dfLoc(d))});{const k=(multi?dfUnitName(d.unitId)+' · ':'')+dfLoc(d);rm[k]=(rm[k]||0)+1}const s={hk:'Buồng phòng',fo:'Lễ tân',room:'Buồng phòng',list:'Danh sách lỗi',mt:'Cơ điện / bộ phận'}[d.src]||'Khác';src[s]=(src[s]||0)+1});
+    const eqR=Object.entries(eq).sort((a,b)=>b[1].c-a[1].c),mx=eqR.length?eqR[0][1].c:1,rmR=Object.entries(rm).sort((a,b)=>b[1]-a[1]).slice(0,10);
+    h+=`<div class="mt-2"><div class="card"><div class="card-title">${IC('ti-tool')} Thiết bị hay hỏng</div>${eqR.length?eqR.slice(0,12).map(([n,o])=>`<div class="mt-bar"><span class="mt-bn">${esc(n)}</span><span class="mt-bt"><i style="width:${Math.round(o.c/mx*100)}%"></i></span><b>${o.c}</b><small>${[...o.rooms].slice(0,6).map(r=>esc(r)).join(', ')}${o.rooms.size>6?'…':''}</small></div>`).join(''):'<div style="color:var(--muted)">Chưa có lỗi nào trong kỳ.</div>'}</div>
+      <div class="card"><div class="card-title">${IC('ti-door')} Vị trí nhiều lỗi</div>${rmR.length?`<div class="tbl-wrap"><table><tbody>${rmR.map(([r,c])=>`<tr><td><b>${esc(r)}</b></td><td style="text-align:right">${c} lỗi</td></tr>`).join('')}</tbody></table></div>`:'<div style="color:var(--muted)">–</div>'}
+        <div class="card-title" style="margin-top:12px">Nguồn báo lỗi</div>${Object.entries(src).map(([k,v])=>`<div class="mt-src"><span>${k}</span><b>${v}</b></div>`).join('')||'<div style="color:var(--muted)">–</div>'}</div></div>`;
+  }
+  return h;
+}
+
+
+/* ---------- Gắn vào hệ thống ---------- */
+const _mtSubAllowed=subAllowed;
+subAllowed=function(pg,sub){if(pg==='unit'&&sub==='mt')return mtPerm()&&!!curUnitId();return _mtSubAllowed.apply(this,arguments)};
+const _mtWanted=wantedParts;
+wantedParts=function(){const w=_mtWanted.apply(this,arguments);if(S.user&&mtPerm())w.add('g/defects');return w};
+const _mtDfCanReport=dfCanReport;dfCanReport=function(){return _mtDfCanReport()||mtPerm()};
+const _mtDfCanFix=dfCanFix;dfCanFix=function(){return _mtDfCanFix()||hasPerm('mt_manage')};
+const _mtRerender=dfRerender;dfRerender=function(){_mtRerender();try{if(S._curTab==='unit'&&S._sub.unit==='mt')renderMT()}catch(e){}try{if(S._curTab==='today')renderToday()}catch(e){}};
+/* menu: badge số việc của cơ điện */
+const _mtBadges=sideBadges;
+sideBadges=function(uid){const b=_mtBadges.apply(this,arguments);try{if(hasPerm('mt_do')||hasPerm('mt_manage')){const us=hasPerm('mt_do')?mtAllUids():[dfUid(uid)],open=(S.defects||[]).filter(d=>us.includes(d.unitId)&&d.st!=='fixed');
+  const n=hasPerm('mt_do')?open.filter(d=>mtMine(d)||!d.asg).length:open.length;if(n)b.mt={n,c:open.some(d=>d.st==='open')?'warn':'info'}}}catch(e){}return b};
+/* Hôm nay: việc của cơ điện */
+const _mtToday=renderToday;
+renderToday=function(){
+  const r=_mtToday.apply(this,arguments);
+  try{
+    if(!(hasPerm('mt_do')||hasPerm('mt_manage')))return r;const box=document.getElementById('todayContent');if(!box)return r;
+    const us=hasPerm('mt_do')?mtAllUids():[dfUid(curUnitId())],multi=us.length>1,open=(S.defects||[]).filter(d=>us.includes(d.unitId)&&d.st!=='fixed');if(!open.length)return r;
+    const mine=hasPerm('mt_do')?open.filter(d=>mtMine(d)):[],free=open.filter(d=>!d.asg);
+    const rows=(hasPerm('mt_do')?mine.concat(free):open).sort(mtSort).slice(0,10);
+    const card=document.createElement('div');card.className='card mt-today';
+    card.innerHTML=`<div class="card-title">${IC('ti-tool')} Lỗi thiết bị ${hasPerm('mt_do')?`— của bạn ${mine.length} · chưa ai nhận ${free.length}`:`đang mở ${open.length}`}<span style="flex:1"></span><button class="btn btn-ghost btn-sm" onclick="goTab('unit','mt')">Mở Cơ điện</button></div>
+      ${rows.map(d=>`<div class="mt-trow"><b>${esc(dfLoc(d))}</b>${multi?`<small>${esc(dfUnitName(d.unitId))}</small>`:''}<span>${esc(dfTitle(d))}</span><span class="mt-st ${MT_ST[mtSt(d)].c}">${MT_ST[mtSt(d)].l}</span>${d.asg?`<small>${esc(d.asg.n)}</small>`:''}</div>`).join('')}`;
+    const t=box.querySelector('.pg-title');if(t)t.after(card);else box.prepend(card);
+  }catch(e){console.warn(e)}
+  return r;
+};
+/* ===========================================================
+   KIỂM TRA LẠI THEO CẤP (phòng đã được duyệt "Sẵn sàng")
+   Cấp 1: Giám sát buồng phòng (check_review) — duyệt lần đầu như cũ
+   Cấp 2: Quản lý khách sạn (check_lv2) · Cấp 3: Lãnh đạo / Ban giám đốc (check_lv3, QTV)
+   - Người cấp cao hơn người duyệt gần nhất được "Kiểm tra lại": Xác nhận đạt hoặc Yêu cầu làm lại
+   - Phòng bị cấp N trả lại: lượt dọn sau phải do người cấp ≥ N duyệt (rec.needLv)
+   - Đã được cấp N xác nhận: chỉ cấp > N mới kiểm tra lại được (rec.apprLv)
+   Lưu: rec.reviews[] thêm {audit:true,lv}; lượt dọn bị kiểm tra lại: round.au={lv,by,byId,at,d,note}
+=========================================================== */
+PERMS.push(['check_lv2','🏨 Kiểm tra lại phòng đã duyệt — cấp 2 (Quản lý khách sạn)'],['check_lv3','🏢 Kiểm tra lại phòng đã duyệt — cấp 3 (Lãnh đạo)']);
+ROLES.admin.perms.push('check_lv2','check_lv3');ROLES.manager.perms.push('check_lv3');
+ROLES.hotel_mgr={label:'🏨 Quản lý khách sạn',color:'#9333ea',perms:['profile','issues','report','check_review','check_lv2','inv_view','fo_rev','mt_manage']};
+const CHK_LV_NAME={1:'Giám sát',2:'Quản lý khách sạn',3:'Lãnh đạo'};
+function chkLv(){if(!S.user)return 0;if(S.user.isAdmin||hasPerm('check_lv3'))return 3;if(hasPerm('check_lv2'))return 2;return hasPerm('check_review')?1:0}
+function chkApprLv(rec){return rec.apprLv||1}
+function canAudit(rec){return !!rec&&rec.status==='approved'&&chkLv()>=2&&chkLv()>chkApprLv(rec)}
+function lvTag(lv){return `<span class="lv-tag lv${lv}">Cấp ${lv} · ${CHK_LV_NAME[lv]}</span>`}
+
+/* khối "Kiểm tra lại" trong hộp phòng / phiếu đã duyệt */
+function auditHtml(rec){
+  if(!rec)return '';
+  let h='';
+  if(rec.needLv>1&&['submitted','inspecting','redo','cleaning'].includes(rec.status))h+=`<div class="warn-banner" style="display:block;margin-top:10px">${lvTag(rec.needLv)} đã yêu cầu làm lại — lượt dọn tiếp theo phải do <b>cấp ${rec.needLv} trở lên</b> duyệt.</div>`;
+  if(rec.status==='approved'&&rec.apprLv>1)h+=`<div class="au-ok">${IC('ti-shield-check')} Đã được ${lvTag(rec.apprLv)} kiểm tra lại và xác nhận đạt.</div>`;
+  if(!canAudit(rec))return h;
+  const rs=roomState(rec.unitId,rec.room);if(rs.st!=='ready'||(rs.last&&rs.last.id!==rec.id))return h;
+  const ap=(rec.reviews||[]).filter(r=>r.decision==='approve').slice(-1)[0];
+  return h+`<div class="au-box"><div class="au-h">${IC('ti-shield-check')} <b>Kiểm tra lại</b> ${lvTag(chkLv())}</div>
+    <div class="au-sub">Đã duyệt đạt${ap?` bởi ${esc(ap.by||'')} lúc ${fmtDateTime(ap.at)}`:''}${chkApprLv(rec)>1?' ('+lvTag(chkApprLv(rec))+')':''}. Nếu phòng chưa đạt, yêu cầu làm lại — phòng chuyển về "Làm lại", không bán được cho tới khi dọn lại và được cấp ${chkLv()} trở lên duyệt.</div>
+    <textarea id="auNote" rows="2" placeholder="Nhận xét / lý do (bắt buộc khi yêu cầu làm lại)"></textarea>
+    <div class="au-btns"><button class="btn btn-ok btn-sm" onclick="auditDo('${rec.id}','approve')">Xác nhận đạt</button><button class="btn btn-warn btn-sm" onclick="auditDo('${rec.id}','redo')">Yêu cầu làm lại</button></div></div>`;
+}
+async function auditDo(id,d){
+  const rec=S.checks.find(x=>x.id===id);if(!canAudit(rec)){toast('🔒 Bạn không đủ cấp để kiểm tra lại phòng này');return}
+  const ta=document.getElementById('auNote'),note=((ta||{}).value||'').trim(),lv=chkLv(),now=nowISO();
+  if(d==='redo'&&!note){if(ta){fieldErr(ta,'Ghi rõ lý do yêu cầu làm lại');ta.focus()}return}
+  if(d==='redo'&&!await askYes(`Yêu cầu làm lại phòng ${rec.room}? Phòng sẽ chuyển về "Làm lại" và không bán được cho tới khi được duyệt lại.`,{yes:'Yêu cầu làm lại'}))return;
+  const l=lastRound(rec);if(l)l.au={lv,by:S.user.name,byId:S.user.id,at:now,d,note};
+  rec.reviews=(rec.reviews||[]).concat([{at:now,by:S.user.name,byId:S.user.id,decision:d,note,audit:true,lv}]);
+  if(d==='redo'){rec.status='redo';rec.needLv=Math.max(lv,rec.needLv||1);delete rec.apprLv}else rec.apprLv=lv;
+  rec.updatedAt=now;persist();
+  try{if(S._chk)closeM('chkModal');S._chk=null}catch(e){}
+  renderChecks();try{if(S._curTab==='unit'&&S._sub.unit==='fo')renderFO()}catch(e){}
+  toast(d==='redo'?`↩️ Phòng ${rec.room}: cấp ${lv} yêu cầu làm lại`:`✅ Phòng ${rec.room}: cấp ${lv} xác nhận đạt`);
+}
+/* duyệt lượt dọn sau khi cấp trên trả lại: cần đủ cấp */
+const _auStart=chkStartInspect;
+chkStartInspect=function(){
+  const rec=S._chk&&S.checks.find(x=>x.id===S._chk.recId);
+  if(rec&&(rec.needLv||1)>chkLv()){toast(`🔒 Phòng do cấp ${rec.needLv} trả lại — cần ${CHK_LV_NAME[rec.needLv]} (cấp ${rec.needLv}) trở lên kiểm tra`);return}
+  return _auStart.apply(this,arguments);
+};
+const _auReview=reviewChk;
+reviewChk=function(decision){
+  const c=S._chk,rec=c&&S.checks.find(x=>x.id===c.recId);
+  if(rec&&(rec.needLv||1)>chkLv()){toast(`🔒 Cần cấp ${rec.needLv} trở lên duyệt phòng này`);return}
+  const need=rec&&rec.needLv,lv=chkLv();
+  const r=_auReview.apply(this,arguments);
+  try{if(rec&&rec.status==='approved'){if(need>1){rec.apprLv=Math.max(lv,need);delete rec.needLv}else if(lv>1)rec.apprLv=lv;persist()}}catch(e){}
+  return r;
+};
+/* không cho đặt tay "Sẵn sàng" để vượt qua yêu cầu làm lại của cấp cao hơn */
+const _auSetRs=setRoomStatus;
+setRoomStatus=function(st){
+  const c=S._chk;
+  if(st==='ready'&&c){const last=chkLatest(c.unitId,c.room);if(last&&last.needLv>chkLv()&&['redo','cleaning','submitted','inspecting'].includes(last.status)){toast(`🔒 Phòng do cấp ${last.needLv} yêu cầu làm lại — cần cấp ${last.needLv} trở lên duyệt`);return}}
+  return _auSetRs.apply(this,arguments);
+};
 // START
 buildLayout();
 STORE.init().then(()=>{S.sums=LS.get(K_SUMS,{});checkSession()});
