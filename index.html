@@ -2405,10 +2405,14 @@ function seed(){
   persist();
 }
 
+function critMarked(uid,m){const u=S.units.find(x=>x.id===uid);return !!(u&&(u.critM||[]).includes(m))}
+function critMark(uid,m){const u=S.units.find(x=>x.id===uid);if(!u||(u.critM||[]).includes(m))return;u.critM=[...(u.critM||[]),m].sort().slice(-24)}
 function seedCriteria(unitId,bizType,month,forceTemplate){
   if(!partReady(month,unitId,'criteria'))return;                   // chưa biết máy chủ có gì → không tự sinh
   const existing=S.criteria.filter(c=>c.unitId===unitId&&c.month===month);
-  if(existing.length>0) return;
+  /* mỗi đơn vị × tháng chỉ tự tạo bộ tiêu chí MỘT lần; đã có (hoặc người dùng đã chủ động xoá hết) thì không tự sinh lại */
+  if(existing.length>0){critMark(unitId,month);return}
+  if(!forceTemplate&&critMarked(unitId,month))return;
   if(!forceTemplate){
     const pm1=prevMonthOf(month);
     if(S.fbDb&&!partReady(pm1,unitId,'criteria')&&!S._seedTried[unitId+'|'+month]){
@@ -2417,7 +2421,7 @@ function seedCriteria(unitId,bizType,month,forceTemplate){
       return;
     }
     const pm=[...new Set(S.criteria.filter(c=>c.unitId===unitId&&c.month<month).map(c=>c.month))].sort().pop();
-    if(pm){S.criteria.filter(c=>c.unitId===unitId&&c.month===pm).forEach((c,i)=>S.criteria.push({...c,id:`c_${unitId}_${month}_${i}`,month}));return}
+    if(pm){S.criteria.filter(c=>c.unitId===unitId&&c.month===pm).forEach((c,i)=>S.criteria.push({...c,id:`c_${unitId}_${month}_${i}`,month}));critMark(unitId,month);return}
   }
   const tpl=getCriteriaTemplate(bizType);
   tpl.hw.forEach((c,i)=>{
@@ -2426,6 +2430,7 @@ function seedCriteria(unitId,bizType,month,forceTemplate){
   tpl.sw.forEach((c,i)=>{
     S.criteria.push({id:`c_${unitId}_${month}_sw${i}`,unitId,month,type:'sw',name:c[0],desc:c[1],method:c[2],maxScore:10});
   });
+  critMark(unitId,month);
 }
 
 function ensureCriteria(){
@@ -2695,11 +2700,12 @@ function critDelSel(){
   const ids=new Set(critBoxes().filter(b=>b.checked).map(b=>b.value));if(!ids.size)return;
   const ev=S.evals.filter(e=>ids.has(e.criteriaId)&&e.committed).length;
   delayedConfirm('Xoá nhiều tiêu chí',`Xoá ${ids.size} tiêu chí đã chọn của tháng ${S.month.split('-').reverse().join('/')}?${ev?`\n\nKèm theo ${ev} kết quả đánh giá đã lưu của các tiêu chí này cũng bị xoá.`:''}\n\nKhông thể hoàn tác (có thể khôi phục từ bản sao lưu).`,()=>{
+    S.criteria.filter(x=>ids.has(x.id)).forEach(x=>critMark(x.unitId,x.month));
     S.criteria=S.criteria.filter(x=>!ids.has(x.id));S.evals=S.evals.filter(e=>!ids.has(e.criteriaId));
     S._critSel=new Set();S._critLast=null;persist();renderCriteria();toast(`Đã xoá ${ids.size} tiêu chí`);
   });
 }
-function delCrit(id){delayedConfirm('Xóa tiêu chí','Bạn có chắc chắn muốn XÓA tiêu chí này?',()=>{S.criteria=S.criteria.filter(x=>x.id!==id);S.evals=S.evals.filter(e=>e.criteriaId!==id);persist();renderCriteria()})}
+function delCrit(id){delayedConfirm('Xóa tiêu chí','Bạn có chắc chắn muốn XÓA tiêu chí này?',()=>{{const c=S.criteria.find(x=>x.id===id);if(c)critMark(c.unitId,c.month)}S.criteria=S.criteria.filter(x=>x.id!==id);S.evals=S.evals.filter(e=>e.criteriaId!==id);persist();renderCriteria()})}
 function copyPrevMonth(){
   const uid=document.getElementById('cUnitSel').value;if(!uid)return;
   const[y,m]=S.month.split('-').map(Number);const pv=new Date(y,m-2,1);const pm=`${pv.getFullYear()}-${String(pv.getMonth()+1).padStart(2,'0')}`;
@@ -8223,7 +8229,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='31.10.2026-1e6c20';
+const APP_BUILD='31.10.2026-6e7749';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
