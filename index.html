@@ -2487,6 +2487,10 @@ function critMarked(uid,m){const u=S.units.find(x=>x.id===uid);return !!(u&&(u.c
 function critMark(uid,m){const u=S.units.find(x=>x.id===uid);if(!u||(u.critM||[]).includes(m))return;u.critM=[...(u.critM||[]),m].sort().slice(-24)}
 function seedCriteria(unitId,bizType,month,forceTemplate){
   if(!partReady(month,unitId,'criteria'))return;                   // chưa biết máy chủ có gì → không tự sinh
+  /* danh sách đơn vị (kèm dấu "đã tạo / đã xoá" critM) phải là bản mới nhất từ máy chủ, nếu không sẽ kế thừa nhầm tháng đã chủ động xoá */
+  if(S.fbDb&&!forceTemplate&&!(S._parts['g/units']&&S._parts['g/units'].ready))return;
+  /* chỉ máy của người quản lý tiêu chí / đánh giá mới tự tạo — tránh máy nhân viên (có thể đang chạy bản cũ / dữ liệu cũ) sinh tiêu chí */
+  if(!forceTemplate&&S.user&&!(S.user.isAdmin||hasPerm('criteria')||hasPerm('evaluate')))return;
   const existing=S.criteria.filter(c=>c.unitId===unitId&&c.month===month);
   /* mỗi đơn vị × tháng chỉ tự tạo bộ tiêu chí MỘT lần; đã có (hoặc người dùng đã chủ động xoá hết) thì không tự sinh lại */
   if(existing.length>0){critMark(unitId,month);return}
@@ -4516,7 +4520,7 @@ function ensurePart(path){
     if(db!==S.fbDb||S._parts[path]!==p)return;
     reconcilePart(path,snap.val()||{},fresh);
     p.ready=true;p.loading=null;saveSyncBase();
-    if(colOf(path)==='criteria'){try{ensureCriteria()}catch(e){}}
+    if(colOf(path)==='criteria'||path==='g/units'){try{ensureCriteria()}catch(e){}}
     scheduleRemoteRender();scheduleSync();
   }).catch(e=>{p.loading=null;console.warn('part',path,e)});
   return p.loading;
@@ -4880,6 +4884,8 @@ function cMerge(base,mine,theirs){
 function confWho(r){return (r&&(r.updatedBy||r.closedBy||r.by))||'máy khác'}
 /* trả về true nếu đã xử lý (tự gộp hoặc đưa vào danh sách chờ chọn) */
 function syncConflict(path,k,col,i,loc,r,base){
+  /* dấu tháng tiêu chí (critM) chỉ có thêm, không bớt → luôn gộp hợp, không bao giờ mất dấu "đã xoá" */
+  if(col==='units'&&loc&&r&&(Array.isArray(loc.critM)||Array.isArray(r.critM))){const u=[...new Set([...(loc.critM||[]),...(r.critM||[])])].sort().slice(-24);loc.critM=u;r={...r,critM:u}}
   const pk=path+'/'+k,mine=loc?canon(syncView(col,loc))||{}:null;
   if(!mine||!r){ /* một bên xoá, bên kia sửa */
     S._conf[pk]={pk,path,k,col,mine,theirs:r,base,fields:[],del:!r?'remote':'local',at:Date.now()};confNotify();return true}
@@ -7360,7 +7366,7 @@ function logEntries(writes,updates){
     if(op==='upd'&&old&&!ch.length)return;
     const r=nw||old;
     const id=`${t.toString(36)}_${CLIENT_ID.slice(-4)}_${i}`;
-    out[`log/${mon}/${id}`]={t,by:S.user.name||'',uid:S.user.id||'',role:S.user.role||'',col,rid:w.k,u:(col==='units'?r.id:r.unitId)||'',op,lbl:logLabel(col,r).slice(0,120),...(ch.length?{ch}:{})};
+    out[`log/${mon}/${id}`]={t,by:S.user.name||'',uid:S.user.id||'',role:S.user.role||'',ver:typeof APP_BUILD==='string'?APP_BUILD:'',col,rid:w.k,u:(col==='units'?r.id:r.unitId)||'',op,lbl:logLabel(col,r).slice(0,120),...(ch.length?{ch}:{})};
   });
   return out;
 }
@@ -7396,7 +7402,7 @@ function renderLog(){
      :`${adm?logAdminBar(list,shown):''}<div class="lg-list${adm?' lg-adm':''}">${shown.map(r=>`<div class="lg-row${S._logSel.has(r.k)?' sel':''}">${adm?`<label class="lg-ck" title="Chọn để xoá"><input type="checkbox" ${S._logSel.has(r.k)?'checked':''} onchange="logPick('${esc(r.k)}',this.checked)"></label>`:''}<div class="lg-t">${fmtDateTime(new Date(r.t).toISOString())}</div>
         <div class="lg-main"><div class="lg-hd">${opB[r.op]||''}<b>${esc(LOG_COL_LBL[r.col]||r.col)}</b>${r.u?`<span class="lg-u">${esc(uName(r.u))}</span>`:''}<span class="lg-lbl">${esc(r.lbl||'')}</span></div>
         ${(r.ch||[]).length?`<div class="lg-ch">${r.ch.map(c=>`<span><i>${esc(LOG_F[c.f]||c.f)}:</i> <s>${esc(c.o)}</s> → <b>${esc(c.n)}</b></span>`).join('')}</div>`:''}</div>
-        <div class="lg-by">${esc(r.by||'')}<small>${esc(((ROLES[r.role]||{}).label||'').replace(/^\S+\s/,''))}</small></div></div>`).join('')}</div>
+        <div class="lg-by">${esc(r.by||'')}<small>${esc(((ROLES[r.role]||{}).label||'').replace(/^\S+\s/,''))}${r.ver?' · bản '+esc(r.ver):' · bản cũ'}</small></div></div>`).join('')}</div>
       ${list.length>shown.length?`<div style="text-align:center;color:var(--muted);font-size:13px;margin-top:8px">Hiển thị 400 thay đổi mới nhất — dùng bộ lọc để thu hẹp.</div>`:''}
       ${rows.length>=(S._logLim||50)?`<div style="text-align:center;margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="S._logLim=(S._logLim||50)+50;S._logRows=null;renderLog()">Tải thêm 50 thay đổi cũ hơn</button></div>`:''}`}
     <div class="lg-note">${IC('ti-history')} Nhật ký cũ hơn ${LOG_KEEP_M} tháng được tự động xoá.${adm?' Quản trị viên có thể xoá thủ công; mỗi lần xoá đều được ghi lại.':''}</div>`;
@@ -8313,7 +8319,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='01.11.2026-9966c8';
+const APP_BUILD='02.11.2026-43adcf';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
