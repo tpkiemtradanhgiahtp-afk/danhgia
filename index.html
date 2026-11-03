@@ -1060,14 +1060,6 @@ body:has(.modal-overlay.show) .ai-fab{display:none!important}
 #sub-plan .card-row{flex-wrap:wrap;gap:8px}
 @media(max-width:600px){.ov-kpis{grid-template-columns:repeat(2,1fr)}.ov-bar .flt-cnt{display:none}#ovErrTabs{width:100%;overflow-x:auto}#ovErrTabs button{white-space:nowrap}}
 .ov-tbl td:nth-child(2){min-width:160px}
-/* ===== XUNG ĐỘT DỮ LIỆU ===== */
-.conf-chip{font-size:11px;font-weight:800;margin-left:6px;padding:3px 9px;border-radius:12px;background:#fee2e2;color:#991b1b;cursor:pointer;white-space:nowrap}
-.cf-item{border:1px solid #fcd34d;background:#fffbeb;border-radius:12px;padding:10px 12px;margin-bottom:10px}
-.cf-hd{font-size:14px;margin-bottom:6px}.cf-who{color:var(--muted);font-size:12.5px;margin-left:4px}
-.cf-tbl{width:100%;font-size:13.5px;background:#fff;border-radius:8px;overflow:hidden}
-.cf-tbl th{font-size:12px}.cf-m{color:#1e40af;font-weight:600}.cf-t{color:#92400e;font-weight:600}
-.cf-del{font-size:13.5px;color:#92400e}
-.cf-act{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
 /* ===== BẢNG MÀU NỀN (giảm trắng, phân lớp rõ) ===== */
 :root{--page:#e8eef6;--navy:#13233f;--navy-2:#1c3157;--navy-3:#2a4370;--line:#d9e2ee;--card-sh:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.04)}
 html,body{background:var(--page)}
@@ -2279,10 +2271,17 @@ S._formDirty=false;S._rrWait=false;
 document.addEventListener('input',e=>{if(e.target&&e.target.closest&&e.target.closest('.guard'))S._formDirty=true},true);
 document.addEventListener('change',e=>{if(e.target&&e.target.closest&&e.target.closest('.guard'))S._formDirty=true},true);
 function formSaved(){try{const a=document.activeElement;if(a&&a.closest&&a.closest('.guard')&&a.blur)a.blur()}catch(e){}S._formDirty=false;if(S._rrWait){S._rrWait=false;setTimeout(()=>{try{rerenderActive()}catch(e){}},50)}}
+/* đang nhập liệu: vừa gõ vào ô nhập trong màn hình (ô tìm kiếm không tính) trong 30 giây → hoãn vẽ lại do dữ liệu máy khác,
+   tránh xoá chữ đang gõ dở; hết 30 giây không gõ thì vẽ lại bù */
+S._typeAt=0;S._typeEl=null;
+document.addEventListener('input',e=>{const t=e.target;if(t&&t.type!=='search'&&t.closest&&t.closest('#app')){S._typeAt=Date.now();S._typeEl=t}},true);
+function isTyping(){const t=S._typeEl;return !!(t&&t.isConnected&&Date.now()-S._typeAt<30000)}
+setInterval(()=>{if(S._rrTyping&&!isTyping()){S._rrTyping=false;try{rerenderActive()}catch(e){}}},3000);
 function rerenderActive(){
   const app=document.getElementById('app');
   if(!app||app.style.display==='none')return;
   if(S._formDirty&&document.querySelector('.page.active .sub.active .guard, .page.active > .guard')){S._rrWait=true;return}
+  if(isTyping()){S._rrTyping=true;return}                                    // đang gõ dở ô nhập (VD cài đặt) → vẽ lại sau khi rời ô, không xoá chữ đang gõ
   const a=document.querySelector('.nav-tab.active');
   const t=a&&a.dataset?a.dataset.tab:null;
   try{renderTabs()}catch(e){}            // quyền có thể vừa thay đổi
@@ -4528,31 +4527,9 @@ function groupLocal(){
   return g;
 }
 
-/* ---------- Mốc đồng bộ (mã băm) theo ngăn, lưu trên máy ---------- */
-function loadSyncBase(){const b=LS.get(K_SYNCBASE6,null);return (b&&b.db===S._dbUrl&&b.parts)?b.parts:{}}
-let _baseTimer=null;
-function saveSyncBase(now){clearTimeout(_baseTimer);const f=()=>LS.set(K_SYNCBASE6,{db:S._dbUrl,parts:S._base,at:Date.now()});if(now)f();else _baseTimer=setTimeout(f,400)}
 
-/* ---------- Mở / đóng một ngăn ---------- */
-function ensurePart(path){
-  if(!S.fbDb)return Promise.resolve();
-  const P=S._parts[path];if(P)return P.loading||Promise.resolve();
-  const db=S.fbDb,ref=db.ref('dgData/'+path);
-  const p={ready:false};S._parts[path]=p;
-  const fresh=!S._base[path];if(fresh)S._base[path]={};
-  const up=s=>onRemoteChild(path,s.key,s.val()),rm=s=>onRemoteChild(path,s.key,null);
-  ref.on('child_added',up);ref.on('child_changed',up);ref.on('child_removed',rm);
-  p.off=()=>{ref.off('child_added',up);ref.off('child_changed',up);ref.off('child_removed',rm)};
-  p.loading=ref.once('value').then(snap=>{
-    if(db!==S.fbDb||S._parts[path]!==p)return;
-    reconcilePart(path,snap.val()||{},fresh);
-    p.ready=true;p.loading=null;saveSyncBase();
-    if(colOf(path)==='criteria'||path==='g/units'){try{ensureCriteria()}catch(e){}}
-    scheduleRemoteRender();scheduleSync();
-  }).catch(e=>{p.loading=null;console.warn('part',path,e)});
-  return p.loading;
-}
-function releasePart(path){const p=S._parts[path];if(p&&p.off){try{p.off()}catch(e){}}delete S._parts[path]}
+/* ---------- Mở / đóng một ngăn: ensurePart (67), releasePart · reconcilePart · onRemoteChild · pushDirty · doPush ·
+   pendingDetail · cleanOutScope · pruneLocal (19c), wantedParts · refreshScope (66) ---------- */
 function needPart(path){if(!S.fbDb)return;S._extra.add(path);return ensurePart(path)}
 
 /* ---------- Áp dụng dữ liệu máy chủ ---------- */
@@ -4563,107 +4540,10 @@ function applyLocal(col,k,r,idx){
   else if(i>=0){if(col==='evals'&&a[i]&&!a[i].committed)return;a[i]=null}
 }
 function compactCol(col){S[col]=(S[col]||[]).filter(x=>x!==null)}
-function reconcilePart(path,R,fresh){
-  const col=colOf(path),B=S._base[path]||(S._base[path]={});
-  const ev={};(S.evals||[]).forEach(e=>{ev[e.id]=e});
-  const idx={};(S[col]||[]).forEach((x,i)=>{if(isSyncable(col,x)&&partOf(col,x,ev)===path)idx[encKey(x.id)]=i});
-  const gAuth=path.startsWith('g/')&&Object.keys(R).length>0;
-  new Set([...Object.keys(R),...Object.keys(idx),...Object.keys(B)]).forEach(k=>{
-    const r=R[k]||null,rh=r?hashRec(col,r):undefined,i=idx[k],loc=i!=null?S[col][i]:null,lh=loc?hashRec(col,loc):undefined;
-    if(fresh&&gAuth){if(lh!==rh)applyLocal(col,k,r,i)}         // dữ liệu chung: máy chủ là chuẩn
-    else if(fresh){if(r&&lh!==rh)applyLocal(col,k,r,i)}       // ngăn tháng mở lần đầu: lấy bản máy chủ, giữ bản ghi mới tạo trên máy
-    else if(lh===B[k]){if(lh!==rh)applyLocal(col,k,r,i)}       // máy này không sửa → nhận bản máy chủ
-    else if(rh!==B[k]&&lh!==rh&&!S._pending[path+'/'+k])syncConflict(path,k,col,i!=null?i:-1,loc,r,S._srvSnap[path+'/'+k]); // cả hai bên cùng sửa
-    if(rh)B[k]=rh;else delete B[k];
-    logPutSnap(path,k,r);
-  });
-  compactCol(col);
-}
-function onRemoteChild(path,k,r){
-  const P=S._parts[path];if(!P||!P.ready||S._pending[path+'/'+k])return;
-  const col=colOf(path),B=S._base[path]||(S._base[path]={});
-  const rh=r?hashRec(col,r):undefined,i=findLocalIdx(col,k),loc=i>=0?S[col][i]:null;
-  const lh=loc&&isSyncable(col,loc)?hashRec(col,loc):undefined;
-  const bk=B[k],old=S._srvSnap[path+'/'+k];
-  logPutSnap(path,k,r);
-  if(lh===bk&&lh!==rh){applyLocal(col,k,r,i);compactCol(col);scheduleRemoteRender()}
-  else if(lh!==bk&&rh!==bk&&lh!==rh)syncConflict(path,k,col,i,loc,r,old);   // cả hai bên cùng sửa → gộp / hỏi
-  if(rh)B[k]=rh;else delete B[k];
-  saveSyncBase();
-  const lh2=(()=>{const j=findLocalIdx(col,k),x=j>=0?S[col][j]:null;return x&&isSyncable(col,x)?hashRec(col,x):undefined})();
-  if(lh2!==B[k]&&!S._conf[path+'/'+k])scheduleSync();
-}
 
 /* ---------- GHI: chỉ gửi bản ghi thay đổi ---------- */
 function scheduleSync(){if(!S.fbDb)return;clearTimeout(S.fbSyncTimer);S.fbSyncTimer=setTimeout(pushDirty,500)}
-function pushDirty(){
-  if(!S.fbDb||!S._syncReady){updateSyncIndicator();return}
-  const g=groupLocal(),updates={},writes=[],needLoad=new Set(),W=wantedParts();
-  Object.keys(g).forEach(path=>{
-    const P=S._parts[path],B=S._base[path];
-    if(!P||!P.ready){if(W.has(path)&&Object.keys(g[path]).some(k=>!B||hashRec(g[path][k].col,g[path][k].rec)!==B[k]))needLoad.add(path);return}
-    Object.keys(g[path]).forEach(k=>{
-      const{col,rec}=g[path][k];const view=canon(syncView(col,rec))||{};const h=strHash(JSON.stringify(view));
-      const pk=path+'/'+k,pd=S._pending[pk];
-      if(pd?pd.h===h:h===B[k])return;
-      if(S._conf[pk])return;                                      // đang chờ người dùng chọn bản
-      updates[pk]=view;writes.push({pk,path,k,h});
-    });
-  });
-  Object.keys(S._parts).forEach(path=>{
-    if(!S._parts[path].ready)return;const B=S._base[path]||{},gg=g[path]||{};
-    Object.keys(B).forEach(k=>{if(gg[k])return;const pk=path+'/'+k,pd=S._pending[pk];if(pd&&pd.h===null)return;if(S._conf[pk])return;updates[pk]=null;writes.push({pk,path,k,h:null})});
-  });
-  needLoad.forEach(p=>needPart(p));
-  if(!writes.length){updateSyncIndicator();return}
-  if(!S.fbConnected){updateSyncIndicator();return}            // mất mạng: giữ trên máy, gửi khi có mạng (sau khi so với máy chủ)
-  if(S._pushBusy){S._pushAgain=true;return}
-  S._pushBusy=true;
-  /* Kiểm tra trước khi ghi: bản trên máy chủ có bị người khác sửa kể từ lần đồng bộ trước không */
-  Promise.all(writes.map(w=>S.fbDb.ref('dgData/'+w.pk).once('value').then(sn=>({w,v:sn.val()})).catch(()=>({w,v:undefined,err:1}))))
-  .then(res=>{
-    const ok=[];let merged=false;
-    res.forEach(({w,v,err})=>{
-      if(err){ok.push(w);return}
-      const col=colOf(w.path),B=S._base[w.path]||(S._base[w.path]={}),rh=v?hashRec(col,v):undefined;
-      if(rh===B[w.k]||rh===w.h){ok.push(w);return}
-      const i=findLocalIdx(col,w.k),loc=i>=0?S[col][i]:null,old=S._srvSnap[w.pk];
-      logPutSnap(w.path,w.k,v);syncConflict(w.path,w.k,col,i,loc,v,old);merged=true;
-      if(rh)B[w.k]=rh;else delete B[w.k];
-    });
-    if(merged)saveSyncBase();
-    const upd={};ok.forEach(w=>{upd[w.pk]=updates[w.pk]});
-    return ok.length?doPush(ok,upd):null;
-  }).finally(()=>{S._pushBusy=false;if(S._pushAgain||pendingCount()){S._pushAgain=false;scheduleSync()}updateSyncIndicator()});
-}
-function doPush(writes,updates){
-  const tok=++S._tok;writes.forEach(w=>{S._pending[w.pk]={h:w.h,tok}});
-  updateSyncIndicator();
-  try{Object.assign(updates,writes.length>200?logBulk(writes):logEntries(writes,updates))}catch(e){console.warn('log',e)}
-  return S.fbDb.ref('dgData').update(updates).then(()=>{
-    writes.forEach(w=>logPutSnap(w.path,w.k,updates[w.pk]||null));
-    const touched=new Set(),invTouched=new Set(),revTouched=new Set();
-    writes.forEach(w=>{const B=S._base[w.path]||(S._base[w.path]={});if(w.h)B[w.k]=w.h;else delete B[w.k];
-      if(S._pending[w.pk]&&S._pending[w.pk].tok===tok)delete S._pending[w.pk];
-      const seg=w.path.split('/');if(seg[0]==='m'&&CORE_COLS.includes(seg[3]))touched.add(seg[1]+'|'+seg[2]);if(seg[0]==='m'&&seg[3]==='checks')invTouched.add(seg[1]+'|'+seg[2]);if(seg[0]==='m'&&seg[3]==='bookings')revTouched.add(seg[1]+'|'+seg[2])});
-    saveSyncBase();updateSyncIndicator();
-    if(touched.size)updateSummaries(touched);
-    if(invTouched.size){try{updateInvUse(invTouched)}catch(e){console.warn(e)}}
-    if(revTouched.size){try{revUpdate(revTouched)}catch(e){console.warn(e)}}
-  }).catch(err=>{
-    writes.forEach(w=>{if(S._pending[w.pk]&&S._pending[w.pk].tok===tok)delete S._pending[w.pk]});
-    console.warn('sync',err);toast('⚠️ Lỗi đồng bộ: '+((err&&err.message)||'không rõ'));updateSyncIndicator();
-  });
-}
 /* Thay đổi chưa gửi: tách phần trong phạm vi tài khoản (sẽ tự gửi) và bản sao cũ ngoài phạm vi (từ phiên đăng nhập khác trên máy này) */
-function pendingDetail(){
-  const inS={},outS={};if(!S._syncReady)return{inS,outS,n:Object.keys(S._pending).length};
-  const g=groupLocal(),W=wantedParts();const add=(o,p)=>{o[p]=(o[p]||0)+1};
-  Object.keys(g).forEach(p=>{const B=S._base[p];Object.keys(g[p]).forEach(k=>{if(S._pending[p+'/'+k]){add(inS,p);return}const x=g[p][k];if(!B||hashRec(x.col,x.rec)!==B[k])add(W.has(p)||S._parts[p]?inS:outS,p)})});
-  Object.keys(S._parts).forEach(p=>{if(!S._parts[p].ready)return;const B=S._base[p]||{},gg=g[p]||{};Object.keys(B).forEach(k=>{if(!gg[k]&&!S._pending[p+'/'+k])add(inS,p)})});
-  const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
-  return{inS,outS,n:sum(inS),out:sum(outS)};
-}
 function pendingCount(){return pendingDetail().n}
 
 
@@ -4709,56 +4589,8 @@ function attachX(u){
 /* ---------- Phạm vi tải theo người dùng ---------- */
 function corePerm(){return ['dashboard','evaluate','report','profile','issues','criteria'].some(hasPerm)}
 function chkPerm(){return hasPerm('check_do')||hasPerm('check_review')}
-function wantedParts(){
-  const w=new Set(['g/units','g/users']);
-  if(!S.user)return w;
-  w.add('g/plans');
-  const us=availUnits(),inScope=id=>us.some(x=>x.id===id);
-  if(chkPerm()||foPerm()){w.add('g/rstate');w.add('g/defects')}
-  if(chkPerm()||invPerm())w.add('g/rlevel');
-  if(corePerm()){
-    w.add('g/misc_feedback');
-    us.forEach(u=>CORE_COLS.forEach(c=>w.add(partPath(S.month,u.id,c))));
-    if(hasPerm('dashboard'))w.add(`m/${S.month}/_all/feedback`);
-    if(hasPerm('issues'))Object.keys(S.openIdx).forEach(k=>{const[u,m]=k.split('|');if(S.openIdx[k]>0&&inScope(u))CORE_COLS.forEach(c=>w.add(partPath(m,u,c)))});
-  }
-  if(chkPerm()||hasPerm('profile')){
-    const cm=(S._chkDate||localToday()).slice(0,7);
-    us.filter(u=>u.checklist&&u.checklist.enabled).forEach(u=>{w.add(partPath(cm,u.id,'checks'));w.add(partPath(S.month,u.id,'checks'));if(chkPerm()){w.add(partPath(cm,u.id,'hkasg'));w.add(partPath(localToday().slice(0,7),u.id,'hkasg'))}});
-  }
-  if(invPerm())us.filter(u=>invVisible(u.id)).forEach(u=>w.add('u/'+encKey(u.id)+'/inv'));
-  if(foPerm()||chkPerm()){const tm=localToday().slice(0,7);const ms=new Set([tm,prevMonthOf(tm)]);if(foPerm()){ms.add(S.month);ms.add(prevMonthOf(S.month))}
-    [...new Set(us.map(u=>roomUnit(u.id)))].map(id=>S.units.find(x=>x.id===id)).filter(u=>u&&u.checklist&&u.checklist.enabled).forEach(u=>{ms.forEach(m=>w.add(partPath(m,u.id,'bookings')));if(foPerm()){w.add(partPath(tm,u.id,'checks'));w.add(partPath(S.month,u.id,'checks'))}})}
-  S._extra.forEach(p=>w.add(p));
-  return w;
-}
-function refreshScope(){
-  if(!S.fbDb)return;
-  const w=wantedParts();
-  Object.keys(S._parts).forEach(p=>{if(!w.has(p))releasePart(p)});
-  w.forEach(p=>ensurePart(p));
-  const xs=new Set(S.user&&(corePerm()||invPerm())?availUnits().map(u=>u.id):[]);
-  Object.keys(S._xOff).forEach(u=>{if(!xs.has(u)){try{S._xOff[u]()}catch(e){}delete S._xOff[u]}});
-  xs.forEach(u=>{if(!S._xOff[u])attachX(u)});
-  updateSyncIndicator();
-}
 let _scopeT=null;function scheduleScope(){clearTimeout(_scopeT);_scopeT=setTimeout(()=>{try{refreshScope()}catch(e){console.warn(e)}},300)}
 /* Dọn dữ liệu cũ trên máy: chỉ giữ tháng đang xem / tháng hiện tại và tháng liền trước; không đụng dữ liệu chưa gửi */
-function pruneLocal(){
-  const w=wantedParts(),rcm=localToday().slice(0,7);
-  const keep=new Set([S.month,prevMonthOf(S.month),rcm,prevMonthOf(rcm)]);
-  const g=groupLocal();let dropped=0;
-  Object.keys(g).forEach(p=>{
-    if(!p.startsWith('m/')||w.has(p))return;
-    const B=S._base[p];
-    if(keep.has(p.split('/')[1])&&(B||!S.user))return;   // tháng gần: giữ cache; sau đăng nhập bỏ phần ngoài phạm vi chưa từng đồng bộ
-    if(B&&Object.keys(g[p]).some(k=>hashRec(g[p][k].col,g[p][k].rec)!==B[k]))return;
-    Object.values(g[p]).forEach(x=>{x.rec.__drop=1});dropped+=Object.keys(g[p]).length;delete S._base[p];
-  });
-  if(dropped){PART_COLS.forEach(c=>{S[c]=(S[c]||[]).filter(r=>!r.__drop)});saveAllLocal();saveSyncBase(true)}
-  try{updateSyncIndicator()}catch(e){}
-  return dropped;
-}
 
 let _rrTimer=null;
 function scheduleRemoteRender(){
@@ -4866,12 +4698,6 @@ function openSyncInfo(){
       <button class="btn btn-warn" onclick="cleanOutScope()">🧹 Dọn bản sao ngoài phạm vi</button>`:''}`;
   openM('syncModal');
 }
-function cleanOutScope(){
-  const d=pendingDetail();const paths=new Set(Object.keys(d.outS));if(!paths.size)return;
-  const g=groupLocal();let n=0;paths.forEach(p=>{Object.values(g[p]||{}).forEach(x=>{x.rec.__drop=1;n++});delete S._base[p]});
-  ALL_COLS.forEach(c=>{S[c]=(S[c]||[]).filter(r=>!r.__drop)});saveAllLocal();saveSyncBase(true);
-  closeM('syncModal');updateSyncIndicator();toast(`Đã dọn ${n} bản ghi cũ trên máy này`);try{rerenderActive()}catch(e){}
-}
 function updateSyncIndicator(){
   const hdr=document.getElementById('fbStatusHdr');if(!hdr)return;
   const d=S.fbDb?pendingDetail():{n:0,out:0};const n=d.n;
@@ -4880,80 +4706,8 @@ function updateSyncIndicator(){
   el.style.display=n||d.out?'':'none';el.innerHTML=n?`⏳ ${n}<span class="spd-l"> chờ gửi</span>`:'🧹<span class="spd-l"> dữ liệu cũ</span>';el.title=n?n+' thay đổi chờ gửi':'Có bản sao dữ liệu cũ — bấm để xem';
   el.style.background=n?'#fef3c7':'#f1f5f9';el.style.color=n?'#92400e':'#475569';
   el.title=n?'Thay đổi chưa được máy chủ xác nhận — sẽ tự gửi khi có mạng. Bấm để xem chi tiết.':'Máy này còn bản sao dữ liệu cũ ngoài phạm vi tài khoản — bấm để xem / dọn';
-  let cf=document.getElementById('confChip');const nc=(typeof confCount==='function')?confCount():0;
-  if(!cf){cf=document.createElement('span');cf.id='confChip';cf.className='conf-chip';cf.onclick=()=>openConflicts();hdr.appendChild(cf)}
-  cf.style.display=nc?'':'none';cf.innerHTML=`⚠ ${nc}<span class="spd-l"> xung đột</span>`;cf.title='Có dữ liệu bị sửa cùng lúc với người khác — bấm để chọn bản giữ lại';
 }
 
-/* ===========================================================
-   CHỐNG GHI ĐÈ KHI HAI NGƯỜI SỬA CÙNG LÚC
-   Khi máy này đang có thay đổi chưa gửi mà máy khác vừa sửa cùng bản ghi:
-   - So 3 phía theo từng trường: bản gốc (máy chủ trước đó) · bản của tôi · bản mới trên máy chủ
-   - Trường chỉ một bên sửa → tự gộp, không hỏi
-   - Trường cả hai bên sửa khác nhau → giữ lại, không gửi, hỏi người dùng chọn bản
-=========================================================== */
-S._conf={};
-const CONF_META=new Set(['updatedAt','updatedBy','at','by','byId','writer','v','closedAt','submittedAt','reviewedAt']);
-function cEq(a,b){const n=x=>{const c=canon(x);return JSON.stringify(c===undefined?null:c)};return n(a)===n(b)}
-function cMerge(base,mine,theirs){
-  const out={},fields=[];mine=mine||{};theirs=theirs||{};
-  new Set([...Object.keys(base||{}),...Object.keys(mine),...Object.keys(theirs)]).forEach(f=>{
-    const m=mine[f],t=theirs[f];let v;
-    if(cEq(m,t))v=m;
-    else if(base&&cEq(m,base[f]))v=t;
-    else if(base&&cEq(t,base[f]))v=m;
-    else if(CONF_META.has(f))v=(typeof m==='string'&&typeof t==='string'&&/^\d{4}-\d\d-\d\dT/.test(m)&&m>t)?m:t;
-    else{fields.push(f);v=m}
-    if(v!==undefined)out[f]=v;
-  });
-  return{out,fields};
-}
-function confWho(r){return (r&&(r.updatedBy||r.closedBy||r.by))||'máy khác'}
-/* trả về true nếu đã xử lý (tự gộp hoặc đưa vào danh sách chờ chọn) */
-function syncConflict(path,k,col,i,loc,r,base){
-  /* dấu tháng tiêu chí (critM) chỉ có thêm, không bớt → luôn gộp hợp, không bao giờ mất dấu "đã xoá" */
-  if(col==='units'&&loc&&r&&(Array.isArray(loc.critM)||Array.isArray(r.critM))){const u=[...new Set([...(loc.critM||[]),...(r.critM||[])])].sort().slice(-24);loc.critM=u;r={...r,critM:u}}
-  const pk=path+'/'+k,mine=loc?canon(syncView(col,loc))||{}:null;
-  if(!mine||!r){ /* một bên xoá, bên kia sửa */
-    S._conf[pk]={pk,path,k,col,mine,theirs:r,base,fields:[],del:!r?'remote':'local',at:Date.now()};confNotify();return true}
-  const{out,fields}=cMerge(base,mine,r);
-  if(!fields.length){
-    applyLocal(col,k,out,i>=0?i:null);compactCol(col);scheduleRemoteRender();saveAllLocal();
-    toast(`🔀 Đã gộp thay đổi của ${confWho(r)} vào ${LOG_COL_LBL[col]||col} của bạn`);return true;
-  }
-  S._conf[pk]={pk,path,k,col,mine,theirs:r,base,fields,merged:out,at:Date.now()};confNotify();return true;
-}
-function confCount(){return Object.keys(S._conf).length}
-function confNotify(){updateSyncIndicator();if(!document.querySelector('.modal-overlay.show'))openConflicts();else toast('⚠️ Có thay đổi bị trùng với người khác — bấm nhãn "xung đột" để chọn bản')}
-function openConflicts(){
-  if(!confCount()){closeM('confModal');return}
-  let o=document.getElementById('confModal');if(!o){o=document.createElement('div');o.id='confModal';o.className='modal-overlay';document.body.appendChild(o)}
-  const show=v=>{if(v==null||v==='')return '—';if(typeof v==='object')return Array.isArray(v)?v.length+' mục':'{…}';return esc(logShort(v))};
-  o.innerHTML=`<div class="modal" style="max-width:720px"><div class="modal-hd" style="background:#b45309"><h3>⚠️ Dữ liệu bị sửa cùng lúc (${confCount()})</h3><button class="modal-x" onclick="closeM('confModal')" aria-label="Đóng">✕</button></div>
-    <div class="modal-bd"><div style="font-size:13.5px;color:#475569;margin-bottom:10px">Bạn và người khác vừa sửa cùng một bản ghi. Những phần không trùng đã được gộp tự động; với phần bị trùng, hãy chọn giữ bản nào. Trong lúc chờ, bản của bạn <b>chưa được gửi</b> lên máy chủ.</div>
-    ${Object.values(S._conf).map(c=>{const r=c.theirs||c.mine||{};const lbl=logLabel(c.col,r);
-      return `<div class="cf-item"><div class="cf-hd"><b>${esc(LOG_COL_LBL[c.col]||c.col)}</b> · ${esc(lbl)} <span class="cf-who">sửa bởi ${esc(confWho(c.theirs))}</span></div>
-      ${c.del?`<div class="cf-del">${c.del==='remote'?`Người khác đã <b>xoá</b> bản ghi này trong khi bạn đang sửa.`:`Bạn đã <b>xoá</b> bản ghi này nhưng ${esc(confWho(c.theirs))} vừa sửa nó.`}</div>`
-        :`<table class="cf-tbl"><thead><tr><th>Mục</th><th>Bản của bạn</th><th>Bản mới (${esc(confWho(c.theirs))})</th></tr></thead><tbody>${c.fields.map(f=>`<tr><td>${esc(LOG_F[f]||f)}</td><td class="cf-m">${show(c.mine[f])}</td><td class="cf-t">${show(c.theirs[f])}</td></tr>`).join('')}</tbody></table>`}
-      <div class="cf-act"><button class="btn btn-ghost btn-sm" onclick="confResolve('${esc(c.pk)}','theirs')">${c.del==='remote'?'Đồng ý xoá':c.del==='local'?'Khôi phục bản mới':'Dùng bản mới'}</button><button class="btn btn-pri btn-sm" onclick="confResolve('${esc(c.pk)}','mine')">${c.del==='remote'?'Giữ lại bản của tôi':c.del==='local'?'Vẫn xoá':'Giữ bản của tôi'}</button></div></div>`}).join('')}</div>
-    <div class="modal-ft"><button class="btn btn-ghost" onclick="confAll('theirs')">Dùng bản mới cho tất cả</button><button class="btn btn-pri" onclick="confAll('mine')">Giữ bản của tôi cho tất cả</button></div></div>`;
-  o.classList.add('show');
-}
-function confResolve(pk,pick){
-  const c=S._conf[pk];if(!c)return;delete S._conf[pk];
-  const i=findLocalIdx(c.col,c.k);
-  if(c.del){
-    if(pick==='theirs'){applyLocal(c.col,c.k,c.theirs,i>=0?i:null)}   // nhận xoá / khôi phục bản mới
-    else if(c.del==='remote'){applyLocal(c.col,c.k,c.mine,i>=0?i:null)} // giữ bản của tôi → gửi lại
-    else{applyLocal(c.col,c.k,null,i>=0?i:null)}                           // vẫn xoá
-  }else{
-    const v={...c.merged};if(pick==='theirs')c.fields.forEach(f=>{if(c.theirs[f]===undefined)delete v[f];else v[f]=c.theirs[f]});
-    applyLocal(c.col,c.k,v,i>=0?i:null);
-  }
-  compactCol(c.col);saveAllLocal();scheduleSync();scheduleRemoteRender();updateSyncIndicator();
-  if(confCount())openConflicts();else{closeM('confModal');toast('Đã xử lý xong dữ liệu trùng')}
-}
-function confAll(pick){Object.keys(S._conf).forEach(pk=>confResolve(pk,pick))}
 /* ===========================================================
    ĐỒNG BỘ KIỂU THÔNG THƯỜNG — GHI ĐÚNG PHẦN SỬA (thay lõi của 19-dong-bo-firebase.js)
    Nguyên tắc:
@@ -4969,7 +4723,7 @@ function confAll(pick){Object.keys(S._conf).forEach(pk=>confResolve(pk,pick))}
    Tải về: không đổi — vẫn chia ngăn tháng × đơn vị × loại, mỗi ngăn tải 1 lần rồi chỉ nhận bản ghi thay đổi.
 =========================================================== */
 const K_OUTBOX='dg2_outbox';   // lưu ngay vào localStorage (đồng bộ, không mất khi tải lại / tắt app liền sau khi sửa)
-S._ob=null;S._seen={};
+S._ob=null;S._seen={};S._known=new Set();   // _known: mọi bản ghi đã nhận từ máy chủ trong phiên (kể cả ngăn đã trả)
 function obGet(){if(!S._ob||S._ob.db!==S._dbUrl){const v=obGetLS();S._ob=(v&&v.db===S._dbUrl&&v.e)?v:{db:S._dbUrl,e:{}}}return S._ob}
 /* ghi 2 nơi (localStorage + IndexedDB) kèm thời điểm; lúc đọc lấy bản mới hơn → mất 1 nơi vẫn còn */
 try{BIG_KEYS.add(K_OUTBOX+'2')}catch(e){}
@@ -5029,6 +4783,9 @@ function obMigrateOld(){
   }catch(e){console.warn('obMigrate',e)}
 }
 /* ---------- nhận ra thay đổi do người dùng làm → đưa vào hàng chờ gửi ---------- */
+/* B2: dấu nhanh của bản ghi (không sắp khoá, bỏ ảnh) — bản ghi không đổi từ lần quét trước & bản máy chủ không đổi → bỏ qua so sánh */
+const _scanFp=new WeakMap();
+function recFp(rec){let s='';for(const k in rec){if(k==='photos')continue;const v=rec[k];s+=k+':'+(typeof v==='object'?JSON.stringify(v):v)+'|'}return s}
 function syncScan(){
   const ob=obGet().e,g=groupLocal(),present={},W=S.user?wantedParts():new Set();let ch=false;
   Object.keys(g).forEach(path=>{
@@ -5036,10 +4793,15 @@ function syncScan(){
     Object.keys(g[path]).forEach(k=>{
       const pk=path+'/'+k,{col,rec}=g[path][k];present[pk]=1;
       const e=ob[pk];
-      if(!e&&!inW&&!(pk in S._seen))return;                                       // bản sao lạ ngoài phạm vi đang xem (dữ liệu cũ trên máy) → không bao giờ gửi
+      if(!e&&!inW&&!(pk in S._seen)&&S._known.has(pk))return;                     // bản sao ngoài phạm vi đang xem (đã từng nhận từ máy chủ) → không bao giờ gửi
+      if(!e&&!inW&&(pk in S._seen))return;                                         // dữ liệu cũ trên máy lúc mở app, ngoài phạm vi → không gửi
+      /* còn lại: bản ghi người dùng vừa tạo ở ngăn chưa mở (VD phiếu kho lùi ngày, đặt phòng tháng sau) → gửi (tự mở ngăn đó) */
+      const fp=e?null:recFp(rec),c=fp!=null&&_scanFp.get(rec);
+      if(c&&c.fp===fp&&c.pk===pk&&c.snap===S._srvSnap[pk]&&c.ready===ready&&!(pk in S._seen))return;   // không đổi gì → vẫn "bằng máy chủ"
       const v=vOf(col,rec),j=jOf(v);
       const baseJ=e?jOf(e.base):ready?srvJ(pk):(pk in S._seen?S._seen[pk]:(S._srvSnap[pk]!==undefined?srvJ(pk):null));
-      if(j===baseJ){if(e){delete ob[pk];ch=true}return}
+      if(j===baseJ){if(e){delete ob[pk];ch=true}else if(fp!=null)_scanFp.set(rec,{fp,pk,snap:S._srvSnap[pk],ready});return}
+      _scanFp.delete(rec);
       if(!e){ob[pk]={col,k,path,base:baseJ==null?null:JSON.parse(baseJ),cur:v,u:S.user?S.user.id:''};ch=true}
       else{if(e.del){delete e.del;ch=true}if(jOf(e.cur)!==j){e.cur=v;e.path=path;ch=true}}
     });
@@ -5165,8 +4927,6 @@ reconcilePart=function(path,R){
 };
 /* ngăn được trả (đổi phạm vi): quên luôn "bản máy chủ" của ngăn đó để không bao giờ suy ra xoá */
 releasePart=function(path){const p=S._parts[path];if(p&&p.off){try{p.off()}catch(e){}}delete S._parts[path];const pre=path+'/';Object.keys(S._srvSnap).forEach(k=>{if(k.startsWith(pre))delete S._srvSnap[k]})};
-/* ---------- không còn xung đột hỏi người dùng ---------- */
-syncConflict=function(){return true};
 /* ---------- chỉ báo chờ gửi ---------- */
 pendingDetail=function(){
   const inS={},outS={};if(!S._syncReady||!S.fbDb)return{inS,outS,n:0,out:0};
@@ -5202,6 +4962,9 @@ setInterval(()=>{try{if(S.fbDb&&S._dbUrl&&S._obMigrated!==S._dbUrl)obMigrateOld(
 function obFlushNow(){try{if(S.fbDb&&S._syncReady){syncScan();obWrite();STORE.flush()}}catch(e){}}
 window.addEventListener('pagehide',obFlushNow);window.addEventListener('beforeunload',obFlushNow);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)obFlushNow()});
+
+/* ghi nhớ bản ghi đã từng nhận từ máy chủ (để phân biệt với bản ghi người dùng vừa tạo) */
+{const o=logPutSnap;logPutSnap=function(path,k,r){if(r)S._known.add(path+'/'+k);return o.apply(this,arguments)}}
 /* ===========================================================
    BỐ CỤC GỌN: 3 tab chính
    📊 Tổng quan  = Tổng quan + Kế hoạch + Lỗi (toàn hệ thống)
@@ -5758,7 +5521,7 @@ async function submitChk(){
   const l=lastRound(rec);if(l){if(l.team||(l.byId&&l.byId!==S.user.id)){if(!l.team)l.team=roundTeam(l).slice();roundJoin(l)}l.ce=now;l.by=S.user.name;l.byId=S.user.id}
   const mb=chkMb(c);
   if(roomItems(c.unitId).length)chkSaveLevel(c.unitId,c.room,mb.after,mb.exAfter);
-  Object.assign(rec,{status:'submitted',v:2,use:mb.use,fill:mb.fill,left:mb.left,base:mb.base,short:mb.short,rm:mb.rm,fillLot:mb.fillLot,exIn:{...(c.ex||{})},useAmt:useAmount(c.unitId,mb.use),items:items.map(it=>({id:it.id,name:it.name,ok:true})),photoCount:c.photos.length,ptags:(c.ptag||[]).map(id=>{const s=chkShots(cfg).find(x=>x.id===id);return s?s.name:''}),by:S.user.name,byId:S.user.id,submittedAt:now,updatedAt:now,note:c.note||''});
+  Object.assign(rec,{status:'submitted',v:2,use:mb.use,fill:mb.fill,left:mb.left,base:mb.base,short:mb.short,rm:mb.rm,fillLot:mb.fillLot,exIn:{...(c.ex||{})},useAmt:useAmount(c.unitId,mb.use),...chkCompact(c.unitId,(c.ptag||[]).map(id=>{const s=chkShots(cfg).find(x=>x.id===id);return s?s.name:''})),photoCount:c.photos.length,by:S.user.name,byId:S.user.id,submittedAt:now,updatedAt:now,note:c.note||''});
   await chkPhotoPut(rec.id,c.photos.slice());
   chkPendAdd(rec.id);uploadChkPhotos(rec.id);
   delete S._drafts[rec.id];
@@ -5876,10 +5639,10 @@ function renderChkModal(){
     if(rec.status==='submitted')h+=`<div class="timer-bar">⏳ Chờ kiểm tra <b class="tick" data-since="${l.ce||rec.submittedAt}"></b><span style="font-size:13px;color:var(--muted);margin-left:8px">dọn mất ${fmtDur(msBetween(l.cs,l.ce))} · ${esc(l.by||rec.by||'')}</span></div>`;
     if(rec.status==='inspecting')h+=`<div class="timer-bar">🔎 ${esc(l.ib||'')} đang kiểm tra <b class="tick" data-since="${l.is}" data-std="${cfg.stdInspect||10}"></b><span style="font-size:13px;color:var(--muted);margin-left:8px">định mức ${cfg.stdInspect||10} phút</span></div>`;
     if(rec.status!=='cleaning'){
-      h+=`<div>${(rec.items||[]).map(it=>`<div class="chk-item on" style="cursor:default">${it.ok?'✅':'⬜'} <span>${esc(it.name)}</span></div>`).join('')}</div>${chkUseView(rec)}
+      h+=`<div>${chkItemsOf(rec).map(it=>`<div class="chk-item on" style="cursor:default">${it.ok?'✅':'⬜'} <span>${esc(it.name)}</span></div>`).join('')}</div>${chkUseView(rec)}
       ${rec.note?`<div style="margin-top:8px;font-size:14px">📝 ${esc(rec.note)}</div>`:''}
       <div style="margin-top:12px;font-weight:800">📸 Ảnh căn cứ</div>
-      ${ph===null?'<div style="color:var(--muted);padding:8px 0">⏳ Đang tải ảnh…</div>':ph.length?`<div class="photos-row">${ph.map((p,i)=>`<div class="photo-cap"><div class="photo-th" style="width:96px;height:96px"><img src="${p}" onclick="chkShowPhoto(${i},1)"></div>${(rec.ptags||[])[i]?`<small>${esc(rec.ptags[i])}</small>`:''}</div>`).join('')}</div>`
+      ${ph===null?'<div style="color:var(--muted);padding:8px 0">⏳ Đang tải ảnh…</div>':ph.length?`<div class="photos-row">${ph.map((p,i)=>`<div class="photo-cap"><div class="photo-th" style="width:96px;height:96px"><img src="${p}" onclick="chkShowPhoto(${i},1)"></div>${chkPtagsOf(rec)[i]?`<small>${esc(chkPtagsOf(rec)[i])}</small>`:''}</div>`).join('')}</div>`
         :'<div style="color:var(--warn-d);padding:8px 0">⚠️ Chưa có ảnh trên máy chủ — máy người làm có thể đang mất mạng (ảnh sẽ tự gửi khi có mạng), hoặc ảnh đã quá 40 ngày.</div>'}`;
     }
     const self=rec.byId===S.user.id&&!S.user.isAdmin;
@@ -6278,7 +6041,7 @@ async function invQuickTpl(uid){
 function renderInv(){
   const box=document.getElementById('sub-inv');if(!box)return;
   const uid=curUnitId();if(!uid){box.innerHTML='';return}
-  if(S.fbDb){needPart('u/'+encKey(uid)+'/inv');needPart(partPath(S.month,uid,'checks'))}
+  if(S.fbDb){if(S._inv4){const tm=localToday().slice(0,7);needPart(`m/${tm}/${encKey(uid)}/inv`);needPart(`m/${prevMonthOf(tm)}/${encKey(uid)}/inv`)}else needPart('u/'+encKey(uid)+'/inv');needPart(partPath(S.month,uid,'checks'))}   // kho theo tháng (69): tháng này + tháng trước
   const items=invItems(uid);const canEdit=hasPerm('inv_edit');const canCat=canEdit||hasPerm('criteria');
   const v=S._invView;
   const nExp=items.some(i=>i.exp)?invExpLots(uid).length:0;
@@ -8594,7 +8357,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='03.11.2026-fdcac1';
+const APP_BUILD='03.11.2026-f77218';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -9015,7 +8778,7 @@ addEventListener('keydown',e=>{if(!S._tour)return;if(e.key==='Escape'){e.prevent
 /* ===========================================================
    ĐO DUNG LƯỢNG TẢI TỪ FIREBASE (ước tính) — để không vượt hạn mức 360 MB/ngày của gói miễn phí
    - Đếm kích thước dữ liệu mỗi lần máy nhận từ máy chủ (tải ngăn, thay đổi thời gian thực, đọc trước khi ghi…)
-   - Mỗi máy cộng dồn theo ngày, gửi về dgData/x/usage/<ngày>/<mã máy> mỗi 3 phút
+   - Mỗi máy cộng dồn theo ngày, gửi về dgData/x/usage/<ngày>/<mã máy> thưa (≥ 50 KB mới hoặc 30 phút; khi ẩn app)
    - Quản trị viên xem ở Hệ thống → Dung lượng tải; Hôm nay cảnh báo khi > 60% hạn mức
 =========================================================== */
 const USAGE_LIMIT_MB=360;
@@ -9048,15 +8811,18 @@ function usagePatch(db){
 function usageFlush(force){
   try{
     const A=S._uAcc;if(!A)return;LS.set('dg2_usage',A);
-    if(!S.fbDb||!S.fbConnected||!S.user||(!S._uDirty&&!force))return Promise.resolve();S._uDirty=false;
+    if(!S.fbDb||!S.fbConnected||!S.user||(!S._uDirty&&!force))return Promise.resolve();
+    /* B1: gửi thưa — chỉ khi tải thêm ≥ 50 KB hoặc đã 30 phút (ẩn app / quản trị xem thì gửi ngay) */
+    if(!force&&A.b-(S._uSentB||0)<51200&&Date.now()-(S._uSentT||0)<1800000)return Promise.resolve();
+    S._uDirty=false;S._uSentB=A.b;S._uSentT=Date.now();
     const c={};Object.entries(A.c).forEach(([k,v])=>{c[encKey(k)]=Math.round(v)});
     return S.fbDb.ref(`dgData/x/usage/${A.d}/${encKey(CLIENT_ID)}`).set({b:Math.round(A.b),n:A.n,c,by:S.user.name||'',dev:(typeof errDevice==='function'?errDevice():''),t:Date.now()}).catch(()=>{});
   }catch(e){}return Promise.resolve()
 }
 (function(){S._uAcc=uState();S._uAcc.n++;LS.set('dg2_usage',S._uAcc)})();
-setInterval(()=>usageFlush(),180000);
+setInterval(()=>usageFlush(),600000);
 addEventListener('pagehide',()=>{try{LS.set('dg2_usage',S._uAcc)}catch(e){}});
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')usageFlush()});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&S._uAcc&&S._uAcc.b-(S._uSentB||0)>=1024)usageFlush(true)});
 
 /* ---------- Xem (Hệ thống → Dung lượng tải) ---------- */
 S._uRows=null;
@@ -9080,7 +8846,7 @@ function renderUsageBox(){
   <div class="us-grid"><div><h5>7 ngày gần nhất</h5>${R.map(r=>{const b=Object.values(r.v).reduce((a,x)=>a+(x.b||0),0);return `<div class="us-d"><span>${r.d.split('-').reverse().slice(0,2).join('/')}</span><div class="us-db"><i style="width:${Math.max(.5,b/max7*100)}%"></i></div><b>${mb(b)}</b></div>`}).join('')}</div>
     <div><h5>Theo loại dữ liệu (hôm nay)</h5>${cl.length?cl.slice(0,8).map(([k,v])=>`<div class="us-d"><span>${esc(U_CAT_LBL[k]||k)}</span><div class="us-db"><i style="width:${Math.max(.5,v/cl[0][1]*100)}%"></i></div><b>${mb(v)}</b></div>`).join(''):'<div class="err-empty">Chưa có số liệu</div>'}</div>
     <div><h5>Theo máy (hôm nay)</h5>${T.length?T.sort((a,b)=>b.b-a.b).slice(0,8).map(x=>`<div class="us-d"><span title="${esc(x.dev||'')}">${esc(x.by||'?')} <small>${esc((x.dev||'').split(' · ')[0])}</small></span><b>${mb(x.b)}</b><small>${x.n||0} lần mở</small></div>`).join(''):'<div class="err-empty">Chưa có số liệu</div>'}</div></div>
-  <div class="lg-note">Số ước tính từ dữ liệu app nhận được (gửi về mỗi 3 phút). Hạn mức của Firebase tính cả phần mã hoá &amp; giao thức nên thực tế có thể cao hơn khoảng 20–40%. Số chính xác: Firebase Console → Realtime Database → Usage.</div>`;
+  <div class="lg-note">Số ước tính từ dữ liệu app nhận được (mỗi máy gửi về khi tải thêm ≥ 50 KB, tối đa 10 phút/lần, hoặc khi tắt app). Hạn mức của Firebase tính cả phần mã hoá &amp; giao thức nên thực tế có thể cao hơn khoảng 20–40%. Số chính xác: Firebase Console → Realtime Database → Usage.</div>`;
 }
 /* dọn số liệu > 30 ngày (cùng lúc với dọn nhật ký) */
 (function(){const o=logAutoPrune;logAutoPrune=function(){const before=LS.get('dg2_logprune','');o();
@@ -10085,8 +9851,6 @@ function mtStatHtml(uids,mg){
 /* ---------- Gắn vào hệ thống ---------- */
 const _mtSubAllowed=subAllowed;
 subAllowed=function(pg,sub){if(pg==='unit'&&sub==='mt')return mtPerm()&&!!curUnitId();return _mtSubAllowed.apply(this,arguments)};
-const _mtWanted=wantedParts;
-wantedParts=function(){const w=_mtWanted.apply(this,arguments);if(S.user&&mtPerm())w.add('g/defects');return w};
 const _mtDfCanReport=dfCanReport;dfCanReport=function(){return _mtDfCanReport()||mtPerm()};
 const _mtDfCanFix=dfCanFix;dfCanFix=function(){return _mtDfCanFix()||hasPerm('mt_manage')};
 const _mtRerender=dfRerender;dfRerender=function(){_mtRerender();try{if(S._curTab==='unit'&&S._sub.unit==='mt')renderMT()}catch(e){}try{if(S._curTab==='today')renderToday()}catch(e){}};
@@ -11034,7 +10798,7 @@ async function pgLoad(R,cats){
     ['criteria','evals','feedback','checks','hkasg','bookings'].filter(c=>cats.includes(c)||(c==='evals'&&cats.includes('feedback'))).forEach(c=>units.forEach(u=>add(partPath(m,u,c))));
     if(cats.includes('feedback')&&!U)add(`m/${m}/_all/feedback`);
   });
-  if(cats.includes('inv'))units.forEach(u=>add('u/'+encKey(u)+'/inv'));
+  if(cats.includes('inv'))units.forEach(u=>{if(S._inv4)ms.forEach(m=>add(`m/${m}/${encKey(u)}/inv`));else add('u/'+encKey(u)+'/inv')});
   if(cats.includes('defects'))units.forEach(u=>{add('u/'+encKey(u)+'/defects');ms.forEach(m=>add(`m/${m}/${encKey(u)}/defects`))});
   await Promise.race([Promise.all(jobs),new Promise(z=>setTimeout(z,25000))]);
 }
@@ -11337,6 +11101,7 @@ wantedParts=function(){
   return w;
 };
 /* A6: ngăn không còn cần ngay nhưng vừa dùng → giữ 20 phút */
+{const o=needPart;needPart=function(p){S._pUsed[p]=Date.now();return o.apply(this,arguments)}}   // ngăn mở thêm (xem kỳ cũ, gửi phiếu lùi ngày) cũng được giữ 20 phút
 refreshScope=function(){
   if(!S.fbDb)return;
   const w=wantedParts(),now=Date.now();
@@ -11527,6 +11292,280 @@ function renderDeltaBox(){
 
 /* dọn bớt dữ liệu trên máy (ngoài phạm vi) → bỏ mốc của ngăn đó: lần sau phải tải đầy đủ, không bao giờ thiếu bản ghi */
 {const o=pruneLocal;pruneLocal=function(){const before=groupLocal();const r=o.apply(this,arguments);if(r&&S.fbDb){const after=groupLocal(),P=pcGet().p;let ch=false;Object.keys(before).forEach(p=>{if(Object.keys(after[p]||{}).length<Object.keys(before[p]).length&&P[p]){delete P[p];ch=true}});if(ch)pcSave()}return r}}
+/* ===================== 68 — B3: Thu gọn phiếu dọn phòng =====================
+   Trước: mỗi phiếu lưu lại tên toàn bộ hạng mục kiểm tra (items:[{id,name,ok}]) và tên từng ô ảnh (ptags) —
+   lặp lại y hệt ở hàng nghìn phiếu mỗi tháng, chiếm phần lớn dung lượng ngăn checks.
+   Nay: phiếu chỉ lưu  ik = mã bộ hạng mục  +  pti = vị trí tên ô ảnh.
+   Bộ hạng mục lưu 1 lần ở  dgData/x/chkv/<đơn vị>/<ik> = {i:[tên hạng mục], s:[tên ô ảnh]}
+   (chỉ tải khi mở xem chi tiết phiếu; bộ đang dùng lấy ngay từ cài đặt, không cần tải).
+   Phiếu cũ (có items/ptags) vẫn đọc như trước — không tự viết lại dữ liệu cũ. */
+const K_CHKV='dg2_chkv';
+function chkvAll(){if(!S._chkv)S._chkv=LS.get(K_CHKV,{})||{};return S._chkv}
+function chkvKey(names,shots){return strHash(JSON.stringify([names||[],shots||[]]))}
+function chkvCur(uid){
+  const cfg=chkCfg(uid)||{},names=(cfg.items||[]).map(it=>it.name),shots=(typeof chkShots==='function'?chkShots(cfg):[]).map(s=>s.name);
+  return {k:chkvKey(names,shots),i:names,s:shots};
+}
+/* lưu bộ hạng mục lên máy chủ (1 lần cho mỗi bộ) */
+function chkvEnsure(uid,v){
+  const A=chkvAll(),u=A[uid]||(A[uid]={});if(!u[v.k]){u[v.k]={i:v.i,s:v.s};LS.set(K_CHKV,A)}
+  const ok=LS.get('dg2_chkv_ok',{})||{},ck=uid+'|'+v.k;if(ok[ck]||!S.fbDb)return;   // đã chắc chắn có trên máy chủ
+  /* set() khi mất mạng được Firebase giữ và tự gửi lại; chỉ đánh dấu xong khi máy chủ xác nhận */
+  const ref=S.fbDb.ref(`dgData/x/chkv/${encKey(uid)}/${v.k}`);
+  ref.once('value').then(s=>s.val()==null?ref.set({i:v.i,s:v.s}):null).then(()=>{const o=LS.get('dg2_chkv_ok',{})||{};o[ck]=1;LS.set('dg2_chkv_ok',o)}).catch(()=>{})
+}
+/* tìm bộ hạng mục của 1 phiếu: máy → cài đặt hiện tại → tải máy chủ (rồi vẽ lại) */
+function chkvGet(uid,k){
+  if(!k)return null;const A=chkvAll();if(A[uid]&&A[uid][k])return A[uid][k];
+  const cur=chkvCur(uid);if(cur.k===k)return {i:cur.i,s:cur.s};
+  if(S.fbDb){S._chkvAsk=S._chkvAsk||{};const ak=uid+'|'+k;if(!S._chkvAsk[ak]){S._chkvAsk[ak]=1;
+    S.fbDb.ref(`dgData/x/chkv/${encKey(uid)}/${k}`).once('value').then(s=>{const v=s.val();if(v){(A[uid]=A[uid]||{})[k]={i:v.i||[],s:v.s||[]};LS.set(K_CHKV,A);try{if(S._chk&&document.getElementById('chkModal'))renderChkModal()}catch(e){}}}).catch(()=>{})}}
+  return null;
+}
+/* phần ghi vào phiếu khi gửi */
+function chkCompact(uid,ptagNames){
+  const v=chkvCur(uid);chkvEnsure(uid,v);
+  return {ik:v.k,itn:v.i.length,pti:(ptagNames||[]).map(n=>{const i=v.s.indexOf(n);return i}),items:null,ptags:null};
+}
+/* đọc: danh sách hạng mục / tên ảnh của phiếu (cũ hoặc mới) */
+function chkItemsOf(rec){
+  if(rec&&rec.items&&rec.items.length)return rec.items;
+  const v=rec&&chkvGet(rec.unitId,rec.ik);
+  if(v)return v.i.map(n=>({name:n,ok:true}));
+  return rec&&rec.ik?[{name:`⏳ Đang tải ${rec.itn||''} hạng mục…`,ok:true}]:[];
+}
+function chkPtagsOf(rec){
+  if(rec&&rec.ptags)return rec.ptags;
+  const v=rec&&chkvGet(rec.unitId,rec.ik);
+  return (rec&&rec.pti||[]).map(i=>v&&i>=0?(v.s[i]||''):'');
+}
+/* ===================== 69 — A4: Kho tách theo tháng =====================
+   Trước: toàn bộ lịch sử nhập / xuất / kiểm kê của 1 đơn vị nằm chung 1 ngăn u/<đơn vị>/inv → càng dùng lâu càng nặng
+   (mỗi máy thủ kho tải lại đầy đủ mỗi ngày).
+   Nay (sau khi máy quản trị chuyển dữ liệu, dấu meta/inv4):
+     m/<tháng của ngày chứng từ>/<đơn vị>/inv      phiếu kho theo tháng — mặc định tải tháng này + tháng trước
+     x/invbal/<đơn vị>/<tháng>                     tồn ĐẦU THÁNG (cộng dồn mọi phiếu trước tháng đó), dạng
+                                                    {lt:{lô:[vật tư,sl]}, nl:{vật tư:sl nhập không lô}, pl:{vật tư:sl xuất không lô}}
+   Tồn = tồn đầu tháng sớm nhất đang mở + các phiếu từ tháng đó tới nay − tiêu hao trong phòng (x/invuse, như cũ).
+   Tồn đầu tháng chỉ là số cộng dồn suy ra từ phiếu: tính lại khi có phiếu mới / sửa phiếu tháng cũ (máy vừa ghi tự tính
+   các tháng sau đó) và khi sang tháng mới (máy thủ kho đầu tiên mở app). Không bao giờ sửa phiếu kho.
+   Chưa chuyển dữ liệu (chưa có dấu) → chạy như cũ. */
+const K_INV4='dg2_inv4';
+S._inv4=!!LS.get(K_INV4,false);S._invBal={};S._ibOff={};
+function invMonthOf(r){const d=(r&&r.date)||(r&&r.at?isoLocalDate(r.at):'')||localToday();return String(d).slice(0,7)}
+function invOldPath(uid){return 'u/'+encKey(uid)+'/inv'}
+{const o=partOf;partOf=function(col,r,ev){
+  if(col==='inv'&&r&&S._inv4){const m=invMonthOf(r);if(/^\d{4}-\d{2}$/.test(m))return `m/${m}/${encKey(r.unitId||'_')}/inv`}
+  return o.apply(this,arguments);
+}}
+function monthsBetween(a,b){const out=[];let m=a;for(let i=0;i<240&&m<=b;i++){out.push(m);m=nextMonthOf(m)}return out}
+function nextMonthOf(m){const[y,mo]=m.split('-').map(Number);return mo===12?`${y+1}-01`:`${y}-${String(mo+1).padStart(2,'0')}`}
+
+/* ---------- cộng dồn ---------- */
+function invAccOf(recs){
+  const A={lt:{},nl:{},pl:{},ox:{}};
+  recs.forEach(m=>{const q=+m.qty||0,k=m.itemId;if(!k||!q)return;
+    if(!['in','out','adjust'].includes(m.type)){A.ox[k]=(A.ox[k]||0)+q;return}      // loại khác: chỉ cộng vào tồn (như cách tính cũ), không vào lô
+    if(m.lot){const x=A.lt[m.lot]||(A.lt[m.lot]=[k,0]);x[1]+=(m.type==='out'?-q:q)}
+    else if(m.type==='in'||(m.type==='adjust'&&q>0))A.nl[k]=(A.nl[k]||0)+q;
+    else if(m.type==='out')A.pl[k]=(A.pl[k]||0)+q;
+    else if(m.type==='adjust')A.pl[k]=(A.pl[k]||0)-q;
+  });
+  return A;
+}
+function invAccAdd(a,b){
+  const r={lt:{},nl:{...(a&&a.nl||{})},pl:{...(a&&a.pl||{})},ox:{...(a&&a.ox||{})}};
+  Object.entries(a&&a.lt||{}).forEach(([l,x])=>{r.lt[l]=[x[0],+x[1]||0]});
+  Object.entries(b.lt).forEach(([l,x])=>{const y=r.lt[l]||(r.lt[l]=[x[0],0]);y[1]+=x[1]});
+  Object.entries(b.nl).forEach(([k,q])=>{r.nl[k]=(r.nl[k]||0)+q});
+  Object.entries(b.pl).forEach(([k,q])=>{r.pl[k]=(r.pl[k]||0)+q});
+  Object.entries(b.ox||{}).forEach(([k,q])=>{r.ox[k]=(r.ox[k]||0)+q});
+  return r;
+}
+/* dạng lưu: bỏ số 0, làm tròn; rỗng → {z:1} (Firebase không lưu nút rỗng) */
+function invAccStore(A){
+  const r={},rd=x=>Math.round(x*1000)/1000,lt={},nl={},pl={},ox={};
+  Object.entries(A.lt).forEach(([l,x])=>{if(rd(x[1]))lt[encKey(l)]=[x[0],rd(x[1])]});
+  Object.entries(A.nl).forEach(([k,q])=>{if(rd(q))nl[encKey(k)]=rd(q)});
+  Object.entries(A.pl).forEach(([k,q])=>{if(rd(q))pl[encKey(k)]=rd(q)});
+  Object.entries(A.ox||{}).forEach(([k,q])=>{if(rd(q))ox[encKey(k)]=rd(q)});
+  if(Object.keys(lt).length)r.lt=lt;if(Object.keys(nl).length)r.nl=nl;if(Object.keys(pl).length)r.pl=pl;if(Object.keys(ox).length)r.ox=ox;
+  return Object.keys(r).length?r:{z:1};
+}
+function invAccLoad(v){if(!v)return null;const A={lt:{},nl:{},pl:{},ox:{}};Object.assign(A.ox,v.ox||{});Object.entries(v.lt||{}).forEach(([l,x])=>{if(Array.isArray(x))A.lt[l]=[x[0],+x[1]||0]});Object.assign(A.nl,v.nl||{});Object.assign(A.pl,v.pl||{});return A}
+function invAccEq(a,b){return JSON.stringify(canon(invAccStore(a)))===JSON.stringify(canon(invAccStore(b)))}
+/* tồn đầu kỳ thành các "phiếu ảo" để dùng lại nguyên cách tính tồn / tồn theo lô cũ */
+function invAccRecs(uid,A){
+  const out=[];if(!A)return out;
+  Object.entries(A.lt).forEach(([l,x])=>{if(x[1])out.push({unitId:uid,itemId:x[0],type:'adjust',lot:l,qty:x[1],_v:1})});
+  Object.entries(A.nl).forEach(([k,q])=>{if(q)out.push({unitId:uid,itemId:k,type:'in',qty:q,_v:1})});
+  Object.entries(A.pl).forEach(([k,q])=>{if(q)out.push({unitId:uid,itemId:k,type:'out',qty:q,_v:1})});
+  Object.entries(A.ox||{}).forEach(([k,q])=>{if(q)out.push({unitId:uid,itemId:k,type:'_carry',qty:q,_v:1})});
+  return out;
+}
+
+/* ---------- chuỗi tháng đang có đủ: L..tháng này ---------- */
+function invPartM(m,uid){return `m/${m}/${encKey(uid)}/inv`}
+function invPartReady(m,uid){const p=S._parts[invPartM(m,uid)];return !!(p&&p.ready)}
+function invChainStart(uid){
+  let m=localToday().slice(0,7);if(!invPartReady(m,uid))return null;
+  for(let i=0;i<240;i++){const pm=prevMonthOf(m);if(!invPartReady(pm,uid))break;m=pm}
+  return m;
+}
+function invBalKnown(uid,m){const B=S._invBal[uid];return !!(B&&B[m]!==undefined)}
+/* đủ dữ liệu để tính tồn? */
+function invComplete(uid){
+  if(!S.fbDb)return true;
+  if(!S._inv4){const p=S._parts[invOldPath(uid)];return !!(p&&p.ready)}
+  const L=invChainStart(uid);return !!(L&&invBalKnown(uid,L));
+}
+/* bản ghi dùng để tính tồn: tồn đầu tháng L (phiếu ảo) + phiếu từ tháng L trở đi */
+function invCalcRecs(uid){
+  const L=invChainStart(uid);if(!L)return null;
+  const B=S._invBal[uid]||{},base=B[L]||null;
+  return invAccRecs(uid,base).concat((S.inv||[]).filter(m=>m.unitId!==uid||invMonthOf(m)>=L));
+}
+function invWithCalc(uid,fn,args){
+  if(!S._inv4||!S.fbDb)return fn.apply(this,args);
+  const recs=invCalcRecs(uid);if(!recs)return fn.apply(this,args);
+  const keep=S.inv;S.inv=recs;try{return fn.apply(this,args)}finally{S.inv=keep}
+}
+{const o=invBalance;invBalance=function(uid){return invWithCalc(uid,o,arguments)}}
+{const o=invLotBalance;invLotBalance=function(uid){return invWithCalc(uid,o,arguments)}}
+/* cờ "lô đã hết" chỉ cập nhật khi đủ dữ liệu (tránh ghi sai lúc mới tải một phần) */
+{const o=syncLotFlags;syncLotFlags=function(uid){if(!invComplete(uid))return;return o.apply(this,arguments)}}
+
+/* ---------- nghe tồn đầu tháng ---------- */
+function invBalListen(){
+  const want=new Set();
+  if(S.fbDb&&S._inv4&&S.user)Object.keys(S._parts).forEach(p=>{const a=p.split('/');if(a[0]==='m'&&a[3]==='inv')want.add(a[2])});
+  Object.keys(S._ibOff).forEach(e=>{if(!want.has(e)){try{S._ibOff[e]()}catch(x){}delete S._ibOff[e]}});
+  want.forEach(e=>{if(S._ibOff[e])return;const uid=(S.units.find(u=>encKey(u.id)===e)||{}).id||e;
+    const ref=S.fbDb.ref('dgData/x/invbal/'+e).orderByKey().limitToLast(3);
+    const up=s=>{(S._invBal[uid]=S._invBal[uid]||{})[s.key]=invAccLoad(s.val());invBalSoon(uid)};
+    const rm=s=>{if(S._invBal[uid])delete S._invBal[uid][s.key]};
+    ref.on('child_added',up);ref.on('child_changed',up);ref.on('child_removed',rm);
+    ref.once('value').then(()=>{(S._invBalSeen=S._invBalSeen||{})[uid]=1;invBalSoon(uid)}).catch(()=>{});
+    S._ibOff[e]=()=>{ref.off('child_added',up);ref.off('child_changed',up);ref.off('child_removed',rm)}});
+}
+/* tháng đầu chuỗi chưa có tồn đầu kỳ (VD mới chuyển, máy mở tháng cũ) → lấy tồn đầu kỳ gần nhất trước đó + tải các tháng ở giữa */
+async function invBalFill(uid){
+  const L=invChainStart(uid);if(!L||invBalKnown(uid,L)||!S.fbDb)return;
+  const k=uid+'|'+L;S._ibAsk=S._ibAsk||{};if(S._ibAsk[k])return;S._ibAsk[k]=1;
+  try{
+    const v=(await S.fbDb.ref('dgData/x/invbal/'+encKey(uid)).orderByKey().endAt(L).limitToLast(1).once('value')).val()||{};
+    const ms=Object.keys(v);const B=S._invBal[uid]=S._invBal[uid]||{};
+    if(!ms.length){B[L]=null;invBalSoon(uid);return}                                  // chưa từng có tồn đầu kỳ trước L → đơn vị mới, đầu kỳ = 0
+    const S0=ms[0];B[S0]=invAccLoad(v[S0]);
+    if(S0===L){invBalSoon(uid);return}
+    await Promise.all(monthsBetween(S0,prevMonthOf(L)).map(m=>needPart(invPartM(m,uid))));
+    invBalSoon(uid);
+  }catch(e){console.warn('invBalFill',e);delete S._ibAsk[k]}
+}
+/* tính tồn đầu các tháng sau L từ dữ liệu đang có; khác máy chủ → ghi (chỉ máy thủ kho / quản trị) */
+let _ibT={};
+function invBalSoon(uid){clearTimeout(_ibT[uid]);_ibT[uid]=setTimeout(()=>{try{invBalStep(uid)}catch(e){console.warn('invBal',e)}},1500)}
+function invBalStep(uid){
+  if(!S._inv4||!S.fbDb||!S.fbConnected||!S.user)return;
+  const L=invChainStart(uid);if(!L)return;
+  if(!invBalKnown(uid,L)){invBalFill(uid);return}
+  if(!(hasPerm('inv_edit')||S.user.isAdmin)){scheduleRemoteRender();return}
+  if(Object.values(obGet().e).some(e=>e.col==='inv'&&e.path&&e.path.startsWith('m/')&&e.path.endsWith('/'+encKey(uid)+'/inv')))return;   // còn phiếu chưa gửi xong → đợi
+  const B=S._invBal[uid],cur=localToday().slice(0,7),upd={};
+  let acc=B[L]||{lt:{},nl:{},pl:{},ox:{}};
+  monthsBetween(L,cur).forEach(m=>{
+    if(m===cur)return;
+    const recs=(S.inv||[]).filter(r=>r.unitId===uid&&isSyncable('inv',r)&&invMonthOf(r)===m);
+    acc=invAccAdd(acc,invAccOf(recs));const nm=nextMonthOf(m);
+    const have=B[nm];if(have===undefined&&!(S._invBalSeen||{})[uid])return;          // chưa nghe xong → chưa so được
+    if(!have||!invAccEq(have,acc)){upd[`x/invbal/${encKey(uid)}/${nm}`]=invAccStore(acc);B[nm]=invAccLoad(invAccStore(acc))}
+  });
+  if(Object.keys(upd).length)S.fbDb.ref('dgData').update(upd).catch(e=>console.warn('invbal',e));
+  scheduleRemoteRender();
+}
+/* có phiếu tháng cũ vừa gửi → tải các tháng từ đó tới nay để tính lại tồn đầu kỳ */
+{const o=doPush;doPush=function(writes){
+  const r=o.apply(this,arguments);
+  try{if(S._inv4){const t={};writes.forEach(w=>{const a=w.path.split('/');if(a[0]==='m'&&a[3]==='inv'){const uid=(S.units.find(u=>encKey(u.id)===a[2])||{}).id||a[2];if(!t[uid]||a[1]<t[uid])t[uid]=a[1]}});
+    Object.entries(t).forEach(([uid,m])=>{Promise.resolve(r).then(()=>{const cur=localToday().slice(0,7);return Promise.all(monthsBetween(m,cur).map(x=>needPart(invPartM(x,uid))))}).then(()=>invBalSoon(uid)).catch(()=>{})})}}catch(e){}
+  return r;
+}}
+
+/* nhận phiếu tháng trước (máy khác vừa ghi / sửa) → tính lại tồn đầu kỳ các tháng sau */
+{const o=onRemoteChild;onRemoteChild=function(path){
+  const r=o.apply(this,arguments);
+  try{if(S._inv4){const a=String(path).split('/');if(a[0]==='m'&&a[3]==='inv'&&a[1]<localToday().slice(0,7)){const uid=(S.units.find(u=>encKey(u.id)===a[2])||{}).id||a[2];invBalSoon(uid)}}}catch(e){}
+  return r;
+}}
+/* ---------- ngăn cần tải ---------- */
+{const o=wantedParts;wantedParts=function(){
+  const w=o.apply(this,arguments);if(!S._inv4)return w;
+  const tm=localToday().slice(0,7),pm=prevMonthOf(tm);
+  [...w].forEach(p=>{const a=p.split('/');if(a[0]==='u'&&a[2]==='inv'){w.delete(p);w.add(`m/${tm}/${a[1]}/inv`);w.add(`m/${pm}/${a[1]}/inv`)}});
+  return w;
+}}
+/* xem báo cáo kho theo khoảng ngày → tải thêm các tháng đó */
+{const o=renderInv;renderInv=function(){try{if(S._inv4&&S.fbDb){const uid=curUnitId(),[gf,gt]=drGet('inv_g','m');drMonths(gf,gt).forEach(m=>needPart(invPartM(m,uid)))}}catch(e){}return o.apply(this,arguments)}}
+
+/* ---------- chuyển dữ liệu cũ (máy quản trị, 1 lần) + quét phiếu máy bản cũ còn ghi vào u/<đơn vị>/inv ---------- */
+async function invMigrate(){
+  const db=S.fbDb;if(!db||!S.user||!S.user.isAdmin||S._invMig===db)return;S._invMig=db;
+  try{
+    const done=!!(await db.ref('dgData/meta/inv4').once('value')).val();
+    const units=S.units.filter(u=>!u.isAdmin);let moved=0;
+    await Promise.all(units.map(async u=>{
+      const e=encKey(u.id),src=db.ref('dgData/u/'+e+'/inv');
+      const v=(await (done?src.orderByKey().limitToFirst(500):src).once('value')).val()||{};
+      const ks=Object.keys(v).filter(k=>v[k]&&v[k].id);if(!ks.length&&done)return;
+      const recs=ks.map(k=>v[k]);
+      /* phiếu đã có ở ngăn tháng (sau lần chuyển trước) cũng phải tính vào tồn đầu kỳ */
+      const ms=[...new Set(recs.map(invMonthOf))];
+      const upd={};ks.forEach(k=>{const r=v[k];upd[`m/${invMonthOf(r)}/${e}/inv/${k}`]={...r,_t:srvTS()};upd[`u/${e}/inv/${k}`]=null});
+      if(Object.keys(upd).length)await db.ref('dgData').update(upd);moved+=ks.length;
+      await invRebuild(u.id,ms.length?ms.sort()[0]:localToday().slice(0,7));
+    }));
+    if(!done)await db.ref('dgData/meta/inv4').set(true);
+    if(moved)console.info('Kho: đã chuyển',moved,'phiếu sang ngăn theo tháng');
+  }catch(e){console.warn('invMigrate',e);S._invMig=null}
+}
+/* tính lại tồn đầu kỳ từ tháng m0 tới tháng sau (đọc thẳng máy chủ — dùng khi chuyển / quét) */
+async function invRebuild(uid,m0){
+  const db=S.fbDb,e=encKey(uid),cur=localToday().slice(0,7);
+  const pv=(await db.ref('dgData/x/invbal/'+e).orderByKey().endAt(m0).limitToLast(1).once('value')).val()||{};
+  const s0=Object.keys(pv)[0];let start=m0,acc={lt:{},nl:{},pl:{},ox:{}};
+  if(s0){start=s0;acc=invAccLoad(pv[s0])}                                          // chưa có tồn đầu kỳ nào ≤ m0 → m0 là tháng có phiếu sớm nhất, đầu kỳ = 0
+  const upd={};if(!s0)upd[`x/invbal/${e}/${start}`]=invAccStore(acc);
+  for(const m of monthsBetween(start,cur)){
+    if(m===cur)break;
+    const v=(await db.ref(`dgData/m/${m}/${e}/inv`).once('value')).val()||{};
+    acc=invAccAdd(acc,invAccOf(Object.values(v).filter(r=>r&&r.id)));
+    upd[`x/invbal/${e}/${nextMonthOf(m)}`]=invAccStore(acc);
+  }
+  if(!upd[`x/invbal/${e}/${cur}`]&&start===cur)upd[`x/invbal/${e}/${cur}`]=invAccStore(acc);
+  await db.ref('dgData').update(upd);
+}
+/* bật chế độ theo tháng khi máy chủ đã chuyển — đợi phiếu kho kiểu cũ trên máy gửi xong */
+function invFlagListen(){
+  if(!S.fbDb||S._inv4Ref===S.fbDb)return;S._inv4Ref=S.fbDb;
+  S.fbDb.ref('dgData/meta/inv4').on('value',s=>{const on=s.val()===true;if(on&&!S._inv4)S._inv4Want=true;if(!on&&S._inv4){S._inv4=false;LS.set(K_INV4,false)}});
+}
+function invFlagSwitch(){
+  if(!S._inv4Want||S._inv4)return;
+  const ob=obGet().e;if(Object.values(ob).some(e=>e.col==='inv'&&e.path&&e.path.startsWith('u/')))return;   // còn phiếu chưa gửi theo đường cũ
+  S._inv4Want=false;S._inv4=true;LS.set(K_INV4,true);
+  /* bỏ ngăn cũ (không suy ra lệnh xoá) + bản sao phiếu kho trên máy → tải lại theo tháng */
+  Object.keys(S._parts).forEach(p=>{const a=p.split('/');if(a[0]==='u'&&a[2]==='inv')releasePart(p)});
+  [...S._extra].forEach(p=>{const a=p.split('/');if(a[0]==='u'&&a[2]==='inv')S._extra.delete(p)});
+  S.inv=[];saveAllLocal();try{refreshScope()}catch(e){}
+}
+setInterval(()=>{try{
+  if(!S.fbDb||!S._syncReady)return;
+  invFlagListen();invFlagSwitch();
+  if(S.user&&S.user.isAdmin)invMigrate();
+  if(S._inv4){invBalListen();Object.keys(S._ibOff).forEach(e=>{const uid=(S.units.find(u=>encKey(u.id)===e)||{}).id||e;const L=invChainStart(uid);if(L&&!invBalKnown(uid,L)&&(S._invBalSeen||{})[uid])invBalFill(uid)})}
+}catch(e){console.warn('inv4',e)}},2000);
+/* sang tháng mới khi app đang mở / mở lại: tính tồn đầu tháng mới */
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S._inv4)Object.keys(S._invBal).forEach(invBalSoon)});
 </script>
 </body>
 </html>
