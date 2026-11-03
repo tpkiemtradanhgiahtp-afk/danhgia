@@ -1789,6 +1789,7 @@ body.is-locked{overflow:hidden}
       <div class="settings-card" id="cfgUsage"><h4 style="margin:0 0 8px">📊 Dung lượng tải dữ liệu (hạn mức Firebase)</h4><div id="usageBox"></div></div>
       <div class="settings-card" id="cfgPurge"><h4 style="margin:0 0 8px">🗑️ Xoá dữ liệu theo thời gian</h4><div id="purgeBox"></div></div>
       <div class="settings-card" id="cfgRestore"><h4 style="margin:0 0 8px">♻️ Khôi phục phòng & cài đặt đơn vị</h4><div id="restoreBox"></div></div>
+      <div class="settings-card" id="cfgDelta"><h4 style="margin:0 0 8px">⚡ Tối ưu tải dữ liệu (chỉ tải phần thay đổi)</h4><div id="deltaBox"></div></div>
       <div class="settings-card" id="cfgErr"><h4 style="margin:0 0 8px">🔧 Lỗi ứng dụng gần đây</h4><div id="errBox"></div></div>
       <div class="settings-card" id="cfgDrive"><h4 style="margin:0 0 8px">📁 Lưu ảnh lên Google Drive (Apps Script)</h4><div id="drvBox"></div></div>
       <div class="fb-config-panel">
@@ -4674,7 +4675,7 @@ function computeSummaryFrom(u,m,src){
   const remOf=id=>src.feedback.find(f=>f&&f.type==='remediation'&&f.evalId===id);
   let ws=0,wsum=0;lat.forEach(e=>{if(typeof e.score!=='number')return;const c=cById[e.criteriaId];const w=c.weight||1;ws+=e.score/(c.maxScore||10)*10*w;wsum+=w});
   const fails=lat.filter(e=>e.result==='fail');
-  const failed=fails.map(e=>{const c=cById[e.criteriaId];const r=remOf(e.id);return{n:c.name,t:c.type,r:r?r.status:'none'}});
+  const failed=fails.map(e=>{const c=cById[e.criteriaId];const r=remOf(e.id);const o={n:c.name,t:c.type,r:r?r.status:'none'};if(r&&r.dueDate)o.d=r.dueDate;return o});
   const lastFail={};src.evals.forEach(e=>{if(!e||e.unitId!==u||e.month!==m||!e.committed||e.result!=='fail'||!cById[e.criteriaId])return;const c=cById[e.criteriaId];const key=c.name+'::'+c.type;if(!lastFail[key]||(e.evalDate||'')>(lastFail[key].evalDate||''))lastFail[key]=e});
   const open=Object.values(lastFail).filter(e=>{const r=remOf(e.id);return !r||r.status!=='fixed'}).length;
   const ap=src.feedback.find(f=>f&&f.type==='approval'&&f.unitId===u&&f.month===m);
@@ -4970,17 +4971,21 @@ function confAll(pick){Object.keys(S._conf).forEach(pk=>confResolve(pk,pick))}
 const K_OUTBOX='dg2_outbox';   // lưu ngay vào localStorage (đồng bộ, không mất khi tải lại / tắt app liền sau khi sửa)
 S._ob=null;S._seen={};
 function obGet(){if(!S._ob||S._ob.db!==S._dbUrl){const v=obGetLS();S._ob=(v&&v.db===S._dbUrl&&v.e)?v:{db:S._dbUrl,e:{}}}return S._ob}
-let _obT=null;function obWrite(){clearTimeout(_obT);_obT=null;try{if(S._ob)localStorage.setItem(K_OUTBOX,JSON.stringify(S._ob))}catch(e){console.warn('outbox',e)}}
+/* ghi 2 nơi (localStorage + IndexedDB) kèm thời điểm; lúc đọc lấy bản mới hơn → mất 1 nơi vẫn còn */
+try{BIG_KEYS.add(K_OUTBOX+'2')}catch(e){}
+let _obT=null;function obWrite(){clearTimeout(_obT);_obT=null;try{if(S._ob){S._ob.ts=Date.now();localStorage.setItem(K_OUTBOX,JSON.stringify(S._ob));LS.set(K_OUTBOX+'2',S._ob)}}catch(e){console.warn('outbox',e)}}
 function obSave(){clearTimeout(_obT);_obT=setTimeout(obWrite,100)}
-function obGetLS(){try{const v=localStorage.getItem(K_OUTBOX);return v?JSON.parse(v):null}catch(e){return null}}
-function vOf(col,rec){return canon(syncView(col,rec))||{}}
+function obGetLS(){let a=null,b=null;try{const v=localStorage.getItem(K_OUTBOX);a=v?JSON.parse(v):null}catch(e){}try{b=LS.get(K_OUTBOX+'2',null)}catch(e){}if(a&&b)return (b.ts||0)>(a.ts||0)?b:a;return a||b}
+function vOf(col,rec){const v=canon(syncView(col,rec))||{};delete v._t;return v}   // _t = mốc giờ máy chủ (dùng để tải phần thay đổi), không tính là nội dung
 function jOf(v){return v==null?null:JSON.stringify(v)}
-function srvJ(pk){const s=S._srvSnap[pk];return s?jOf(canon(s)||{}):null}
+function srvJ(pk){const s=S._srvSnap[pk];if(!s)return null;const v=canon(s)||{};delete v._t;return jOf(v)}
+function srvTS(){try{const sv=firebase.database&&firebase.database.ServerValue;if(sv&&sv.TIMESTAMP)return sv.TIMESTAMP}catch(e){}return nowMs()}
 function isPlain(v){return !!v&&typeof v==='object'&&!Array.isArray(v)}
 /* chênh lệch theo trường (đi sâu tối đa 3 tầng; mảng coi là 1 giá trị) */
 function fDiff(a,b,pre,out,depth){
   a=a||{};b=b||{};
   new Set([...Object.keys(a),...Object.keys(b)]).forEach(f=>{
+    if(!pre&&f==='_t')return;                                                     // mốc giờ máy chủ: không phải nội dung → không bao giờ gửi riêng
     const x=a[f],y=b[f],p=pre?pre+'/'+f:f;
     if(JSON.stringify(x)===JSON.stringify(y))return;
     if(depth<3&&isPlain(x)&&isPlain(y))fDiff(x,y,p,out,depth+1);
@@ -5068,9 +5073,9 @@ pushDirty=function(){
     let ops=null;
     if(!cur){
       if(e.base===null&&!S._srvSnap[pk]){delete ob[pk];return}
-      fbU[pk]=null;
-    }else if(e.base===null||!S._srvSnap[pk]){fbU[pk]=cur}                        // thêm mới → ghi cả bản ghi
-    else{ops=fDiff(e.base,cur,'',{},0);if(!Object.keys(ops).length){delete ob[pk];return}Object.keys(ops).forEach(f=>{fbU[pk+'/'+f]=ops[f]})}
+      fbU[pk]=null;fbU['del/'+pk]=srvTS();                                       // sổ xoá: máy khác (tải phần thay đổi) biết bản ghi đã bị xoá
+    }else if(e.base===null||!S._srvSnap[pk]){fbU[pk]={...cur,_t:srvTS()}}       // thêm mới → ghi cả bản ghi
+    else{ops=fDiff(e.base,cur,'',{},0);if(!Object.keys(ops).length){delete ob[pk];return}Object.keys(ops).forEach(f=>{fbU[pk+'/'+f]=ops[f]});fbU[pk+'/_t']=srvTS()}
     views[pk]=cur;sent[pk]={ops,full:!ops};writes.push({pk,path:e.path,k:e.k,h:cur?strHash(jOf(cur)):null});
   });
   obSave();
@@ -5111,27 +5116,35 @@ function mergeRemote(col,k,i,r,e){
   const loc=i>=0?S[col][i]:null,cur=loc&&isSyncable(col,loc)?vOf(col,loc):null;
   if(!r){if(e.base===null&&cur)return 'keep';return 'drop'}                    // máy chủ đã xoá: thôi phần sửa của mình (trừ bản ghi mình vừa tạo)
   if(!cur)return 'keep';                                                       // mình đã xoá → giữ lệnh xoá
-  if(e.base===null){e.base=canon(r)||{};return 'keep'}                         // bản ghi mình tạo: giữ nguyên bản của mình, lần gửi sau chỉ gửi phần chênh với máy chủ
+  if(e.base===null){e.base=canon(r)||{};delete e.base._t;return 'keep'}                         // bản ghi mình tạo: giữ nguyên bản của mình, lần gửi sau chỉ gửi phần chênh với máy chủ
   const ops=fDiff(e.base||{},cur,'',{},0),merged=applyOps(JSON.parse(JSON.stringify(r)),ops);
-  e.base=canon(r)||{};
-  if(jOf(canon(syncView(col,merged))||{})===jOf(cur))return 'keep';            // máy chủ chỉ là bản mình vừa gửi → không đổi gì trên màn hình
+  e.base=canon(r)||{};delete e.base._t;
+  if(jOf(vOf(col,merged))===jOf(cur))return 'keep';            // máy chủ chỉ là bản mình vừa gửi → không đổi gì trên màn hình
   applyLocal(col,k,merged,i);return 'merged';
 }
 onRemoteChild=function(path,k,r){
+  if(isGhost(r))r=null;
   const P=S._parts[path];if(!P||!P.ready)return;
-  const col=colOf(path),pk=path+'/'+k,ob=obGet().e,e=ob[pk],i=findLocalIdx(col,k);
+  const col=colOf(path),pk=path+'/'+k,ob=obGet().e,e=ob[pk];
+  const i=findLocalIdx(col,k);
+  if(!r&&i>=0&&S[col][i]&&partOf(col,S[col][i])!==path){   // bản ghi đã chuyển sang ngăn khác (VD lỗi đã sửa → ngăn tháng) → tin xoá ở ngăn cũ không đụng tới
+if(e){delete ob[pk];obSave()}logPutSnap(path,k,r);delete (S._base[path]||{})[k];delete S._seen[pk];return}
   const B=S._base[path]||(S._base[path]={});
   let changed=false;
   if(e){const res=mergeRemote(col,k,i,r,e);if(res==='drop'){delete ob[pk];applyLocal(col,k,null,i)}changed=res!=='keep'||!r;obSave()}
   else{const loc=i>=0?S[col][i]:null;
     if(!r){if(loc){applyLocal(col,k,null,i);changed=true}}
-    else if(!(loc&&isSyncable(col,loc)&&jOf(vOf(col,loc))===jOf(canon(syncView(col,r))||{}))){applyLocal(col,k,r,i);changed=true}}
+    else if(!(loc&&isSyncable(col,loc)&&jOf(vOf(col,loc))===jOf(vOf(col,r)))){applyLocal(col,k,r,i);changed=true}}
   logPutSnap(path,k,r);if(r)B[k]=hashRec(col,r);else delete B[k];
   delete S._seen[pk];compactCol(col);if(changed)scheduleRemoteRender();
   if(e)scheduleSync();
 };
+/* "bản ghi ma": máy mất mạng gửi sửa 1 trường đúng lúc máy khác đã xoá bản ghi → máy chủ còn mẩu {trường,_t} không có id.
+   Coi như không tồn tại (không hiện, không gộp). */
+function isGhost(r){return !!(r&&typeof r==='object'&&r.id==null)}
 reconcilePart=function(path,R){
   obMigrateOld();
+  if(R&&typeof R==='object'){const R2={};Object.keys(R).forEach(k=>{if(!isGhost(R[k]))R2[k]=R[k]});R=R2}
   /* mở ngăn lần đầu trong phiên: máy chủ là chuẩn; chỉ giữ thay đổi của người dùng đang chờ gửi */
   const col=colOf(path),B=S._base[path]={},ob=obGet().e;
   const ev={};(S.evals||[]).forEach(x=>{ev[x.id]=x});
@@ -5143,7 +5156,7 @@ reconcilePart=function(path,R){
       let ii=i;if(e.cur===null&&e.del){if(ii>=0){S[col][ii]=null;ii=-1}}
       else if(e.cur&&(ii<0||jOf(vOf(col,S[col][ii]))!==jOf(e.cur))){const ph=ii>=0&&S[col][ii]&&S[col][ii].photos;const rec={...JSON.parse(JSON.stringify(e.cur)),...(ph?{photos:ph}:{})};if(ii>=0)S[col][ii]=rec;else{S[col].push(rec);ii=S[col].length-1}}
       const res=mergeRemote(col,k,ii,r,e);if(res==='drop'){delete ob[pk];if(ii>=0)applyLocal(col,k,null,ii)}}
-    else if(r){if(!(i>=0&&S[col][i]&&isSyncable(col,S[col][i])&&jOf(vOf(col,S[col][i]))===jOf(canon(syncView(col,r))||{})))applyLocal(col,k,r,i>=0?i:null)}   // giống hệt thì giữ nguyên
+    else if(r){if(!(i>=0&&S[col][i]&&isSyncable(col,S[col][i])&&jOf(vOf(col,S[col][i]))===jOf(vOf(col,r))))applyLocal(col,k,r,i>=0?i:null)}   // giống hệt thì giữ nguyên
     else if(i>=0){const x=S[col][i];if(isSyncable(col,x))S[col][i]=null}          // có trên máy, máy chủ không có, mình không sửa → bản cũ: bỏ (KHÔNG xoá trên máy chủ)
     logPutSnap(path,k,r);if(r)B[k]=hashRec(col,r);
     delete S._seen[pk];
@@ -5174,6 +5187,7 @@ pruneLocal=function(){
   const w=wantedParts(),g=groupLocal(),ob=S.fbDb?obGet().e:{};let dropped=0;
   Object.keys(g).forEach(p=>{
     if(!p.startsWith('m/')||w.has(p)||S._parts[p])return;
+    if(typeof deltaOK==='function'&&S.fbDb&&deltaOK(p)){const m=p.split('/')[1],t=localToday().slice(0,7);if(m>=prevMonthOf(prevMonthOf(t)))return}   // còn mốc mới & tháng gần: giữ để lần sau chỉ tải phần thay đổi
     Object.keys(g[p]).forEach(k=>{if(ob[p+'/'+k])return;g[p][k].rec.__drop=1;dropped++;delete S._seen[p+'/'+k]});
   });
   if(dropped){PART_COLS.forEach(c=>{S[c]=(S[c]||[]).filter(r=>!r.__drop)});saveAllLocal()}
@@ -5185,7 +5199,7 @@ setInterval(()=>{try{if(S.fbDb&&S._dbUrl&&S._obMigrated!==S._dbUrl)obMigrateOld(
 
 /* ghi nhận thay đổi ngay sau mỗi lần lưu, và trước khi tải lại / đóng app */
 {const o=persist;persist=function(){const r=o.apply(this,arguments);clearTimeout(S._scanT);S._scanT=setTimeout(()=>{try{if(S.fbDb&&S._syncReady){syncScan();obWrite()}}catch(e){}},30);return r}}
-function obFlushNow(){try{if(S.fbDb&&S._syncReady){syncScan();obWrite()}}catch(e){}}
+function obFlushNow(){try{if(S.fbDb&&S._syncReady){syncScan();obWrite();STORE.flush()}}catch(e){}}
 window.addEventListener('pagehide',obFlushNow);window.addEventListener('beforeunload',obFlushNow);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)obFlushNow()});
 /* ===========================================================
@@ -7573,7 +7587,7 @@ function applyFlt(tab){
 const LOG_COL_LBL={defects:'Lỗi thiết bị',hkasg:'Phân công buồng phòng',units:'Đơn vị',users:'Tài khoản',plans:'Lịch đánh giá',criteria:'Tiêu chí',evals:'Chấm điểm',feedback:'Khắc phục / ý kiến',checks:'Kiểm tra phòng',bookings:'Lễ tân',inv:'Kho',rstate:'Tình trạng phòng',rlevel:'Minibar phòng',log:'Nhật ký'};
 const LOG_F={org:'Thông tin công ty',closed:'Đã chốt hoá đơn',extras:'Dịch vụ thêm',disc:'Giảm giá',src:'Nguồn đặt',result:'Kết quả',score:'Điểm',notes:'Ghi chú',status:'Trạng thái',st:'Tình trạng',name:'Tên',code:'Mã',rate:'Giá',arr:'Giờ đến',dep:'Giờ đi',ain:'Nhận phòng thực tế',aout:'Trả phòng thực tế',guest:'Khách',phone4:'SĐT',pax:'Số khách',qty:'Số lượng',type:'Loại',password:'Mật khẩu',role:'Vai trò',perms:'Quyền',unitIds:'Phạm vi',content:'Nội dung',dueDate:'Hạn KP',maxScore:'Điểm tối đa',desc:'Mô tả',method:'Phương pháp',group:'Nhóm',date:'Ngày',note:'Ghi chú',pays:'Thanh toán',room:'Phòng',active:'Hoạt động',fullName:'Họ tên',manager:'Phụ trách',checklist:'Cấu hình phòng / checklist',inv:'Danh mục kho',drive:'Lưu ảnh Drive',fo:'Cài đặt lễ tân',roomLink:'Liên kết phòng',committed:'Đã lưu',lv:'Mức minibar',price:'Giá',lot:'Lô',sur:'Phụ thu',reviews:'Duyệt',rounds:'Lượt dọn',round:'Lượt',use:'Khách dùng',fill:'Bổ sung'};
 const LOG_SECRET=/^(password|pass|token|key|apiKey|pin|pw)$/i;
-const LOG_SKIP=new Set(['updatedAt','updatedBy','at','by','byId','writer','v','closedAt']);
+const LOG_SKIP=new Set(['_t','updatedAt','updatedBy','at','by','byId','writer','v','closedAt']);
 S._srvSnap={};
 function logPutSnap(path,k,r){S._srvSnap[path+'/'+k]=r?JSON.parse(JSON.stringify(r)):null}   // bản sao riêng: bản ghi nhận về được gắn thẳng vào dữ liệu trên máy, sửa sau đó không được làm đổi "bản trên máy chủ"
 function logShort(v){
@@ -8580,7 +8594,7 @@ function emoScan(root){
    - Không ghi mật khẩu / dữ liệu khách; trùng lỗi trong 1 phiên chỉ ghi 1 lần; tối đa 20 lỗi / phiên
    - Mất mạng: giữ tạm trên máy, có mạng gửi sau
 =========================================================== */
-const APP_BUILD='03.11.2026-263c6a';
+const APP_BUILD='03.11.2026-fdcac1';
 S._errSeen=new Set();S._errN=0;
 function errDevice(){const u=navigator.userAgent;const os=/iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u)&&navigator.maxTouchPoints>1?'iPad':/iPhone/.test(u)?'iPhone':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Khác';
   const br=/Edg\//.test(u)?'Edge':/CriOS|Chrome\//.test(u)?'Chrome':/FxiOS|Firefox/.test(u)?'Firefox':/Safari/.test(u)?'Safari':'Trình duyệt khác';return os+' · '+br+' · '+innerWidth+'px'}
@@ -10633,7 +10647,8 @@ logEntries=function(writes,updates){
     const t=nowMs();let n=0;
     writes.forEach(w=>{
       const col=colOf(w.path);if(!['hkasg','checks','rstate','defects'].includes(col))return;
-      const old=S._srvSnap[w.pk]||null,nw=updates[w.pk]||null;
+      let old=S._srvSnap[w.pk]||null;const nw=updates[w.pk]||null;
+      if(!old&&nw){const mv=writes.find(x=>x!==w&&x.k===w.k&&colOf(x.path)===col&&!updates[x.pk]&&S._srvSnap[x.pk]);if(mv)old=S._srvSnap[mv.pk]}   // chuyển ngăn (VD lỗi đã sửa → ngăn tháng): bản trước nằm ở ngăn cũ
       const isAdd=!old&&!(S._base[w.path]||{})[w.k];
       nfEvents(col,old,nw,isAdd).forEach(e=>{if(n++>80)return;r[`n/${encKey(e.to)}/${nfId(t)}`]=nfEntry(e,t)});
     });
@@ -11020,6 +11035,7 @@ async function pgLoad(R,cats){
     if(cats.includes('feedback')&&!U)add(`m/${m}/_all/feedback`);
   });
   if(cats.includes('inv'))units.forEach(u=>add('u/'+encKey(u)+'/inv'));
+  if(cats.includes('defects'))units.forEach(u=>{add('u/'+encKey(u)+'/defects');ms.forEach(m=>add(`m/${m}/${encKey(u)}/defects`))});
   await Promise.race([Promise.all(jobs),new Promise(z=>setTimeout(z,25000))]);
 }
 async function pgLogKeys(R){
@@ -11203,6 +11219,314 @@ async function rsFromHist(uid){
   bvRoomEdit(uid);persist();renderRestoreBox();try{renderSide()}catch(e){}toast(`✅ Đã dựng lại ${rooms.length} phòng`);
 }
 {const o=renderUsageBox;renderUsageBox=function(){const r=o.apply(this,arguments);try{renderRestoreBox()}catch(e){console.warn(e)}return r}}
+/* ===========================================================
+   TỐI ƯU TẢI DỮ LIỆU TỪ FIREBASE
+   A2  Dữ liệu đánh giá (tiêu chí / kết quả / ý kiến) chỉ tải cho ĐƠN VỊ ĐANG CHỌN; các màn hình nhiều đơn vị
+       (Tổng quan, Hôm nay, thông báo, trợ lý AI) dùng bảng tổng hợp x/sum (rất nhẹ). Danh sách lỗi toàn hệ thống
+       chỉ tải khi mở màn hình đó. Kho / phiếu phòng cho người chỉ "xem hồ sơ" chỉ tải khi mở màn hình tương ứng.
+   A3  Lỗi thiết bị tách theo đơn vị: đang mở → u/<đơn vị>/defects ; đã sửa → m/<tháng sửa>/<đơn vị>/defects
+       (mặc định tải tháng này + tháng trước; xem kỳ cũ hơn thì tải thêm). Tự chuyển dữ liệu cũ từ g/defects.
+   A5  Buồng phòng không tải đặt phòng: lễ tân ghi bảng nhỏ x/occ/<đơn vị>/<ngày> (phòng nào khách trả / khách đến),
+       buồng phòng chỉ đọc bảng đó.
+   A6  Ngăn vừa dùng (đổi màn hình / đổi tháng) giữ lại 20 phút, quay lại không phải tải lại.
+=========================================================== */
+const KEEP_MS=20*60*1000;S._pUsed=S._pUsed||{};
+function curScreen(){const t=S._curTab||'';return [t,(t==='unit'||t==='setup')?(S._sub[t]||''):'']}
+function scopeUnits(){return S.user?availUnits():[]}
+
+/* ---------- A3: ngăn của lỗi thiết bị ---------- */
+function dfPartMonth(r){try{return r.fixedAt?isoLocalDate(r.fixedAt).slice(0,7):''}catch(e){return ''}}
+{const o=partOf;partOf=function(col,r,ev){
+  if(col==='defects'&&r){const u=encKey(r.unitId||'_');if(r.st==='fixed'){const m=dfPartMonth(r);if(/^\d{4}-\d{2}$/.test(m))return `m/${m}/${u}/defects`}return `u/${u}/defects`}
+  return o.apply(this,arguments);
+}}
+function dfScopeUnits(){
+  if(!S.user)return [];
+  let us=availUnits().map(u=>dfUid(u.id));
+  if(typeof mtPerm==='function'&&mtPerm()&&(S.user.isAdmin||!S.user.unitIds)){us=us.concat(S.units.filter(u=>!u.isAdmin).map(u=>u.id))}
+  return [...new Set(us)];
+}
+function dfPermAny(){return chkPerm()||foPerm()||(typeof mtPerm==='function'&&mtPerm())}
+/* chuyển 1 lần dữ liệu cũ g/defects → ngăn mới (và quét bản ghi máy cũ còn ghi vào g/defects) */
+async function dfMigrate(){
+  const db=S.fbDb;if(!db||S._dfMig===db)return;S._dfMig=db;
+  try{
+    const done=(await db.ref('dgData/meta/df7').once('value')).val();
+    const q=done?db.ref('dgData/g/defects').orderByKey().limitToFirst(200):db.ref('dgData/g/defects');
+    const v=(await q.once('value')).val();if(!v&&done)return;
+    const upd={};Object.keys(v||{}).forEach(k=>{const r=v[k];if(!r||!r.id)return;upd[partOf('defects',r)+'/'+encKey(r.id)]=r;upd['g/defects/'+k]=null});
+    if(!done)upd['meta/df7']=true;
+    if(Object.keys(upd).length)await db.ref('dgData').update(upd);
+    if(v&&Object.keys(v).length)console.info('Đã chuyển',Object.keys(v).length,'lỗi thiết bị sang ngăn theo đơn vị');
+  }catch(e){console.warn('dfMigrate',e);S._dfMig=null}
+}
+/* xem kỳ cũ (Cơ điện → Đã sửa / Thống kê) → tải thêm tháng đó */
+function dfNeedMonths(f,t){if(!S.fbDb)return;try{drMonths(f,t).forEach(m=>dfScopeUnits().forEach(u=>needPart(`m/${m}/${encKey(u)}/defects`)))}catch(e){}}
+{const o=renderMT;renderMT=function(){try{const[f,t]=mtPeriod();dfNeedMonths(f,t)}catch(e){}return o.apply(this,arguments)}}
+
+/* ---------- A5: bảng phòng khách trả / khách đến cho buồng phòng ---------- */
+S._occ={};S._occOff={};
+function occDays(){const t=localToday();return [t,drAdd(t,1)]}
+function occCompute(uid,day){
+  const o={};bkFor(uid).forEach(b=>{
+    if(b.status==='in'&&dPart(b.dep)<=day){const x=o[b.room]||(o[b.room]={});if(!x.d||b.dep<x.d)x.d=b.dep}
+    if(b.status==='booked'&&dPart(b.arr)===day){const x=o[b.room]||(o[b.room]={});if(!x.a||b.arr<x.a)x.a=b.arr}
+  });
+  return o;
+}
+function occReady(uid){const tm=localToday().slice(0,7);return partReady(tm,uid,'bookings')&&partReady(prevMonthOf(tm),uid,'bookings')}
+function occPush(){
+  if(!S.fbDb||!S.user||!foPerm())return;
+  const hosts=[...new Set(scopeUnits().map(u=>roomUnit(u.id)))].filter(id=>chkCfg(id));
+  hosts.forEach(uid=>{if(!occReady(uid))return;occDays().forEach(day=>{
+    const v=occCompute(uid,day),cur=(S._occ[uid]||{})[day]||null;
+    if(JSON.stringify(canon(v)||null)!==JSON.stringify(canon(cur)||null)){(S._occ[uid]=S._occ[uid]||{})[day]=v;S.fbDb.ref(`dgData/x/occ/${encKey(uid)}/${day}`).set(Object.keys(v).length?v:null).catch(()=>{})}
+  })});
+}
+let _occT=null;function occSoon(){clearTimeout(_occT);_occT=setTimeout(()=>{try{occPush()}catch(e){}},1500)}
+function occListen(){
+  const want=new Set();
+  if(S.fbDb&&S.user&&(chkPerm()||foPerm()))[...new Set(scopeUnits().map(u=>roomUnit(u.id)))].filter(id=>chkCfg(id)).forEach(uid=>occDays().forEach(d=>want.add(uid+'|'+d)));
+  Object.keys(S._occOff).forEach(k=>{if(!want.has(k)){try{S._occOff[k]()}catch(e){}delete S._occOff[k]}});
+  want.forEach(k=>{if(S._occOff[k])return;const[uid,day]=k.split('|');const ref=S.fbDb.ref(`dgData/x/occ/${encKey(uid)}/${day}`);
+    const cb=s=>{const v=s.val(),nv=v&&typeof v==='object'?v:{},o=S._occ[uid]=S._occ[uid]||{},same=JSON.stringify(o[day]||null)===JSON.stringify(nv);o[day]=nv;if(!same&&!foPerm())scheduleRemoteRender();if(foPerm())occSoon()};   // lễ tân tự tính từ đặt phòng → không cần vẽ lại; chỉ vẽ lại khi thật sự đổi
+    ref.on('value',cb);S._occOff[k]=()=>ref.off('value',cb)});
+}
+{const o=bkToday;bkToday=function(uid,room){
+  if(!S.fbDb||occReady(uid))return o.apply(this,arguments);
+  const x=((S._occ[uid]||{})[localToday()]||{})[room]||{};
+  return{dep:x.d?{dep:x.d,room,status:'in'}:undefined,arr:x.a?{arr:x.a,room,status:'booked'}:undefined};
+}}
+
+/* ---------- A2: phạm vi tải theo màn hình ---------- */
+wantedParts=function(){
+  const w=new Set(['g/units','g/users']);
+  if(!S.user)return w;
+  w.add('g/plans');
+  const us=availUnits(),cu=curUnitId(),[tab,sub]=curScreen();
+  const core=corePerm();
+  if(chkPerm()||foPerm())w.add('g/rstate');
+  if(chkPerm()||invPerm())w.add('g/rlevel');
+  if(core){
+    w.add('g/misc_feedback');
+    if(window.__EAGER)us.forEach(u=>CORE_COLS.forEach(c=>w.add(partPath(S.month,u.id,c))));   // chế độ kiểm thử cũ: tải như trước
+    else if(cu&&us.some(u=>u.id===cu))CORE_COLS.forEach(c=>w.add(partPath(S.month,cu,c)));
+    if(hasPerm('dashboard')&&tab==='overview')w.add(`m/${S.month}/_all/feedback`);
+    if(hasPerm('issues')){
+      const all=(tab==='overview'&&S._ovErr==='need')||!!window.__EAGER;                         // danh sách lỗi toàn hệ thống: chỉ khi đang mở
+      Object.keys(S.openIdx).forEach(k=>{const[u,m]=k.split('|');if(S.openIdx[k]>0&&us.some(x=>x.id===u)&&(all||u===cu))CORE_COLS.forEach(c=>w.add(partPath(m,u,c)))});
+    }
+  }
+  /* phiếu phòng / phân công */
+  const cm=(S._chkDate||localToday()).slice(0,7),tm=localToday().slice(0,7);
+  const hk=chkPerm(),profOnly=!hk&&hasPerm('profile');
+  /* tài khoản xem toàn hệ thống (quản trị / lãnh đạo): phiếu phòng, kho, đặt phòng chỉ tải cho đơn vị đang chọn */
+  const scoped=!!(S.user.unitIds&&S.user.unitIds.length)||!!window.__EAGER,focus=u=>scoped||u.id===cu||u.id===roomUnit(cu)||roomUnit(u.id)===cu;
+  us.filter(u=>u.checklist&&u.checklist.enabled&&focus(u)).forEach(u=>{
+    if(hk){w.add(partPath(cm,u.id,'checks'));w.add(partPath(tm,u.id,'checks'));w.add(partPath(cm,u.id,'hkasg'));w.add(partPath(tm,u.id,'hkasg'));if(sub==='checks'||sub==='profile')w.add(partPath(S.month,u.id,'checks'))}
+    else if(profOnly&&u.id===cu&&(sub==='profile'||sub==='checks'))w.add(partPath(S.month,u.id,'checks'));
+  });
+  /* kho: người làm kho tải luôn; người chỉ xem → khi mở Kho / Hồ sơ */
+  if(invPerm())us.filter(u=>invVisible(u.id)&&focus(u)).forEach(u=>{if(hasPerm('inv_edit')||sub==='inv'||(sub==='profile'&&u.id===cu))w.add('u/'+encKey(u.id)+'/inv')});
+  /* đặt phòng: chỉ lễ tân (buồng phòng dùng bảng x/occ) */
+  if(foPerm()){const ms=new Set([tm,prevMonthOf(tm),S.month,prevMonthOf(S.month)]);
+    [...new Set(us.filter(focus).map(u=>roomUnit(u.id)))].map(id=>S.units.find(x=>x.id===id)).filter(u=>u&&u.checklist&&u.checklist.enabled).forEach(u=>{ms.forEach(m=>w.add(partPath(m,u.id,'bookings')));w.add(partPath(tm,u.id,'checks'));if(sub==='fo'||tab==='today')w.add(partPath(S.month,u.id,'checks'))})}
+  /* lỗi thiết bị: đang mở + đã sửa tháng này / tháng trước */
+  if(dfPermAny()){const ms=[tm,prevMonthOf(tm)];if(S.month!==tm)ms.push(S.month);dfScopeUnits().forEach(u=>{const e=encKey(u);w.add(`u/${e}/defects`);ms.forEach(m=>w.add(`m/${m}/${e}/defects`))})}
+  S._extra.forEach(p=>w.add(p));
+  return w;
+};
+/* A6: ngăn không còn cần ngay nhưng vừa dùng → giữ 20 phút */
+refreshScope=function(){
+  if(!S.fbDb)return;
+  const w=wantedParts(),now=Date.now();
+  w.forEach(p=>{S._pUsed[p]=now});
+  Object.keys(S._parts).forEach(p=>{if(!w.has(p)&&now-(S._pUsed[p]||0)>KEEP_MS)releasePart(p)});
+  w.forEach(p=>ensurePart(p));
+  const xs=new Set(S.user&&(corePerm()||invPerm())?availUnits().map(u=>u.id):[]);
+  Object.keys(S._xOff).forEach(u=>{if(!xs.has(u)){try{S._xOff[u]()}catch(e){}delete S._xOff[u]}});
+  xs.forEach(u=>{if(!S._xOff[u])attachX(u)});
+  try{occListen()}catch(e){}
+  try{if(dfPermAny())dfMigrate()}catch(e){}
+  updateSyncIndicator();
+};
+setInterval(()=>{try{if(S.fbDb&&S._syncReady){const now=Date.now(),w=wantedParts();if(Object.keys(S._parts).some(p=>!w.has(p)&&now-(S._pUsed[p]||0)>KEEP_MS))refreshScope()}}catch(e){}},5*60*1000);
+/* đổi màn hình → cập nhật phạm vi tải */
+{const o=goSub;goSub=function(){const r=o.apply(this,arguments);try{scheduleScope()}catch(e){}return r}}
+{const o=goTab;goTab=function(){const r=o.apply(this,arguments);try{scheduleScope()}catch(e){}return r}}
+{const o=renderIssues;renderIssues=function(){const r=o.apply(this,arguments);try{scheduleScope()}catch(e){}return r}}
+/* lễ tân: sau khi lưu đặt phòng / mở màn hình → cập nhật bảng x/occ */
+{const o=revUpdate;revUpdate=function(){const r=o.apply(this,arguments);occSoon();return r}}
+{const o=renderFO;renderFO=function(){const r=o.apply(this,arguments);occSoon();return r}}
+
+/* ---------- A2: số liệu nhiều đơn vị lấy từ bảng tổng hợp khi chưa tải chi tiết ---------- */
+function coreReady(u,m){return CORE_COLS.every(c=>partReady(m,u,c))}
+function sumOf(u,m){return S.sums[sumKey(u,m)]||null}
+/* lỗi chưa khắc phục: nếu chưa tải chi tiết các tháng còn lỗi → tính từ bảng tổng hợp (mỗi tiêu chí lấy lần không đạt gần nhất) */
+{const o=openIssueStats;openIssueStats=function(uid){
+  if(!S.fbDb)return o.apply(this,arguments);
+  const ms=Object.keys(S.openIdx).filter(k=>k.startsWith(uid+'|')&&S.openIdx[k]>0).map(k=>k.split('|')[1]);
+  if(ms.every(m=>coreReady(uid,m)))return o.apply(this,arguments);
+  const last={},td=localToday();
+  Object.keys(S.sums).filter(k=>k.startsWith(uid+'|')).sort().forEach(k=>{const s=S.sums[k];(s&&s.failed||[]).forEach(f=>{last[f.n+'::'+f.t]=f})});
+  let n=0,over=0;Object.values(last).forEach(f=>{if(f.r==='fixed')return;n++;if(f.r==='open'&&f.d&&f.d<td)over++});
+  return{n,over};
+}}
+/* Tổng quan (kỳ tháng) */
+{const o=ovMonthRows;ovMonthRows=function(){
+  if(!S.fbDb)return o.apply(this,arguments);
+  const m=S.month,pm=prevMonthOf(m),canIss=hasPerm('issues');
+  const rows=availUnits().map(u=>{
+    if(coreReady(u.id,m)){const nc=S.criteria.filter(c=>c.unitId===u.id&&c.month===m).length,evs=latestEvals(u.id,m);
+      const avg=evs.some(e=>typeof e.score==='number')?weightedAvgOfEvals(evs):null,os=canIss?openIssueStats(u.id):{n:0,over:0},ps=sumOf(u.id,pm);
+      return{u,nc,ne:evs.length,pct:nc?Math.min(100,Math.round(evs.length/nc*100)):0,pass:evs.filter(e=>e.result==='pass').length,fail:evs.filter(e=>e.result==='fail').length,avg,open:os.n,over:os.over,prev:ps&&typeof ps.avg==='number'?ps.avg:null}}
+    const s=sumOf(u.id,m),ps=sumOf(u.id,pm),os=canIss?openIssueStats(u.id):{n:0,over:0},nc=s?s.total||0:0,ne=s?s.n||0:0;
+    return{u,nc,ne,pct:nc?Math.min(100,Math.round(ne/nc*100)):0,pass:s?s.pass||0:0,fail:s?s.fail||0:0,avg:s&&typeof s.avg==='number'&&ne?s.avg:null,open:os.n,over:os.over,prev:ps&&typeof ps.avg==='number'?ps.avg:null};
+  });
+  rows.sort((a,b)=>((b.avg==null?-1:b.avg)-(a.avg==null?-1:a.avg))||(b.pct-a.pct));
+  return rows;
+}}
+/* duyệt biên bản (thông báo & Hôm nay): có kết quả mà chưa duyệt */
+function hasEvalsNoAppr(u,m){
+  if(coreReady(u,m)){const has=S.evals.some(e=>e.unitId===u&&e.month===m&&e.committed),ap=S.feedback.find(f=>f.type==='approval'&&f.unitId===u&&f.month===m);return has&&!ap}
+  const s=sumOf(u,m);return !!(s&&s.n&&!s.appr);
+}
+{const o=computeNotifCandidates;computeNotifCandidates=function(){
+  const items=o.apply(this,arguments);
+  if(!S.fbDb||!S.user||!hasPerm('approve'))return items;
+  const have=new Set(items.map(i=>i.id));
+  availUnits().forEach(u=>{const id='appr_'+u.id+'_'+S.month;if(!have.has(id)&&!coreReady(u.id,S.month)&&hasEvalsNoAppr(u.id,S.month))items.push({id,ic:'🖊️',text:`${u.name} có đánh giá tháng ${S.month.split('-')[1]} chờ DUYỆT`,time:S.month})});
+  return items;
+}}
+/* trợ lý AI: tóm tắt các đơn vị chưa tải chi tiết từ bảng tổng hợp */
+{const o=buildAIContext;buildAIContext=function(){
+  let ctx=o.apply(this,arguments);if(!S.fbDb)return ctx;
+  availUnits().forEach(u=>{if(coreReady(u.id,S.month))return;const s=sumOf(u.id,S.month);if(!s||!s.n)return;
+    ctx+=`- ${u.code} ${u.name}: điểm TB ${(+s.avg||0).toFixed(1)}/10, đạt ${s.pass||0}, lỗi ${s.fail||0}${(s.failed||[]).length?'. Lỗi: '+s.failed.map(f=>f.n).join(', '):''}\n`});
+  return ctx;
+}}
+/* bảng điều khiển cũ (renderDash) dùng chung số liệu với Tổng quan */
+if(typeof renderDash==='function'){const o=renderDash;renderDash=function(){
+  if(!S.fbDb)return o.apply(this,arguments);
+  const sv=S.criteria,se=S.evals,add=[],adde=[];
+  availUnits().forEach(u=>{if(coreReady(u.id,S.month))return;const s=sumOf(u.id,S.month);if(!s)return;
+    for(let i=0;i<(s.total||0);i++)add.push({id:'__s'+u.id+i,unitId:u.id,month:S.month,type:'hw',name:'',maxScore:10});
+    for(let i=0;i<(s.n||0);i++)adde.push({id:'__e'+u.id+i,criteriaId:'__s'+u.id+i,unitId:u.id,month:S.month,committed:true,result:i<(s.pass||0)?'pass':'fail',score:+s.avg||0,evalDate:s.last||''})});
+  if(!add.length)return o.apply(this,arguments);
+  S.criteria=sv.concat(add);S.evals=se.concat(adde);try{return o.apply(this,arguments)}finally{S.criteria=sv;S.evals=se}
+}}
+/* ===========================================================
+   A1 — CHỈ TẢI PHẦN THAY ĐỔI KỂ TỪ LẦN MỞ TRƯỚC
+   Mỗi bản ghi có _t (giờ máy chủ lúc ghi); bản ghi bị xoá được ghi vào sổ xoá dgData/del/<ngăn>/<mã> = giờ xoá.
+   Máy giữ sẵn bản đã tải (bộ nhớ máy) + mốc "đã đồng bộ tới lúc nào" cho từng ngăn (dg2_pcache).
+   Mở lại ngăn: chỉ xin bản ghi có _t ≥ mốc và mục sổ xoá ≥ mốc → thường chỉ vài KB thay vì cả ngăn.
+   Tải đầy đủ lại khi: chưa có mốc · mốc quá 24 giờ (bắt kịp các thay đổi từ máy chưa cập nhật bản mới,
+   vốn không ghi _t) · số bản ghi trên máy ít hơn lúc lưu mốc (bộ nhớ máy bị dọn) · bấm "Tải lại toàn bộ".
+   Cần chỉ mục ".indexOn": "_t" trên Firebase (Quản trị → Hệ thống → Tối ưu tải dữ liệu). Chưa có chỉ mục
+   thì Firebase vẫn trả đúng dữ liệu (tải cả ngăn rồi lọc), không lỗi.
+=========================================================== */
+const K_PCACHE='dg2_pcache',DELTA_FULL_MS=24*3600*1000;let DELTA_SKEW=60*1000;try{const x=localStorage.getItem('dg2_dskew');if(x!=null)DELTA_SKEW=+x}catch(e){}   // lùi mốc 1 phút phòng lệch giờ (chế độ thử có thể đặt dg2_dskew)
+/* mốc lưu CÙNG CHỖ với dữ liệu (IndexedDB, cùng lượt ghi) → mốc và dữ liệu trên máy luôn khớp nhau */
+try{BIG_KEYS.add(K_PCACHE)}catch(e){}
+function pcGet(){if(!S._pc||S._pc.db!==S._dbUrl){const v=LS.get(K_PCACHE,null);S._pc=(v&&v.db===S._dbUrl&&v.p)?v:{db:S._dbUrl,p:{}}}return S._pc}
+/* đang nghe ngăn + có mạng → mọi thay đổi đã về máy → mốc = bây giờ (trừ 1 phút) */
+function pcAdvance(){if(!S.fbConnected||!S._pc)return;const t=nowMs()-DELTA_SKEW;Object.keys(S._parts).forEach(p=>{const P=S._parts[p];if(P&&P.ready&&!P.loading){const o=S._pc.p[p]||(S._pc.p[p]={f:nowMs()});if(!o.f)o.f=nowMs();o.t=Math.max(o.t||0,t)}})}
+let _pcT=null;function pcSave(){clearTimeout(_pcT);_pcT=setTimeout(pcFlush,400)}
+function pcFlush(){clearTimeout(_pcT);try{if(!S._pc||!S.fbDb)return;pcAdvance();const g=groupLocal(),P=S._pc.p;Object.keys(P).forEach(p=>{const X=S._parts[p];if(X&&X.ready)P[p].n=Object.keys(g[p]||{}).length});saveAllLocal();LS.set(K_PCACHE,S._pc)}catch(e){}}
+setInterval(()=>{try{if(S.fbDb&&S._syncReady)pcFlush()}catch(e){}},30000);
+window.addEventListener('pagehide',()=>{try{pcFlush();STORE.flush()}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){try{pcFlush();STORE.flush()}catch(e){}}});
+function pcSet(path,t,n){const P=pcGet().p,o=P[path]||(P[path]={});o.t=Math.max(o.t||0,t||0);if(n!=null)o.n=n;if(!o.f)o.f=nowMs();pcSave()}
+function pcFull(path,n){pcGet().p[path]={t:nowMs(),n,f:nowMs()};pcSave()}
+function partLocal(path){const col=colOf(path);if(!ALL_COLS.includes(col))return [];const ev={};(S.evals||[]).forEach(x=>{ev[x.id]=x});return (S[col]||[]).filter(x=>x&&x.id!=null&&isSyncable(col,x)&&partOf(col,x,ev)===path)}
+function deltaOK(path){
+  if(S._deltaOff)return null;
+  const c=pcGet().p[path];if(!c||!c.t||!c.f)return null;
+  if(nowMs()-c.f>DELTA_FULL_MS)return null;                                    // mỗi ngày tải đầy đủ 1 lần
+  if(c.n!=null&&partLocal(path).length<c.n)return null;                        // bộ nhớ máy thiếu bản ghi
+  return c;
+}
+ensurePart=function(path){
+  if(!S.fbDb)return Promise.resolve();
+  const P=S._parts[path];if(P)return P.loading||Promise.resolve();
+  const db=S.fbDb,base=db.ref('dgData/'+path),c=deltaOK(path),since=c?c.t-DELTA_SKEW:0;
+  const p={ready:false,delta:!!c};S._parts[path]=p;
+  S._base[path]=S._base[path]||{};
+  const q=c?base.orderByChild('_t').startAt(since):base;
+  const seen=r=>{if(r&&typeof r._t==='number')pcSet(path,r._t)};
+  const up=s=>{const v=s.val();seen(v);onRemoteChild(path,s.key,v)},rm=s=>{if(!c)onRemoteChild(path,s.key,null)};
+  q.on('child_added',up);q.on('child_changed',up);q.on('child_removed',rm);
+  /* sổ xoá: luôn nghe (kể cả khi tải đầy đủ) để biết bản ghi bị xoá lúc đang mở */
+  const dref=db.ref('dgData/del/'+path).orderByValue().startAt(c?since:nowMs()-DELTA_SKEW);
+  const dl=s=>{const t=s.val();if(typeof t==='number')pcSet(path,t);if(p.ready)onRemoteChild(path,s.key,null);else(p.dq=p.dq||[]).push(s.key)};
+  dref.on('child_added',dl);
+  p.off=()=>{q.off('child_added',up);q.off('child_changed',up);q.off('child_removed',rm);dref.off('child_added',dl)};
+  p.loading=q.once('value').then(snap=>{
+    if(db!==S.fbDb||S._parts[path]!==p)return;
+    const R=snap.val()||{};
+    if(c){
+      /* bản trên máy = bản máy chủ tới mốc → làm "bản máy chủ" cho phần không đổi, rồi áp phần thay đổi */
+      partLocal(path).forEach(x=>{const k=encKey(x.id);if(!(k in R)&&S._srvSnap[path+'/'+k]===undefined){logPutSnap(path,k,syncView(colOf(path),x));S._base[path][k]=hashRec(colOf(path),x)}});
+      p.ready=true;
+      Object.keys(R).forEach(k=>{seen(R[k]);onRemoteChild(path,k,R[k])});
+      (p.dq||[]).forEach(k=>onRemoteChild(path,k,null));p.dq=null;
+      S._deltaStat=(S._deltaStat||0)+1;S._deltaN=(S._deltaN||0)+Object.keys(R).length;(S._deltaParts=S._deltaParts||{})[path]=Object.keys(R).length;
+    }else{
+      reconcilePart(path,R,true);p.ready=true;
+      (p.dq||[]).forEach(k=>onRemoteChild(path,k,null));p.dq=null;
+      pcFull(path,Object.keys(R).length);
+      Object.values(R).forEach(seen);
+    }
+    p.loading=null;pcSet(path,nowMs()-DELTA_SKEW,partLocal(path).length);
+    if(colOf(path)==='criteria'||path==='g/units'){try{ensureCriteria()}catch(e){}}
+    scheduleRemoteRender();scheduleSync();
+  }).catch(e=>{p.loading=null;console.warn('part',path,e)});
+  return p.loading;
+};
+/* đang nghe tới lúc trả ngăn → mốc = bây giờ (quay lại chỉ tải phần đổi sau đó) */
+{const o=releasePart;releasePart=function(path){const p=S._parts[path];if(p&&p.ready&&S.fbConnected)pcSet(path,nowMs()-DELTA_SKEW,partLocal(path).length);return o.apply(this,arguments)}}
+/* máy chủ / dữ liệu đổi khác thường → bỏ mốc, lần sau tải đầy đủ */
+function pcReset(){S._pc={db:S._dbUrl,p:{}};try{LS.set(K_PCACHE,S._pc)}catch(e){}}
+async function deltaReloadAll(){
+  if(!S.fbDb){toast('Chưa kết nối máy chủ');return}
+  if(!(await askYes('Tải lại toàn bộ dữ liệu đang xem từ máy chủ? (dùng khi nghi dữ liệu trên máy chưa khớp)',{yes:'Tải lại'})))return;
+  pcReset();Object.keys(S._parts).forEach(p=>releasePart(p));refreshScope();toast('Đang tải lại toàn bộ…');
+}
+/* dọn sổ xoá cũ (> 7 ngày) — chỉ máy quản trị, mỗi ngày 1 lần */
+setInterval(()=>{try{
+  if(!S.fbDb||!S.fbConnected||!S._syncReady||!(S.user&&S.user.isAdmin))return;
+  const td=localToday();if(localStorage.getItem('dg2_delprune')===td)return;localStorage.setItem('dg2_delprune',td);
+  const lim=nowMs()-7*86400000,walk=(v,pre,out,d)=>{if(d>6||!v||typeof v!=='object')return;Object.keys(v).forEach(k=>{const x=v[k];if(typeof x==='number'){if(x<lim)out[pre+'/'+k]=null}else walk(x,pre+'/'+k,out,d+1)})};
+  const db=S.fbDb;db.ref('dgData/del').once('value').then(async s=>{const out={};walk(s.val(),'del',out,0);
+    /* dọn "bản ghi ma" (mẩu {trường,_t} không id do máy mất mạng sửa đúng lúc bản ghi bị xoá) */
+    for(const dk of Object.keys(out).slice(0,300)){const rp=dk.slice(4);try{const v=(await db.ref('dgData/'+rp).once('value')).val();if(v&&typeof v==='object'&&v.id==null)out[rp]=null}catch(e){}}
+    if(Object.keys(out).length)db.ref('dgData').update(out)}).catch(()=>{});
+}catch(e){}},60000);
+
+/* ---------- Hệ thống → Tối ưu tải dữ liệu (luật chỉ mục Firebase + tải lại) ---------- */
+const FB_RULES_TXT=JSON.stringify({rules:{'.read':true,'.write':true,dgData:{
+  g:{$c:{'.indexOn':['_t']}},
+  u:{$u:{$c:{'.indexOn':['_t']}}},
+  m:{$m:{$u:{$c:{'.indexOn':['_t']}}}},
+  del:{g:{$c:{'.indexOn':['.value']}},u:{$u:{$c:{'.indexOn':['.value']}}},m:{$m:{$u:{$c:{'.indexOn':['.value']}}}}}
+}}},null,2);
+function renderDeltaBox(){
+  const box=document.getElementById('deltaBox');if(!box)return;
+  const can=!!(S.user&&(S.user.isAdmin||hasPerm('config')));const card=document.getElementById('cfgDelta'),fold=card&&(card.closest('details.fold')||card);if(fold)fold.style.display=can?'':'none';if(!can)return;
+  const pc=S.fbDb?pcGet().p:{},n=Object.keys(pc).length;
+  box.innerHTML=`<div class="rs">
+    <div class="rs-note">Ứng dụng giữ sẵn dữ liệu đã tải trên từng máy và lần mở sau <b>chỉ tải phần thay đổi</b>. Để Firebase lọc ngay trên máy chủ (tiết kiệm nhất), dán đoạn luật dưới đây <b>một lần</b>:<br>
+    Firebase Console → Realtime Database → tab <b>Rules</b> → xoá nội dung cũ → dán → <b>Publish</b>. Luật này giữ nguyên quyền đọc/ghi như hiện tại, chỉ thêm chỉ mục.</div>
+    <textarea id="fbRulesTxt" readonly style="width:100%;height:150px;font-family:monospace;font-size:12px" onclick="this.select()">${esc(FB_RULES_TXT)}</textarea>
+    <div class="rs-row"><button class="btn btn-pri btn-sm" onclick="nfCopy('fbRulesTxt')">${IC('ti-checks')} Sao chép luật</button>
+      <button class="btn btn-ghost btn-sm" onclick="deltaReloadAll()">${IC('ti-refresh')} Tải lại toàn bộ dữ liệu trên máy này</button></div>
+    <div class="rs-mut">Máy này đang giữ mốc cho ${n} ngăn dữ liệu · phiên này mở ${S._deltaStat||0} ngăn bằng cách chỉ tải phần thay đổi. Mỗi ngày lần mở đầu tiên vẫn tải đầy đủ để bắt kịp các máy chưa cập nhật bản mới.</div>
+  </div>`;
+}
+{const o=renderUsageBox;renderUsageBox=function(){const r=o.apply(this,arguments);try{renderDeltaBox()}catch(e){console.warn(e)}return r}}
+
+/* dọn bớt dữ liệu trên máy (ngoài phạm vi) → bỏ mốc của ngăn đó: lần sau phải tải đầy đủ, không bao giờ thiếu bản ghi */
+{const o=pruneLocal;pruneLocal=function(){const before=groupLocal();const r=o.apply(this,arguments);if(r&&S.fbDb){const after=groupLocal(),P=pcGet().p;let ch=false;Object.keys(before).forEach(p=>{if(Object.keys(after[p]||{}).length<Object.keys(before[p]).length&&P[p]){delete P[p];ch=true}});if(ch)pcSave()}return r}}
 </script>
 </body>
 </html>
